@@ -50,16 +50,6 @@
 	return nil;
 }
 
--(void) setPinned:(BOOL)v
-{
-	_pinned = v;
-}
-
--(BOOL) pinned
-{
-	return _pinned;
-}
-
 -(void) showVisualizerWindow:(id)sender
 {
 }

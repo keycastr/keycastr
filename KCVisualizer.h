@@ -14,9 +14,6 @@
 -(NSView*) preferencesView;
 -(NSString*) visualizerName;
 
--(void) setPinned:(BOOL)v;
--(BOOL) pinned;
-
 -(void) showVisualizerWindow:(id)sender;
 -(void) hideVisualizerWindow:(id)sender;
 
@@ -38,7 +35,6 @@
 @interface KCVisualizer : NSObject <KCVisualizer>
 {
 	IBOutlet NSView* preferencesView;
-	BOOL _pinned;
 }
 
 +(void) registerVisualizerFactory:(id<KCVisualizerFactory>)factory withName:(NSString*)name;
@@ -47,9 +43,6 @@
 
 -(NSView*) preferencesView;
 -(NSString*) visualizerName;
-
--(void) setPinned:(BOOL)v;
--(BOOL) pinned;
 
 -(void) showVisualizerWindow:(id)sender;
 -(void) hideVisualizerWindow:(id)sender;
