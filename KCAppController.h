@@ -28,6 +28,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KCVisualizer.h"
+#import "KCKeyboardTap.h"
+#import "KCKeystroke.h"
 #import "ShortcutRecorder/ShortcutRecorder.h"
 
 @class KCPrefsWindowController;
@@ -73,5 +75,7 @@
 -(id<KCVisualizer>) currentVisualizer;
 -(void) setCurrentVisualizer:(id<KCVisualizer>)visualizer;
 
+-(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke;
+-(void) keyboardTap:(KCKeyboardTap*)tap noteFlagsChanged:(uint32_t)flags;
 
 @end

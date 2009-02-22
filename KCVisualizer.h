@@ -38,6 +38,7 @@
 -(void) deactivateVisualizer:(id)sender;
 
 -(void) noteKeyEvent:(KCKeystroke*)keystroke;
+-(void) noteFlagsChanged:(uint32_t)flags;
 
 @end
 
@@ -69,6 +70,7 @@
 -(void) deactivateVisualizer:(id)sender;
 
 -(void) noteKeyEvent:(KCKeystroke*)keystroke;
+-(void) noteFlagsChanged:(uint32_t)flags;
 
 @end
 

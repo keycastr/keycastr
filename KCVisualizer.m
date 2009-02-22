@@ -77,12 +77,18 @@
 {
 }
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke
+-(void) deactivateVisualizer:(id)sender
 {
 }
 
--(void) deactivateVisualizer:(id)sender
+-(void) noteKeyEvent:(KCKeystroke*)keystroke
 {
+	// Default implementation does nothing.
+}
+
+-(void) noteFlagsChanged:(uint32_t)flags
+{
+	// Default implementation does nothing.
 }
 
 @end

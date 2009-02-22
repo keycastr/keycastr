@@ -116,8 +116,10 @@ else NSLog(@"(not toggling)");
 		[currentVisualizer noteKeyEvent:keystroke];
 }
 
--(void) keyboardTap:(KCKeyboardTap*)tap noteFlagsChanged:(uint32_t)newFlags
+-(void) keyboardTap:(KCKeyboardTap*)tap noteFlagsChanged:(uint32_t)flags
 {
+	if (currentVisualizer != nil)
+		[currentVisualizer noteFlagsChanged:flags];
 }
 
 -(NSStatusItem*) createStatusItem
