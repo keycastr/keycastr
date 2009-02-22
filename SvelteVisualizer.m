@@ -26,7 +26,7 @@
 
 
 #import "SvelteVisualizer.h"
-
+#import "NSBezierPath+RoundedRect.h"
 
 @implementation SvelteVisualizerFactory
 
@@ -47,6 +47,103 @@
 
 @end
 
+@implementation SvelteVisualizerView
+
+-(void) drawRect:(NSRect)rect
+{
+	NSRect frame = [self frame];
+	[[NSColor clearColor] setFill];
+	NSRectFill(frame);
+
+	float oneQuarter = floorf(frame.size.width / 4);
+
+	[[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
+	NSBezierPath* bp = [NSBezierPath bezierPath];
+	[bp appendRoundedRect:frame radius:16];
+	[bp appendBezierPathWithRect:NSMakeRect(0,30,frame.size.width,1)];
+	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*1,0,1,30)];
+	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*2,0,1,30)];
+	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*3,0,1,30)];
+	[bp fill];
+	
+	NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
+	[ps setAlignment:NSCenterTextAlignment];
+	
+	NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
+	NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
+	NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
+	NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
+	NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
+	[shadow setShadowColor:[NSColor blackColor]];
+	[shadow setShadowBlurRadius:2];
+	[shadow setShadowOffset:NSMakeSize(2,-2)];
+
+	NSSize size;
+	NSMutableDictionary* attr = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+		[NSFont systemFontOfSize:16], NSFontAttributeName,
+		[NSColor whiteColor], NSForegroundColorAttributeName,
+		shadow, NSShadowAttributeName,
+		ps, NSParagraphStyleAttributeName,
+		nil];
+
+	if (_flags & NSShiftKeyMask)
+		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	else
+		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
+	size = [shiftKeyString sizeWithAttributes:attr];
+	[shiftKeyString drawInRect:NSMakeRect(0,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+
+	if (_flags & NSControlKeyMask)
+		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	else
+		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
+	size = [controlKeyString sizeWithAttributes:attr];
+	[controlKeyString drawInRect:NSMakeRect(oneQuarter,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+
+	if (_flags & NSAlternateKeyMask)
+		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	else
+		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
+	size = [altKeyString sizeWithAttributes:attr];
+	[altKeyString drawInRect:NSMakeRect(oneQuarter*2,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+
+	if (_flags & NSCommandKeyMask)
+		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	else
+		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
+	size = [commandKeyString sizeWithAttributes:attr];
+	[commandKeyString drawInRect:NSMakeRect(oneQuarter*3,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+	
+	if (_displayedString != nil)
+	{
+		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+		float fontSize = 48;
+		[attr setObject:[NSFont systemFontOfSize:fontSize] forKey:NSFontAttributeName];
+		
+		size = [_displayedString sizeWithAttributes:attr];
+		while (size.width > frame.size.width - 10)
+		{
+			fontSize -= 1.0;
+			[attr setObject:[NSFont systemFontOfSize:fontSize] forKey:NSFontAttributeName];
+			size = [_displayedString sizeWithAttributes:attr];
+		}
+		[_displayedString drawInRect:NSMakeRect(0,30+(frame.size.height-30 - size.height)/2.0,frame.size.width,size.height) withAttributes:attr];
+	}
+}
+
+-(void) noteKeyEvent:(KCKeystroke*)keystroke
+{
+	_displayedString = [[keystroke convertToString] retain];
+	[self setNeedsDisplay:YES];
+}
+
+-(void) noteFlagsChanged:(uint32_t)flags
+{
+	_flags = flags;
+	[self setNeedsDisplay:YES];
+}
+
+@end
 
 
 @implementation SvelteVisualizer
@@ -56,8 +153,55 @@
 	return @"Svelte";
 }
 
+-(id) init
+{
+	if (![super init])
+		return nil;
+
+	NSRect r = { 10, 10, 200, 100 };
+	_visualizerWindow = [[NSWindow alloc]
+		initWithContentRect:r
+		styleMask:NSBorderlessWindowMask
+		backing:NSBackingStoreBuffered
+		defer:NO];
+	[_visualizerWindow setBackgroundColor:[NSColor blueColor]];
+	[_visualizerWindow setMovableByWindowBackground:YES];
+	[_visualizerWindow setFrame:r display:NO];
+	[_visualizerWindow setFrameAutosaveName:@"svelte visualizerFrame"];
+	[_visualizerWindow setFrameUsingName:@"svelte visualizerFrame"];
+	[_visualizerWindow setOpaque:NO];
+
+	_visualizerView = [[SvelteVisualizerView alloc] initWithFrame:r];
+	[_visualizerWindow setContentView:_visualizerView];
+
+	return self;
+}
+
+-(void) showVisualizer:(id)sender
+{
+	[_visualizerWindow orderFront:self];
+}
+
+-(void) hideVisualizer:(id)sender
+{
+	[_visualizerWindow orderOut:self];
+}
+
 -(void) deactivateVisualizer:(id)sender
 {
+	[_visualizerWindow orderOut:self];
+}
+
+-(void) noteKeyEvent:(KCKeystroke*)keystroke
+{
+	if (![keystroke isCommand])
+		return;
+	[_visualizerView noteKeyEvent:keystroke];
+}
+
+-(void) noteFlagsChanged:(uint32_t)flags
+{
+	[_visualizerView noteFlagsChanged:flags];
 }
 
 @end

@@ -38,12 +38,27 @@
 
 @end
 
+@interface SvelteVisualizerView : NSView
+{
+	uint32_t _flags;
+	NSString* _displayedString;
+}
+
+-(void) noteKeyEvent:(KCKeystroke*)keystroke;
+-(void) noteFlagsChanged:(uint32_t)flags;
+
+@end
+
 @interface SvelteVisualizer : KCVisualizer <KCVisualizer>
 {
-	NSWindow* visualizerWindow;
+	NSWindow* _visualizerWindow;
+	SvelteVisualizerView* _visualizerView;
 }
 
 -(NSString*) visualizerName;
 -(void) deactivateVisualizer:(id)sender;
+
+-(void) noteKeyEvent:(KCKeystroke*)keystroke;
+-(void) noteFlagsChanged:(uint32_t)flags;
 
 @end

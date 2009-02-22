@@ -48,6 +48,11 @@
 			<string>SvelteVisualizer</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>_visualizerWindow</key>
+				<string>NSWindow</string>
+			</dict>
 			<key>SUPERCLASS</key>
 			<string>KCVisualizer</string>
 		</dict>
