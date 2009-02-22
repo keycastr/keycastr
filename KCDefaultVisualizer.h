@@ -60,6 +60,7 @@
 -(BOOL) isCommand;
 -(void) setAlphaValue:(float)opacity;
 -(void) appendString:(NSString*)t;
+-(void) scheduleFadeOut;
 
 @end
 

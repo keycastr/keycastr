@@ -7,7 +7,13 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>deactivateVisualizer</key>
+				<string>id</string>
+				<key>hideVisualizer</key>
+				<string>id</string>
 				<key>hideVisualizerWindow</key>
+				<string>id</string>
+				<key>showVisualizer</key>
 				<string>id</string>
 				<key>showVisualizerWindow</key>
 				<string>id</string>
@@ -33,6 +39,11 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>deactivateVisualizer</key>
+				<string>id</string>
+			</dict>
 			<key>CLASS</key>
 			<string>SvelteVisualizer</string>
 			<key>LANGUAGE</key>

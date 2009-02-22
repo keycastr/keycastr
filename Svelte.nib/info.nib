@@ -4,6 +4,8 @@
 <dict>
 	<key>IBFramework Version</key>
 	<string>629</string>
+	<key>IBLastKnownRelativeProjectPath</key>
+	<string>../KeyCastr.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
 	<key>IBOpenObjects</key>

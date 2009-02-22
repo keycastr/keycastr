@@ -275,7 +275,7 @@ else NSLog(@"(not toggling)");
 	}
 
 	currentVisualizer = new;
-	[new showVisualizerWindow:self];
+	[new showVisualizer:self];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KCVisualizerChanged" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 		new, @"newVisualizer",
 		old, @"oldVisualizer",
