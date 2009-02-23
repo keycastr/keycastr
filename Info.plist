@@ -19,12 +19,39 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>0.8.0</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>LSUIElement</key>
 	<string>0</string>
+	<key>SUFeedURL</key>
+	<string>http://stephendeken.net/software/keycastr/appcast.xml</string>
+	<key>SUExpectsDSASignature</key>
+	<true/>
+	<key>SUPublicDSAKey</key>
+	<string>
+-----BEGIN PUBLIC KEY-----
+MIIDOzCCAi4GByqGSM44BAEwggIhAoIBAQDhLJx1XzSjRMFENpYwDeWlJvQ5LTUY
+MSq4LH7JWVeTw57t9/1d889udk5eHtddCVBi+4zP750oUe+ig+kFuKG7JwlIqigk
+yVpDzJMmDJpdlBRnyQESiYq6hsLFaHb2kxh37kQHVrYCsgjgIhw2sQdlDPeRQMRT
+icI06xniaH04Vcbm6537aVx7c9So33kWRImkC9zXPp/9wtMoLqIeix5At9a2J0wo
+KB2jthw37lnIEQ6Yik/gggaFOmCNi3YCkxiEyZ4WjmUd14D9yZN9DV+nwHycWCJh
+Z32fv/Ics2MPNxd1GO1BmJMN3yY36ZS/ZSqNJi5gKQJJ3QzjPfHVI/FFAhUAwg0N
+8c//umhjOJ3skOAHEfWHRpsCggEBAJ+2QriA2UQl5MmW2O0IwucziCVLApYnYTqt
+ZjjS71dCi+uGFmFUKat3wWJU3oP3+h2WRliSSyAn9s6TzYvc9VpHOVZfbtt3bJga
+zJbsyCJTqtFIfx52JDHzJUIBJZThPQ5VsEx5IavNZ6zVU2u3zMUU7BCee1IBRXGG
+Rgz5Heo+TKrYTAoQvrjZHSUV0o01z/ItTljgXZvJDmh6wgRCczufybamRNYLdOe+
+FG0pfIfFVM9YurMzLjKLfB96Fmc4ciamAJYmLTYOyohEym1tuUs+PDWL5tPNc6ZB
+HIxbK/f3rM8MrhW8U9uruxk3fQg/8gUwRnlmejYKnLBcg0MTgqsDggEFAAKCAQBl
+r7zCRjK3U3QcKTxVHj+gEw1OheOSjBkfGRO5apyFR70qFxl7VqfomBSqDCcYa6Lm
+9kbniD1UAe8e09RSwJk4AOsb4nNpz1wuvRxjVPtQNR9bTQ4n9PYNMaDEZxrGmc1w
+n7RIgagIG01nm8wxdOyFxXGLYx0V5sX7bHS9vXwviAztvada++HFvx/fMRUzkC5p
+c/cOHewrxPYGmo4MRwXL8cfMmiiu6CSR/QDryNHTqp86HOx4c9Gxe+3+6CZl2yjd
+qwdT09SF6QVsFstU0js8OJ6PYfkN/PfgJu0kRCtRp3cbFX+LSz7MHPWdC0zFlrlV
+n0czvYDaS2NHqKOoAzRV
+-----END PUBLIC KEY-----
+</string>
 </dict>
 </plist>
