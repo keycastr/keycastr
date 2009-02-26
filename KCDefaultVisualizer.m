@@ -176,7 +176,6 @@
 
 -(void) _lineBreak:(id)sender
 {
-NSLog( @"breaking line" );
 	_mostRecentBezelView = nil;
 }
 

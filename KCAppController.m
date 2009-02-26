@@ -50,13 +50,65 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 
 	_allowToggle = true;
 	_isCapturing = true;
-	_startupIconPreference = [[NSUserDefaults standardUserDefaults] integerForKey:kKCPrefDisplayIcon];
 
 	return self;
 }
 
+-(void) _mapOldPreference:(NSString*)old toNewPreference:(NSString*)new
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:[ud objectForKey:old] forKey:new];
+	[ud removeObjectForKey:old];
+}
+
+-(void) _setupDefaults
+{
+	// Set up user-defaults defaults
+	KeyCombo keyCombo;
+	keyCombo.code = 1;
+	keyCombo.flags = NSShiftKeyMask | NSAlternateKeyMask;
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithInt:3], kKCPrefDisplayIcon,
+		@"Default", kKCPrefSelectedVisualizer,
+		[NSNumber numberWithBool:YES], kKCPrefVisibleAtLaunch,
+		[NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)], kKCPrefCapturingHotKey,
+
+		[NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]], @"default.bezelColor",
+		[NSNumber numberWithFloat:2.0], @"default.fadeDelay",
+		[NSNumber numberWithFloat:0.2], @"default.fadeDuration",
+		[NSNumber numberWithFloat:16.0], @"default.fontSize",
+		[NSNumber numberWithFloat:0.5], @"default.keystrokeDelay",
+		[NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]], @"default.textColor",
+		nil]];
+
+	if ([ud objectForKey:@"fontSize"] != nil)
+	{
+		// Clean up old 0.7.x defaults
+		[self _mapOldPreference:@"bezelColor" toNewPreference:@"default.bezelColor"];
+		[self _mapOldPreference:@"fadeDelay" toNewPreference:@"default.fadeDelay"];
+		[self _mapOldPreference:@"fontSize" toNewPreference:@"default.fontSize"];
+		[self _mapOldPreference:@"keystrokeDelay" toNewPreference:@"default.keystrokeDelay"];
+		[self _mapOldPreference:@"textColor" toNewPreference:@"default.textColor"];
+		[self _mapOldPreference:@"onlyCommandKeys" toNewPreference:@"default.commandKeysOnly"];
+		NSDictionary* oldKey = [ud objectForKey:@"ShortcutRecorder toggleCapture"];
+		if (oldKey != nil)
+		{
+			keyCombo.code = [[oldKey objectForKey:@"keyCode"] intValue];
+			keyCombo.flags = [[oldKey objectForKey:@"modifierFlags"] intValue];
+			[ud setObject:[NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)] forKey:kKCPrefCapturingHotKey];
+			[ud removeObjectForKey:@"ShortcutRecorder toggleCapture"];
+		}
+		[ud removeObjectForKey:@"launchedOnce"];
+	}
+}
+
 -(void) awakeFromNib
 {
+	[self _setupDefaults];
+
+	_startupIconPreference = [[NSUserDefaults standardUserDefaults] integerForKey:kKCPrefDisplayIcon];
+
 	[NSApp activateIgnoringOtherApps:TRUE];
 	[self registerVisualizers];
 	[self setCurrentVisualizerName:[[NSUserDefaults standardUserDefaults] objectForKey:kKCPrefSelectedVisualizer]];
@@ -71,8 +123,6 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 	if (d != nil)
 		[d getBytes:&kc length:sizeof(kc)];
 		
-		NSLog( @"pref modifiers = %08x; keycode = %d", kc.flags, kc.code );
-
 	[shortcutRecorder setKeyCombo:kc];
 	_allowToggle = YES;
 
@@ -96,14 +146,11 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 	KeyCombo kc = [shortcutRecorder keyCombo];
 	if ([keystroke keyCode] == kc.code && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (kc.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
 	{
-NSLog(@"Toggle keystroke hit");
 		if (_allowToggle)
 		{
-NSLog(@"(toggling)");
 			[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopPretending:) object:nil];
 			[self toggleRecording:self];
 		}
-else NSLog(@"(not toggling)");
 		return;
 	}
 	
@@ -233,7 +280,6 @@ else NSLog(@"(not toggling)");
 -(void) stopPretending:(id)what
 {
 	_allowToggle = true;
-	NSLog(@"Timer expired, toggling recording");
 	[self toggleRecording:self];
 }
 
@@ -241,7 +287,6 @@ else NSLog(@"(not toggling)");
 {
 	_allowToggle = false;
 	[self performSelector:@selector(stopPretending:) withObject:nil afterDelay:0.1];
-	NSLog(@"Menu item hit, waiting 100 ms");
 }
 
 -(NSString*) currentVisualizerName

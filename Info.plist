@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>KeyCastr</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.stephendeken.KeyCastr2</string>
+	<string>net.stephendeken.KeyCastr</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -20,16 +20,16 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>0.8.0</string>
+	<key>LSUIElement</key>
+	<string>0</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>LSUIElement</key>
-	<string>0</string>
-	<key>SUFeedURL</key>
-	<string>http://stephendeken.net/software/keycastr/appcast.xml</string>
 	<key>SUExpectsDSASignature</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>http://stephendeken.net/software/keycastr/appcast.xml</string>
 	<key>SUPublicDSAKey</key>
 	<string>
 -----BEGIN PUBLIC KEY-----

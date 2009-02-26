@@ -40,6 +40,7 @@
 		3D3F56410F32D266001C7272 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3F56400F32D266001C7272 /* ShortcutRecorder.framework */; };
 		3D3F564E0F32D2EA001C7272 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D3F56400F32D266001C7272 /* ShortcutRecorder.framework */; };
 		3D3F56CB0F337533001C7272 /* NSUserDefaults+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F56CA0F337533001C7272 /* NSUserDefaults+Utility.m */; };
+		3D66FC520F539C290034ECC1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3DF8835C0F5254F9005FD1C6 /* Sparkle.framework */; };
 		3DF883890F5256FF005FD1C6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF8835C0F5254F9005FD1C6 /* Sparkle.framework */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -103,6 +104,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3D66FC520F539C290034ECC1 /* Sparkle.framework in CopyFiles */,
 				3D1646D10F43DCA700CA65AD /* KCVisualizer.framework in CopyFiles */,
 				3D3F564E0F32D2EA001C7272 /* ShortcutRecorder.framework in CopyFiles */,
 			);
