@@ -252,10 +252,13 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		SRKeyCodeTransformer* xformer = [[SRKeyCodeTransformer alloc] init];
 		[statusShortcutItem setKeyEquivalent:[xformer transformedValue:[NSNumber numberWithInt:kc.code]]];
 		[statusShortcutItem setKeyEquivalentModifierMask:kc.flags];
+		[dockShortcutItem setKeyEquivalent:[xformer transformedValue:[NSNumber numberWithInt:kc.code]]];
+		[dockShortcutItem setKeyEquivalentModifierMask:kc.flags];
 	}
 	else
 	{
 		[statusShortcutItem setKeyEquivalent:@""];
+		[dockShortcutItem setKeyEquivalent:@""];
 	}
 }
 
@@ -355,6 +358,9 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		: [NSImage imageNamed:@"KeyCastrStatusItemInactive"])
 		];
 	[statusShortcutItem setTitle:(_isCapturing
+		? @"Stop Casting"
+		: @"Start Casting")];
+	[dockShortcutItem setTitle:(_isCapturing
 		? @"Stop Casting"
 		: @"Start Casting")];
 	[NSApp setApplicationIconImage:(_isCapturing

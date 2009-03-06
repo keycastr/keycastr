@@ -49,6 +49,7 @@
 	id<KCVisualizer> currentVisualizer;
 	IBOutlet SRRecorderControl* shortcutRecorder;
 	IBOutlet NSMenuItem* statusShortcutItem;
+	IBOutlet NSMenuItem* dockShortcutItem;
 	BOOL _isCapturing;
 	BOOL _allowToggle;
 	int _startupIconPreference;
