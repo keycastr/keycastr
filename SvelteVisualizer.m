@@ -80,7 +80,7 @@
 
 	NSSize size;
 	NSMutableDictionary* attr = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-		[NSFont systemFontOfSize:16], NSFontAttributeName,
+		[NSFont boldSystemFontOfSize:16], NSFontAttributeName,
 		[NSColor whiteColor], NSForegroundColorAttributeName,
 		shadow, NSShadowAttributeName,
 		ps, NSParagraphStyleAttributeName,
@@ -164,6 +164,7 @@
 		styleMask:NSBorderlessWindowMask
 		backing:NSBackingStoreBuffered
 		defer:NO];
+	[_visualizerWindow setLevel:NSScreenSaverWindowLevel];
 	[_visualizerWindow setBackgroundColor:[NSColor blueColor]];
 	[_visualizerWindow setMovableByWindowBackground:YES];
 	[_visualizerWindow setFrame:r display:NO];
