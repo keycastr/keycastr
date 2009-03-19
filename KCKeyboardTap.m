@@ -111,7 +111,21 @@ CGEventRef eventTapCallback(
 	static BOOL tapInstalled = NO;
 	if (!tapInstalled)
 	{
+		// We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
+		// install the event tap for the flags changed event, which apparently doesn't require universal access
+		// to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
 		CFMachPortRef tap = CGEventTapCreate(
+			kCGSessionEventTap,
+			kCGHeadInsertEventTap,
+			kCGEventTapOptionListenOnly,
+			CGEventMaskBit(kCGEventKeyDown),
+			eventTapCallback,
+			self
+			);
+		FAIL_LOUDLY( tap == NULL, @"Could not create event tap.  Make sure 'Enable Access for Assistive Devices' is checked in the Universal Access preferences." );
+		CFRelease( tap );
+
+		tap = CGEventTapCreate(
 			kCGSessionEventTap,
 			kCGHeadInsertEventTap,
 			kCGEventTapOptionListenOnly,
