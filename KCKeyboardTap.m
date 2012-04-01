@@ -36,6 +36,7 @@
 
 @end
 
+/*
 static int
 GetKeyboardLayout( Ptr* resource )
 {
@@ -81,6 +82,7 @@ GetKeyboardLayout( Ptr* resource )
         return 0;
     }
 }
+*/
 
 CGEventRef eventTapCallback(
    CGEventTapProxy proxy, 
