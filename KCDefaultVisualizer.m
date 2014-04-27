@@ -135,7 +135,7 @@
 
 @implementation KCDefaultVisualizerWindow
 
--(id) initWithContentRect:(NSRect)contentRect styleMask:(int)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+-(id) initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
 	if (![super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag])
 		return nil;
@@ -143,18 +143,19 @@
 	_bezelViews = [[NSMutableArray alloc] init];
 	_runningAnimations = [[NSMutableArray alloc] init];
 
-	NSScreen *s = [NSScreen mainScreen];
-	NSRect r = NSMakeRect([s frame].size.width-210,10,200,0);
+	NSScreen *screen = [NSScreen mainScreen];
+	NSRect screenFrame = [screen frame];
 
-	[self setFrame:r display:NO];
+	NSRect frame = NSMakeRect(screenFrame.size.width-210, 10, contentRect.size.width, contentRect.size.height);
+
+	[self setFrame:frame display:NO];
 	[self setFrameUsingName:@"KCBezelWindow default.bezelWindow"];
 	[self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
-	
+
 	[self setLevel:NSScreenSaverWindowLevel];
 	[self setOpaque:NO];
 	[self setBackgroundColor:[NSColor clearColor]];
 	
-	r.origin = NSZeroPoint;
 	[self setAlphaValue:1];
 	[self setMovableByWindowBackground:YES];
 
@@ -197,8 +198,17 @@
 	if (_mostRecentBezelView == nil || [keystroke isCommand])
 	{
 		NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+        NSRect frame = [self frame];
+        CGFloat maxWidth = frame.size.width;
+        if (!(maxWidth > 0)) {
+            NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(frame));
+            maxWidth = 200;
+            frame.size = NSMakeSize(maxWidth, MAX(32.0, frame.size.height));
+            [self setFrame:frame display:YES];
+            NSLog(@"New frame: %@", NSStringFromRect(frame));
+        }
 		_mostRecentBezelView = [[KCDefaultVisualizerBezelView alloc]
-			initWithMaxWidth:[self frame].size.width
+			initWithMaxWidth:maxWidth
 			text:charString
 			isCommand:NO
 			fontSize:[userDefaults floatForKey:@"default.fontSize"]
@@ -206,11 +216,10 @@
 			backgroundColor:[userDefaults colorForKey:@"default.bezelColor"]
 			];
 		[_bezelViews addObject:_mostRecentBezelView];
-		NSRect r = [self frame];
-		r.size.height += 10 + [_mostRecentBezelView frame].size.height;
+		frame.size.height += 10 + [_mostRecentBezelView frame].size.height;
 		[_mostRecentBezelView setAutoresizingMask:NSViewMinYMargin];
 		
-		[self setFrame:r display:YES animate:NO];
+		[self setFrame:frame display:YES animate:NO];
 
 		[[self contentView] addSubview:_mostRecentBezelView];
 		if ([keystroke isCommand])
