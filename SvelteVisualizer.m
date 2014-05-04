@@ -83,8 +83,8 @@
 		[NSFont boldSystemFontOfSize:16], NSFontAttributeName,
 		[NSColor whiteColor], NSForegroundColorAttributeName,
 		shadow, NSShadowAttributeName,
-		ps, NSParagraphStyleAttributeName,
-		nil];
+		[ps autorelease], NSParagraphStyleAttributeName,
+        nil];
 
 	if (_flags & NSShiftKeyMask)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -155,7 +155,7 @@
 
 -(id) init
 {
-	if (![super init])
+	if (!(self = [super init]))
 		return nil;
 
 	NSRect r = { 10, 10, 200, 100 };
@@ -176,6 +176,12 @@
 	[_visualizerWindow setContentView:_visualizerView];
 
 	return self;
+}
+
+- (void)dealloc {
+    [_visualizerWindow release];
+    [_visualizerView release];
+    [super dealloc];
 }
 
 -(void) showVisualizer:(id)sender

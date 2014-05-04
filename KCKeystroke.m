@@ -32,7 +32,7 @@
 
 -(id) initWithKeyCode:(uint16_t)keyCode characterCode:(uint16_t)charCode modifiers:(uint32_t)modifiers;
 {
-	if (![super init])
+	if (!(self = [super init]))
 		return nil;
 
 	_keyCode = keyCode;

@@ -200,7 +200,7 @@ static NSString* kShiftKeyString = nil;
 	if (isCommand)
 	{
 		NSMutableString *t = [[s uppercaseString] mutableCopy];
-		s = t;
+        s = [t autorelease];
 	}
 	
 	return s;

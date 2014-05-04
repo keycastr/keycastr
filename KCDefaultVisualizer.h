@@ -40,24 +40,19 @@
 
 @interface KCDefaultVisualizerBezelView : NSView
 {
-	double _maxWidth;
-	NSColor* _foregroundColor;
-	NSColor* _backgroundColor;
-	double _fontSize;
-	NSString* _contentText;
-	BOOL _isCommand;
-	float _opacity;
+	CGFloat _maxWidth;
+    NSColor* _backgroundColor;
+    float _opacity;
 
 	NSTextStorage* _textStorage;
 	NSLayoutManager* _layoutManager;
 	NSTextContainer* _textContainer;
 }
 
--(id) initWithMaxWidth:(double)maxWidth text:(NSString*)string isCommand:(BOOL)isCommand fontSize:(double)size fontColor:(NSColor*)fontColor backgroundColor:(NSColor*)color;
+-(id) initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color;
 -(NSDictionary*) attributes;
 -(void) maybeResize;
 -(NSShadow*) shadow;
--(BOOL) isCommand;
 -(void) setAlphaValue:(float)opacity;
 -(void) appendString:(NSString*)t;
 -(void) scheduleFadeOut;
@@ -66,14 +61,13 @@
 
 @class KCDefaultVisualizerWindow;
 
-@interface KCBezelAnimation : NSAnimation
+@interface KCBezelAnimation : NSAnimation<NSAnimationDelegate>
 {
 	KCDefaultVisualizerBezelView* _bezelView;
 	NSWindow* _window;
 }
 
 -(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView;
--(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView window:(KCDefaultVisualizerWindow*)window;
 
 @end
 

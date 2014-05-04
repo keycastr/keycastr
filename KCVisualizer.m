@@ -110,9 +110,9 @@
 -(id<KCVisualizer>) constructVisualizer
 {
 	Class c = [self visualizerClass];
-	id<KCVisualizer> v = [[[c alloc] init] retain];
-	NSNib* nib = [[NSNib alloc] initWithNibNamed:[self visualizerNibName] bundle:[NSBundle bundleForClass:[self class]]];
-	if (![nib instantiateNibWithOwner:v topLevelObjects:nil])
+	id<KCVisualizer> v = [[[c alloc] init] autorelease];
+	NSNib* nib = [[[NSNib alloc] initWithNibNamed:[self visualizerNibName] bundle:[NSBundle bundleForClass:[self class]]] autorelease];
+	if (![nib instantiateWithOwner:v topLevelObjects:nil])
 		return nil;
 	return v;
 }

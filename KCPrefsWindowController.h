@@ -30,7 +30,7 @@
 @class KCAppController;
 @protocol KCVisualizer;
 
-@interface KCPrefsWindowController : NSObject
+@interface KCPrefsWindowController : NSObject<NSToolbarDelegate>
 {
 	IBOutlet NSWindow* prefsWindow;
 	IBOutlet NSTabView* tabView;

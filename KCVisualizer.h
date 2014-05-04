@@ -28,7 +28,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KCKeystroke.h"
 
-@protocol KCVisualizer
+@protocol KCVisualizer<NSObject>
 
 -(NSView*) preferencesView;
 -(NSString*) visualizerName;

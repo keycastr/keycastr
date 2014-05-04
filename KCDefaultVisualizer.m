@@ -60,7 +60,7 @@
 
 -(id) init
 {
-	if (![super init])
+	if (!(self = [super init]))
 		return nil;
 
 	return self;
@@ -73,6 +73,7 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
 }
 
 -(void) _createVisualizerWindow
@@ -137,7 +138,7 @@
 
 -(id) initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
-	if (![super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag])
+	if (!(self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]))
 		return nil;
 
 	_bezelViews = [[NSMutableArray alloc] init];
@@ -210,9 +211,6 @@
 		_mostRecentBezelView = [[KCDefaultVisualizerBezelView alloc]
 			initWithMaxWidth:maxWidth
 			text:charString
-			isCommand:NO
-			fontSize:[userDefaults floatForKey:@"default.fontSize"]
-			fontColor:[userDefaults colorForKey:@"default.textColor"]
 			backgroundColor:[userDefaults colorForKey:@"default.bezelColor"]
 			];
 		[_bezelViews addObject:_mostRecentBezelView];
@@ -294,7 +292,7 @@
 
 -(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView
 {
-	if (![super init])
+	if (!(self = [super init]))
 		return nil;
 
 	_bezelView = [bezelView retain];
@@ -303,15 +301,9 @@
 	return self;
 }
 
--(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView window:(KCDefaultVisualizerWindow*)window
-{
-	if (![super init])
-		return nil;
-
-	_bezelView = [bezelView retain];
-	_window = [window retain];
-
-	return self;
+- (void)dealloc {
+    [_bezelView release];
+    [super dealloc];
 }
 
 -(void) fadeOutOverDuration:(NSTimeInterval)duration
@@ -342,17 +334,14 @@
 
 	[_bezelView setAlphaValue:(1 - progress)];
 	[_bezelView setNeedsDisplay:YES];
-	if (progress == 1)
-		[self release];
 }
 
 -(void) animationDidEnd:(NSAnimation*)anim
 {
+	CGFloat deltaY = [_bezelView frame].size.height + 10;
 	KCDefaultVisualizerWindow* w = (KCDefaultVisualizerWindow*)[_bezelView window];
 	[w removeRunningAnimation:self];
 	[_bezelView removeFromSuperview];
-	[_bezelView release];
-	int deltaY = [_bezelView frame].size.height + 10;
 	
 	NSArray* a = [[w contentView] subviews];
 	int vc = [a count];
@@ -379,9 +368,9 @@
 
 static const int kKCBezelBorder = 6;
 
--(id) initWithMaxWidth:(double)maxWidth text:(NSString*)string isCommand:(BOOL)isCommand fontSize:(double)size fontColor:(NSColor*)fontColor backgroundColor:(NSColor*)color
+-(id) initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color
 {
-	if (![super initWithFrame:NSMakeRect(0,0,maxWidth,32)])
+	if (!(self = [super initWithFrame:NSMakeRect(0,0,maxWidth,32)]))
 	{
 		return nil;
 	}
@@ -389,13 +378,9 @@ static const int kKCBezelBorder = 6;
 	_opacity = 1.0;
 
 	_maxWidth = maxWidth;
-	_foregroundColor = [fontColor retain];
 	_backgroundColor = [color retain];
-	_contentText = [string retain];
-	_fontSize = size;
-	_isCommand = isCommand;
 
-	_textStorage = [[NSTextStorage alloc] initWithString:_contentText];
+	_textStorage = [[NSTextStorage alloc] initWithString:string];
 	_textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(_maxWidth-kKCBezelBorder*2, FLT_MAX)];
 	_layoutManager = [[NSLayoutManager alloc] init];
 	[_layoutManager addTextContainer:_textContainer];
@@ -426,7 +411,7 @@ static const int kKCBezelBorder = 6;
 	[w abandonCurrentView];
 	KCBezelAnimation* anim = [[KCBezelAnimation alloc] initWithBezelView:self];
 	[anim fadeOutOverDuration:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.fadeDuration"]];
-	[w addRunningAnimation:anim];
+	[w addRunningAnimation:[anim autorelease]];
 }
 
 -(NSDictionary*) attributes
@@ -505,8 +490,7 @@ static const int kKCBezelBorder = 6;
 -(void) appendString:(NSString*)t
 {
 	[self scheduleFadeOut];
-	_contentText = [[NSString stringWithFormat:@"%@%@", _contentText, t] retain];
-	[_textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:t]];
+	[_textStorage appendAttributedString:[[[NSAttributedString alloc] initWithString:t] autorelease]];
 	[_textStorage setAttributes:[self attributes] range:NSMakeRange(0, [_textStorage length])];
 	[self maybeResize];
 	[self setNeedsDisplay:YES];
@@ -515,11 +499,6 @@ static const int kKCBezelBorder = 6;
 -(BOOL) isFlipped
 {
 	return YES;
-}
-
--(BOOL) isCommand
-{
-	return _isCommand;
 }
 
 @end
