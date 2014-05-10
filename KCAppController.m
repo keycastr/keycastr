@@ -46,10 +46,11 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 	if (!(self = [super init]))
 		return nil;
 
-	[NSColor setIgnoresAlpha:NO];
+	_allowToggle = YES;
+	_isCapturing = YES;
 
-	_allowToggle = true;
-	_isCapturing = true;
+	[NSColor setIgnoresAlpha:NO];
+	[self registerVisualizers];
 
 	return self;
 }
@@ -119,7 +120,6 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 	_startupIconPreference = [[NSUserDefaults standardUserDefaults] integerForKey:kKCPrefDisplayIcon];
 
 	[NSApp activateIgnoringOtherApps:TRUE];
-	[self registerVisualizers];
 	[self setCurrentVisualizerName:[[NSUserDefaults standardUserDefaults] objectForKey:kKCPrefSelectedVisualizer]];
 	[self setIsCapturing:YES];
 
