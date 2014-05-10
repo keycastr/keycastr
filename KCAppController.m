@@ -71,9 +71,11 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 {
 	// Set up user-defaults defaults
 	KeyCombo keyCombo;
-	keyCombo.code = 1;
-	keyCombo.flags = NSShiftKeyMask | NSAlternateKeyMask;
+	keyCombo.code = 40;
+	keyCombo.flags = NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud synchronize];
+
 	[ud registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithInt:3], kKCPrefDisplayIcon,
 		@"Default", kKCPrefSelectedVisualizer,
@@ -107,6 +109,7 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		}
 		[ud removeObjectForKey:@"launchedOnce"];
 	}
+	[ud synchronize];
 }
 
 -(void) awakeFromNib
