@@ -31,6 +31,7 @@
 
 #import "KCKeystrokeTransformer.h"
 
+
 @implementation KCDefaultVisualizerFactory
 
 -(NSString*) visualizerNibName
@@ -80,7 +81,7 @@
 {
 	if (visualizerWindow == nil)
 	{
-		NSRect frameRect = NSMakeRect(0,100,200,100);
+		NSRect frameRect = NSMakeRect(0,100,1600,100);
 		visualizerWindow = [[[KCDefaultVisualizerWindow alloc]
 			initWithContentRect:frameRect
 			styleMask:NSBorderlessWindowMask
@@ -147,7 +148,7 @@
 	NSScreen *screen = [NSScreen mainScreen];
 	NSRect screenFrame = [screen frame];
 
-	NSRect frame = NSMakeRect(screenFrame.size.width-210, 10, contentRect.size.width, contentRect.size.height);
+	NSRect frame = NSMakeRect(screenFrame.size.width-contentRect.size.width-10, 10, contentRect.size.width, contentRect.size.height);
 
 	[self setFrame:frame display:NO];
 	[self setFrameUsingName:@"KCBezelWindow default.bezelWindow"];
@@ -200,7 +201,8 @@
 	{
 		NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
         NSRect frame = [self frame];
-        CGFloat maxWidth = frame.size.width;
+        CGFloat maxWidth = [[NSUserDefaults standardUserDefaults] floatForKey:@"default.bezelWidth"];
+
         if (!(maxWidth > 0)) {
             NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(frame));
             maxWidth = 200;
