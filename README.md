@@ -9,6 +9,7 @@ Original repo: [sdeken/keycastr](https://github.com/sdeken/keycastr)
  
  - [Download latest release](https://github.com/lqez/keycastr/releases/download/0.8.2-bezel/KeyCastr.zip)
     - Added `bezelwidth` option.
+    - [youknowone](https://github.com/youknowone) created this package. Thanks.
 
 
 ## History
