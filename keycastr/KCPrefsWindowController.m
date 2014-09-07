@@ -32,22 +32,22 @@
 
 -(NSArray*) toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
 {
-	return [toolbarItemIdentifiers retain];
+	return toolbarItemIdentifiers;
 }
 
 -(NSArray*) toolbarDefaultItemIdentifiers:(id)sender
 {
-	return [toolbarItemIdentifiers retain];
+	return toolbarItemIdentifiers;
 }
 
 -(NSArray*) toolbarSelectableItemIdentifiers:(id)sender
 {
-	return [toolbarItemIdentifiers retain];
+	return toolbarItemIdentifiers;
 }
 
 -(NSToolbarItem*) toolbar:(NSToolbar*)toolbar itemForItemIdentifier:(NSString*)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
-	return [[toolbarItems objectForKey:itemIdentifier] retain];
+	return [toolbarItems objectForKey:itemIdentifier];
 }
 
 -(NSRect) frameRectWithPin:(NSPoint)point andContentSize:(NSSize)size

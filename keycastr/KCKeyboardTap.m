@@ -107,7 +107,7 @@ CGEventRef eventTapCallback(
 
 -(id) init
 {
-	if (![super init])
+	if (!(self = [super init]))
 		return nil;
 
 	static BOOL tapInstalled = NO;
@@ -124,8 +124,11 @@ CGEventRef eventTapCallback(
 			eventTapCallback,
 			self
 			);
-		FAIL_LOUDLY( tap == NULL, @"Could not create event tap.  Make sure 'Enable Access for Assistive Devices' is checked in the Universal Access preferences." );
-		CFRelease( tap );
+        if (tap != NULL) {
+            CFRelease( tap );
+        } else {
+            FAIL_LOUDLY( YES , @"Could not create event tap.  Make sure 'Enable Access for Assistive Devices' is checked in the Universal Access preferences." );
+        }
 
 		tap = CGEventTapCreate(
 			kCGSessionEventTap,
@@ -146,9 +149,20 @@ CGEventRef eventTapCallback(
 		FAIL_LOUDLY( runLoop == NULL, @"There is no current run loop." );
 
 		CFRunLoopAddSource( runLoop, eventSrc, kCFRunLoopDefaultMode );
+		if ( eventSrc != NULL) {
+			CFRelease( eventSrc );
+		}
+		if (tap != NULL) {
+			CFRelease( tap );
+		}
 	}
-		
+
 	return self;
+}
+
+- (void)dealloc {
+    [_delegate release];
+    [super dealloc];
 }
 
 -(void) _noteFlagsChanged:(CGEventRef)event

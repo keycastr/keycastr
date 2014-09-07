@@ -26,23 +26,72 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "KCVisualizer.h"
 
-@class KCAppController;
-@protocol KCVisualizer;
-
-@interface KCPrefsWindowController : NSObject
+@interface KCDefaultVisualizerFactory : KCVisualizerFactory <KCVisualizerFactory>
 {
-	IBOutlet NSWindow* prefsWindow;
-	IBOutlet NSTabView* tabView;
-	IBOutlet KCAppController* appController;
-	NSMutableDictionary* toolbarItems;
-	NSMutableArray* toolbarItemIdentifiers;
-	NSToolbar* toolbar;
-	NSMutableArray* preferenceViews;
-	int _selectedPreferencePane;
 }
 
--(void) changeVisualizerFrom:(id<KCVisualizer>)old to:(id<KCVisualizer>)new;
--(void) nudge;
+-(NSString*) visualizerNibName;
+-(Class) visualizerClass;
+-(NSString*) visualizerName;
 
 @end
+
+@interface KCDefaultVisualizerBezelView : NSView
+{
+	CGFloat _maxWidth;
+    NSColor* _backgroundColor;
+    float _opacity;
+
+	NSTextStorage* _textStorage;
+	NSLayoutManager* _layoutManager;
+	NSTextContainer* _textContainer;
+}
+
+-(id) initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color;
+-(NSDictionary*) attributes;
+-(void) maybeResize;
+-(NSShadow*) shadow;
+-(void) setAlphaValue:(float)opacity;
+-(void) appendString:(NSString*)t;
+-(void) scheduleFadeOut;
+
+@end
+
+@class KCDefaultVisualizerWindow;
+
+@interface KCBezelAnimation : NSAnimation<NSAnimationDelegate>
+{
+	KCDefaultVisualizerBezelView* _bezelView;
+	NSWindow* _window;
+}
+
+-(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView;
+
+@end
+
+@interface KCDefaultVisualizerWindow : NSWindow
+{
+	NSMutableArray* _bezelViews;
+	KCDefaultVisualizerBezelView* _mostRecentBezelView;
+	NSMutableArray* _runningAnimations;
+	BOOL _dragging;
+}
+
+-(void) addKeystroke:(KCKeystroke*)keystroke;
+-(void) abandonCurrentView;
+-(void) addRunningAnimation:(KCBezelAnimation*)animation;
+
+@end
+
+@interface KCDefaultVisualizer : KCVisualizer <KCVisualizer>
+{
+	KCDefaultVisualizerWindow* visualizerWindow;
+}
+
+-(NSString*) visualizerName;
+-(void) deactivateVisualizer:(id)sender;
+
+@end
+
