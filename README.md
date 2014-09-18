@@ -2,8 +2,6 @@
 
 KeyCastr, an open-source keystroke visualizer
 
-Original repo: [sdeken/keycastr](https://github.com/sdeken/keycastr)
-
 
 ## Download
  
