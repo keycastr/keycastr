@@ -2,24 +2,10 @@
 
 KeyCastr, an open-source keystroke visualizer
 
-Original repo: [sdeken/keycastr](https://github.com/sdeken/keycastr)
+## Please Note
 
+Ownership of this project on GitHub has been transferred to the [keycastr](https://github.com/keycastr) organization.  This repository is now a fork of theirs instead of the other way around.  
 
-## Download
- 
- - [Download latest release](https://github.com/lqez/keycastr/releases/download/0.8.2-bezel/KeyCastr.zip)
-    - Added `bezelwidth` option.
-    - [youknowone](https://github.com/youknowone) created this package. Thanks.
+_Anyone seeking the latest updates should use the [keycastr/keycastr](http://github.com/keycastr/keycastr) repository instead of this one._
 
-
-## History
-
- - [sdeken](https://github.com/sdeken/keycastr) wrote the original version.
- - [elia](https://github.com/elia/keycastr) created `keycastr` organizaion and forked into it.
- - [akitchen](https://github.com/akitchen/keycastr) fixed for recent OS X releases.
- - [lqez](https://github.com/lqez/keycastr) added `bezelwidth` option for larger display.
-
-
-## License
-
-BSD 3-Clause
+Many thanks!
