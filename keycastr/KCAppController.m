@@ -43,15 +43,22 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 
 -(id) init
 {
-	if (![super init])
+	if (!(self = [super init]))
 		return nil;
 
-	[NSColor setIgnoresAlpha:NO];
+	_allowToggle = YES;
+	_isCapturing = YES;
 
-	_allowToggle = true;
-	_isCapturing = true;
+	[NSColor setIgnoresAlpha:NO];
+	[self registerVisualizers];
 
 	return self;
+}
+
+- (void)dealloc {
+    [statusItem release];
+    [currentVisualizer release];
+    [super dealloc];
 }
 
 -(void) _mapOldPreference:(NSString*)old toNewPreference:(NSString*)new
@@ -65,9 +72,11 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 {
 	// Set up user-defaults defaults
 	KeyCombo keyCombo;
-	keyCombo.code = 1;
-	keyCombo.flags = NSShiftKeyMask | NSAlternateKeyMask;
+	keyCombo.code = 40;
+	keyCombo.flags = NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud synchronize];
+
 	[ud registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithInt:3], kKCPrefDisplayIcon,
 		@"Default", kKCPrefSelectedVisualizer,
@@ -101,6 +110,7 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		}
 		[ud removeObjectForKey:@"launchedOnce"];
 	}
+	[ud synchronize];
 }
 
 -(void) awakeFromNib
@@ -110,7 +120,6 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 	_startupIconPreference = [[NSUserDefaults standardUserDefaults] integerForKey:kKCPrefDisplayIcon];
 
 	[NSApp activateIgnoringOtherApps:TRUE];
-	[self registerVisualizers];
 	[self setCurrentVisualizerName:[[NSUserDefaults standardUserDefaults] objectForKey:kKCPrefSelectedVisualizer]];
 	[self setIsCapturing:YES];
 
@@ -196,6 +205,7 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 {
 	KCVisualizerFactory* factory = [[c alloc] init];
 	[KCVisualizer registerVisualizerFactory:factory withName:[factory visualizerName]];
+    [factory autorelease];
 }
 
 -(void) loadPluginsFromDirectory:(NSString*)path
@@ -254,7 +264,8 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		[statusShortcutItem setKeyEquivalentModifierMask:kc.flags];
 		[dockShortcutItem setKeyEquivalent:[xformer transformedValue:[NSNumber numberWithInt:kc.code]]];
 		[dockShortcutItem setKeyEquivalentModifierMask:kc.flags];
-	}
+		[xformer autorelease];
+    }
 	else
 	{
 		[statusShortcutItem setKeyEquivalent:@""];
@@ -324,7 +335,8 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		[old deactivateVisualizer:self];
 	}
 
-	currentVisualizer = new;
+	currentVisualizer = [new retain];
+	[old autorelease];
 	[new showVisualizer:self];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KCVisualizerChanged" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 		new, @"newVisualizer",

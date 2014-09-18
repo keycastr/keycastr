@@ -25,46 +25,24 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#import "KCKeystroke.h"
-#import "KCKeystrokeTransformer.h"
+#import <Cocoa/Cocoa.h>
 
-@implementation KCKeystroke
+@class KCAppController;
+@protocol KCVisualizer;
 
--(id) initWithKeyCode:(uint16_t)keyCode characterCode:(uint16_t)charCode modifiers:(uint32_t)modifiers;
+@interface KCPrefsWindowController : NSObject<NSToolbarDelegate>
 {
-	if (![super init])
-		return nil;
-
-	_keyCode = keyCode;
-	_charCode = charCode;
-	_modifiers = modifiers;
-
-	return self;
+	IBOutlet NSWindow* prefsWindow;
+	IBOutlet NSTabView* tabView;
+	IBOutlet KCAppController* appController;
+	NSMutableDictionary* toolbarItems;
+	NSMutableArray* toolbarItemIdentifiers;
+	NSToolbar* toolbar;
+	NSMutableArray* preferenceViews;
+	int _selectedPreferencePane;
 }
 
--(uint16_t) keyCode
-{
-	return _keyCode;
-}
-
--(uint32_t) modifiers
-{
-	return _modifiers;
-}
-
--(uint16_t) charCode
-{
-	return _charCode;
-}
-
--(BOOL) isCommand
-{
-	return (_modifiers & (NSAlternateKeyMask | NSControlKeyMask | NSCommandKeyMask)) != 0;
-}
-
--(NSString*) convertToString
-{
-	return [[KCKeystrokeTransformer sharedTransformer] transformedValue:self];
-}
+-(void) changeVisualizerFrom:(id<KCVisualizer>)old to:(id<KCVisualizer>)new;
+-(void) nudge;
 
 @end

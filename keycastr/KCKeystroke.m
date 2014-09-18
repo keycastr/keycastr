@@ -25,61 +25,46 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#import <Cocoa/Cocoa.h>
 #import "KCKeystroke.h"
+#import "KCKeystrokeTransformer.h"
 
-@protocol KCVisualizer
+@implementation KCKeystroke
 
--(NSView*) preferencesView;
--(NSString*) visualizerName;
-
--(void) showVisualizer:(id)sender;
--(void) hideVisualizer:(id)sender;
--(void) deactivateVisualizer:(id)sender;
-
--(void) noteKeyEvent:(KCKeystroke*)keystroke;
--(void) noteFlagsChanged:(uint32_t)flags;
-
-@end
-
-
-@protocol KCVisualizerFactory
-
--(NSString*) visualizerNibName;
--(Class) visualizerClass;
--(id<KCVisualizer>) constructVisualizer;
--(NSString*) visualizerName;
-
-@end
-
-
-@interface KCVisualizer : NSObject <KCVisualizer>
+-(id) initWithKeyCode:(uint16_t)keyCode characterCode:(uint16_t)charCode modifiers:(uint32_t)modifiers;
 {
-	IBOutlet NSView* preferencesView;
+	if (!(self = [super init]))
+		return nil;
+
+	_keyCode = keyCode;
+	_charCode = charCode;
+	_modifiers = modifiers;
+
+	return self;
 }
 
-+(void) registerVisualizerFactory:(id<KCVisualizerFactory>)factory withName:(NSString*)name;
-+(id<KCVisualizer>) visualizerWithName:(NSString*)visualizerName;
-+(NSArray*) availableVisualizerFactories;
-
--(NSView*) preferencesView;
--(NSString*) visualizerName;
-
--(void) showVisualizer:(id)sender;
--(void) hideVisualizer:(id)sender;
--(void) deactivateVisualizer:(id)sender;
-
--(void) noteKeyEvent:(KCKeystroke*)keystroke;
--(void) noteFlagsChanged:(uint32_t)flags;
-
-@end
-
-
-@interface KCVisualizerFactory : NSObject <KCVisualizerFactory>
+-(uint16_t) keyCode
 {
+	return _keyCode;
 }
 
--(id<KCVisualizer>) constructVisualizer;
+-(uint32_t) modifiers
+{
+	return _modifiers;
+}
+
+-(uint16_t) charCode
+{
+	return _charCode;
+}
+
+-(BOOL) isCommand
+{
+	return (_modifiers & (NSAlternateKeyMask | NSControlKeyMask | NSCommandKeyMask)) != 0;
+}
+
+-(NSString*) convertToString
+{
+	return [[KCKeystrokeTransformer sharedTransformer] transformedValue:self];
+}
 
 @end
-
