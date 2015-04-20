@@ -49,10 +49,10 @@ static NSString* kShiftKeyString = nil;
 +(void) load
 {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-	kControlKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\x83\x01"] retain];
-	kAltKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"] retain];
-	kCommandKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\x98\x01"] retain];
-	kShiftKeyString = [[NSString stringWithUTF8String:"\xe2\x87\xa7\x01"] retain];
+	kControlKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\x83"] retain];
+	kAltKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\xa5"] retain];
+	kCommandKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\x98"] retain];
+	kShiftKeyString = [[NSString stringWithUTF8String:"\xe2\x87\xa7"] retain];
 	[pool release];
 }
 
@@ -188,7 +188,7 @@ static NSString* kShiftKeyString = nil;
 	if (tmp != nil)
 	{
 		if (needsShiftGlyph)
-			[s appendString:[NSString stringWithUTF8String:"\xe2\x87\xa7\x01"]];
+			[s appendString:[NSString stringWithUTF8String:"\xe2\x87\xa7"]];
 		[s appendString:tmp];
 
 		return s;
