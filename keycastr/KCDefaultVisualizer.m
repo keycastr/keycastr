@@ -201,8 +201,8 @@
 	{
 		NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
         NSRect frame = [self frame];
-        CGFloat maxWidth = [[NSUserDefaults standardUserDefaults] floatForKey:@"default.bezelWidth"];
 
+        CGFloat maxWidth = frame.size.width;
         if (!(maxWidth > 0)) {
             NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(frame));
             maxWidth = 200;
