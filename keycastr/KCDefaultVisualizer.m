@@ -219,7 +219,7 @@
 		
 		[self setFrame:frame display:YES animate:NO];
 
-		[[self contentView] addSubview:_mostRecentBezelView];
+		[[self contentView] addSubview:[_mostRecentBezelView autorelease]];
 		if ([keystroke isCommand])
 			_mostRecentBezelView = nil;
 	}
