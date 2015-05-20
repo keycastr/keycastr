@@ -142,7 +142,6 @@
 	if (!(self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]))
 		return nil;
 
-	_bezelViews = [[NSMutableArray alloc] init];
 	_runningAnimations = [[NSMutableArray alloc] init];
 
 	NSScreen *screen = [NSScreen mainScreen];
@@ -215,7 +214,6 @@
 			text:charString
 			backgroundColor:[userDefaults colorForKey:@"default.bezelColor"]
 			];
-		[_bezelViews addObject:_mostRecentBezelView];
 		frame.size.height += 10 + [_mostRecentBezelView frame].size.height;
 		[_mostRecentBezelView setAutoresizingMask:NSViewMinYMargin];
 		
