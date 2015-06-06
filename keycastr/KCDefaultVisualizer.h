@@ -73,7 +73,6 @@
 
 @interface KCDefaultVisualizerWindow : NSWindow
 {
-	NSMutableArray* _bezelViews;
 	KCDefaultVisualizerBezelView* _mostRecentBezelView;
 	NSMutableArray* _runningAnimations;
 	BOOL _dragging;

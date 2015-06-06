@@ -116,6 +116,8 @@ CGEventRef eventTapCallback(
 		// We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
 		// install the event tap for the flags changed event, which apparently doesn't require universal access
 		// to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
+        NSString *failureMessage = @"Could not register tap event.\n\nPlease add KeyCastr to the list of apps allowed to control your computer, in the Accessibility section of the Security & Privacy Preferences pane.\n\nIf you are seeing this message after changing settings, remove KeyCastr from the list of applications and add it again.";
+
 		CFMachPortRef tap = CGEventTapCreate(
 			kCGSessionEventTap,
 			kCGHeadInsertEventTap,
@@ -124,10 +126,11 @@ CGEventRef eventTapCallback(
 			eventTapCallback,
 			self
 			);
+
         if (tap != NULL) {
             CFRelease( tap );
         } else {
-            FAIL_LOUDLY( YES , @"Could not create event tap.  Make sure 'Enable Access for Assistive Devices' is checked in the Universal Access preferences." );
+            FAIL_LOUDLY(YES, failureMessage);
         }
 
 		tap = CGEventTapCreate(
@@ -138,7 +141,7 @@ CGEventRef eventTapCallback(
 			eventTapCallback,
 			self
 			);
-		FAIL_LOUDLY( tap == NULL, @"Could not create event tap.  Make sure 'Enable Access for Assistive Devices' is checked in the Universal Access preferences." );
+		FAIL_LOUDLY(tap == NULL, failureMessage);
 
 //		GetKeyboardLayout( &_kybdLayout );
 

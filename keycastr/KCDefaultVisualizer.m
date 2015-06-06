@@ -142,7 +142,6 @@
 	if (!(self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]))
 		return nil;
 
-	_bezelViews = [[NSMutableArray alloc] init];
 	_runningAnimations = [[NSMutableArray alloc] init];
 
 	NSScreen *screen = [NSScreen mainScreen];
@@ -201,8 +200,8 @@
 	{
 		NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
         NSRect frame = [self frame];
-        CGFloat maxWidth = [[NSUserDefaults standardUserDefaults] floatForKey:@"default.bezelWidth"];
 
+        CGFloat maxWidth = frame.size.width;
         if (!(maxWidth > 0)) {
             NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(frame));
             maxWidth = 200;
@@ -215,13 +214,12 @@
 			text:charString
 			backgroundColor:[userDefaults colorForKey:@"default.bezelColor"]
 			];
-		[_bezelViews addObject:_mostRecentBezelView];
 		frame.size.height += 10 + [_mostRecentBezelView frame].size.height;
 		[_mostRecentBezelView setAutoresizingMask:NSViewMinYMargin];
 		
 		[self setFrame:frame display:YES animate:NO];
 
-		[[self contentView] addSubview:_mostRecentBezelView];
+		[[self contentView] addSubview:[_mostRecentBezelView autorelease]];
 		if ([keystroke isCommand])
 			_mostRecentBezelView = nil;
 	}
