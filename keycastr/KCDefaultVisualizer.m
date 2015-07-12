@@ -145,11 +145,15 @@
 
 	_runningAnimations = [[NSMutableArray alloc] init];
 
-	NSRect frame = NSMakeRect(10, 10, contentRect.size.width, contentRect.size.height);
+    [self setFrameUsingName:@"KCBezelWindow default.bezelWindow"];
+    [self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
 
-	[self setFrame:frame display:NO];
-	[self setFrameUsingName:@"KCBezelWindow default.bezelWindow"];
-	[self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
+    CGFloat padding = 10;
+    NSRect boundingRect = NSInsetRect([NSScreen mainScreen].frame, padding, padding);
+    if (!NSPointInRect(self.frame.origin, boundingRect)) {
+        NSRect defaultFrame = NSMakeRect(padding, padding, contentRect.size.width, contentRect.size.height);
+        [self setFrame:defaultFrame display:NO];
+    }
 
 	[self setLevel:NSScreenSaverWindowLevel];
 	[self setOpaque:NO];
