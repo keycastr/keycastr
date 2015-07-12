@@ -11,9 +11,9 @@ KeyCastr, an open-source keystroke visualizer
 ## History
 
  - [sdeken](https://github.com/sdeken/keycastr) wrote the original version.
+ - [akitchen](https://github.com/akitchen/keycastr) fixes for more recent OS X releases and other maintenance.
  - [elia](https://github.com/elia/keycastr) created `keycastr` organizaion and forked into it.
- - [akitchen](https://github.com/akitchen/keycastr) fixed for recent OS X releases.
- - [lqez](https://github.com/lqez/keycastr) added adjustments for larger display.
+ - [lqez](https://github.com/lqez/keycastr) added a new menu bar icon
 
 
 ## License
