@@ -1,10 +1,13 @@
 # Keycastr
 
-KeyCastr, an open-source keystroke visualizer
+KeyCastr, an open-source keystroke visualizer.
 
+![preview](assets/preview.png)
+
+![display preferences](assets/preferences.png)
 
 ## Download
- 
+
  - [Download latest release](https://github.com/keycastr/keycastr/releases)
 
 
