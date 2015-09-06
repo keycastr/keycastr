@@ -382,26 +382,15 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 
 -(void) restartPanel:(NSAlert*)alert closedWithCode:(int)returnCode context:(void*)contextInfo
 {
-	if (returnCode == NSOKButton)
+	if (returnCode == NSModalResponseOK)
 	{
-		// manually flush preferences
 		[[NSUserDefaults standardUserDefaults] synchronize];
-	
-		FSRef fsRef;
-		FSPathMakeRef( (const UInt8 *)[[[NSBundle mainBundle] bundlePath] fileSystemRepresentation], &fsRef, NULL );
 
-		LSApplicationParameters appParams;
-		appParams.version = 0;
-		appParams.flags = kLSLaunchNewInstance;
-		appParams.application = &fsRef;
-		appParams.asyncLaunchRefCon = NULL;
-		appParams.environment = NULL;
-		appParams.argv = NULL;
-		appParams.initialEvent = NULL;
-		ProcessSerialNumber psn;
-		LSOpenApplication(
-			&appParams,
-			&psn );
+        NSURL *bundleURL = [[NSBundle mainBundle] bundleURL];
+        [[NSWorkspace sharedWorkspace] launchApplicationAtURL:bundleURL
+                                                      options:NSWorkspaceLaunchNewInstance
+                                                configuration:nil
+                                                        error:NULL];
 		[NSApp terminate:self];
 	}
 }
