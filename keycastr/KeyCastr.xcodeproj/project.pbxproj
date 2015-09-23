@@ -729,6 +729,7 @@
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = KeyCastr;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -904,6 +905,7 @@
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = KeyCastr;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -925,6 +927,7 @@
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = KeyCastr;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;

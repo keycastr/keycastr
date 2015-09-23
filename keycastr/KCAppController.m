@@ -380,16 +380,16 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		: [NSImage imageNamed:@"KeyCastrInactive"])];
 }
 
--(void) restartPanel:(NSAlert*)alert closedWithCode:(int)returnCode context:(void*)contextInfo
+-(void) restartPanel:(NSAlert*)alert closedWithCode:(NSModalResponse)returnCode
 {
-	if (returnCode == NSModalResponseOK)
+	if (returnCode == NSAlertFirstButtonReturn)
 	{
 		[[NSUserDefaults standardUserDefaults] synchronize];
 
         NSURL *bundleURL = [[NSBundle mainBundle] bundleURL];
         [[NSWorkspace sharedWorkspace] launchApplicationAtURL:bundleURL
                                                       options:NSWorkspaceLaunchNewInstance
-                                                configuration:nil
+                                                configuration:@{}
                                                         error:NULL];
 		[NSApp terminate:self];
 	}
@@ -398,14 +398,20 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 -(void) changeIconPreference:(id)sender
 {
 	int newIconPref = [[NSUserDefaults standardUserDefaults] integerForKey:kKCPrefDisplayIcon];
-	if ((newIconPref & 0x02) != (_startupIconPreference & 0x02) && !_displayedRestartAlertPanel)
+	if ((newIconPref & 0x02) != (_startupIconPreference & 0x02))
 	{
-		_displayedRestartAlertPanel = YES;
 		NSString* displayMessage = (_startupIconPreference & 0x02)
 			? @"In order to hide the dock icon, KeyCastr must be restarted."
 			: @"In order to show the dock icon, KeyCastr must be restarted.";
-		NSAlert* a = [NSAlert alertWithMessageText:@"Restart required" defaultButton:@"Restart Now" alternateButton:@"Restart Later" otherButton:nil informativeTextWithFormat:@"%@", displayMessage];
-		[a beginSheetModalForWindow:preferencesWindow modalDelegate:self didEndSelector:@selector(restartPanel:closedWithCode:context:) contextInfo:nil];
+
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Restart required";
+        alert.informativeText = displayMessage;
+        [alert addButtonWithTitle:@"Restart Now"];
+        [alert addButtonWithTitle:@"Restart Later"];
+        [alert beginSheetModalForWindow:preferencesWindow completionHandler:^(NSModalResponse returnCode) {
+            [self restartPanel:alert closedWithCode:returnCode];
+        }];
 	}
 	
 	if (newIconPref & 0x01)
