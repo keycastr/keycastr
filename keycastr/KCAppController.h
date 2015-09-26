@@ -53,7 +53,6 @@
 	BOOL _isCapturing;
 	BOOL _allowToggle;
 	int _startupIconPreference;
-	BOOL _displayedRestartAlertPanel;
 }
 
 -(IBAction) orderFrontKeyCastrAboutPanel:(id)sender;

@@ -116,7 +116,7 @@ CGEventRef eventTapCallback(
 		// We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
 		// install the event tap for the flags changed event, which apparently doesn't require universal access
 		// to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
-        NSString *failureMessage = @"Could not register tap event.\n\nPlease add KeyCastr to the list of apps allowed to control your computer, in the Accessibility section of the Security & Privacy Preferences pane.\n\nIf you are seeing this message after changing settings, remove KeyCastr from the list of applications and add it again.";
+        NSString *failureMessage = @"Could not register tap event.\n\nPlease add KeyCastr to the list of apps allowed to control your computer, in the Accessibility section of the Security & Privacy Preferences pane.\n\nIf you are seeing this message after reinstalling or changing settings, remove KeyCastr from the list of applications and add it again.";
 
 		CFMachPortRef tap = CGEventTapCreate(
 			kCGSessionEventTap,

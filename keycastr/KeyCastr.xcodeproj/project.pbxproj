@@ -46,6 +46,12 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		AE39388B1BB73B36005458A6 /* KeyCastrStatusItem.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938871BB73B36005458A6 /* KeyCastrStatusItem.png */; settings = {ASSET_TAGS = (); }; };
+		AE39388C1BB73B36005458A6 /* KeyCastrStatusItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */; settings = {ASSET_TAGS = (); }; };
+		AE39388D1BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */; settings = {ASSET_TAGS = (); }; };
+		AE39388E1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */; settings = {ASSET_TAGS = (); }; };
+		AEBF2CC01B5DF86000A5F268 /* KCAppControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEBF2CBF1B5DF86000A5F268 /* KCAppControllerSpec.mm */; };
+		AED758A21B645CB4007BE610 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED758A11B645CB4007BE610 /* AppKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +170,16 @@
 		3DF8835C0F5254F9005FD1C6 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* KeyCastr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCastr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE3938871BB73B36005458A6 /* KeyCastrStatusItem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeyCastrStatusItem.png; sourceTree = "<group>"; };
+		AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItem@2x.png"; sourceTree = "<group>"; };
+		AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemActive@2x.png"; sourceTree = "<group>"; };
+		AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemInactive@2x.png"; sourceTree = "<group>"; };
+		AEBF2CB01B5DF6F500A5F268 /* KeyCastr Specs.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KeyCastr Specs.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEBF2CB31B5DF6F500A5F268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AEBF2CBF1B5DF86000A5F268 /* KCAppControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KCAppControllerSpec.mm; sourceTree = "<group>"; };
+		AEBF2CC11B5DF9AD00A5F268 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AEBF2CC31B5DF9BC00A5F268 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AED758A11B645CB4007BE610 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +263,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AE3938871BB73B36005458A6 /* KeyCastrStatusItem.png */,
+				AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */,
+				AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */,
+				AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */,
 				3D16404E0F3BCC6900CA65AD /* KeyCastrStatusItemActive.png */,
 				3D16404F0F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png */,
 				3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */,
@@ -488,10 +508,14 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				3D3F52A70F30BF1E001C7272 /* KeyCastr.icns in Resources */,
 				3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */,
+				AE39388C1BB73B36005458A6 /* KeyCastrStatusItem@2x.png in Resources */,
 				3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */,
 				3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */,
 				3D1640500F3BCC6900CA65AD /* KeyCastrStatusItemActive.png in Resources */,
 				3D1640510F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png in Resources */,
+				AE39388D1BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png in Resources */,
+				AE39388B1BB73B36005458A6 /* KeyCastrStatusItem.png in Resources */,
+				AE39388E1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png in Resources */,
 				3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -705,6 +729,7 @@
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = KeyCastr;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -880,6 +905,7 @@
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = KeyCastr;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -901,6 +927,7 @@
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = KeyCastr;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
