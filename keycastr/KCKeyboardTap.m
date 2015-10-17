@@ -207,27 +207,7 @@ CGEventRef eventTapCallback(
 	if (f & kCGEventFlagMaskAlternate)
 		modifiers |= NSAlternateKeyMask;
 	
-	
-/*
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	id obj = [defaults objectForKey:@"ShortcutRecorder toggleCapture"];
-	if (obj != nil)
-	{
-		CGKeyCode toggleKeyCode = [[obj valueForKey:@"keyCode"] longValue];
-		CGEventFlags toggleFlags = [[obj valueForKey:@"modifierFlags"] longValue] & NSDeviceIndependentModifierFlagsMask;
-		if (toggleKeyCode == charCode && toggleFlags == (f & NSDeviceIndependentModifierFlagsMask))
-		{
-			capturing = !capturing;
-			[visualizer setCapturing:capturing];
-			return; // we don't echo the capturing command
-		}
-	}
-
-	if (capturing == NO)
-		return;
-*/
-	
-	UniChar buf[3] = {0};
+    UniChar buf[3] = {0};
 	UInt32 len;
 	UInt32 deadKeys = 0;
 
