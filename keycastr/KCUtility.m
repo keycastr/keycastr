@@ -35,7 +35,7 @@ void KCFailLoudly( int expr, NSString *message )
 			NSApplicationLoad();
 		NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 		[alert addButtonWithTitle:@"Close"];
-		[alert setMessageText:@"Catastropic Error Encountered"];
+		[alert setMessageText:@"Catastrophic Error Encountered"];
 		[alert setInformativeText:[NSString stringWithFormat:@"%@\n\nKeyCastr will now terminate.", message]];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert runModal];
