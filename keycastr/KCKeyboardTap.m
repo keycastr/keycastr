@@ -250,34 +250,33 @@ CGEventRef eventTapCallback(
 	}
 	else if (keyboardKind == kKLKCHRuchrKind || keyboardKind == kKLuchrKind)
 	{
-		const void* resource;
-		if (KLGetKeyboardLayoutProperty(keyboardLayout, kKLuchrData, &resource) != noErr)
-		{
-			FAIL_LOUDLY( 1, @"Could not get keyboard UCHR data." );
-		}
-			
+        TISInputSourceRef inputSource = TISCopyCurrentKeyboardLayoutInputSource();
+
+        CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+        const UCKeyboardLayout *keyboardLayout = (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
+
+
 		UInt32 modifiers = 0;
 		if (f & kCGEventFlagMaskShift && !(f & (kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl)))
 			modifiers |= shiftKey;
 		if (f & kCGEventFlagMaskAlphaShift)
 			modifiers |= alphaLock;
 
-		if (UCKeyTranslate (
-			resource,
-			charCode,
-			kUCKeyActionDown,
-			(modifiers >> 8) & 0xff,
-			CGEventGetIntegerValueField( event, kCGKeyboardEventKeyboardType ),
-			kUCKeyTranslateNoDeadKeysMask,
-			&deadKeys,
-			2,
-			&len,
-			buf
-			) != noErr)
-		{
-			FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
-		}
-		
+        OSStatus result = UCKeyTranslate (keyboardLayout,
+                                          charCode,
+                                          kUCKeyActionDown,
+                                          (modifiers >> 8) & 0xff,
+                                          LMGetKbdType(),
+                                          kUCKeyTranslateNoDeadKeysMask,
+                                          &deadKeys,
+                                          2,
+                                          &len,
+                                          buf);
+
+        if (result != noErr)
+        {
+            FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
+        }
 		charCode = buf[0];
 	}
 	else
