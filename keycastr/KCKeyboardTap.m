@@ -90,17 +90,19 @@ CGEventRef eventTapCallback(
    CGEventRef event, 
    void *vp)
 {
-	KCKeyboardTap* keyTap = (KCKeyboardTap*)vp;
-	switch (type)
-	{
-	case kCGEventKeyDown:
-		[keyTap _noteKeyEvent:event];
-		break;
-	case kCGEventFlagsChanged:
-		[keyTap _noteFlagsChanged:event];
-		break;
-	}
-	return NULL;
+    KCKeyboardTap* keyTap = (KCKeyboardTap*)vp;
+    switch (type)
+    {
+        case kCGEventKeyDown:
+            [keyTap _noteKeyEvent:event];
+            break;
+        case kCGEventFlagsChanged:
+            [keyTap _noteFlagsChanged:event];
+            break;
+        default:
+            break;
+    }
+    return NULL;
 }
 
 @implementation KCKeyboardTap
