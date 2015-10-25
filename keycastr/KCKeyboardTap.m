@@ -192,100 +192,51 @@ CGEventRef eventTapCallback(
 
 -(void) _noteKeyEvent:(CGEventRef)event
 {
-	uint32_t modifiers = 0;
-	CGEventFlags f = CGEventGetFlags( event );
-	CGKeyCode keyCode = CGEventGetIntegerValueField( event, kCGKeyboardEventKeycode );
-	CGKeyCode charCode = keyCode;
+    uint32_t modifiers = 0;
+    CGEventFlags f = CGEventGetFlags( event );
+    CGKeyCode keyCode = CGEventGetIntegerValueField( event, kCGKeyboardEventKeycode );
+    CGKeyCode charCode = keyCode;
 
-	if (f & kCGEventFlagMaskShift)
-		modifiers |= NSShiftKeyMask;
-	
-	if (f & kCGEventFlagMaskCommand)
-		modifiers |= NSCommandKeyMask;
+    if (f & kCGEventFlagMaskShift)
+        modifiers |= NSShiftKeyMask;
 
-	if (f & kCGEventFlagMaskControl)
-		modifiers |= NSControlKeyMask;
-	
-	if (f & kCGEventFlagMaskAlternate)
-		modifiers |= NSAlternateKeyMask;
-	
+    if (f & kCGEventFlagMaskCommand)
+        modifiers |= NSCommandKeyMask;
+
+    if (f & kCGEventFlagMaskControl)
+        modifiers |= NSControlKeyMask;
+
+    if (f & kCGEventFlagMaskAlternate)
+        modifiers |= NSAlternateKeyMask;
+
     UniChar buf[3] = {0};
-	UInt32 len;
-	UInt32 deadKeys = 0;
+    UInt32 len;
+    UInt32 deadKeys = 0;
 
-	KeyboardLayoutRef keyboardLayout;
-	if (KLGetCurrentKeyboardLayout(&keyboardLayout) != noErr)
-	{
-		FAIL_LOUDLY( 1, @"Could not get current keyboard layout." );
-	}
+    TISInputSourceRef inputSource = TISCopyCurrentKeyboardLayoutInputSource();
 
-	KeyboardLayoutKind keyboardKind;
-	if (KLGetKeyboardLayoutProperty(keyboardLayout, kKLKind, (const void**)&keyboardKind) != noErr)
-	{
-		FAIL_LOUDLY( 1, @"Could not get keyboard kind." );
-	}
+    CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+    const UCKeyboardLayout *keyboardLayout = (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
 
-	if (keyboardKind == kKLKCHRKind)
-	{
-		Handle kchrHandle;
-		if (KLGetKeyboardLayoutProperty(keyboardLayout, kKLKCHRData, (const void**)&kchrHandle) != noErr)
-		{
-			FAIL_LOUDLY( 1, @"Could not get keyboard KCHR data." );
-		}
-		UInt32 modifiers = 0;
-		if (f & kCGEventFlagMaskShift && !(f & (kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl)))
-			modifiers |= shiftKey;
-		if (f & kCGEventFlagMaskAlphaShift)
-			modifiers |= alphaLock;
+    OSStatus result = UCKeyTranslate(keyboardLayout,
+                                     charCode,
+                                     kUCKeyActionDown,
+                                     (modifiers >> 8) & 0xff,
+                                     LMGetKbdType(),
+                                     kUCKeyTranslateNoDeadKeysMask,
+                                     &deadKeys,
+                                     2,
+                                     &len,
+                                     buf);
 
-		UInt16 keyCode = (charCode & 0x3f) | modifiers;
-		UInt32 state = 0;
+    if (result != noErr)
+    {
+        FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
+    }
+    charCode = buf[0];
 
-		char c = 0xff & KeyTranslate( kchrHandle, keyCode, &state );
-		if (state != 0)
-			c = 0xff & KeyTranslate( kchrHandle, keyCode, &state );
-		buf[0] = [[[[NSString alloc] initWithData:[NSData dataWithBytes:&c length:1] encoding:NSMacOSRomanStringEncoding] autorelease] characterAtIndex:0];
-
-		charCode = buf[0];
-	}
-	else if (keyboardKind == kKLKCHRuchrKind || keyboardKind == kKLuchrKind)
-	{
-        TISInputSourceRef inputSource = TISCopyCurrentKeyboardLayoutInputSource();
-
-        CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
-        const UCKeyboardLayout *keyboardLayout = (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
-
-
-		UInt32 modifiers = 0;
-		if (f & kCGEventFlagMaskShift && !(f & (kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl)))
-			modifiers |= shiftKey;
-		if (f & kCGEventFlagMaskAlphaShift)
-			modifiers |= alphaLock;
-
-        OSStatus result = UCKeyTranslate (keyboardLayout,
-                                          charCode,
-                                          kUCKeyActionDown,
-                                          (modifiers >> 8) & 0xff,
-                                          LMGetKbdType(),
-                                          kUCKeyTranslateNoDeadKeysMask,
-                                          &deadKeys,
-                                          2,
-                                          &len,
-                                          buf);
-
-        if (result != noErr)
-        {
-            FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
-        }
-		charCode = buf[0];
-	}
-	else
-	{
-		FAIL_LOUDLY( 1, @"Keyboard is neither KCHR or UCHR." );
-	}
-
-	KCKeystroke* e = [[[KCKeystroke alloc] initWithKeyCode:keyCode characterCode:charCode modifiers:modifiers] autorelease];
-	[self noteKeyEvent:e];
+    KCKeystroke* e = [[[KCKeystroke alloc] initWithKeyCode:keyCode characterCode:charCode modifiers:modifiers] autorelease];
+    [self noteKeyEvent:e];
 }
 
 -(void) noteKeyEvent:(KCKeystroke*)keystroke
