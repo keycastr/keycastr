@@ -10,6 +10,11 @@ KeyCastr, an open-source keystroke visualizer.
 
  - [Download latest release](https://github.com/keycastr/keycastr/releases)
 
+### Installation via [homebrew](http://brew.sh/) [cask](https://github.com/caskroom/homebrew-cask)
+
+```console
+brew cask install keycastr
+```
 
 ## History
 
