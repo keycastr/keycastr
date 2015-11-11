@@ -410,7 +410,7 @@ static const int kKCBezelBorder = 6;
 -(void) beginFadeOut:(id)sender
 {
 	KCDefaultVisualizerWindow* w = (KCDefaultVisualizerWindow*)[self window];
-	[w abandonCurrentView];
+	// [w abandonCurrentView];
 	KCBezelAnimation* anim = [[KCBezelAnimation alloc] initWithBezelView:self];
 	[anim fadeOutOverDuration:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.fadeDuration"]];
 	[w addRunningAnimation:[anim autorelease]];
