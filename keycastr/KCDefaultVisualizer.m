@@ -180,6 +180,7 @@
 
 -(void) _lineBreak:(id)sender
 {
+    [_mostRecentBezelView release];
 	_mostRecentBezelView = nil;
 }
 
@@ -221,9 +222,7 @@
 		
 		[self setFrame:frame display:YES animate:NO];
 
-		[[self contentView] addSubview:[_mostRecentBezelView autorelease]];
-		if ([keystroke isCommand])
-			_mostRecentBezelView = nil;
+		[[self contentView] addSubview:_mostRecentBezelView];
 	}
 	else
 	{
@@ -234,7 +233,6 @@
 
 -(void) abandonCurrentView
 {
-	_mostRecentBezelView = nil;
 	[self _cancelLineBreak];
 }
 
