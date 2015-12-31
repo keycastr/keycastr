@@ -64,7 +64,6 @@
 @interface KCBezelAnimation : NSAnimation<NSAnimationDelegate>
 {
 	KCDefaultVisualizerBezelView* _bezelView;
-	NSWindow* _window;
 }
 
 -(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView;

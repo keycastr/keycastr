@@ -126,20 +126,6 @@
 
 @end
 
-@interface SSS : NSView
-{
-}
-@end
-
-@implementation SSS
-
--(BOOL) isFlipped
-{
-	return YES;
-}
-
-@end
-
 @implementation KCDefaultVisualizerWindow
 
 -(id) initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
@@ -166,18 +152,6 @@
 	[self setAlphaValue:1];
 	[self setMovableByWindowBackground:YES];
 
-/*
-	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-	NSView* vv = [[KCDefaultVisualizerBezelView alloc]
-		initWithMaxWidth:r.size.width
-		text:@"Welcome to KeyCastr, you sucker!"
-		isCommand:NO
-		fontSize:[userDefaults floatForKey:@"default.fontSize"]
-		fontColor:[userDefaults colorForKey:@"default.textColor"]
-		backgroundColor:[userDefaults colorForKey:@"default.bezelColor"]
-		];
-	[[self contentView] addSubview:vv];
-*/
 
 	return self;
 }
@@ -311,7 +285,6 @@
 		return nil;
 
 	_bezelView = [bezelView retain];
-	_window = [_bezelView window];
 
 	return self;
 }
