@@ -67,6 +67,11 @@
 	return self;
 }
 
+- (void)dealloc {
+    [visualizerWindow release];
+    [super dealloc];
+}
+
 -(NSString*) visualizerName
 {
 	return @"Default";
@@ -83,12 +88,11 @@
 	{
         NSRect screenFrame = [NSScreen mainScreen].frame;
 		NSRect frameRect = NSMakeRect(0, 100, NSWidth(screenFrame), 100);
-		visualizerWindow = [[[KCDefaultVisualizerWindow alloc]
+		visualizerWindow = [[KCDefaultVisualizerWindow alloc]
 			initWithContentRect:frameRect
 			styleMask:NSBorderlessWindowMask
 			backing:NSBackingStoreBuffered
-			defer:NO
-			] retain];
+			defer:NO];
 		[visualizerWindow orderFront:self];
 	}
 }
@@ -178,6 +182,11 @@
 	return self;
 }
 
+- (void)dealloc {
+    [_runningAnimations removeAllObjects];
+    [_runningAnimations release];
+    [super dealloc];
+}
 -(void) _lineBreak:(id)sender
 {
     [_mostRecentBezelView release];
@@ -393,6 +402,15 @@ static const int kKCBezelBorder = 6;
 	[self scheduleFadeOut];
 
 	return self;
+}
+
+- (void)dealloc {
+    [_backgroundColor release];
+    [_textStorage release];
+    [_textContainer release];
+    [_layoutManager release];
+
+    [super dealloc];
 }
 
 -(void) scheduleFadeOut
