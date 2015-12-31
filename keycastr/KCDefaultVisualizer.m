@@ -141,8 +141,7 @@
     CGFloat padding = 10;
     NSRect boundingRect = NSInsetRect([NSScreen mainScreen].frame, padding, padding);
     if (!NSPointInRect(self.frame.origin, boundingRect)) {
-        NSRect defaultFrame = NSMakeRect(padding, padding, contentRect.size.width, contentRect.size.height);
-        [self setFrame:defaultFrame display:NO];
+        [self resetFrame];
     }
 
 	[self setLevel:NSScreenSaverWindowLevel];
@@ -152,6 +151,7 @@
 	[self setAlphaValue:1];
 	[self setMovableByWindowBackground:YES];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenParametersDidChange) name:NSApplicationDidChangeScreenParametersNotification object:nil];
 
 	return self;
 }
@@ -161,6 +161,17 @@
     [_runningAnimations release];
     [super dealloc];
 }
+
+- (void)screenParametersDidChange {
+    [self resetFrame];
+}
+
+- (void)resetFrame {
+    CGFloat padding = 10;
+    NSRect defaultFrame = NSMakeRect(padding, padding, self.frame.size.width, self.frame.size.height);
+    [self setFrame:defaultFrame display:NO];
+}
+
 - (void)abandonCurrentBezelView {
     [_currentBezelView release];
 	_currentBezelView = nil;
