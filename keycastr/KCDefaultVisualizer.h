@@ -73,14 +73,14 @@
 
 @interface KCDefaultVisualizerWindow : NSWindow
 {
-	KCDefaultVisualizerBezelView* _mostRecentBezelView;
+	KCDefaultVisualizerBezelView* _currentBezelView;
 	NSMutableArray* _runningAnimations;
 	BOOL _dragging;
 }
 
--(void) addKeystroke:(KCKeystroke*)keystroke;
--(void) abandonCurrentView;
--(void) addRunningAnimation:(KCBezelAnimation*)animation;
+- (void)abandonCurrentBezelView;
+- (void)addKeystroke:(KCKeystroke *)keystroke;
+- (void)addRunningAnimation:(KCBezelAnimation *)animation;
 
 @end
 

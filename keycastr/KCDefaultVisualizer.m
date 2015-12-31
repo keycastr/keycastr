@@ -187,20 +187,21 @@
     [_runningAnimations release];
     [super dealloc];
 }
--(void) _lineBreak:(id)sender
-{
-    [_mostRecentBezelView release];
-	_mostRecentBezelView = nil;
+- (void)abandonCurrentBezelView {
+    [_currentBezelView release];
+	_currentBezelView = nil;
 }
 
 -(void) _cancelLineBreak
 {
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_lineBreak:) object:nil];
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(abandonCurrentBezelView) object:nil];
 }
 
 -(void) _scheduleLineBreak
 {
-	[self performSelector:@selector(_lineBreak:) withObject:nil afterDelay:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.keystrokeDelay"]];
+	[self performSelector:@selector(abandonCurrentBezelView)
+			   withObject:nil
+			   afterDelay:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.keystrokeDelay"]];
 }
 
 -(void) addKeystroke:(KCKeystroke*)keystroke
@@ -208,7 +209,12 @@
 	[self _cancelLineBreak];
 	NSString* charString = [keystroke convertToString];
 //		NSLog( @"%d", [keystroke isCommand] );
-	if (_mostRecentBezelView == nil || [keystroke isCommand])
+	if ([keystroke isCommand])
+	{
+        [self abandonCurrentBezelView];
+	}
+
+	if (_currentBezelView == nil)
 	{
 		NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
         NSRect frame = [self frame];
@@ -217,27 +223,27 @@
         if (!(maxWidth > 0)) {
             NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(frame));
             maxWidth = 200;
-            frame.size = NSMakeSize(maxWidth, MAX(32.0, frame.size.height));
+            frame.size = NSMakeSize(maxWidth, fmaxf(32.0, frame.size.height));
             [self setFrame:frame display:YES];
             NSLog(@"New frame: %@", NSStringFromRect(frame));
         }
-		_mostRecentBezelView = [[KCDefaultVisualizerBezelView alloc]
+		_currentBezelView = [[KCDefaultVisualizerBezelView alloc]
 			initWithMaxWidth:maxWidth
 			text:charString
 			backgroundColor:[userDefaults colorForKey:@"default.bezelColor"]
 			];
-		frame.size.height += 10 + [_mostRecentBezelView frame].size.height;
-		[_mostRecentBezelView setAutoresizingMask:NSViewMinYMargin];
+		frame.size.height += 10 + _currentBezelView.frame.size.height;
+		[_currentBezelView setAutoresizingMask:NSViewMinYMargin];
 		
 		[self setFrame:frame display:YES animate:NO];
 
-		[[self contentView] addSubview:_mostRecentBezelView];
+		[[self contentView] addSubview:_currentBezelView];
 	}
 	else
 	{
-		[_mostRecentBezelView appendString:charString];
-		[self _scheduleLineBreak];
+		[_currentBezelView appendString:charString];
 	}
+    [self _scheduleLineBreak];
 }
 
 -(void) abandonCurrentView
