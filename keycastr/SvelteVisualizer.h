@@ -53,6 +53,7 @@
 {
 	NSWindow* _visualizerWindow;
 	SvelteVisualizerView* _visualizerView;
+    BOOL _displayAll;
 }
 
 -(NSString*) visualizerName;

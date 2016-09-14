@@ -133,13 +133,28 @@
 
 -(void) noteKeyEvent:(KCKeystroke*)keystroke
 {
-	_displayedString = [[keystroke convertToString] retain];
+    if (_displayedString) {
+        [_displayedString autorelease];
+        _displayedString = [[_displayedString stringByAppendingString:[keystroke convertToString]] retain];
+
+
+        if (_displayedString.length > 6) {
+            NSRange range = NSMakeRange(_displayedString.length - 6, 6);
+            [_displayedString autorelease];
+            _displayedString = [[_displayedString substringWithRange:range] retain];
+        }
+    }
+    else {
+        _displayedString = [[keystroke convertToString] retain];
+    }
 	[self setNeedsDisplay:YES];
 }
 
 -(void) noteFlagsChanged:(uint32_t)flags
 {
-	_flags = flags;
+    [_displayedString autorelease];
+    _displayedString = nil;
+    _flags = flags;
 	[self setNeedsDisplay:YES];
 }
 
@@ -175,10 +190,18 @@
 	_visualizerView = [[SvelteVisualizerView alloc] initWithFrame:r];
 	[_visualizerWindow setContentView:_visualizerView];
 
+    _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
+ object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+     _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
+ }];
+
 	return self;
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_visualizerWindow release];
     [_visualizerView release];
     [super dealloc];
@@ -201,7 +224,7 @@
 
 -(void) noteKeyEvent:(KCKeystroke*)keystroke
 {
-	if (![keystroke isCommand])
+	if (!_displayAll && ![keystroke isCommand])
 		return;
 	[_visualizerView noteKeyEvent:keystroke];
 }
