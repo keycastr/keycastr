@@ -118,7 +118,7 @@ CGEventRef eventTapCallback(
 		// We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
 		// install the event tap for the flags changed event, which apparently doesn't require universal access
 		// to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
-        NSString *failureMessage = @"Could not register tap event.\n\nPlease add KeyCastr to the list of apps allowed to control your computer, in the Accessibility section of the Security & Privacy Preferences pane.\n\nIf you are seeing this message after reinstalling or changing settings, remove KeyCastr from the list of applications and add it again.";
+        NSString *failureMessage = @"Could not register tap event.\n\nPlease add KeyCastr to the list of apps allowed to control your computer, in the Accessibility/Privacy section of the Security & Privacy Preferences pane.\n\nIf you are seeing this message after reinstalling or changing settings, remove KeyCastr from the list of applications and add it again.";
 
 		CFMachPortRef tap = CGEventTapCreate(
 			kCGSessionEventTap,
@@ -132,6 +132,7 @@ CGEventRef eventTapCallback(
         if (tap != NULL) {
             CFRelease( tap );
         } else {
+            [self openPrefsPane];
             FAIL_LOUDLY(YES, failureMessage);
         }
 
@@ -143,9 +144,11 @@ CGEventRef eventTapCallback(
 			eventTapCallback,
 			self
 			);
-		FAIL_LOUDLY(tap == NULL, failureMessage);
 
-//		GetKeyboardLayout( &_kybdLayout );
+        if (!tap) {
+            [self openPrefsPane];
+            FAIL_LOUDLY(tap == NULL, failureMessage);
+        }
 
 		CFRunLoopSourceRef eventSrc = CFMachPortCreateRunLoopSource(NULL, tap, 0);
 		FAIL_LOUDLY( eventSrc == NULL, @"Could not create a run loop source." );
@@ -168,6 +171,19 @@ CGEventRef eventTapCallback(
 - (void)dealloc {
     [_delegate release];
     [super dealloc];
+}
+
+- (void)openPrefsPane {
+    NSString *text = @"tell application \"System Preferences\"   \n\
+    --get a reference to the Security & Privacy preferences pane \n\
+    set securityPane to pane id \"com.apple.preference.security\"\n\
+    tell securityPane to reveal anchor \"Privacy_Accessibility\" \n\
+    --open the preferences window and make it frontmost          \n\
+    activate \n\
+    end tell \n";
+    NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
+    [script executeAndReturnError:nil];
+    [script release];
 }
 
 -(void) _noteFlagsChanged:(CGEventRef)event
