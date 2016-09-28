@@ -38,7 +38,7 @@
 
 
 */
-@interface KCAppController : NSObject
+@interface KCAppController : NSObject <NSApplicationDelegate>
 {
 	IBOutlet NSMenu* statusMenu;
 	IBOutlet NSWindow* aboutWindow;
@@ -53,6 +53,7 @@
 	BOOL _isCapturing;
 	BOOL _allowToggle;
 	int _startupIconPreference;
+    KCKeyboardTap* keyboardTap;
 }
 
 -(IBAction) orderFrontKeyCastrAboutPanel:(id)sender;

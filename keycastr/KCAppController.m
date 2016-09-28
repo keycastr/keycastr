@@ -36,6 +36,17 @@ static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
 static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 
+static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
+static NSInteger kKCPrefDisplayIconInDock = 0x02;
+
+@interface KCAppController ()
+
+@property NSInteger prefDisplayIcon;
+@property BOOL showInDock;
+@property BOOL showInMenuBar;
+
+@end
+
 @implementation KCAppController
 
 #pragma mark -
@@ -49,6 +60,9 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 	_allowToggle = YES;
 	_isCapturing = YES;
 
+    keyboardTap = [KCKeyboardTap new];
+    keyboardTap.delegate = self;
+
 	[NSColor setIgnoresAlpha:NO];
 	[self registerVisualizers];
 
@@ -59,6 +73,62 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
     [statusItem release];
     [currentVisualizer release];
     [super dealloc];
+}
+
+- (void)openPrefsPane:(id)sender {
+    NSString *text = @"tell application \"System Preferences\"   \n\
+    --get a reference to the Security & Privacy preferences pane \n\
+    set securityPane to pane id \"com.apple.preference.security\"\n\
+    tell securityPane to reveal anchor \"Privacy_Accessibility\" \n\
+    --open the preferences window and make it frontmost          \n\
+    activate \n\
+    end tell \n";
+    NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
+    [script executeAndReturnError:nil];
+    [script release];
+}
+
+-(void) installTap:(id)sender {
+    NSError* error;
+    if (![keyboardTap installTapWithError:&error]) {
+        NSAlert *alert = [[NSAlert new] autorelease];
+        [alert addButtonWithTitle:@"Close"];
+        [alert addButtonWithTitle:@"Grant Access"];
+        alert.messageText = @"Catastrophic Error Encountered";
+        alert.informativeText = error.localizedDescription;
+        alert.alertStyle = NSCriticalAlertStyle;
+        
+        switch ([alert runModal]) {
+            case NSAlertFirstButtonReturn:
+                [NSApp terminate:nil];
+                break;
+            case NSAlertSecondButtonReturn: {
+                NSString* text = @"do shell script \"sqlite3 \\\"/Library/Application Support/com.apple.TCC/TCC.db\\\" \\\"DELETE FROM access WHERE service = 'kTCCServiceAccessibility' AND client = 'net.stephendeken.KeyCastr'; INSERT INTO access (service,client,client_type,allowed,prompt_count) VALUES ('kTCCServiceAccessibility', 'net.stephendeken.KeyCastr', 0, 1, 0)\\\"\" with administrator privileges";
+                NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
+                [script executeAndReturnError:nil];
+                [script release];
+                
+                // ideally, after granting access we can just remove and reinstall the tap,
+                // but it turns out this doesn't work.
+                // [keyboardTap removeTap];
+                
+                // instead, we'll just relaunch the app manually.
+                NSTask *task = [[[NSTask alloc] init] autorelease];
+                task.launchPath = @"/bin/sh";
+                task.arguments = @[
+                                   @"-c",
+                                   [NSString stringWithFormat:@"sleep 0.125; open \"%@\"", NSBundle.mainBundle.bundlePath]];
+                [task launch];
+                
+                [NSApp terminate:nil];
+            }
+                break;
+        }
+    }
+}
+
+-(void) applicationWillFinishLaunching:(NSNotification *)notification {
+    [self installTap:nil];
 }
 
 -(void) _mapOldPreference:(NSString*)old toNewPreference:(NSString*)new
@@ -135,9 +205,6 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 	[shortcutRecorder setKeyCombo:kc];
 	_allowToggle = YES;
 
-	// Set up observation of keystroke events
-	[[KCKeyboardTap sharedKeyboardTap] setDelegate:self];
-
 	[prefsWindowController nudge];
 	// Show the preferences window if desired
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefVisibleAtLaunch])
@@ -145,9 +212,11 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 		[preferencesWindow center];
 		[preferencesWindow makeKeyAndOrderFront:self];
 	}
-	
-	if (_startupIconPreference & 0x01)
-		[self createStatusItem];
+    
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+                                            forKeyPath:kKCPrefDisplayIcon
+                                               options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
+                                               context:nil];
 }
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
@@ -397,46 +466,74 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 
 -(void) changeIconPreference:(id)sender
 {
-	int newIconPref = [[NSUserDefaults standardUserDefaults] integerForKey:kKCPrefDisplayIcon];
-	if ((newIconPref & 0x02) != (_startupIconPreference & 0x02))
-	{
-		NSString* displayMessage = (_startupIconPreference & 0x02)
-			? @"In order to hide the dock icon, KeyCastr must be restarted."
-			: @"In order to show the dock icon, KeyCastr must be restarted.";
+    // sent from the UI.  Ignore until we can update the UI to remove this event.
+}
 
-        NSAlert *alert = [[NSAlert alloc] init];
-        alert.messageText = @"Restart required";
-        alert.informativeText = displayMessage;
-        [alert addButtonWithTitle:@"Restart Now"];
-        [alert addButtonWithTitle:@"Restart Later"];
-        [alert beginSheetModalForWindow:preferencesWindow completionHandler:^(NSModalResponse returnCode) {
-            [self restartPanel:alert closedWithCode:returnCode];
-        }];
-	}
-	
-	if (newIconPref & 0x01)
-		[self createStatusItem];
-	else
-	{
-		if (_startupIconPreference & 0x02)
-			[self deleteStatusItem];
-		else
-		{
-			// On startup, we did not have an icon in the dock.
-			// Don't remove the menu bar item, because if we did,
-			// KeyCastr would be inaccessible.
-		}
-	}
-	
-	NSTask* task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/defaults" arguments:[NSArray arrayWithObjects:
-		@"write",
-		[NSString stringWithFormat:@"%@/Contents/Info", [[NSBundle mainBundle] bundlePath]],
-		@"LSUIElement",
-		((newIconPref & 0x02)
-			? @"0"
-			: @"1"),
-		nil]];
-	[task waitUntilExit];
+#pragma mark -
+#pragma mark Observers
+
+-(void) prefDisplayIconUpdatedTo:(NSInteger)prefDisplayIcon {
+    // if the pref is set such that the icon is hidden in both the menu bar and the dock,
+    // show the icon in the dock regardless of the user's preference.
+    if (0 == (prefDisplayIcon & (kKCPrefDisplayIconInMenuBar | kKCPrefDisplayIconInDock))) {
+        prefDisplayIcon = prefDisplayIcon | kKCPrefDisplayIconInDock;
+    }
+    
+    ProcessSerialNumber psn = { 0, kCurrentProcess };
+    if (prefDisplayIcon & kKCPrefDisplayIconInDock) {
+        // show dock icon
+        TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+    }
+    else {
+        // hide dock icon
+        preferencesWindow.canHide = NO;
+        TransformProcessType(&psn, kProcessTransformToUIElementApplication);
+    }
+
+    if (prefDisplayIcon & kKCPrefDisplayIconInMenuBar) {
+        // show icon in menu bar
+        [self createStatusItem];
+    }
+    else {
+        // hide icon in menu bar
+        [self deleteStatusItem];
+    }
+}
+
+-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:kKCPrefDisplayIcon]) {
+        [self prefDisplayIconUpdatedTo:[[change objectForKey:NSKeyValueChangeNewKey] integerValue]];
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+#pragma mark -
+#pragma mark Properties
+
+-(NSInteger) prefDisplayIcon {
+    return [NSUserDefaults.standardUserDefaults integerForKey:kKCPrefDisplayIcon];
+}
+
+-(void) setPrefDisplayIcon:(NSInteger)prefDisplayIcon {
+    [NSUserDefaults.standardUserDefaults setInteger:prefDisplayIcon forKey:kKCPrefDisplayIcon];
+}
+
+-(BOOL) showInDock {
+    return (self.prefDisplayIcon & kKCPrefDisplayIconInDock) == kKCPrefDisplayIconInDock;
+}
+
+-(void) setShowInDock:(BOOL)showInDock {
+    self.prefDisplayIcon = (self.prefDisplayIcon & ~kKCPrefDisplayIconInDock) | (showInDock ? kKCPrefDisplayIconInDock : 0);
+}
+
+-(BOOL) showInMenuBar {
+    return (self.prefDisplayIcon & kKCPrefDisplayIconInMenuBar) == kKCPrefDisplayIconInMenuBar;
+}
+
+-(void) setShowInMenuBar:(BOOL)showInMenuBar {
+    self.prefDisplayIcon = (self.prefDisplayIcon & ~kKCPrefDisplayIconInMenuBar) | (showInMenuBar ? kKCPrefDisplayIconInMenuBar : 0);
 }
 
 #pragma mark -

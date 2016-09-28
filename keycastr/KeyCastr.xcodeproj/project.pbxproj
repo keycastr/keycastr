@@ -33,7 +33,6 @@
 		3D3F52EB0F30CB13001C7272 /* KCPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */; };
 		3D3F540C0F30E8E7001C7272 /* KCKeyboardTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F540B0F30E8E7001C7272 /* KCKeyboardTap.m */; };
 		3D3F540E0F30E914001C7272 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3F540D0F30E914001C7272 /* Carbon.framework */; };
-		3D3F542B0F30EE24001C7272 /* KCUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F542A0F30EE24001C7272 /* KCUtility.m */; };
 		3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54870F30F37E001C7272 /* GeneralIcon.tif */; };
 		3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54880F30F37E001C7272 /* DisplayIcon.tif */; };
 		3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */; };
@@ -148,8 +147,6 @@
 		3D3F540A0F30E8E7001C7272 /* KCKeyboardTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKeyboardTap.h; sourceTree = "<group>"; };
 		3D3F540B0F30E8E7001C7272 /* KCKeyboardTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKeyboardTap.m; sourceTree = "<group>"; };
 		3D3F540D0F30E914001C7272 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		3D3F54290F30EE24001C7272 /* KCUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCUtility.h; sourceTree = "<group>"; };
-		3D3F542A0F30EE24001C7272 /* KCUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCUtility.m; sourceTree = "<group>"; };
 		3D3F54870F30F37E001C7272 /* GeneralIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = GeneralIcon.tif; sourceTree = "<group>"; };
 		3D3F54880F30F37E001C7272 /* DisplayIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DisplayIcon.tif; sourceTree = "<group>"; };
 		3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = UpdateIcon.tif; sourceTree = "<group>"; };
@@ -221,7 +218,6 @@
 				3D3F52550F300389001C7272 /* KCAppController.m */,
 				3D3F540B0F30E8E7001C7272 /* KCKeyboardTap.m */,
 				3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */,
-				3D3F542A0F30EE24001C7272 /* KCUtility.m */,
 				3D3F56CA0F337533001C7272 /* NSUserDefaults+Utility.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -330,7 +326,6 @@
 				3D3F52540F300389001C7272 /* KCAppController.h */,
 				3D3F540A0F30E8E7001C7272 /* KCKeyboardTap.h */,
 				3D3F52E90F30CB13001C7272 /* KCPrefsWindowController.h */,
-				3D3F54290F30EE24001C7272 /* KCUtility.h */,
 				32CA4F630368D1EE00C91783 /* KeyCastr_Prefix.pch */,
 				3D3F56C90F337533001C7272 /* NSUserDefaults+Utility.h */,
 			);
@@ -549,7 +544,6 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				3D3F52EB0F30CB13001C7272 /* KCPrefsWindowController.m in Sources */,
 				3D3F540C0F30E8E7001C7272 /* KCKeyboardTap.m in Sources */,
-				3D3F542B0F30EE24001C7272 /* KCUtility.m in Sources */,
 				3D3F56CB0F337533001C7272 /* NSUserDefaults+Utility.m in Sources */,
 				3D1646EB0F43DD3000CA65AD /* KCAppController.m in Sources */,
 			);

@@ -27,7 +27,6 @@
 
 #include <Carbon/Carbon.h>
 #import "KCKeyboardTap.h"
-#import "KCUtility.h"
 
 @interface KCKeyboardTap (Private)
 
@@ -112,59 +111,6 @@ CGEventRef eventTapCallback(
 	if (!(self = [super init]))
 		return nil;
 
-	static BOOL tapInstalled = NO;
-	if (!tapInstalled)
-	{
-		// We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
-		// install the event tap for the flags changed event, which apparently doesn't require universal access
-		// to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
-        NSString *failureMessage = @"Could not register tap event.\n\nPlease add KeyCastr to the list of apps allowed to control your computer, in the Accessibility/Privacy section of the Security & Privacy Preferences pane.\n\nIf you are seeing this message after reinstalling or changing settings, remove KeyCastr from the list of applications and add it again.";
-
-		CFMachPortRef tap = CGEventTapCreate(
-			kCGSessionEventTap,
-			kCGHeadInsertEventTap,
-			kCGEventTapOptionListenOnly,
-			CGEventMaskBit(kCGEventKeyDown),
-			eventTapCallback,
-			self
-			);
-
-        if (tap != NULL) {
-            CFRelease( tap );
-        } else {
-            [self openPrefsPane];
-            FAIL_LOUDLY(YES, failureMessage);
-        }
-
-		tap = CGEventTapCreate(
-			kCGSessionEventTap,
-			kCGHeadInsertEventTap,
-			kCGEventTapOptionListenOnly,
-			CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged),
-			eventTapCallback,
-			self
-			);
-
-        if (!tap) {
-            [self openPrefsPane];
-            FAIL_LOUDLY(tap == NULL, failureMessage);
-        }
-
-		CFRunLoopSourceRef eventSrc = CFMachPortCreateRunLoopSource(NULL, tap, 0);
-		FAIL_LOUDLY( eventSrc == NULL, @"Could not create a run loop source." );
-
-		CFRunLoopRef runLoop = CFRunLoopGetCurrent();
-		FAIL_LOUDLY( runLoop == NULL, @"There is no current run loop." );
-
-		CFRunLoopAddSource( runLoop, eventSrc, kCFRunLoopDefaultMode );
-		if ( eventSrc != NULL) {
-			CFRelease( eventSrc );
-		}
-		if (tap != NULL) {
-			CFRelease( tap );
-		}
-	}
-
 	return self;
 }
 
@@ -173,17 +119,92 @@ CGEventRef eventTapCallback(
     [super dealloc];
 }
 
-- (void)openPrefsPane {
-    NSString *text = @"tell application \"System Preferences\"   \n\
-    --get a reference to the Security & Privacy preferences pane \n\
-    set securityPane to pane id \"com.apple.preference.security\"\n\
-    tell securityPane to reveal anchor \"Privacy_Accessibility\" \n\
-    --open the preferences window and make it frontmost          \n\
-    activate \n\
-    end tell \n";
-    NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
-    [script executeAndReturnError:nil];
-    [script release];
+-(NSError*) constructErrorWithDescription:(NSString*)description {
+    return [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier
+                               code:0
+                           userInfo:@{
+                                      NSLocalizedDescriptionKey: NSLocalizedString(description, nil)
+                                      }];
+}
+
+-(BOOL) installTapWithError:(NSError **)error {
+    if (tapInstalled) {
+        return YES;
+    }
+    
+    // We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
+    // install the event tap for the flags changed event, which apparently doesn't require universal access
+    // to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
+    CFMachPortRef tapKeyDown = CGEventTapCreate(
+                                         kCGSessionEventTap,
+                                         kCGHeadInsertEventTap,
+                                         kCGEventTapOptionListenOnly,
+                                         CGEventMaskBit(kCGEventKeyDown),
+                                         eventTapCallback,
+                                         self
+                                         );
+    
+    if (tapKeyDown == NULL) {
+        if (error != NULL) {
+            *error = [self constructErrorWithDescription:@"Could not create event tap!"];
+        }
+        return NO;
+    }
+    CFRelease( tapKeyDown );
+    
+    keyboardTap = CGEventTapCreate(
+                           kCGSessionEventTap,
+                           kCGHeadInsertEventTap,
+                           kCGEventTapOptionListenOnly,
+                           CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged),
+                           eventTapCallback,
+                           self
+                           );
+    
+    if (keyboardTap == NULL) {
+        if (error != NULL) {
+            *error = [self constructErrorWithDescription:@"Could not create event tap!"];
+        }
+        return NO;
+    }
+    
+    keyboardTapEventSource = CFMachPortCreateRunLoopSource(NULL, keyboardTap, 0);
+    if (keyboardTapEventSource == NULL) {
+        CFRelease(keyboardTap);
+        if (error != NULL) {
+            *error = [self constructErrorWithDescription:@"Could not create run loop source!"];
+        }
+        return NO;
+    }
+    
+    keyboardTapRunLoop = CFRunLoopGetCurrent();
+    if (keyboardTapRunLoop == NULL) {
+        CFRelease(keyboardTapEventSource);
+        CFRelease(keyboardTap);
+        if (error != NULL) {
+            *error = [self constructErrorWithDescription:@"Could not get current run loop!"];
+        }
+        return NO;
+    }
+    
+    CFRunLoopAddSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
+    CFRelease( keyboardTapEventSource );
+    CFRelease( keyboardTap );
+
+    tapInstalled = YES;
+    
+    return YES;
+}
+
+-(void) removeTap {
+    if (!tapInstalled) {
+        return;
+    }
+    
+    CFRunLoopRemoveSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
+    CFRelease(keyboardTapRunLoop);
+    
+    tapInstalled = NO;
 }
 
 -(void) _noteFlagsChanged:(CGEventRef)event
@@ -247,7 +268,7 @@ CGEventRef eventTapCallback(
 
     if (result != noErr)
     {
-        FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
+        // FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
     }
     charCode = buf[0];
 
