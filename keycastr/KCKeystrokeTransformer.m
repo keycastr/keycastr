@@ -104,32 +104,6 @@ static NSString* kShiftKeyString = nil;
 			UTF8("\x26"), NSNum(26), // &
 			UTF8("\x2a"), NSNum(28), // *
 			UTF8("\x28"), NSNum(25), // (
-			UTF8("A"), NSNum(0),
-			UTF8("B"), NSNum(11),
-			UTF8("C"), NSNum(8),
-			UTF8("D"), NSNum(2),
-			UTF8("E"), NSNum(14),
-			UTF8("F"), NSNum(3),
-			UTF8("G"), NSNum(5),
-			UTF8("H"), NSNum(4),
-			UTF8("I"), NSNum(34),
-			UTF8("J"), NSNum(38),
-			UTF8("K"), NSNum(40),
-			UTF8("L"), NSNum(37),
-			UTF8("M"), NSNum(46),
-			UTF8("N"), NSNum(45),
-			UTF8("O"), NSNum(31),
-			UTF8("P"), NSNum(35),
-			UTF8("Q"), NSNum(12),
-			UTF8("R"), NSNum(15),
-			UTF8("S"), NSNum(1),
-			UTF8("T"), NSNum(17),
-			UTF8("U"), NSNum(32),
-			UTF8("V"), NSNum(9),
-			UTF8("W"), NSNum(13),
-			UTF8("X"), NSNum(7),
-			UTF8("Y"), NSNum(16),
-			UTF8("Z"), NSNum(6),
 			nil];
 	}
 	return d;
@@ -224,7 +198,11 @@ static NSString* kShiftKeyString = nil;
 	if (isShifted && !isCommand)
 	{
 		id tmp = [[self _shiftedSpecialKeys] objectForKey:NSNum(_keyCode)];
-		if (tmp != nil)
+        if (!tmp)
+        {
+            tmp = [[NSString stringWithCharacters:&_charCode length:1] uppercaseString];
+        }
+		if (tmp)
 		{
 			[s appendString:tmp];
 			return s;
