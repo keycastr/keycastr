@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>KeyCastr</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.stephendeken.KeyCastr</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
