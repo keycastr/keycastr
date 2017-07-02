@@ -39,7 +39,7 @@
 	NSMutableArray* toolbarItemIdentifiers;
 	NSToolbar* toolbar;
 	NSMutableArray* preferenceViews;
-	int _selectedPreferencePane;
+	NSInteger _selectedPreferencePane;
 }
 
 -(void) changeVisualizerFrom:(id<KCVisualizer>)old to:(id<KCVisualizer>)new;

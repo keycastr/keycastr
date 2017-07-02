@@ -250,7 +250,7 @@
 
 -(void) _suspendAnimations
 {
-	int vc = [_runningAnimations count];
+	NSUInteger vc = [_runningAnimations count];
 	int i;
 	for (i = 0; i < vc; ++i)
 	{
@@ -261,7 +261,7 @@
 
 -(void) _resumeAnimations
 {
-	int vc = [_runningAnimations count];
+	NSUInteger vc = [_runningAnimations count];
 	int i;
 	for (i = 0; i < vc; ++i)
 	{
@@ -343,7 +343,7 @@
 	[_bezelView removeFromSuperview];
 	
 	NSArray* a = [[w contentView] subviews];
-	int vc = [a count];
+	NSUInteger vc = [a count];
 	int i;
 	for (i = 0; i < vc; ++i)
 	{
@@ -476,7 +476,7 @@ static const int kKCBezelBorder = 6;
 			float deltaY = size.height - frame.size.height;
 			NSWindow* w = [self window];
 			NSArray* a = [[w contentView] subviews];
-			int vc = [a count];
+			NSUInteger vc = [a count];
 			int i;
 			for (i = 0; i < vc; ++i)
 			{

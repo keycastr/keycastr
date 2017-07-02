@@ -52,7 +52,7 @@
 	IBOutlet NSMenuItem* dockShortcutItem;
 	BOOL _isCapturing;
 	BOOL _allowToggle;
-	int _startupIconPreference;
+	NSInteger _startupIconPreference;
     KCKeyboardTap* keyboardTap;
 }
 

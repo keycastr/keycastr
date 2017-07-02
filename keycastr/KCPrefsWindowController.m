@@ -64,7 +64,7 @@
 	NSToolbarItem* item = sender;
 	
 	// Otherwise, switch preference panes:
-	int tag = [item tag];
+	NSInteger tag = [item tag];
 	if (tag == _selectedPreferencePane)
 		return;
 	

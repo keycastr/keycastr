@@ -247,7 +247,7 @@ CGEventRef eventTapCallback(
         modifiers |= NSAlternateKeyMask;
 
     UniChar buf[3] = {0};
-    UInt32 len;
+    UniCharCount len;
     UInt32 deadKeys = 0;
 
     TISInputSourceRef inputSource = TISCopyCurrentKeyboardLayoutInputSource();
