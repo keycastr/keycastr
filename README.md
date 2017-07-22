@@ -10,12 +10,17 @@ KeyCastr, an open-source keystroke visualizer.
 
  - [Download latest release](https://github.com/keycastr/keycastr/releases)
 
-### Installation via [homebrew](http://brew.sh/) [cask](https://github.com/caskroom/homebrew-cask)
+## Installation via [homebrew](http://brew.sh/) [cask](https://github.com/caskroom/homebrew-cask)
 
 ```console
 which cask || brew tap caskroom/cask # Get cask if you don't already have it
 brew cask install keycastr
 ```
+## Accessibility API access
+
+In order to work, KeyCastr must be included in the list of applications with Accessibility API access, under the Security & Privacy system preferences.
+
+![accessibility](assets/accessibility.png)
 
 ## History
 
