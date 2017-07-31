@@ -25,12 +25,11 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#include <Carbon/Carbon.h>
 #import "KCKeyboardTap.h"
 
 @interface KCKeyboardTap (Private)
 
--(void) _noteKeyEvent:(CGEventRef)event;
+-(void) _noteKeyEvent:(CGEventRef)eventRef;
 -(void) _noteFlagsChanged:(CGEventRef)event;
 
 @end
@@ -227,56 +226,16 @@ CGEventRef eventTapCallback(
 	[self noteFlagsChanged:modifiers];
 }
 
--(void) _noteKeyEvent:(CGEventRef)event
+-(void) _noteKeyEvent:(CGEventRef)eventRef
 {
-    uint32_t modifiers = 0;
-    CGEventFlags f = CGEventGetFlags( event );
-    CGKeyCode keyCode = CGEventGetIntegerValueField( event, kCGKeyboardEventKeycode );
-    CGKeyCode charCode = keyCode;
-
-    if (f & kCGEventFlagMaskShift)
-        modifiers |= NSShiftKeyMask;
-
-    if (f & kCGEventFlagMaskCommand)
-        modifiers |= NSCommandKeyMask;
-
-    if (f & kCGEventFlagMaskControl)
-        modifiers |= NSControlKeyMask;
-
-    if (f & kCGEventFlagMaskAlternate)
-        modifiers |= NSAlternateKeyMask;
-
-    UniChar buf[3] = {0};
-    UniCharCount len;
-    UInt32 deadKeys = 0;
-
-    TISInputSourceRef inputSource = TISCopyCurrentKeyboardLayoutInputSource();
-
-    CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
-    const UCKeyboardLayout *keyboardLayout = (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
-
-    OSStatus result = UCKeyTranslate(keyboardLayout,
-                                     charCode,
-                                     kUCKeyActionDown,
-                                     (modifiers >> 8) & 0xff,
-                                     LMGetKbdType(),
-                                     kUCKeyTranslateNoDeadKeysMask,
-                                     &deadKeys,
-                                     2,
-                                     &len,
-                                     buf);
-
-    if (result != noErr)
-    {
-        // FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
-    }
-    charCode = buf[0];
-
-    KCKeystroke* e = [[[KCKeystroke alloc] initWithKeyCode:keyCode characterCode:charCode modifiers:modifiers] autorelease];
-    [self noteKeyEvent:e];
+    NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
+    KCKeystroke* keystroke = [[[KCKeystroke alloc] initWithKeyCode:event.keyCode
+                                                         modifiers:event.modifierFlags
+                                       charactersIgnoringModifiers:event.charactersIgnoringModifiers] autorelease];
+    [self noteKeystroke:keystroke];
 }
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke
+-(void) noteKeystroke:(KCKeystroke*)keystroke
 {
 	if ([_delegate respondsToSelector:@selector(keyboardTap:noteKeystroke:)])
 		[_delegate keyboardTap:self noteKeystroke:keystroke];
