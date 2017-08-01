@@ -119,6 +119,11 @@ static NSString* kShiftKeyString = nil;
 	return d;
 }
 
+- (NSString *)leftTabString
+{
+    return @"\xe2\x87\xa4";
+}
+
 -(id) transformedValue:(id)value
 {
 	KCKeystroke* v = (KCKeystroke*)value;
@@ -162,14 +167,14 @@ static NSString* kShiftKeyString = nil;
 
 	if (isShifted && !isCommand)
 	{
-		NSString *tmp = v.charactersIgnoringModifiers;
+        NSString *tmp = [@(_keyCode) isEqualToNumber:@48] ? [self leftTabString] : v.charactersIgnoringModifiers;
 		if (tmp) {
 			[s appendString:tmp];
 			return s;
 		}
 	}
 
-	id tmp = [[self _specialKeys] objectForKey:NSNum(_keyCode)];
+	id tmp = [[self _specialKeys] objectForKey:@(_keyCode)];
 	if (tmp != nil)
 	{
 		if (needsShiftGlyph)
