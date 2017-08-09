@@ -13,7 +13,6 @@ KeyCastr, an open-source keystroke visualizer.
 ## Installation via [homebrew](http://brew.sh/) [cask](https://github.com/caskroom/homebrew-cask)
 
 ```console
-which cask || brew tap caskroom/cask # Get cask if you don't already have it
 brew cask install keycastr
 ```
 ## Accessibility API access
