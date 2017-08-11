@@ -126,11 +126,11 @@ static NSString* kShiftKeyString = nil;
 
 -(id) transformedValue:(id)value
 {
-	KCKeystroke* v = (KCKeystroke*)value;
-	NSMutableString* s = [NSMutableString string];
+	KCKeystroke* keystroke = (KCKeystroke*)value;
+	NSMutableString* mutableResponse = [NSMutableString string];
 
-	uint32_t _modifiers = [v modifiers];
-	uint16_t _keyCode = [v keyCode];
+	uint32_t _modifiers = [keystroke modifiers];
+	uint16_t _keyCode = [keystroke keyCode];
 
 	BOOL isShifted = NO;
 	BOOL needsShiftGlyph = NO;
@@ -139,18 +139,18 @@ static NSString* kShiftKeyString = nil;
 	if (_modifiers & NSControlKeyMask)
 	{
 		isCommand = YES;
-		[s appendString:kControlKeyString];
+		[mutableResponse appendString:kControlKeyString];
 	}
 	if (_modifiers & NSAlternateKeyMask)
 	{
 		isCommand = YES;
-		[s appendString:kAltKeyString];
+		[mutableResponse appendString:kAltKeyString];
 	}
 	if (_modifiers & NSShiftKeyMask)
 	{
 		isShifted = YES;
 		if (isCommand)
-			[s appendString:kShiftKeyString];
+			[mutableResponse appendString:kShiftKeyString];
 		else
 			needsShiftGlyph = YES;
 	}
@@ -158,19 +158,19 @@ static NSString* kShiftKeyString = nil;
 	{
 		if (needsShiftGlyph)
 		{
-			[s appendString:kShiftKeyString];
+			[mutableResponse appendString:kShiftKeyString];
 			needsShiftGlyph = NO;
 		}
 		isCommand = YES;
-		[s appendString:kCommandKeyString];
+		[mutableResponse appendString:kCommandKeyString];
 	}
 
 	if (isShifted && !isCommand)
 	{
-        NSString *tmp = [@(_keyCode) isEqualToNumber:@48] ? [self leftTabString] : v.charactersIgnoringModifiers;
+        NSString *tmp = [@(_keyCode) isEqualToNumber:@48] ? [self leftTabString] : keystroke.charactersIgnoringModifiers;
 		if (tmp) {
-			[s appendString:tmp];
-			return s;
+			[mutableResponse appendString:tmp];
+			return mutableResponse;
 		}
 	}
 
@@ -178,22 +178,21 @@ static NSString* kShiftKeyString = nil;
 	if (tmp != nil)
 	{
 		if (needsShiftGlyph)
-			[s appendString:kShiftKeyString];
-		[s appendString:tmp];
+			[mutableResponse appendString:kShiftKeyString];
+		[mutableResponse appendString:tmp];
 
-		return s;
+		return mutableResponse;
 	}
 
-	[s appendString:v.charactersIgnoringModifiers];
+	[mutableResponse appendString:keystroke.charactersIgnoringModifiers];
 
 	// If this is a command string, put it in uppercase.
 	if (isCommand)
 	{
-		NSMutableString *t = [[s uppercaseString] mutableCopy];
-        s = [t autorelease];
+        mutableResponse = [[[mutableResponse uppercaseString] mutableCopy] autorelease];
 	}
 	
-	return s;
+	return mutableResponse;
 }
 
 @end
