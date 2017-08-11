@@ -70,6 +70,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 - (void)dealloc {
+    [keyboardTap release];
     [statusItem release];
     [currentVisualizer release];
     [super dealloc];
@@ -89,7 +90,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 -(void) installTap:(id)sender {
-    NSError* error;
+    NSError* error = nil;
     if (![keyboardTap installTapWithError:&error]) {
         NSAlert *alert = [[NSAlert new] autorelease];
         [alert addButtonWithTitle:@"Close"];
@@ -127,9 +128,14 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 }
 
--(void) applicationWillFinishLaunching:(NSNotification *)notification {
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
     [self installTap:nil];
 }
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [keyboardTap removeTap];
+}
+
 
 -(void) _mapOldPreference:(NSString*)old toNewPreference:(NSString*)new
 {
