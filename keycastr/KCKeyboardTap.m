@@ -102,7 +102,7 @@ CGEventRef eventTapCallback(
     
     if (tapKeyDown == NULL) {
         if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not create event tap!"];
+            *error = [self constructErrorWithDescription:@"Could not create keyDown event tap!"];
         }
         return NO;
     }
@@ -119,7 +119,7 @@ CGEventRef eventTapCallback(
     
     if (keyboardTap == NULL) {
         if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not create event tap!"];
+            *error = [self constructErrorWithDescription:@"Could not create keyDown|flagsChanged event tap!"];
         }
         return NO;
     }
