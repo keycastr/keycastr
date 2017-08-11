@@ -68,6 +68,10 @@ CGEventRef eventTapCallback(
 }
 
 - (void)dealloc {
+    if (tapInstalled) {
+        [self removeTap];
+    }
+
     [super dealloc];
 }
 
@@ -140,8 +144,6 @@ CGEventRef eventTapCallback(
     }
     
     CFRunLoopAddSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
-    CFRelease( keyboardTapEventSource );
-    CFRelease( keyboardTap );
 
     tapInstalled = YES;
     
@@ -155,7 +157,9 @@ CGEventRef eventTapCallback(
     
     CFRunLoopRemoveSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
     CFRelease(keyboardTapRunLoop);
-    
+    CFRelease(keyboardTapEventSource);
+    CFRelease(keyboardTap);
+
     tapInstalled = NO;
 }
 
