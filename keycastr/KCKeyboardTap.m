@@ -57,6 +57,8 @@ CGEventRef eventTapCallback(
 
 @implementation KCKeyboardTap
 
+@synthesize delegate = _delegate;
+
 -(id) init
 {
 	if (!(self = [super init]))
@@ -66,7 +68,6 @@ CGEventRef eventTapCallback(
 }
 
 - (void)dealloc {
-    [_delegate release];
     [super dealloc];
 }
 
@@ -189,27 +190,12 @@ CGEventRef eventTapCallback(
 
 -(void) noteKeystroke:(KCKeystroke*)keystroke
 {
-	if ([_delegate respondsToSelector:@selector(keyboardTap:noteKeystroke:)])
-		[_delegate keyboardTap:self noteKeystroke:keystroke];
+    [_delegate keyboardTap:self noteKeystroke:keystroke];
 }
 
 -(void) noteFlagsChanged:(uint32_t)newFlags
 {
-	if ([_delegate respondsToSelector:@selector(keyboardTap:noteFlagsChanged:)])
-		[_delegate keyboardTap:self noteFlagsChanged:newFlags];
-}
-
--(id) delegate
-{
-	return _delegate;
-}
-
--(void) setDelegate:(id)delegate
-{
-	if (delegate == _delegate)
-		return;
-	[_delegate release];
-	_delegate = [delegate retain];
+    [_delegate keyboardTap:self noteFlagsChanged:newFlags];
 }
 
 @end

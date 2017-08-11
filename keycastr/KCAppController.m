@@ -39,7 +39,7 @@ static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
-@interface KCAppController ()
+@interface KCAppController ()<KCKeyboardTapDelegate>
 
 @property NSInteger prefDisplayIcon;
 @property BOOL showInDock;
