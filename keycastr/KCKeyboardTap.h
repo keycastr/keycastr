@@ -45,7 +45,6 @@
     CFRunLoopSourceRef keyboardTapEventSource;
 }
 
-+(KCKeyboardTap*) sharedKeyboardTap;
 
 -(BOOL) installTapWithError:(NSError**)error;
 -(void) removeTap;
@@ -53,8 +52,6 @@
 -(void) noteKeystroke:(KCKeystroke*)keystroke;
 -(void) noteFlagsChanged:(uint32_t)newFlags;
 
--(void) addObserver:(id)recipient selector:(SEL)aSelector;
--(void) removeObserver:(id)recipient;
 
 -(void) setDelegate:(id)delegate;
 -(id) delegate;

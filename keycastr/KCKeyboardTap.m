@@ -34,54 +34,6 @@
 
 @end
 
-/*
-static int
-GetKeyboardLayout( Ptr* resource )
-{
-    static Boolean initialized = false;
-    static SInt16 lastKeyLayoutID = -1;
-    static Handle uchrHnd = NULL;
-    static Handle KCHRHnd = NULL;
-
-    SInt16 keyScript;
-    SInt16 keyLayoutID;
-
-    keyScript = GetScriptManagerVariable(smKeyScript);
-    keyLayoutID = GetScriptVariable(keyScript,smScriptKeys);
-
-    if (!initialized || (lastKeyLayoutID != keyLayoutID)) {
-        initialized = true;
-        // deadKeyStateUp = deadKeyStateDown = 0;
-        lastKeyLayoutID = keyLayoutID;
-        uchrHnd = GetResource('uchr',keyLayoutID);
-        if (NULL == uchrHnd) {
-            KCHRHnd = GetResource('KCHR',keyLayoutID);
-        }
-        if ((NULL == uchrHnd) && (NULL == KCHRHnd)) {
-            initialized = false;
-            fprintf (stderr,
-                    "GetKeyboardLayout(): "
-                    "Can't get a keyboard layout for layout %d "
-                    "(error code %d)?\n",
-                    (int) keyLayoutID, (int) ResError());
-            *resource = (Ptr)GetScriptManagerVariable(smKCHRCache);
-            fprintf (stderr,
-                    "GetKeyboardLayout(): Trying the cache: %p\n",
-                    *resource);
-            return 0;
-        }
-    }
-
-    if (NULL != uchrHnd) {
-        *resource = *uchrHnd;
-        return 1;
-    } else {
-        *resource = *KCHRHnd;
-        return 0;
-    }
-}
-*/
-
 CGEventRef eventTapCallback(
    CGEventTapProxy proxy, 
    CGEventType type, 
@@ -245,28 +197,6 @@ CGEventRef eventTapCallback(
 {
 	if ([_delegate respondsToSelector:@selector(keyboardTap:noteFlagsChanged:)])
 		[_delegate keyboardTap:self noteFlagsChanged:newFlags];
-}
-
--(void) addObserver:(id)recipient selector:(SEL)aSelector
-{
-	NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-	[center addObserver:recipient selector:aSelector name:@"KCKeystrokeEvent" object:self];
-}
-
--(void) removeObserver:(id)recipient
-{
-	NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-	[center removeObserver:recipient];
-}
-
-+(KCKeyboardTap*) sharedKeyboardTap
-{
-	static KCKeyboardTap* sharedTap = nil;
-	if (sharedTap == nil)
-	{
-		sharedTap = [[KCKeyboardTap alloc] init];
-	}
-	return sharedTap;
 }
 
 -(id) delegate
