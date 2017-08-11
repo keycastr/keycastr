@@ -35,6 +35,7 @@ static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
 static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
+static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility API. If KeyCastr already has access, please remove it and add it again.";
 
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
@@ -94,33 +95,17 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     if (![keyboardTap installTapWithError:&error]) {
         NSAlert *alert = [[NSAlert new] autorelease];
         [alert addButtonWithTitle:@"Close"];
-        [alert addButtonWithTitle:@"Grant Access"];
+        [alert addButtonWithTitle:@"Open System Preferences"];
         alert.messageText = @"Catastrophic Error Encountered";
-        alert.informativeText = error.localizedDescription;
+        alert.informativeText = [error.localizedDescription stringByAppendingString:kKCSupplementalAlertText];
         alert.alertStyle = NSCriticalAlertStyle;
-        
+
         switch ([alert runModal]) {
             case NSAlertFirstButtonReturn:
                 [NSApp terminate:nil];
                 break;
             case NSAlertSecondButtonReturn: {
-                NSString* text = @"do shell script \"sqlite3 \\\"/Library/Application Support/com.apple.TCC/TCC.db\\\" \\\"DELETE FROM access WHERE service = 'kTCCServiceAccessibility' AND client = 'net.stephendeken.KeyCastr'; INSERT INTO access (service,client,client_type,allowed,prompt_count) VALUES ('kTCCServiceAccessibility', 'net.stephendeken.KeyCastr', 0, 1, 0)\\\"\" with administrator privileges";
-                NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
-                [script executeAndReturnError:nil];
-                [script release];
-                
-                // ideally, after granting access we can just remove and reinstall the tap,
-                // but it turns out this doesn't work.
-                // [keyboardTap removeTap];
-                
-                // instead, we'll just relaunch the app manually.
-                NSTask *task = [[[NSTask alloc] init] autorelease];
-                task.launchPath = @"/bin/sh";
-                task.arguments = @[
-                                   @"-c",
-                                   [NSString stringWithFormat:@"sleep 0.125; open \"%@\"", NSBundle.mainBundle.bundlePath]];
-                [task launch];
-                
+                [self openPrefsPane:nil];
                 [NSApp terminate:nil];
             }
                 break;
