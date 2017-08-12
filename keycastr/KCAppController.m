@@ -31,6 +31,11 @@
 #import "KCPrefsWindowController.h"
 #import "ShortcutRecorder/SRKeyCodeTransformer.h"
 
+typedef struct _KeyCombo {
+    unsigned int flags; // 0 for no flags
+    signed short code; // -1 for no code
+} KeyCombo;
+
 static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
@@ -46,6 +51,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 @property BOOL showInDock;
 @property BOOL showInMenuBar;
 
+@property (nonatomic, assign) KeyCombo toggleKeyCombo;
+
 @end
 
 @implementation KCAppController
@@ -58,7 +65,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	if (!(self = [super init]))
 		return nil;
 
-	_allowToggle = YES;
 	_isCapturing = YES;
 
     keyboardTap = [KCKeyboardTap new];
@@ -185,18 +191,20 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	[self setIsCapturing:YES];
 
 	// Bootstrap key capturing hotkey from preferences
-	KeyCombo kc;
-	kc.code = -1;
-	kc.flags = 0;
+	KeyCombo toggleShortcutKey;
+	toggleShortcutKey.code = -1;
+	toggleShortcutKey.flags = 0;
 	
-	NSData* d = [[NSUserDefaults standardUserDefaults] dataForKey:kKCPrefCapturingHotKey];
-	if (d != nil)
-		[d getBytes:&kc length:sizeof(kc)];
-		
-	[shortcutRecorder setKeyCombo:kc];
-	_allowToggle = YES;
+	NSData *toggleShortcutKeyData = [[NSUserDefaults standardUserDefaults] dataForKey:kKCPrefCapturingHotKey];
+    if (toggleShortcutKeyData != nil) {
+		[toggleShortcutKeyData getBytes:&toggleShortcutKey length:sizeof(toggleShortcutKey)];
+    }
 
-	[prefsWindowController nudge];
+    [self changeKeyComboTo:toggleShortcutKey];
+    [shortcutRecorder setObjectValue:@{ SRShortcutKeyCode : @(toggleShortcutKey.code),
+                                        SRShortcutModifierFlagsKey : @(toggleShortcutKey.flags)}];
+
+    [prefsWindowController nudge];
 	// Show the preferences window if desired
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefVisibleAtLaunch])
 	{
@@ -212,18 +220,11 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
 {
-	KeyCombo kc = [shortcutRecorder keyCombo];
-	if ([keystroke keyCode] == kc.code && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (kc.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
+	if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (self.toggleKeyCombo.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
 	{
-		if (_allowToggle)
-		{
-			[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopPretending:) object:nil];
-			[self toggleRecording:self];
-		}
+        [self toggleRecording:self];
 		return;
 	}
-	
-	_allowToggle = true;
 	
 	if (!_isCapturing)
 		return;
@@ -314,23 +315,22 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	}
 }
 
--(void) changeKeyComboTo:(KeyCombo)kc
+-(void) changeKeyComboTo:(KeyCombo)keyCombo
 {
-	_allowToggle = false;
-	if (kc.code != -1)
-	{
-		SRKeyCodeTransformer* xformer = [[SRKeyCodeTransformer alloc] init];
-		[statusShortcutItem setKeyEquivalent:[xformer transformedValue:[NSNumber numberWithInt:kc.code]]];
-		[statusShortcutItem setKeyEquivalentModifierMask:kc.flags];
-		[dockShortcutItem setKeyEquivalent:[xformer transformedValue:[NSNumber numberWithInt:kc.code]]];
-		[dockShortcutItem setKeyEquivalentModifierMask:kc.flags];
-		[xformer autorelease];
+    self.toggleKeyCombo = keyCombo;
+    if (keyCombo.code != -1)
+    {
+        SRKeyCodeTransformer* xformer = [SRKeyCodeTransformer sharedTransformer];
+        [statusShortcutItem setKeyEquivalent:[xformer transformedValue:@(keyCombo.code)]];
+        [statusShortcutItem setKeyEquivalentModifierMask:keyCombo.flags];
+        [dockShortcutItem setKeyEquivalent:[xformer transformedValue:@(keyCombo.code)]];
+        [dockShortcutItem setKeyEquivalentModifierMask:keyCombo.flags];
     }
-	else
-	{
-		[statusShortcutItem setKeyEquivalent:@""];
-		[dockShortcutItem setKeyEquivalent:@""];
-	}
+    else
+    {
+        [statusShortcutItem setKeyEquivalent:@""];
+        [dockShortcutItem setKeyEquivalent:@""];
+    }
 }
 
 -(void) orderFrontKeyCastrAboutPanel:(id)sender
@@ -353,13 +353,11 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) stopPretending:(id)what
 {
-	_allowToggle = true;
 	[self toggleRecording:self];
 }
 
 -(void) pretendToDoSomethingImportant:(id)sender
 {
-	_allowToggle = false;
 	[self performSelector:@selector(stopPretending:) withObject:nil afterDelay:0.1];
 }
 
@@ -367,6 +365,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 {
 	if (currentVisualizer == nil)
 		return nil;
+
 	return [currentVisualizer visualizerName];
 }
 
@@ -528,12 +527,24 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 #pragma mark -
-#pragma mark SRRecorderDelegate methods
+#pragma mark SRRecorderControlDelegate methods
 
--(void) shortcutRecorder:(SRRecorderControl*)aRecorder keyComboDidChange:(KeyCombo)newKeyCombo
+- (void)shortcutRecorderDidEndRecording:(SRRecorderControl *)aRecorder;
 {
-	[self changeKeyComboTo:newKeyCombo];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithBytes:&newKeyCombo length:sizeof(newKeyCombo)] forKey:kKCPrefCapturingHotKey];
+    NSDictionary *toggleShortcut = aRecorder.objectValue;
+    KeyCombo newKeyCombo;
+    newKeyCombo.code = [toggleShortcut[SRShortcutKeyCode] shortValue];
+    newKeyCombo.flags = [toggleShortcut[SRShortcutModifierFlagsKey] unsignedIntValue];
+
+    [self changeKeyComboTo:newKeyCombo];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithBytes:&newKeyCombo length:sizeof(newKeyCombo)] forKey:kKCPrefCapturingHotKey];
 }
 
+@end
+
+// This class needs to exist for compatibility with the legacy MainMenu.nib
+@interface SRRecorderCell : NSActionCell
+@end
+
+@implementation SRRecorderCell
 @end
