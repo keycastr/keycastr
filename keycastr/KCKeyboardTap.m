@@ -25,63 +25,14 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#include <Carbon/Carbon.h>
 #import "KCKeyboardTap.h"
 
 @interface KCKeyboardTap (Private)
 
--(void) _noteKeyEvent:(CGEventRef)event;
+-(void) _noteKeyEvent:(CGEventRef)eventRef;
 -(void) _noteFlagsChanged:(CGEventRef)event;
 
 @end
-
-/*
-static int
-GetKeyboardLayout( Ptr* resource )
-{
-    static Boolean initialized = false;
-    static SInt16 lastKeyLayoutID = -1;
-    static Handle uchrHnd = NULL;
-    static Handle KCHRHnd = NULL;
-
-    SInt16 keyScript;
-    SInt16 keyLayoutID;
-
-    keyScript = GetScriptManagerVariable(smKeyScript);
-    keyLayoutID = GetScriptVariable(keyScript,smScriptKeys);
-
-    if (!initialized || (lastKeyLayoutID != keyLayoutID)) {
-        initialized = true;
-        // deadKeyStateUp = deadKeyStateDown = 0;
-        lastKeyLayoutID = keyLayoutID;
-        uchrHnd = GetResource('uchr',keyLayoutID);
-        if (NULL == uchrHnd) {
-            KCHRHnd = GetResource('KCHR',keyLayoutID);
-        }
-        if ((NULL == uchrHnd) && (NULL == KCHRHnd)) {
-            initialized = false;
-            fprintf (stderr,
-                    "GetKeyboardLayout(): "
-                    "Can't get a keyboard layout for layout %d "
-                    "(error code %d)?\n",
-                    (int) keyLayoutID, (int) ResError());
-            *resource = (Ptr)GetScriptManagerVariable(smKCHRCache);
-            fprintf (stderr,
-                    "GetKeyboardLayout(): Trying the cache: %p\n",
-                    *resource);
-            return 0;
-        }
-    }
-
-    if (NULL != uchrHnd) {
-        *resource = *uchrHnd;
-        return 1;
-    } else {
-        *resource = *KCHRHnd;
-        return 0;
-    }
-}
-*/
 
 CGEventRef eventTapCallback(
    CGEventTapProxy proxy, 
@@ -106,6 +57,8 @@ CGEventRef eventTapCallback(
 
 @implementation KCKeyboardTap
 
+@synthesize delegate = _delegate;
+
 -(id) init
 {
 	if (!(self = [super init]))
@@ -115,7 +68,10 @@ CGEventRef eventTapCallback(
 }
 
 - (void)dealloc {
-    [_delegate release];
+    if (tapInstalled) {
+        [self removeTap];
+    }
+
     [super dealloc];
 }
 
@@ -146,7 +102,7 @@ CGEventRef eventTapCallback(
     
     if (tapKeyDown == NULL) {
         if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not create event tap!"];
+            *error = [self constructErrorWithDescription:@"Could not create keyDown event tap!"];
         }
         return NO;
     }
@@ -163,7 +119,7 @@ CGEventRef eventTapCallback(
     
     if (keyboardTap == NULL) {
         if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not create event tap!"];
+            *error = [self constructErrorWithDescription:@"Could not create keyDown|flagsChanged event tap!"];
         }
         return NO;
     }
@@ -188,8 +144,6 @@ CGEventRef eventTapCallback(
     }
     
     CFRunLoopAddSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
-    CFRelease( keyboardTapEventSource );
-    CFRelease( keyboardTap );
 
     tapInstalled = YES;
     
@@ -203,7 +157,9 @@ CGEventRef eventTapCallback(
     
     CFRunLoopRemoveSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
     CFRelease(keyboardTapRunLoop);
-    
+    CFRelease(keyboardTapEventSource);
+    CFRelease(keyboardTap);
+
     tapInstalled = NO;
 }
 
@@ -227,100 +183,23 @@ CGEventRef eventTapCallback(
 	[self noteFlagsChanged:modifiers];
 }
 
--(void) _noteKeyEvent:(CGEventRef)event
+-(void) _noteKeyEvent:(CGEventRef)eventRef
 {
-    uint32_t modifiers = 0;
-    CGEventFlags f = CGEventGetFlags( event );
-    CGKeyCode keyCode = CGEventGetIntegerValueField( event, kCGKeyboardEventKeycode );
-    CGKeyCode charCode = keyCode;
-
-    if (f & kCGEventFlagMaskShift)
-        modifiers |= NSShiftKeyMask;
-
-    if (f & kCGEventFlagMaskCommand)
-        modifiers |= NSCommandKeyMask;
-
-    if (f & kCGEventFlagMaskControl)
-        modifiers |= NSControlKeyMask;
-
-    if (f & kCGEventFlagMaskAlternate)
-        modifiers |= NSAlternateKeyMask;
-
-    UniChar buf[3] = {0};
-    UniCharCount len;
-    UInt32 deadKeys = 0;
-
-    TISInputSourceRef inputSource = TISCopyCurrentKeyboardLayoutInputSource();
-
-    CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
-    const UCKeyboardLayout *keyboardLayout = (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
-
-    OSStatus result = UCKeyTranslate(keyboardLayout,
-                                     charCode,
-                                     kUCKeyActionDown,
-                                     (modifiers >> 8) & 0xff,
-                                     LMGetKbdType(),
-                                     kUCKeyTranslateNoDeadKeysMask,
-                                     &deadKeys,
-                                     2,
-                                     &len,
-                                     buf);
-
-    if (result != noErr)
-    {
-        // FAIL_LOUDLY( 1, @"Could not translate keystroke into characters via UCHR data." );
-    }
-    charCode = buf[0];
-
-    KCKeystroke* e = [[[KCKeystroke alloc] initWithKeyCode:keyCode characterCode:charCode modifiers:modifiers] autorelease];
-    [self noteKeyEvent:e];
+    NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
+    KCKeystroke* keystroke = [[[KCKeystroke alloc] initWithKeyCode:event.keyCode
+                                                         modifiers:event.modifierFlags
+                                       charactersIgnoringModifiers:event.charactersIgnoringModifiers] autorelease];
+    [self noteKeystroke:keystroke];
 }
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke
+-(void) noteKeystroke:(KCKeystroke*)keystroke
 {
-	if ([_delegate respondsToSelector:@selector(keyboardTap:noteKeystroke:)])
-		[_delegate keyboardTap:self noteKeystroke:keystroke];
+    [_delegate keyboardTap:self noteKeystroke:keystroke];
 }
 
 -(void) noteFlagsChanged:(uint32_t)newFlags
 {
-	if ([_delegate respondsToSelector:@selector(keyboardTap:noteFlagsChanged:)])
-		[_delegate keyboardTap:self noteFlagsChanged:newFlags];
-}
-
--(void) addObserver:(id)recipient selector:(SEL)aSelector
-{
-	NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-	[center addObserver:recipient selector:aSelector name:@"KCKeystrokeEvent" object:self];
-}
-
--(void) removeObserver:(id)recipient
-{
-	NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-	[center removeObserver:recipient];
-}
-
-+(KCKeyboardTap*) sharedKeyboardTap
-{
-	static KCKeyboardTap* sharedTap = nil;
-	if (sharedTap == nil)
-	{
-		sharedTap = [[KCKeyboardTap alloc] init];
-	}
-	return sharedTap;
-}
-
--(id) delegate
-{
-	return _delegate;
-}
-
--(void) setDelegate:(id)delegate
-{
-	if (delegate == _delegate)
-		return;
-	[_delegate release];
-	_delegate = [delegate retain];
+    [_delegate keyboardTap:self noteFlagsChanged:newFlags];
 }
 
 @end

@@ -30,31 +30,23 @@
 
 @implementation KCKeystroke
 
--(id) initWithKeyCode:(uint16_t)keyCode characterCode:(uint16_t)charCode modifiers:(uint32_t)modifiers;
-{
+@synthesize keyCode = _keyCode, modifiers = _modifiers, charactersIgnoringModifiers = _charactersIgnoringModifiers;
+
+- (id)initWithKeyCode:(uint16_t)keyCode modifiers:(uint32_t)modifiers charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers {
 	if (!(self = [super init]))
 		return nil;
 
 	_keyCode = keyCode;
-	_charCode = charCode;
 	_modifiers = modifiers;
+	_charactersIgnoringModifiers = [charactersIgnoringModifiers copy];
 
 	return self;
 }
 
--(uint16_t) keyCode
-{
-	return _keyCode;
-}
-
--(uint32_t) modifiers
-{
-	return _modifiers;
-}
-
--(uint16_t) charCode
-{
-	return _charCode;
+- (void)dealloc {
+	[_charactersIgnoringModifiers release];
+	_charactersIgnoringModifiers = nil;
+	[super dealloc];
 }
 
 -(BOOL) isCommand
