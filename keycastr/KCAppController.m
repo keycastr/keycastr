@@ -31,6 +31,17 @@
 #import "KCPrefsWindowController.h"
 #import "ShortcutRecorder/SRKeyCodeTransformer.h"
 
+typedef struct _KeyCombo {
+    unsigned int flags; // 0 for no flags
+    signed short code; // -1 for no code
+} KeyCombo;
+
+@interface SRRecorderCell : NSActionCell
+@end
+
+@implementation SRRecorderCell
+@end
+
 static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
@@ -193,7 +204,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	if (d != nil)
 		[d getBytes:&kc length:sizeof(kc)];
 		
-	[shortcutRecorder setKeyCombo:kc];
+    [shortcutRecorder setObjectValue:@{ SRShortcutKeyCode : @(kc.code),
+                                        SRShortcutModifierFlagsKey : @(kc.flags)}];
 	_allowToggle = YES;
 
 	[prefsWindowController nudge];
@@ -212,8 +224,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
 {
-	KeyCombo kc = [shortcutRecorder keyCombo];
-	if ([keystroke keyCode] == kc.code && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (kc.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
+    // this has gotten expensive so let's not do it on every keystroke. need to separate some concerns.
+    NSDictionary *toggleShortcut = shortcutRecorder.objectValue;
+
+	if ([keystroke keyCode] == [toggleShortcut[SRShortcutKeyCode] shortValue] && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == ([toggleShortcut[SRShortcutModifierFlagsKey] unsignedIntegerValue] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
 	{
 		if (_allowToggle)
 		{

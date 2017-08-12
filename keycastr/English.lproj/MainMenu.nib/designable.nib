@@ -466,20 +466,6 @@
 													<reference key="NSSuperview" ref="834740838"/>
 													<reference key="NSWindow"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="SRRecorderCell" key="NSCell" id="219345310">
-														<int key="NSCellFlags">130560</int>
-														<int key="NSCellFlags2">0</int>
-														<reference key="NSControlView" ref="975533557"/>
-														<nil key="autosaveName"/>
-														<integer value="-1" key="keyComboCode"/>
-														<integer value="0" key="keyComboFlags" id="8"/>
-														<integer value="10354688" key="allowedFlags"/>
-														<reference key="requiredFlags" ref="8"/>
-														<integer value="0" key="allowsKeyOnly" id="6"/>
-														<reference key="escapeKeysRecord" ref="6"/>
-														<reference key="isAnimating" ref="6"/>
-														<reference key="style" ref="8"/>
-													</object>
 												</object>
 											</object>
 											<string key="NSFrame">{{17, 174}, {399, 121}}</string>
