@@ -37,23 +37,14 @@
 
 @implementation KCKeystrokeTransformer
 
-static NSString* kCommandKeyString = nil;
-static NSString* kAltKeyString = nil;
-static NSString* kControlKeyString = nil;
-static NSString* kShiftKeyString = nil;
+static NSString* kCommandKeyString = @"\xe2\x8c\x98";
+static NSString* kAltKeyString = @"\xe2\x8c\xa5";
+static NSString* kControlKeyString = @"\xe2\x8c\x83";
+static NSString* kShiftKeyString = @"\xe2\x87\xa7";
+static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
 #define UTF8(x) [NSString stringWithUTF8String:x]
 #define NSNum(x) [NSNumber numberWithInt:x]
-
-+(void) load
-{
-	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-	kControlKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\x83"] retain];
-	kAltKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\xa5"] retain];
-	kCommandKeyString = [[NSString stringWithUTF8String:"\xe2\x8c\x98"] retain];
-	kShiftKeyString = [[NSString stringWithUTF8String:"\xe2\x87\xa7"] retain];
-	[pool release];
-}
 
 +(BOOL) allowsReverseTransformation
 {
@@ -119,11 +110,6 @@ static NSString* kShiftKeyString = nil;
 	return d;
 }
 
-- (NSString *)leftTabString
-{
-    return @"\xe2\x87\xa4";
-}
-
 -(id) transformedValue:(id)value
 {
 	KCKeystroke* keystroke = (KCKeystroke*)value;
@@ -167,7 +153,7 @@ static NSString* kShiftKeyString = nil;
 
 	if (isShifted && !isCommand)
 	{
-        NSString *tmp = [@(_keyCode) isEqualToNumber:@48] ? [self leftTabString] : keystroke.charactersIgnoringModifiers;
+        NSString *tmp = [@(_keyCode) isEqualToNumber:@48] ? kLeftTabString : keystroke.charactersIgnoringModifiers;
 		if (tmp) {
 			[mutableResponse appendString:tmp];
 			return mutableResponse;

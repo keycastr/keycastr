@@ -32,7 +32,6 @@
 {
 }
 
-+(void) load;
 +(BOOL) allowsReverseTransformation;
 +(Class) transformedValueClass;
 +(KCKeystrokeTransformer*) sharedTransformer;
