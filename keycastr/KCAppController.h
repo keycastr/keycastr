@@ -51,7 +51,6 @@
 	IBOutlet NSMenuItem* statusShortcutItem;
 	IBOutlet NSMenuItem* dockShortcutItem;
 	BOOL _isCapturing;
-	BOOL _allowToggle;
 	NSInteger _startupIconPreference;
     KCKeyboardTap* keyboardTap;
 }
