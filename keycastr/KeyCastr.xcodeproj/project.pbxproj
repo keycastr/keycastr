@@ -653,6 +653,7 @@
 				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = "Code Coverage";
@@ -812,6 +813,7 @@
 				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -839,6 +841,7 @@
 				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
