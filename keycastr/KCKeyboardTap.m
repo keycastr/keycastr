@@ -185,11 +185,13 @@ CGEventRef eventTapCallback(
 
 -(void) _noteKeyEvent:(CGEventRef)eventRef
 {
-    NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
-    KCKeystroke* keystroke = [[[KCKeystroke alloc] initWithKeyCode:event.keyCode
-                                                         modifiers:event.modifierFlags
-                                       charactersIgnoringModifiers:event.charactersIgnoringModifiers] autorelease];
-    [self noteKeystroke:keystroke];
+    @autoreleasepool {
+        NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
+        KCKeystroke* keystroke = [[[KCKeystroke alloc] initWithKeyCode:event.keyCode
+                                                             modifiers:event.modifierFlags
+                                           charactersIgnoringModifiers:event.charactersIgnoringModifiers] autorelease];
+        [self noteKeystroke:keystroke];
+    }
 }
 
 -(void) noteKeystroke:(KCKeystroke*)keystroke
