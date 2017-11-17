@@ -21,6 +21,12 @@ In order to work, KeyCastr must be included in the list of applications with Acc
 
 ![accessibility](assets/accessibility.png)
 
+## Position on Screen
+
+The default position is on the bottom left of your display. To modify the position of displayed keystrokes, click and drag the text like so:
+
+![reposition](assets/reposition.gif)
+
 ## History
 
  - [sdeken](https://github.com/sdeken/keycastr) wrote the original version.
