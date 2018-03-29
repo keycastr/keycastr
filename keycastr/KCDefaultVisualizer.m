@@ -93,6 +93,7 @@
 			styleMask:NSBorderlessWindowMask
 			backing:NSBackingStoreBuffered
 			defer:NO];
+		[visualizerWindow setCollectionBehavior: NSWindowCollectionBehaviorCanJoinAllSpaces];
 		[visualizerWindow orderFront:self];
 	}
 }
