@@ -122,7 +122,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	BOOL needsShiftGlyph = NO;
 	BOOL isCommand = NO;
 
-	if (_modifiers & NSControlKeyMask)
+    if (_modifiers & NSControlKeyMask)
 	{
 		isCommand = YES;
 		[mutableResponse appendString:kControlKeyString];

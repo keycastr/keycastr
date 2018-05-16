@@ -220,7 +220,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
 {
-	if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (self.toggleKeyCombo.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
+	if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask | NSFunctionKeyMask)) == (self.toggleKeyCombo.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask | NSFunctionKeyMask)))
 	{
         [self toggleRecording:self];
 		return;

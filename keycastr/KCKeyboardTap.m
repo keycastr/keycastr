@@ -168,9 +168,12 @@ CGEventRef eventTapCallback(
 	uint32_t modifiers = 0;
 	CGEventFlags f = CGEventGetFlags( event );
 
-	if (f & kCGEventFlagMaskShift)
-		modifiers |= NSShiftKeyMask;
-	
+    if (f & kCGEventFlagMaskSecondaryFn)
+        modifiers |= NSFunctionKeyMask;
+
+    if (f & kCGEventFlagMaskShift)
+        modifiers |= NSShiftKeyMask;
+
 	if (f & kCGEventFlagMaskCommand)
 		modifiers |= NSCommandKeyMask;
 

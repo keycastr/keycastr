@@ -55,21 +55,23 @@
 	[[NSColor clearColor] setFill];
 	NSRectFill(frame);
 
-	float oneQuarter = floorf(frame.size.width / 4);
+	float oneFifth = floorf(frame.size.width / 5);
 
 	[[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
 	NSBezierPath* bp = [NSBezierPath bezierPath];
 	[bp appendRoundedRect:frame radius:16];
 	[bp appendBezierPathWithRect:NSMakeRect(0,30,frame.size.width,1)];
-	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*1,0,1,30)];
-	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*2,0,1,30)];
-	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*3,0,1,30)];
+	[bp appendBezierPathWithRect:NSMakeRect(oneFifth*1,0,1,30)];
+	[bp appendBezierPathWithRect:NSMakeRect(oneFifth*2,0,1,30)];
+    [bp appendBezierPathWithRect:NSMakeRect(oneFifth*3,0,1,30)];
+    [bp appendBezierPathWithRect:NSMakeRect(oneFifth*4,0,1,30)];
 	[bp fill];
 	
 	NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
 	[ps setAlignment:NSCenterTextAlignment];
 	
-	NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
+    NSString* fnKeyString = @"fn";
+    NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
 	NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
 	NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
 	NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
@@ -86,33 +88,40 @@
 		[ps autorelease], NSParagraphStyleAttributeName,
         nil];
 
-	if (_flags & NSShiftKeyMask)
+    if (_flags & NSFunctionKeyMask)
+        [attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+    else
+        [attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
+    size = [fnKeyString sizeWithAttributes:attr];
+    [fnKeyString drawInRect:NSMakeRect(0,(30 - size.height) / 2.0,oneFifth,size.height) withAttributes:attr];
+
+    if (_flags & NSShiftKeyMask)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
 	size = [shiftKeyString sizeWithAttributes:attr];
-	[shiftKeyString drawInRect:NSMakeRect(0,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+	[shiftKeyString drawInRect:NSMakeRect(oneFifth,(30 - size.height) / 2.0,oneFifth,size.height) withAttributes:attr];
 
 	if (_flags & NSControlKeyMask)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
 	size = [controlKeyString sizeWithAttributes:attr];
-	[controlKeyString drawInRect:NSMakeRect(oneQuarter,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+	[controlKeyString drawInRect:NSMakeRect(oneFifth*2,(30 - size.height) / 2.0,oneFifth,size.height) withAttributes:attr];
 
 	if (_flags & NSAlternateKeyMask)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
 	size = [altKeyString sizeWithAttributes:attr];
-	[altKeyString drawInRect:NSMakeRect(oneQuarter*2,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+	[altKeyString drawInRect:NSMakeRect(oneFifth*3,(30 - size.height) / 2.0,oneFifth,size.height) withAttributes:attr];
 
 	if (_flags & NSCommandKeyMask)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
 	size = [commandKeyString sizeWithAttributes:attr];
-	[commandKeyString drawInRect:NSMakeRect(oneQuarter*3,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+	[commandKeyString drawInRect:NSMakeRect(oneFifth*4,(30 - size.height) / 2.0,oneFifth,size.height) withAttributes:attr];
 	
 	if (_displayedString != nil)
 	{
@@ -173,7 +182,7 @@
 	if (!(self = [super init]))
 		return nil;
 
-	NSRect r = { 10, 10, 200, 100 };
+	NSRect r = { 10, 10, 240, 100 };
 	_visualizerWindow = [[NSWindow alloc]
 		initWithContentRect:r
 		styleMask:NSBorderlessWindowMask
