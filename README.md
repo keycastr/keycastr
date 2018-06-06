@@ -24,6 +24,12 @@ In order to work, KeyCastr must be included in the list of applications with Acc
 
 To add KeyCastr to the list click the <kbd>&plus;</kbd> button and select KeyCastr from the file system.
 
+## Position on Screen
+
+The default position is on the bottom left of your display. To modify the position of displayed keystrokes, click and drag the text like so:
+
+![reposition](assets/reposition.gif)
+
 ## History
 
  - [sdeken](https://github.com/sdeken/keycastr) wrote the original version.
