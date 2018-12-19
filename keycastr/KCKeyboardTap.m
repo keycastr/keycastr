@@ -87,7 +87,20 @@ CGEventRef eventTapCallback(
     if (tapInstalled) {
         return YES;
     }
-    
+
+    // 10.9 and after
+    if (AXIsProcessTrustedWithOptions != NULL) {
+        NSDictionary *options = @{(__bridge id) kAXTrustedCheckOptionPrompt : @YES};
+        BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef) options);
+
+        if (!accessibilityEnabled) {
+            if (error != NULL) {
+                *error = [self constructErrorWithDescription:@"Could not create keyDown event tap!"];
+            }
+            return NO;
+        }
+    }
+
     // We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
     // install the event tap for the flags changed event, which apparently doesn't require universal access
     // to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
