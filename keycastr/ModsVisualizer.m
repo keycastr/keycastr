@@ -83,10 +83,10 @@
 	}
 
 	if (bgFrame.size.width > 0) {
-        [[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
-        NSBezierPath* bp = [NSBezierPath bezierPath];
-        [bp appendRoundedRect:bgFrame radius:10];
-        [bp fill];
+				[[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
+				NSBezierPath* bp = [NSBezierPath bezierPath];
+				[bp appendRoundedRect:bgFrame radius:10];
+				[bp fill];
 	}
 
 	NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
@@ -139,8 +139,8 @@
 
 -(void) noteFlagsChanged:(uint32_t)flags
 {
-    _flags = flags;
-    [self setNeedsDisplay:YES];
+		_flags = flags;
+		[self setNeedsDisplay:YES];
 }
 
 @end
@@ -168,28 +168,20 @@
 	[_visualizerWindow setBackgroundColor:[NSColor clearColor]];
 	[_visualizerWindow setMovableByWindowBackground:YES];
 	[_visualizerWindow setFrame:r display:NO];
-	[_visualizerWindow setFrameAutosaveName:@"svelte visualizerFrame"];
-	[_visualizerWindow setFrameUsingName:@"svelte visualizerFrame"];
+	[_visualizerWindow setFrameAutosaveName:@"mods visualizerFrame"];
+	[_visualizerWindow setFrameUsingName:@"mods visualizerFrame"];
 	[_visualizerWindow setOpaque:NO];
 
 	_visualizerView = [[ModsVisualizerView alloc] initWithFrame:r];
 	[_visualizerWindow setContentView:_visualizerView];
 
-    _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
-
-    [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
- object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-     _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
- }];
-
 	return self;
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_visualizerWindow release];
-    [_visualizerView release];
-    [super dealloc];
+		[_visualizerWindow release];
+		[_visualizerView release];
+		[super dealloc];
 }
 
 -(void) showVisualizer:(id)sender
