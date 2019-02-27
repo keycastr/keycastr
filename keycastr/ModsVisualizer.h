@@ -51,7 +51,6 @@
 {
 	NSWindow* _visualizerWindow;
 	ModsVisualizerView* _visualizerView;
-    BOOL _displayAll;
 }
 
 -(NSString*) visualizerName;
