@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DB8252B2226E86500E123AA /* ModsVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB825272226E86500E123AA /* ModsVisualizer.h */; };
+		1DB8252C2226E86500E123AA /* Mods.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Mods.nib */; };
+		1DB8252D2226E86500E123AA /* Mods-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825292226E86500E123AA /* Mods-Info.plist */; };
+		1DB8252E2226E86500E123AA /* ModsVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8252A2226E86500E123AA /* ModsVisualizer.m */; };
+		1DB8253E2226E8D100E123AA /* ModsVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8252A2226E86500E123AA /* ModsVisualizer.m */; };
+		1DB8253F2226E8DA00E123AA /* Mods.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Mods.nib */; };
+		1DB825402226EC2100E123AA /* Mods.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DB8253C2226E8A000E123AA /* Mods.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */; };
 		324AD36C18A447EB8EDCE7B7 /* KCDefaultVisualizer.nib in Resources */ = {isa = PBXBuildFile; fileRef = 324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */; };
 		324AD7AC994A031550F38591 /* KCKeycastrEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADBA0D37774E36EA35A2E /* KCKeycastrEvent.m */; };
@@ -71,6 +78,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1DB825412226EC3200E123AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1DB8252F2226E8A000E123AA;
+			remoteInfo = Mods;
+		};
 		3D1646D40F43DCB200CA65AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -297,6 +311,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				1DB825402226EC2100E123AA /* Mods.kcplugin in CopyFiles */,
 				3D1648C20F451EDB00CA65AD /* Svelte.kcplugin in CopyFiles */,
 				3D1646690F43D76D00CA65AD /* KCDefaultVisualizer.kcplugin in CopyFiles */,
 			);
@@ -329,6 +344,11 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1DB825272226E86500E123AA /* ModsVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModsVisualizer.h; sourceTree = "<group>"; };
+		1DB825282226E86500E123AA /* Mods.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Mods.nib; sourceTree = "<group>"; };
+		1DB825292226E86500E123AA /* Mods-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mods-Info.plist"; sourceTree = "<group>"; };
+		1DB8252A2226E86500E123AA /* ModsVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModsVisualizer.m; sourceTree = "<group>"; };
+		1DB8253C2226E8A000E123AA /* Mods.kcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mods.kcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -471,8 +491,19 @@
 				3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */,
 				3D1648AC0F451D4500CA65AD /* Svelte.kcplugin */,
 				AFC172192377CFF500292155 /* KCVisualizerTests.xctest */,
+				1DB8253C2226E8A000E123AA /* Mods.kcplugin */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1DB825262226E85800E123AA /* Mods */ = {
+			isa = PBXGroup;
+			children = (
+				1DB825282226E86500E123AA /* Mods.nib */,
+				1DB825272226E86500E123AA /* ModsVisualizer.h */,
+				1DB8252A2226E86500E123AA /* ModsVisualizer.m */,
+			);
+			name = Mods;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* KeyCastr */ = {
@@ -486,6 +517,7 @@
 				AF6DD3FB2586E00500EDC9D4 /* Externals */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				1DB825292226E86500E123AA /* Mods-Info.plist */,
 			);
 			name = KeyCastr;
 			sourceTree = "<group>";
@@ -550,6 +582,7 @@
 		3D1646530F43D6B800CA65AD /* Visualizers */ = {
 			isa = PBXGroup;
 			children = (
+				1DB825262226E85800E123AA /* Mods */,
 				3D1648A30F451CDA00CA65AD /* Svelte */,
 				324AD7A5D37DE702839F52C6 /* Mouse */,
 				324ADFFC6CB5410AEFDEF479 /* Default */,
@@ -674,12 +707,31 @@
 				324ADBC2EAD3FC5FD3C369FE /* KCMouseEventVisualizer.h in Headers */,
 				324ADBB15522719676E80D5F /* KCMouseEvent.h in Headers */,
 				324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */,
+				1DB8252B2226E86500E123AA /* ModsVisualizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1DB8252F2226E8A000E123AA /* Mods */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DB825382226E8A000E123AA /* Build configuration list for PBXNativeTarget "Mods" */;
+			buildPhases = (
+				1DB825322226E8A000E123AA /* Resources */,
+				1DB825342226E8A000E123AA /* Sources */,
+				3D1646580F43D6E700CA65AD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1DB825302226E8A000E123AA /* PBXTargetDependency */,
+			);
+			name = Mods;
+			productName = Svelte;
+			productReference = 1DB8253C2226E8A000E123AA /* Mods.kcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		3D1646590F43D6E700CA65AD /* KCDefaultVisualizer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D16465E0F43D6E800CA65AD /* Build configuration list for PBXNativeTarget "KCDefaultVisualizer" */;
@@ -752,6 +804,7 @@
 				AF6DD4372586E0BA00EDC9D4 /* PBXTargetDependency */,
 				AF6DD4342586E0A700EDC9D4 /* PBXTargetDependency */,
 				3D1646D50F43DCB200CA65AD /* PBXTargetDependency */,
+				1DB825422226EC3200E123AA /* PBXTargetDependency */,
 			);
 			name = KeyCastr;
 			productInstallPath = "$(HOME)/Applications";
@@ -824,6 +877,7 @@
 			projectRoot = "";
 			targets = (
 				3D1646B50F43DBD700CA65AD /* KCVisualizer */,
+				1DB8252F2226E8A000E123AA /* Mods */,
 				3D1648AB0F451D4500CA65AD /* Svelte */,
 				3D1646590F43D6E700CA65AD /* KCDefaultVisualizer */,
 				8D1107260486CEB800E47090 /* KeyCastr */,
@@ -983,6 +1037,14 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1DB825322226E8A000E123AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DB8253F2226E8DA00E123AA /* Mods.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3D1646560F43D6E700CA65AD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -995,6 +1057,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB8252C2226E86500E123AA /* Mods.nib in Resources */,
+				1DB8252D2226E86500E123AA /* Mods-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1037,6 +1101,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1DB825342226E8A000E123AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DB8253E2226E8D100E123AA /* ModsVisualizer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3D1646570F43D6E700CA65AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1050,6 +1122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB8252E2226E86500E123AA /* ModsVisualizer.m in Sources */,
 				3D1646C20F43DC4700CA65AD /* KCVisualizer.m in Sources */,
 				AF5457292C0CDB2E00064C82 /* KCColorValueTransformer.m in Sources */,
 				AF7B1CF32C22376100C8C145 /* NSUserDefaults+Utility.m in Sources */,
@@ -1095,6 +1168,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1DB825422226EC3200E123AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1DB8252F2226E8A000E123AA /* Mods */;
+			targetProxy = 1DB825412226EC3200E123AA /* PBXContainerItemProxy */;
+		};
 		3D1646D50F43DCB200CA65AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3D1646B50F43DBD700CA65AD /* KCVisualizer */;
@@ -1167,6 +1245,88 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1DB825392226E8A000E123AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Mods-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr.Mods;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kcplugin;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DB8253A2226E8A000E123AA /* Code Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Mods-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr.Mods;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kcplugin;
+				ZERO_LINK = NO;
+			};
+			name = "Code Coverage";
+		};
+		1DB8253B2226E8A000E123AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Mods-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr.Mods;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kcplugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		3D16465C0F43D6E800CA65AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1593,6 +1753,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1DB825382226E8A000E123AA /* Build configuration list for PBXNativeTarget "Mods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DB825392226E8A000E123AA /* Debug */,
+				1DB8253A2226E8A000E123AA /* Code Coverage */,
+				1DB8253B2226E8A000E123AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3D16465E0F43D6E800CA65AD /* Build configuration list for PBXNativeTarget "KCDefaultVisualizer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
