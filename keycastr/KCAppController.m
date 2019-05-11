@@ -40,7 +40,7 @@ static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
 static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
-static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility API. If KeyCastr already has access, please remove it and add it again.";
+static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility API.\n\nIf KeyCastr already has access, please remove it and add it again.";
 
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
@@ -84,13 +84,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 - (void)openPrefsPane:(id)sender {
-    NSString *text = @"tell application \"System Preferences\"   \n\
-    --get a reference to the Security & Privacy preferences pane \n\
-    set securityPane to pane id \"com.apple.preference.security\"\n\
-    tell securityPane to reveal anchor \"Privacy_Accessibility\" \n\
-    --open the preferences window and make it frontmost          \n\
-    activate \n\
-    end tell \n";
+    NSString *text = @"tell application \"System Preferences\" \n reveal anchor \"Privacy_Accessibility\" of pane id \"com.apple.preference.security\" \n activate \n end tell";
     NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
     [script executeAndReturnError:nil];
     [script release];
