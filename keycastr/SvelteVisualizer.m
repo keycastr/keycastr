@@ -57,7 +57,7 @@
 
 	float oneQuarter = floorf(frame.size.width / 4);
 
-	[[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
+	[[NSColor colorWithCalibratedWhite:0 alpha:0.85] setFill];
 	NSBezierPath* bp = [NSBezierPath bezierPath];
 	[bp appendRoundedRect:frame radius:16];
 	[bp appendBezierPathWithRect:NSMakeRect(0,30,frame.size.width,1)];
@@ -170,34 +170,35 @@
 
 -(id) init
 {
-	if (!(self = [super init]))
-		return nil;
-
-	NSRect r = { 10, 10, 200, 100 };
-	_visualizerWindow = [[NSWindow alloc]
-		initWithContentRect:r
-		styleMask:NSBorderlessWindowMask
-		backing:NSBackingStoreBuffered
-		defer:NO];
-	[_visualizerWindow setLevel:NSScreenSaverWindowLevel];
-	[_visualizerWindow setBackgroundColor:[NSColor blueColor]];
-	[_visualizerWindow setMovableByWindowBackground:YES];
-	[_visualizerWindow setFrame:r display:NO];
-	[_visualizerWindow setFrameAutosaveName:@"svelte visualizerFrame"];
-	[_visualizerWindow setFrameUsingName:@"svelte visualizerFrame"];
-	[_visualizerWindow setOpaque:NO];
-
-	_visualizerView = [[SvelteVisualizerView alloc] initWithFrame:r];
-	[_visualizerWindow setContentView:_visualizerView];
-
+    if (!(self = [super init]))
+        return nil;
+    
+    NSRect r = { 10, 10, 200, 100 };
+    _visualizerWindow = [[NSWindow alloc] initWithContentRect:r
+                                                    styleMask:NSBorderlessWindowMask
+                                                      backing:NSBackingStoreBuffered
+                                                        defer:NO];
+    [_visualizerWindow setLevel:NSScreenSaverWindowLevel];
+    [_visualizerWindow setBackgroundColor:[NSColor clearColor]];
+    [_visualizerWindow setMovableByWindowBackground:YES];
+    [_visualizerWindow setFrame:r display:NO];
+    [_visualizerWindow setFrameAutosaveName:@"svelte visualizerFrame"];
+    [_visualizerWindow setFrameUsingName:@"svelte visualizerFrame"];
+    [_visualizerWindow setOpaque:NO];
+    
+    _visualizerView = [[[SvelteVisualizerView alloc] initWithFrame:r] autorelease];
+    [_visualizerWindow setContentView:_visualizerView];
+    
     _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
-
+    
     [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
- object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-     _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
- }];
-
-	return self;
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification * _Nonnull note) {
+                                                      _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
+                                                  }];
+    
+    return self;
 }
 
 - (void)dealloc {
