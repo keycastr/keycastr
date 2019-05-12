@@ -93,8 +93,6 @@
 			styleMask:NSBorderlessWindowMask
 			backing:NSBackingStoreBuffered
 			defer:NO];
-		[visualizerWindow setCollectionBehavior: NSWindowCollectionBehaviorCanJoinAllSpaces];
-		[visualizerWindow orderFront:self];
 	}
 }
 
@@ -131,30 +129,34 @@
 
 -(id) initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
-	if (!(self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]))
-		return nil;
-
-	_runningAnimations = [[NSMutableArray alloc] init];
-
+    if (!(self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]))
+        return nil;
+    
+    _runningAnimations = [[NSMutableArray alloc] init];
+    
     [self setFrameUsingName:@"KCBezelWindow default.bezelWindow"];
     [self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
-
+    
     CGFloat padding = 10;
     NSRect boundingRect = NSInsetRect([NSScreen mainScreen].frame, padding, padding);
     if (!NSPointInRect(self.frame.origin, boundingRect)) {
         [self resetFrame];
     }
-
-	[self setLevel:NSScreenSaverWindowLevel];
-	[self setOpaque:NO];
-	[self setBackgroundColor:[NSColor clearColor]];
-	
-	[self setAlphaValue:1];
-	[self setMovableByWindowBackground:YES];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenParametersDidChange) name:NSApplicationDidChangeScreenParametersNotification object:nil];
-
-	return self;
+    
+    [self setLevel:NSScreenSaverWindowLevel];
+    [self setOpaque:NO];
+    [self setBackgroundColor:[NSColor clearColor]];
+    
+    [self setAlphaValue:1];
+    [self setMovableByWindowBackground:YES];
+    [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(screenParametersDidChange)
+                                                 name:NSApplicationDidChangeScreenParametersNotification
+                                               object:nil];
+    
+    return self;
 }
 
 - (void)dealloc {

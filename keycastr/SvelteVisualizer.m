@@ -185,6 +185,7 @@
     [_visualizerWindow setFrameAutosaveName:@"svelte visualizerFrame"];
     [_visualizerWindow setFrameUsingName:@"svelte visualizerFrame"];
     [_visualizerWindow setOpaque:NO];
+    [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
     
     _visualizerView = [[[SvelteVisualizerView alloc] initWithFrame:r] autorelease];
     [_visualizerWindow setContentView:_visualizerView];
