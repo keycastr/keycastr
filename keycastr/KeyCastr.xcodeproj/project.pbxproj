@@ -167,6 +167,7 @@
 		AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItem@2x.png"; sourceTree = "<group>"; };
 		AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemActive@2x.png"; sourceTree = "<group>"; };
 		AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemInactive@2x.png"; sourceTree = "<group>"; };
+		AFB1F705235BC9AB0092F4A9 /* KeyCastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KeyCastr.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +237,7 @@
 		29B97314FDCFA39411CA2CEA /* KeyCastr */ = {
 			isa = PBXGroup;
 			children = (
+				AFB1F705235BC9AB0092F4A9 /* KeyCastr.entitlements */,
 				3D1646530F43D6B800CA65AD /* Visualizers */,
 				3D1646FC0F43DDC100CA65AD /* Framework */,
 				080E96DDFE201D6D7F000001 /* Application */,
@@ -439,6 +441,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					8D1107260486CEB800E47090 = {
+						DevelopmentTeam = 68TUCLNAPS;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "KeyCastr" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -661,7 +669,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCVisualizer;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
@@ -690,7 +698,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr.Svelte;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
@@ -717,7 +725,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCDefaultVisualizer;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
@@ -728,7 +736,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 68TUCLNAPS;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -744,8 +757,9 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -771,7 +785,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCDefaultVisualizer;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = YES;
@@ -797,7 +811,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCDefaultVisualizer;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
@@ -827,7 +841,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCVisualizer;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = YES;
@@ -856,7 +870,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KCVisualizer;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
@@ -883,7 +897,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr.Svelte;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = YES;
@@ -909,7 +923,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr.Svelte;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
@@ -920,7 +934,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 68TUCLNAPS;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -934,8 +953,9 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -945,7 +965,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 68TUCLNAPS;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -956,8 +981,9 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.stephendeken.KeyCastr;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
