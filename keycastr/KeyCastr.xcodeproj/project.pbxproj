@@ -444,7 +444,7 @@
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
 						DevelopmentTeam = 68TUCLNAPS;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -738,7 +738,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 68TUCLNAPS;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -814,6 +814,7 @@
 				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
 			};
@@ -926,6 +927,7 @@
 				PREBINDING = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
 			};
@@ -937,7 +939,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 68TUCLNAPS;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -968,8 +970,8 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 68TUCLNAPS;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -986,7 +988,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "KeyCastr Developer ID";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
