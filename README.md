@@ -16,7 +16,16 @@ KeyCastr, an open-source keystroke visualizer.
 brew cask install keycastr
 ```
 
-## Accessibility API access
+## Mac OS (Catalina) Input Monitoring access
+
+In order to work, KeyCastr must be included in the list of applications with Input Monitoring access, under the Security & Privacy system preferences.
+
+![accessibility](assets/input_monitoring.png)
+
+To add KeyCastr to the list click the <kbd>&plus;</kbd> button and select KeyCastr from the file system.
+
+
+## Mac OS (Pre-Catalina) Accessibility API access
 
 In order to work, KeyCastr must be included in the list of applications with Accessibility API access, under the Security & Privacy system preferences.
 
