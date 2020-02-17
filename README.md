@@ -24,6 +24,29 @@ In order to work, KeyCastr must be included in the list of applications with Acc
 
 To add KeyCastr to the list click the <kbd>&plus;</kbd> button and select KeyCastr from the file system.
 
+> NOTE: If KeyCastr is already in the list, then click the <kbd>&minus;</kbd> button and add KeyCastr again to be certain that the right application is chosen.
+
+## Input Monitoring
+
+Also, KeyCastr needs your explicit permission to to monitor inputs. You can set this in the Input Monitoring section under the Security & Privacy system preferences.
+
+![input_monitoring](assets/input_monitoring.png)
+
+To add KeyCastr to the list click the <kbd>&plus;</kbd> button and select KeyCastr from the file system.
+
+> NOTE: If KeyCastr is already in the list, then click the <kbd>&minus;</kbd> button and add KeyCastr again to be certain that the right application is chosen.
+
+
+## Displaying All Keystrokes
+
+Make sure to check the "Display all keystrokes" checkbox if you would like to display more than just the modifier keys.
+
+Alternatively, keep this box unchecked to only display modifier keys (e.g. ⇧ ⌃ ⌥ ⌘)
+
+![display_all_keystrokes](assets/display_all_keystrokes.png)
+
+
+
 ## Position on Screen
 
 The default position is on the bottom left of your display. To modify the position of displayed keystrokes, click and drag the text like so:
