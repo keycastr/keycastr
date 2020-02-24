@@ -30,33 +30,49 @@
 
 @implementation KCKeystroke
 
-@synthesize keyCode = _keyCode, modifiers = _modifiers, charactersIgnoringModifiers = _charactersIgnoringModifiers;
+- (id)initWithKeyCode:(uint16_t)keyCode modifiers:(NSEventModifierFlags)modifiers characters:(NSString *)characters charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers {
+    if (!(self = [super init]))
+        return nil;
 
-- (id)initWithKeyCode:(uint16_t)keyCode modifiers:(uint32_t)modifiers charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers {
-	if (!(self = [super init]))
-		return nil;
+    _keyCode = keyCode;
+    _modifiers = modifiers;
+    _characters = [characters copy];
+    _charactersIgnoringModifiers = [charactersIgnoringModifiers copy];
 
-	_keyCode = keyCode;
-	_modifiers = modifiers;
-	_charactersIgnoringModifiers = [charactersIgnoringModifiers copy];
-
-	return self;
+    return self;
 }
 
 - (void)dealloc {
 	[_charactersIgnoringModifiers release];
 	_charactersIgnoringModifiers = nil;
-	[super dealloc];
+    [_characters release];
+    _characters = nil;
+    [super dealloc];
 }
 
--(BOOL) isCommand
-{
-	return (_modifiers & (NSAlternateKeyMask | NSControlKeyMask | NSCommandKeyMask)) != 0;
+- (BOOL)isCommand {
+    return (_modifiers & (NSAlternateKeyMask | NSControlKeyMask | NSCommandKeyMask)) != 0;
 }
 
--(NSString*) convertToString
-{
-	return [[KCKeystrokeTransformer sharedTransformer] transformedValue:self];
+- (BOOL)isLetter {
+    unichar character = [self.characters characterAtIndex:0];
+    return [[NSCharacterSet letterCharacterSet] characterIsMember:character];
+}
+
+- (BOOL)isAlphanumeric {
+    unichar character = [self.characters characterAtIndex:0];
+    NSCharacterSet *punctuationSet = [NSCharacterSet punctuationCharacterSet]; // [NSCharacterSet characterSetWithCharactersInString:@"`~!!!!!!!@#$%^&*()_+1234567890-=[]\{}|;':\",./<>?]"];
+    NSCharacterSet *alphanumericSet = [NSCharacterSet alphanumericCharacterSet];
+    return [alphanumericSet characterIsMember:character] || [punctuationSet characterIsMember:character];
+}
+
+- (NSString *)convertToString {
+    return [[KCKeystrokeTransformer sharedTransformer] transformedValue:self];
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<KCKeystroke: keyCode: %hu, modifiers: %lu, characters: %@, charactersIgnoringModifiers: %@>",
+            _keyCode, (unsigned long)_modifiers, _characters, _charactersIgnoringModifiers];
 }
 
 @end

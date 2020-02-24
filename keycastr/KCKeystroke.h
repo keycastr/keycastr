@@ -27,21 +27,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface KCKeystroke : NSObject 
-{
-    uint16_t _keyCode;
-	uint32_t _modifiers;
-    NSString *_charactersIgnoringModifiers;
-}
+@interface KCKeystroke : NSObject
 
-@property (nonatomic) uint16_t keyCode;
-@property (nonatomic) uint32_t modifiers;
-@property (nonatomic, copy) NSString *charactersIgnoringModifiers;
+@property (nonatomic, readonly) uint16_t keyCode;
+@property (nonatomic, readonly) NSEventModifierFlags modifiers;
+@property (nonatomic, copy, readonly) NSString *characters;
+@property (nonatomic, copy, readonly) NSString *charactersIgnoringModifiers;
 
-- (id)initWithKeyCode:(uint16_t)keyCode modifiers:(uint32_t)modifiers charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers;
+- (id)initWithKeyCode:(uint16_t)keyCode modifiers:(NSEventModifierFlags)modifiers characters:(NSString *)characters charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers;
 
--(BOOL) isCommand;
+- (BOOL)isCommand;
+- (BOOL)isLetter;
+- (BOOL)isAlphanumeric;
 
--(NSString*) convertToString;
+- (NSString *)convertToString;
 
 @end

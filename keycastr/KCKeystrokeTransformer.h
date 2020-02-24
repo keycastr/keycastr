@@ -29,8 +29,6 @@
 
 
 @interface KCKeystrokeTransformer : NSValueTransformer
-{
-}
 
 +(BOOL) allowsReverseTransformation;
 +(Class) transformedValueClass;

@@ -189,8 +189,10 @@ CGEventRef eventTapCallback(
         NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
         KCKeystroke* keystroke = [[[KCKeystroke alloc] initWithKeyCode:event.keyCode
                                                              modifiers:event.modifierFlags
+                                                            characters:event.characters
                                            charactersIgnoringModifiers:event.charactersIgnoringModifiers] autorelease];
         [self noteKeystroke:keystroke];
+        NSLog(@"================> %@", keystroke);
     }
 }
 

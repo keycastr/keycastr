@@ -114,12 +114,14 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	return d;
 }
 
+
+// TODO: Escape, delete, return and arrow keys should be included in the list of command keys, or otherwise treated so that they are always displayed
 -(id) transformedValue:(id)value
 {
 	KCKeystroke* keystroke = (KCKeystroke*)value;
 	NSMutableString* mutableResponse = [NSMutableString string];
 
-	uint32_t _modifiers = [keystroke modifiers];
+	NSEventModifierFlags _modifiers = [keystroke modifiers];
 	uint16_t _keyCode = [keystroke keyCode];
 
 	BOOL isShifted = NO;
@@ -131,11 +133,13 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		isCommand = YES;
 		[mutableResponse appendString:kControlKeyString];
 	}
+
 	if (_modifiers & NSAlternateKeyMask)
 	{
 		isCommand = YES;
 		[mutableResponse appendString:kAltKeyString];
 	}
+
 	if (_modifiers & NSShiftKeyMask)
 	{
 		isShifted = YES;
@@ -144,6 +148,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		else
 			needsShiftGlyph = YES;
 	}
+
 	if (_modifiers & NSCommandKeyMask)
 	{
 		if (needsShiftGlyph)
@@ -156,28 +161,36 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	}
 
 	if (isShifted && !isCommand)
-	{
-        NSString *tmp = [@(_keyCode) isEqualToNumber:@48] ? kLeftTabString : keystroke.charactersIgnoringModifiers;
-		if (tmp) {
-			[mutableResponse appendString:tmp];
-			return mutableResponse;
-		}
-	}
+    {
+        // TODO: what do to about checking for delete, escape, return, arrow keys
+        if ([@(_keyCode) isEqualToNumber:@48]) {
+            [mutableResponse appendString:kLeftTabString];
+            return mutableResponse;
+        }
+    }
 
-	id tmp = [[self _specialKeys] objectForKey:@(_keyCode)];
-	if (tmp != nil)
+	NSString *specialKeyString = [[self _specialKeys] objectForKey:@(_keyCode)];
+	if (specialKeyString)
 	{
-		if (needsShiftGlyph)
+        if (needsShiftGlyph) {
 			[mutableResponse appendString:kShiftKeyString];
-		[mutableResponse appendString:tmp];
+        }
+		[mutableResponse appendString:specialKeyString];
 
-		return mutableResponse;
+        return mutableResponse;
 	}
 
-	[mutableResponse appendString:keystroke.charactersIgnoringModifiers];
+    if (keystroke.isLetter) {
+     } else {
+        [mutableResponse appendString:keystroke.characters];
+    }
 
-	// If this is a command string, put it in uppercase.
-	if (isCommand)
+    // TODO: improved heuristic for transformation:
+    //  - alphabetic command characters should be uppercased
+    //  - Non-alpha keystrokes should be represented by their unshifted value.
+
+    // If this is a command string, put it in uppercase.
+    if (isCommand)
 	{
         mutableResponse = [[[mutableResponse uppercaseString] mutableCopy] autorelease];
 	}

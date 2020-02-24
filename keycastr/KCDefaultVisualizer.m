@@ -113,9 +113,13 @@
 	[visualizerWindow orderOut:self];
 }
 
+- (BOOL)shouldIgnoreAlphanumeric {
+    return [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.commandKeysOnly"] boolValue];
+}
+
 -(void) noteKeyEvent:(KCKeystroke*)keystroke
 {
-	if (![keystroke isCommand] && [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.commandKeysOnly"] boolValue])
+	if ([keystroke isAlphanumeric] && [self shouldIgnoreAlphanumeric])
 	{
 		// This is not a command key, and we want to only display command keys, so we ignore this.
 		return;
