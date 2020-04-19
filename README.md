@@ -16,26 +16,21 @@ KeyCastr, an open-source keystroke visualizer.
 brew cask install keycastr
 ```
 
-## Accessibility API access
+## Enabling Accessibility API Access
 
-In order to work, KeyCastr must be included in the list of applications with Accessibility API access, under the Security & Privacy system preferences.
+KeyCastr requires access to the macOS Accessibility API in order to receive your key events and broadcast the keystrokes you are interested in.
+
+On newer versions of macOS (10.15+) there is a new Input Monitoring menu under Security & Privacy within the System Preferences app, and KeyCastr will appear there automatically the first time you run it. Simply unlock this menu and check the box next to KeyCastr to enable it.
+
+![input_monitoring](assets/input_monitoring.png)
+
+On older versions of macOS, or if for some reason the app doesn't appear under the Input Monitoring menu (or if you want to pre-enable it) then you may manually add it to the list of apps in the Accessibility menu.
 
 ![accessibility](assets/accessibility.png)
 
 To add KeyCastr to the list click the <kbd>&plus;</kbd> button and select KeyCastr from the file system.
 
-> NOTE: If KeyCastr is already in the list, then click the <kbd>&minus;</kbd> button and add KeyCastr again to be certain that the right application is chosen.
-
-## Input Monitoring
-
-Also, KeyCastr needs your explicit permission to to monitor inputs. You can set this in the Input Monitoring section under the Security & Privacy system preferences.
-
-![input_monitoring](assets/input_monitoring.png)
-
-To add KeyCastr to the list click the <kbd>&plus;</kbd> button and select KeyCastr from the file system.
-
-> NOTE: If KeyCastr is already in the list, then click the <kbd>&minus;</kbd> button and add KeyCastr again to be certain that the right application is chosen.
-
+If KeyCastr is already in the list, then click the <kbd>&minus;</kbd> button and add KeyCastr again to be certain that the right application is chosen.
 
 ## Displaying All Keystrokes
 
@@ -44,8 +39,6 @@ Make sure to check the "Display all keystrokes" checkbox if you would like to di
 Alternatively, keep this box unchecked to only display modifier keys (e.g. ⇧ ⌃ ⌥ ⌘)
 
 ![display_all_keystrokes](assets/display_all_keystrokes.png)
-
-
 
 ## Position on Screen
 
