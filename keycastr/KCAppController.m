@@ -40,7 +40,7 @@ static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
 static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
-static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility API.\n\nIf KeyCastr already has access, please remove it and add it again.";
+static NSString* kKCSupplementalAlertText = @"\n\nPlease check the box next to KeyCastr in the Input Monitoring menu within the Security & Privacy System Preferences pane. This will grant KeyCastr access to the Accessibility API in order to broadcast your keyboard inputs.\n\nIf your version of macOS doesn't have an Input Monitoring menu or if KeyCastr isn't listed, please add KeyCastr to the Accessibility menu instead. If KeyCastr is already listed under the Accessibility menu, please remove it and try again.\n";
 
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
@@ -96,7 +96,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
         NSAlert *alert = [[NSAlert new] autorelease];
         [alert addButtonWithTitle:@"Close"];
         [alert addButtonWithTitle:@"Open System Preferences"];
-        alert.messageText = @"Catastrophic Error Encountered";
+        alert.messageText = @"Additional Permissions Required";
         alert.informativeText = [error.localizedDescription stringByAppendingString:kKCSupplementalAlertText];
         alert.alertStyle = NSCriticalAlertStyle;
 
