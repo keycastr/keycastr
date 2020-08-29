@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,7 @@
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="56">
                     <rect key="frame" x="144" y="16" width="219" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Exclude alpha-numeric keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="123">
+                    <buttonCell key="cell" type="check" title="Display only command keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="123">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -86,7 +86,7 @@
                     <rect key="frame" x="146" y="131" width="215" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="1" doubleValue="0.25" tickMarkPosition="above" sliderType="linear" id="116">
-                        <font key="font" metaFont="palette"/>
+                        <font key="font" metaFont="menu" size="11"/>
                     </sliderCell>
                     <connections>
                         <binding destination="9" name="value" keyPath="values.default.fadeDuration" id="67"/>
@@ -114,7 +114,7 @@
                     <rect key="frame" x="146" y="180" width="215" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="0.10000000000000001" maxValue="5" doubleValue="0.125" tickMarkPosition="above" sliderType="linear" id="113">
-                        <font key="font" metaFont="palette"/>
+                        <font key="font" metaFont="menu" size="11"/>
                     </sliderCell>
                     <connections>
                         <binding destination="9" name="value" keyPath="values.default.fadeDelay" id="66"/>
@@ -124,7 +124,7 @@
                     <rect key="frame" x="146" y="230" width="215" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="0.10000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="112">
-                        <font key="font" metaFont="palette"/>
+                        <font key="font" metaFont="menu" size="11"/>
                     </sliderCell>
                     <connections>
                         <binding destination="9" name="value" keyPath="values.default.keystrokeDelay" id="65"/>
@@ -170,7 +170,7 @@
                     <rect key="frame" x="146" y="279" width="215" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" alignment="left" minValue="8" maxValue="144" doubleValue="14.510000050067902" tickMarkPosition="above" sliderType="linear" id="107">
-                        <font key="font" metaFont="palette"/>
+                        <font key="font" metaFont="menu" size="11"/>
                     </sliderCell>
                     <connections>
                         <binding destination="9" name="value" keyPath="values.default.fontSize" id="64"/>

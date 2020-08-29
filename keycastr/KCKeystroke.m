@@ -55,15 +55,11 @@
 }
 
 - (BOOL)isLetter {
-    unichar character = [self.characters characterAtIndex:0];
-    return [[NSCharacterSet letterCharacterSet] characterIsMember:character];
-}
-
-- (BOOL)isAlphanumeric {
-    unichar character = [self.characters characterAtIndex:0];
-    NSCharacterSet *punctuationSet = [NSCharacterSet punctuationCharacterSet]; // [NSCharacterSet characterSetWithCharactersInString:@"`~!!!!!!!@#$%^&*()_+1234567890-=[]\{}|;':\",./<>?]"];
-    NSCharacterSet *alphanumericSet = [NSCharacterSet alphanumericCharacterSet];
-    return [alphanumericSet characterIsMember:character] || [punctuationSet characterIsMember:character];
+    if (self.characters.length) {
+        unichar character = [self.characters characterAtIndex:0];
+        return [[NSCharacterSet letterCharacterSet] characterIsMember:character];
+    }
+    return NO;
 }
 
 - (NSString *)convertToString {

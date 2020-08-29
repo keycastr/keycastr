@@ -24,39 +24,18 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"⇧⌘]");
 }
 
-- (void)test_KCKeystroke_convertsAlphaCharactersShifted {
-    // cmd-opt-shift-]
-//    KCKeystroke *keystroke = [[KCKeystroke alloc] init
+- (void)test_KCKeystroke_convertsShiftedNumberCommandsToNumber {
+    // cmd-shift-7
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:26 modifiers:1179914 characters:@"7" charactersIgnoringModifiers:@"&"];
+
+    XCTAssertEqualObjects(keystroke.convertToString, @"⇧⌘7");
 }
 
-- (void)test_KCKeystroke_convertsNonCommandShiftTabToLeftTab {
-    // cmd-opt-shift-]
-//    KCKeystroke *keystroke = [[KCKeystroke alloc] init
+- (void)test_KCKeystroke_convertsCtrlShiftedCommandLetterToLetter {
+    // ctrl-shift-cmd-A
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:0 modifiers:1442059 characters:@"\\^A" charactersIgnoringModifiers:@"A"];
+
+    XCTAssertEqualObjects(keystroke.convertToString, @"⌃⇧⌘A");
 }
-
-- (void)test_KCKeystroke_convertsForwardDelete {
-
-}
-
-- (void)test_KCKeystroke_convertsCapitalizedCommandStrings {
-
-}
-
-- (void)test_KCKeystroke_convertsOptionComboToKeycap {
-
-}
-
-- (void)test_KCKeystroke_cmdOptionComboConvertsToKeycap {
-
-}
-
-- (void)test_KCKeystroke_shiftCmdEqualsConvertsToPlus {
-
-}
-
-- (void)test_KCKeystroke_shiftCmdMinusConvertsToMinus {
-
-}
-
 
 @end

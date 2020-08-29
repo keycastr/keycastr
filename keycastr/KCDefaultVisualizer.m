@@ -29,8 +29,6 @@
 #import "NSBezierPath+RoundedRect.h"
 #import "NSUserDefaults+Utility.h"
 
-#import "KCKeystrokeTransformer.h"
-
 
 @implementation KCDefaultVisualizerFactory
 
@@ -113,15 +111,14 @@
 	[visualizerWindow orderOut:self];
 }
 
-- (BOOL)shouldIgnoreAlphanumeric {
+- (BOOL)shouldOnlyDisplayCommandKeys
+{
     return [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.commandKeysOnly"] boolValue];
 }
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke
+- (void)noteKeyEvent:(KCKeystroke*)keystroke
 {
-	if ([keystroke isAlphanumeric] && [self shouldIgnoreAlphanumeric])
-	{
-		// This is not a command key, and we want to only display command keys, so we ignore this.
+    if (![keystroke isCommand] && [self shouldOnlyDisplayCommandKeys]) {
 		return;
 	}
 	[visualizerWindow addKeystroke:keystroke];

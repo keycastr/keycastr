@@ -38,7 +38,6 @@
 
 - (BOOL)isCommand;
 - (BOOL)isLetter;
-- (BOOL)isAlphanumeric;
 
 - (NSString *)convertToString;
 

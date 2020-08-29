@@ -162,7 +162,6 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
 	if (isShifted && !isCommand)
     {
-        // TODO: what do to about checking for delete, escape, return, arrow keys
         if ([@(_keyCode) isEqualToNumber:@48]) {
             [mutableResponse appendString:kLeftTabString];
             return mutableResponse;
@@ -181,13 +180,12 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	}
 
     if (keystroke.isLetter) {
-     } else {
+        [mutableResponse appendString:keystroke.charactersIgnoringModifiers];
+    } else if ((_modifiers & NSEventModifierFlagOption) || (_modifiers & NSEventModifierFlagControl)) {
+        [mutableResponse appendString:keystroke.charactersIgnoringModifiers];
+    } else {
         [mutableResponse appendString:keystroke.characters];
     }
-
-    // TODO: improved heuristic for transformation:
-    //  - alphabetic command characters should be uppercased
-    //  - Non-alpha keystrokes should be represented by their unshifted value.
 
     // If this is a command string, put it in uppercase.
     if (isCommand)
