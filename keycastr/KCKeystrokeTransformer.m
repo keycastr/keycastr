@@ -114,8 +114,6 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	return d;
 }
 
-
-// TODO: Escape, delete, return and arrow keys should be included in the list of command keys, or otherwise treated so that they are always displayed
 -(id) transformedValue:(id)value
 {
 	KCKeystroke* keystroke = (KCKeystroke*)value;
@@ -181,10 +179,9 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
     if (keystroke.isLetter) {
         [mutableResponse appendString:keystroke.charactersIgnoringModifiers];
-    } else if ((_modifiers & NSEventModifierFlagOption) || (_modifiers & NSEventModifierFlagControl)) {
-        [mutableResponse appendString:keystroke.charactersIgnoringModifiers];
-    } else {
-        [mutableResponse appendString:keystroke.characters];
+    }
+    else {
+        [mutableResponse appendString:[self preferredCharactersForKeystroke:keystroke]];
     }
 
     // If this is a command string, put it in uppercase.
@@ -194,6 +191,19 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	}
 	
 	return mutableResponse;
+}
+
+- (NSString *)preferredCharactersForKeystroke:(KCKeystroke *)keystroke {
+    static NSCharacterSet *alphanumericSet = nil;
+    if (alphanumericSet == nil) {
+        alphanumericSet = [NSCharacterSet alphanumericCharacterSet];
+    }
+
+	if ((keystroke.characters.length > 0) && [alphanumericSet characterIsMember:[keystroke.characters characterAtIndex:0]]) {
+		return keystroke.characters;
+	} else {
+		return keystroke.charactersIgnoringModifiers;
+	}
 }
 
 @end
