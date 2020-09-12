@@ -98,4 +98,12 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥U");
 }
 
+#pragma mark - Other layouts
+
+- (void)test_KCKeystroke_convertsAZERTYShiftOptionNumberToNumber {
+    // AZERTY - shift-opt-» (-> 7)
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
+    XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧7");
+}
+
 @end

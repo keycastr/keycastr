@@ -177,6 +177,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         return mutableResponse;
 	}
 
+    //TODO: maybe this doesn't make sense as we're checking -characters and then returning -charactersIgnoringModifiers
     if (keystroke.isLetter) {
         [mutableResponse appendString:keystroke.charactersIgnoringModifiers];
     }
