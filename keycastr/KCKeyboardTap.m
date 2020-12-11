@@ -68,7 +68,7 @@ CGEventRef eventTapCallback(
 }
 
 - (void)dealloc {
-    if (tapInstalled) {
+    if (_tapInstalled) {
         [self removeTap];
     }
 
@@ -84,7 +84,7 @@ CGEventRef eventTapCallback(
 }
 
 -(BOOL) installTapWithError:(NSError **)error {
-    if (tapInstalled) {
+    if (_tapInstalled) {
         return YES;
     }
     
@@ -145,13 +145,13 @@ CGEventRef eventTapCallback(
     
     CFRunLoopAddSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
 
-    tapInstalled = YES;
+    _tapInstalled = YES;
     
     return YES;
 }
 
 -(void) removeTap {
-    if (!tapInstalled) {
+    if (!_tapInstalled) {
         return;
     }
     
@@ -160,7 +160,7 @@ CGEventRef eventTapCallback(
     CFRelease(keyboardTapEventSource);
     CFRelease(keyboardTap);
 
-    tapInstalled = NO;
+    _tapInstalled = NO;
 }
 
 -(void) _noteFlagsChanged:(CGEventRef)event

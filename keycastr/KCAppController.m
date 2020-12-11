@@ -65,15 +65,15 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	if (!(self = [super init]))
 		return nil;
 
-	_isCapturing = YES;
-
     keyboardTap = [KCKeyboardTap new];
     keyboardTap.delegate = self;
 
-	[NSColor setIgnoresAlpha:NO];
-	[self registerVisualizers];
+    [self _setupDefaults];
+    [self registerVisualizers];
 
-	return self;
+    [NSColor setIgnoresAlpha:NO];
+
+    return self;
 }
 
 - (void)dealloc {
@@ -83,6 +83,55 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [super dealloc];
 }
 
+- (void)awakeFromNib {
+    [self setIsCapturing:NO];
+    
+    // Set current visualizer from user preferences
+    [self setCurrentVisualizerName:[[NSUserDefaults standardUserDefaults] objectForKey:kKCPrefSelectedVisualizer]];
+
+    // Bootstrap key capturing hotkey from preferences
+    KeyCombo toggleShortcutKey;
+    toggleShortcutKey.code = -1;
+    toggleShortcutKey.flags = 0;
+
+    NSData *toggleShortcutKeyData = [[NSUserDefaults standardUserDefaults] dataForKey:kKCPrefCapturingHotKey];
+    if (toggleShortcutKeyData != nil) {
+        [toggleShortcutKeyData getBytes:&toggleShortcutKey length:sizeof(toggleShortcutKey)];
+    }
+
+    [self changeKeyComboTo:toggleShortcutKey];
+    [shortcutRecorder setObjectValue:@{SRShortcutKeyCode: @(toggleShortcutKey.code),
+            SRShortcutModifierFlagsKey: @(toggleShortcutKey.flags)}];
+
+    [prefsWindowController nudge];
+
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+                                            forKeyPath:kKCPrefDisplayIcon
+                                               options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
+                                               context:nil];
+}
+
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+    NSError *error = nil;
+    [keyboardTap installTapWithError:&error];
+
+    if (error) {
+        return;
+    }
+
+    [self setIsCapturing:YES];
+
+    // Show the preferences window if desired
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefVisibleAtLaunch]) {
+        [preferencesWindow center];
+        [preferencesWindow makeKeyAndOrderFront:self];
+    }
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [keyboardTap removeTap];
+}
+
 - (void)openPrefsPane:(id)sender {
     NSString *text = @"tell application \"System Preferences\" \n reveal anchor \"Privacy_Accessibility\" of pane id \"com.apple.preference.security\" \n activate \n end tell";
     NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
@@ -90,37 +139,32 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [script release];
 }
 
--(void) installTap:(id)sender {
-    NSError* error = nil;
-    if (![keyboardTap installTapWithError:&error]) {
-        NSAlert *alert = [[NSAlert new] autorelease];
-        [alert addButtonWithTitle:@"Close"];
-        [alert addButtonWithTitle:@"Open System Preferences"];
-        alert.messageText = @"Additional Permissions Required";
-        alert.informativeText = [error.localizedDescription stringByAppendingString:kKCSupplementalAlertText];
-        alert.alertStyle = NSCriticalAlertStyle;
+- (void)displayPermissionsAlertWithError:(NSError *)error {
+    NSAlert *alert = [[NSAlert new] autorelease];
+    [alert addButtonWithTitle:@"Close"];
+    [alert addButtonWithTitle:@"Open System Preferences"];
+    alert.messageText = @"Additional Permissions Required";
+    alert.informativeText = [error.localizedDescription stringByAppendingString:kKCSupplementalAlertText];
+    alert.alertStyle = NSCriticalAlertStyle;
 
-        switch ([alert runModal]) {
-            case NSAlertFirstButtonReturn:
-                [NSApp terminate:nil];
-                break;
-            case NSAlertSecondButtonReturn: {
-                [self openPrefsPane:nil];
-                [NSApp terminate:nil];
-            }
-                break;
+    switch ([alert runModal]) {
+        case NSAlertFirstButtonReturn:
+            [NSApp terminate:nil];
+            break;
+        case NSAlertSecondButtonReturn: {
+            [self openPrefsPane:nil];
+            [NSApp terminate:nil];
         }
+            break;
     }
 }
 
-- (void)applicationWillFinishLaunching:(NSNotification *)notification {
-    [self installTap:nil];
+- (void)installTap:(id)sender {
+    NSError *error = nil;
+    if (![keyboardTap installTapWithError:&error]) {
+        [self displayPermissionsAlertWithError:error];
+    }
 }
-
-- (void)applicationWillTerminate:(NSNotification *)notification {
-    [keyboardTap removeTap];
-}
-
 
 -(void) _mapOldPreference:(NSString*)old toNewPreference:(NSString*)new
 {
@@ -172,44 +216,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 		[ud removeObjectForKey:@"launchedOnce"];
 	}
 	[ud synchronize];
-}
-
--(void) awakeFromNib
-{
-	[self _setupDefaults];
-
-	_startupIconPreference = [[NSUserDefaults standardUserDefaults] integerForKey:kKCPrefDisplayIcon];
-
-	[NSApp activateIgnoringOtherApps:TRUE];
-	[self setCurrentVisualizerName:[[NSUserDefaults standardUserDefaults] objectForKey:kKCPrefSelectedVisualizer]];
-	[self setIsCapturing:YES];
-
-	// Bootstrap key capturing hotkey from preferences
-	KeyCombo toggleShortcutKey;
-	toggleShortcutKey.code = -1;
-	toggleShortcutKey.flags = 0;
-	
-	NSData *toggleShortcutKeyData = [[NSUserDefaults standardUserDefaults] dataForKey:kKCPrefCapturingHotKey];
-    if (toggleShortcutKeyData != nil) {
-		[toggleShortcutKeyData getBytes:&toggleShortcutKey length:sizeof(toggleShortcutKey)];
-    }
-
-    [self changeKeyComboTo:toggleShortcutKey];
-    [shortcutRecorder setObjectValue:@{ SRShortcutKeyCode : @(toggleShortcutKey.code),
-                                        SRShortcutModifierFlagsKey : @(toggleShortcutKey.flags)}];
-
-    [prefsWindowController nudge];
-	// Show the preferences window if desired
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefVisibleAtLaunch])
-	{
-		[preferencesWindow center];
-		[preferencesWindow makeKeyAndOrderFront:self];
-	}
-    
-    [[NSUserDefaults standardUserDefaults] addObserver:self
-                                            forKeyPath:kKCPrefDisplayIcon
-                                               options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
-                                               context:nil];
 }
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
@@ -375,26 +381,22 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	return currentVisualizer;
 }
 
--(void) setCurrentVisualizer:(id<KCVisualizer>)new
-{
-	id<KCVisualizer> old = currentVisualizer;
-	if (new == nil || old == new)
-	{
-		return;
-	}
+- (void)setCurrentVisualizer:(id <KCVisualizer>)newVisualizer {
+    if (newVisualizer == nil || currentVisualizer == newVisualizer) {
+        return;
+    }
+    
+    id <KCVisualizer> oldVisualizer = [currentVisualizer autorelease];
 
-	if (old != nil)
-	{
-		[old deactivateVisualizer:self];
-	}
+    if (oldVisualizer != nil) {
+        [oldVisualizer deactivateVisualizer:self];
+    }
 
-	currentVisualizer = [new retain];
-	[old autorelease];
-	[new showVisualizer:self];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"KCVisualizerChanged" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-		new, @"newVisualizer",
-		old, @"oldVisualizer",
-		nil]];
+    currentVisualizer = [newVisualizer retain];
+    [newVisualizer showVisualizer:self];
+
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:newVisualizer, @"newVisualizer", oldVisualizer, @"oldVisualizer", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KCVisualizerChanged" object:self userInfo:userInfo];
 }
 
 -(NSArray*) availableVisualizerNames
@@ -415,9 +417,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	return _isCapturing;
 }
 
--(void) setIsCapturing:(BOOL)v
+-(void) setIsCapturing:(BOOL)capture
 {
-	_isCapturing = v;
+    if (capture && !keyboardTap.tapInstalled) {
+        return;
+    }
+
+	_isCapturing = capture;
 	[statusItem setImage:(_isCapturing
 		? [NSImage imageNamed:@"KeyCastrStatusItemActive"]
 		: [NSImage imageNamed:@"KeyCastrStatusItemInactive"])

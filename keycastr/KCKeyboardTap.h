@@ -39,13 +39,13 @@
 
 @interface KCKeyboardTap : NSObject {
     id<KCKeyboardTapDelegate> _delegate;
-    BOOL tapInstalled;
     CFMachPortRef keyboardTap;
     CFRunLoopRef keyboardTapRunLoop;
     CFRunLoopSourceRef keyboardTapEventSource;
 }
 
 @property (nonatomic, assign) id<KCKeyboardTapDelegate> delegate;
+@property (nonatomic, assign, readonly) BOOL tapInstalled;
 
 -(BOOL) installTapWithError:(NSError**)error;
 -(void) removeTap;

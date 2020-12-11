@@ -51,7 +51,6 @@
 	IBOutlet NSMenuItem* statusShortcutItem;
 	IBOutlet NSMenuItem* dockShortcutItem;
 	BOOL _isCapturing;
-	NSInteger _startupIconPreference;
     KCKeyboardTap* keyboardTap;
 }
 
@@ -62,7 +61,7 @@
 -(IBAction) changeIconPreference:(id)sender;
 
 -(BOOL) isCapturing;
--(void) setIsCapturing:(BOOL)isCapturing;
+-(void) setIsCapturing:(BOOL)capture;
 -(void) registerVisualizers;
 
 -(NSStatusItem*) createStatusItem;
@@ -73,7 +72,7 @@
 -(void) setCurrentVisualizerName:(NSString*)visualizerName;
 
 -(id<KCVisualizer>) currentVisualizer;
--(void) setCurrentVisualizer:(id<KCVisualizer>)visualizer;
+-(void) setCurrentVisualizer:(id<KCVisualizer>)newVisualizer;
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke;
 -(void) keyboardTap:(KCKeyboardTap*)tap noteFlagsChanged:(uint32_t)flags;
