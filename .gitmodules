@@ -1,0 +1,6 @@
+[submodule "keycastr/Externals/ShortcutRecorder"]
+	path = keycastr/Externals/ShortcutRecorder
+	url = git@github.com:JanX2/ShortcutRecorder.git
+[submodule "keycastr/Externals/Sparkle"]
+	path = keycastr/Externals/Sparkle
+	url = git@github.com:sparkle-project/Sparkle.git

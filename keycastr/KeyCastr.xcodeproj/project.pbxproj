@@ -35,7 +35,6 @@
 		3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54870F30F37E001C7272 /* GeneralIcon.tif */; };
 		3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54880F30F37E001C7272 /* DisplayIcon.tif */; };
 		3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */; };
-		3D3F56410F32D266001C7272 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3F56400F32D266001C7272 /* ShortcutRecorder.framework */; };
 		3D3F564E0F32D2EA001C7272 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D3F56400F32D266001C7272 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3D3F56CB0F337533001C7272 /* NSUserDefaults+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F56CA0F337533001C7272 /* NSUserDefaults+Utility.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
@@ -46,7 +45,8 @@
 		AE39388C1BB73B36005458A6 /* KeyCastrStatusItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */; };
 		AE39388D1BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */; };
 		AE39388E1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */; };
-		AFB1F707235BCD500092F4A9 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFB1F706235BCD500092F4A9 /* Sparkle.framework */; };
+		AF6DD4352586E0AE00EDC9D4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; };
+		AF6DD4382586E0C200EDC9D4 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */; };
 		AFB1F708235BCD630092F4A9 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AFB1F706235BCD500092F4A9 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AFC1721C2377CFF500292155 /* KCVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFC1721B2377CFF500292155 /* KCVisualizerTests.m */; };
 		AFC1721E2377CFF500292155 /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
@@ -87,6 +87,125 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3D1648AB0F451D4500CA65AD;
 			remoteInfo = Svelte;
+		};
+		AF6DD4022586E03A00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 939837800DA42965007F53F3;
+			remoteInfo = ShortcutRecorder.framework;
+		};
+		AF6DD4042586E03A00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E273122E1349EC9000A84433;
+			remoteInfo = PTHotKey.framework;
+		};
+		AF6DD4062586E03A00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0D6B2468180304DE00CE1142;
+			remoteInfo = Demo;
+		};
+		AF6DD41B2586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
+		AF6DD41D2586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
+			remoteInfo = "Sparkle Test App";
+		};
+		AF6DD41F2586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 612279D90DB5470200AB99EA;
+			remoteInfo = "Sparkle Unit Tests";
+		};
+		AF6DD4212586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D06E8D00FD68C7C005AE3F6;
+			remoteInfo = BinaryDelta;
+		};
+		AF6DD4232586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55C14BB7136EEF1500649790;
+			remoteInfo = Autoupdate;
+		};
+		AF6DD4252586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 726B2B5D1C645FC900388755;
+			remoteInfo = "UI Tests";
+		};
+		AF6DD4272586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 722954B41D04ADAF00ECF9CA;
+			remoteInfo = fileop;
+		};
+		AF6DD4292586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5AE13FB31E0D9E07000D2C2C;
+			remoteInfo = generate_appcast;
+		};
+		AF6DD42B2586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5AB8F19F214DA72000A1187F;
+			remoteInfo = generate_keys;
+		};
+		AF6DD42D2586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5A5ADED7214EDE4900DF0099;
+			remoteInfo = sign_update;
+		};
+		AF6DD42F2586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EA4311EA229D651300A5503D;
+			remoteInfo = bsdiff;
+		};
+		AF6DD4312586E04C00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EA4311A0229D5FBC00A5503D;
+			remoteInfo = ed25519;
+		};
+		AF6DD4332586E0A700EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
+		AF6DD4362586E0BA00EDC9D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9398377F0DA42965007F53F3;
+			remoteInfo = ShortcutRecorder.framework;
 		};
 		AFC1721F2377CFF500292155 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -175,6 +294,8 @@
 		AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItem@2x.png"; sourceTree = "<group>"; };
 		AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemActive@2x.png"; sourceTree = "<group>"; };
 		AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemInactive@2x.png"; sourceTree = "<group>"; };
+		AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
+		AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		AFB1F705235BC9AB0092F4A9 /* KeyCastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KeyCastr.entitlements; sourceTree = "<group>"; };
 		AFB1F706235BCD500092F4A9 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		AFC172192377CFF500292155 /* KCVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,10 +331,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF6DD4382586E0C200EDC9D4 /* ShortcutRecorder.framework in Frameworks */,
+				AF6DD4352586E0AE00EDC9D4 /* Sparkle.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				3D3F52BA0F30C68B001C7272 /* Quartz.framework in Frameworks */,
-				AFB1F707235BCD500092F4A9 /* Sparkle.framework in Frameworks */,
-				3D3F56410F32D266001C7272 /* ShortcutRecorder.framework in Frameworks */,
 				3D1646F40F43DD8300CA65AD /* KCVisualizer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,6 +384,7 @@
 				3D1646FC0F43DDC100CA65AD /* Framework */,
 				080E96DDFE201D6D7F000001 /* Application */,
 				AFC1721A2377CFF500292155 /* KCVisualizerTests */,
+				AF6DD3FB2586E00500EDC9D4 /* Externals */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -363,6 +485,44 @@
 			name = Svelte;
 			sourceTree = "<group>";
 		};
+		AF6DD3FB2586E00500EDC9D4 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */,
+				AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */,
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		AF6DD3FD2586E03A00EDC9D4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */,
+				AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */,
+				AF6DD4072586E03A00EDC9D4 /* Demo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AF6DD4092586E04C00EDC9D4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */,
+				AF6DD41E2586E04C00EDC9D4 /* Sparkle Test App.app */,
+				AF6DD4202586E04C00EDC9D4 /* Sparkle Unit Tests.xctest */,
+				AF6DD4222586E04C00EDC9D4 /* BinaryDelta */,
+				AF6DD4242586E04C00EDC9D4 /* Autoupdate.app */,
+				AF6DD4262586E04C00EDC9D4 /* UI Tests.xctest */,
+				AF6DD4282586E04C00EDC9D4 /* fileop */,
+				AF6DD42A2586E04C00EDC9D4 /* generate_appcast */,
+				AF6DD42C2586E04C00EDC9D4 /* generate_keys */,
+				AF6DD42E2586E04C00EDC9D4 /* sign_update */,
+				AF6DD4302586E04C00EDC9D4 /* libbsdiff.a */,
+				AF6DD4322586E04C00EDC9D4 /* libed25519.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AFC1721A2377CFF500292155 /* KCVisualizerTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +615,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				AF6DD4372586E0BA00EDC9D4 /* PBXTargetDependency */,
+				AF6DD4342586E0A700EDC9D4 /* PBXTargetDependency */,
 				3D1646D50F43DCB200CA65AD /* PBXTargetDependency */,
 				3D1648C60F451EE400CA65AD /* PBXTargetDependency */,
 				3D1646670F43D74700CA65AD /* PBXTargetDependency */,
@@ -511,6 +673,16 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* KeyCastr */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AF6DD3FD2586E03A00EDC9D4 /* Products */;
+					ProjectRef = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
+				},
+				{
+					ProductGroup = AF6DD4092586E04C00EDC9D4 /* Products */;
+					ProjectRef = AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3D1646B50F43DBD700CA65AD /* KCVisualizer */,
@@ -521,6 +693,114 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ShortcutRecorder.framework;
+			remoteRef = AF6DD4022586E03A00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PTHotKey.framework;
+			remoteRef = AF6DD4042586E03A00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4072586E03A00EDC9D4 /* Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Demo.app;
+			remoteRef = AF6DD4062586E03A00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Sparkle.framework;
+			remoteRef = AF6DD41B2586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD41E2586E04C00EDC9D4 /* Sparkle Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Sparkle Test App.app";
+			remoteRef = AF6DD41D2586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4202586E04C00EDC9D4 /* Sparkle Unit Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Sparkle Unit Tests.xctest";
+			remoteRef = AF6DD41F2586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4222586E04C00EDC9D4 /* BinaryDelta */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = BinaryDelta;
+			remoteRef = AF6DD4212586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4242586E04C00EDC9D4 /* Autoupdate.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Autoupdate.app;
+			remoteRef = AF6DD4232586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4262586E04C00EDC9D4 /* UI Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "UI Tests.xctest";
+			remoteRef = AF6DD4252586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4282586E04C00EDC9D4 /* fileop */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = fileop;
+			remoteRef = AF6DD4272586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD42A2586E04C00EDC9D4 /* generate_appcast */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = generate_appcast;
+			remoteRef = AF6DD4292586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD42C2586E04C00EDC9D4 /* generate_keys */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = generate_keys;
+			remoteRef = AF6DD42B2586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD42E2586E04C00EDC9D4 /* sign_update */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = sign_update;
+			remoteRef = AF6DD42D2586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4302586E04C00EDC9D4 /* libbsdiff.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libbsdiff.a;
+			remoteRef = AF6DD42F2586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF6DD4322586E04C00EDC9D4 /* libed25519.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libed25519.a;
+			remoteRef = AF6DD4312586E04C00EDC9D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3D1646560F43D6E700CA65AD /* Resources */ = {
@@ -650,6 +930,16 @@
 			isa = PBXTargetDependency;
 			target = 3D1648AB0F451D4500CA65AD /* Svelte */;
 			targetProxy = 3D1648C50F451EE400CA65AD /* PBXContainerItemProxy */;
+		};
+		AF6DD4342586E0A700EDC9D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Sparkle;
+			targetProxy = AF6DD4332586E0A700EDC9D4 /* PBXContainerItemProxy */;
+		};
+		AF6DD4372586E0BA00EDC9D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ShortcutRecorder.framework;
+			targetProxy = AF6DD4362586E0BA00EDC9D4 /* PBXContainerItemProxy */;
 		};
 		AFC172202377CFF500292155 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
