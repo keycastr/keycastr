@@ -2,7 +2,7 @@
 
 ## Running and Debugging
 
-In order to run KeyCastr in the debugger, the built product needs accessibility permissions just as the released app does. Upon first launching a new build in the debugger you may see a fatal error dialog -- if so, open System Preferences -> Privacy -> Accessibility (or Input Monitoring on macOS 10.15 and above), right click on KeyCastr.app under Built Products in the Xcode project navigator and select 'Show in Finder', and drag KeyCastr.app from the Build/Products folder into the Accessibility list. In Xcode, ctrl-cmd-R to run the same build again.
+In order to run KeyCastr in the debugger the built product needs accessibility permissions just as the released app does. Upon first launching a new build in Xcode you may see a fatal error dialog or macOS Securty & Privacy prompt. On macOS 10.15 and above, simply click 'Allow' and check the box next to KeyCastr in the Input Monitoring preferences pane. On macOS 10.14 or earlier, open System Preferences -> Privacy -> Accessibility, right click on KeyCastr.app under Built Products in the Xcode project navigator and select 'Show in Finder', and drag KeyCastr.app from the Build/Products folder into the Accessibility list. In Xcode, ctrl-cmd-R to run the same build again.
 
 ## Creating a Release
  - Update app version metadata in `Info.plist` and `MainMenu.nib/keyedobjects.nib`
