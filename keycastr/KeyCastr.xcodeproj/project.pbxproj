@@ -35,7 +35,6 @@
 		3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54870F30F37E001C7272 /* GeneralIcon.tif */; };
 		3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54880F30F37E001C7272 /* DisplayIcon.tif */; };
 		3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */; };
-		3D3F564E0F32D2EA001C7272 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D3F56400F32D266001C7272 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3D3F56CB0F337533001C7272 /* NSUserDefaults+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F56CA0F337533001C7272 /* NSUserDefaults+Utility.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -45,9 +44,8 @@
 		AE39388C1BB73B36005458A6 /* KeyCastrStatusItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */; };
 		AE39388D1BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */; };
 		AE39388E1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */; };
-		AF6DD4352586E0AE00EDC9D4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; };
-		AF6DD4382586E0C200EDC9D4 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */; };
-		AFB1F708235BCD630092F4A9 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AFB1F706235BCD500092F4A9 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF408C1C258710E70010C0EF /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */; };
+		AF408C1D258710E70010C0EF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; };
 		AFC1721C2377CFF500292155 /* KCVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFC1721B2377CFF500292155 /* KCVisualizerTests.m */; };
 		AFC1721E2377CFF500292155 /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 /* End PBXBuildFile section */
@@ -234,9 +232,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AFB1F708235BCD630092F4A9 /* Sparkle.framework in CopyFiles */,
 				3D1646D10F43DCA700CA65AD /* KCVisualizer.framework in CopyFiles */,
-				3D3F564E0F32D2EA001C7272 /* ShortcutRecorder.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +277,6 @@
 		3D3F54E10F31E52E001C7272 /* KCDefaultVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCDefaultVisualizer.h; sourceTree = "<group>"; };
 		3D3F54E20F31E52E001C7272 /* KCDefaultVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCDefaultVisualizer.m; sourceTree = "<group>"; };
 		3D3F54E70F31E5C2001C7272 /* KCDefaultVisualizer.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KCDefaultVisualizer.nib; sourceTree = "<group>"; };
-		3D3F56400F32D266001C7272 /* ShortcutRecorder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShortcutRecorder.framework; sourceTree = "<group>"; };
 		3D3F56C30F3374E9001C7272 /* NSBezierPath+RoundedRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+RoundedRect.m"; sourceTree = "<group>"; };
 		3D3F56C40F3374E9001C7272 /* NSBezierPath+RoundedRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+RoundedRect.h"; sourceTree = "<group>"; };
 		3D3F56C90F337533001C7272 /* NSUserDefaults+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+Utility.h"; sourceTree = "<group>"; };
@@ -297,7 +292,6 @@
 		AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
 		AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		AFB1F705235BC9AB0092F4A9 /* KeyCastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KeyCastr.entitlements; sourceTree = "<group>"; };
-		AFB1F706235BCD500092F4A9 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		AFC172192377CFF500292155 /* KCVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC1721B2377CFF500292155 /* KCVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCVisualizerTests.m; sourceTree = "<group>"; };
 		AFC1721D2377CFF500292155 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -331,11 +325,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF6DD4382586E0C200EDC9D4 /* ShortcutRecorder.framework in Frameworks */,
-				AF6DD4352586E0AE00EDC9D4 /* Sparkle.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				3D3F52BA0F30C68B001C7272 /* Quartz.framework in Frameworks */,
 				3D1646F40F43DD8300CA65AD /* KCVisualizer.framework in Frameworks */,
+				AF408C1D258710E70010C0EF /* Sparkle.framework in Frameworks */,
+				AF408C1C258710E70010C0EF /* ShortcutRecorder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,8 +409,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AFB1F706235BCD500092F4A9 /* Sparkle.framework */,
-				3D3F56400F32D266001C7272 /* ShortcutRecorder.framework */,
 				3D3F52B90F30C68B001C7272 /* Quartz.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
@@ -653,6 +645,15 @@
 			attributes = {
 				LastUpgradeCheck = 1120;
 				TargetAttributes = {
+					3D1646590F43D6E700CA65AD = {
+						ProvisioningStyle = Automatic;
+					};
+					3D1646B50F43DBD700CA65AD = {
+						ProvisioningStyle = Automatic;
+					};
+					3D1648AB0F451D4500CA65AD = {
+						ProvisioningStyle = Automatic;
+					};
 					8D1107260486CEB800E47090 = {
 						DevelopmentTeam = 68TUCLNAPS;
 						ProvisioningStyle = Automatic;
@@ -1012,8 +1013,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -1033,6 +1037,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
@@ -1042,7 +1047,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
@@ -1060,6 +1068,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
 			};
@@ -1069,7 +1078,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1085,6 +1097,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
 			};
@@ -1128,7 +1141,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1144,6 +1160,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = YES;
 			};
@@ -1153,8 +1170,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -1168,6 +1188,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
@@ -1178,8 +1199,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -1198,6 +1222,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				ZERO_LINK = YES;
 			};
@@ -1207,9 +1232,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -1226,6 +1254,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCVisualizer;
 				PRODUCT_NAME = KCVisualizer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
@@ -1235,7 +1264,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1251,6 +1283,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = YES;
 			};
@@ -1260,8 +1293,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -1275,6 +1311,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
