@@ -112,10 +112,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
-    NSError *error = nil;
-    [keyboardTap installTapWithError:&error];
 
-    if (error) {
+    [NSApp activateIgnoringOtherApps:YES];
+
+    if (![self installTap]) {
         return;
     }
 
@@ -159,11 +159,19 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 }
 
-- (void)installTap:(id)sender {
+- (BOOL)installTap {
     NSError *error = nil;
     if (![keyboardTap installTapWithError:&error]) {
-        [self displayPermissionsAlertWithError:error];
+        // Only display a custom error message if we're running on macOS < 10.15
+        NSOperatingSystemVersion minimumSupportedOSVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
+        BOOL hasOwnPermissionsAlert = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minimumSupportedOSVersion];
+
+        if (!hasOwnPermissionsAlert) {
+            [self displayPermissionsAlertWithError:error];
+        }
+        return NO;
     }
+    return YES;
 }
 
 -(void) _mapOldPreference:(NSString*)old toNewPreference:(NSString*)new
