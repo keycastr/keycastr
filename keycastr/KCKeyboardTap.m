@@ -34,6 +34,15 @@
 
 @end
 
+CGEventRef nullEventTapCallback(
+   CGEventTapProxy proxy,
+   CGEventType type,
+   CGEventRef event,
+   void *vp)
+{
+    return NULL;
+}
+
 CGEventRef eventTapCallback(
    CGEventTapProxy proxy, 
    CGEventType type, 
@@ -96,7 +105,7 @@ CGEventRef eventTapCallback(
                                          kCGHeadInsertEventTap,
                                          kCGEventTapOptionListenOnly,
                                          CGEventMaskBit(kCGEventKeyDown),
-                                         eventTapCallback,
+                                         nullEventTapCallback,
                                          self
                                          );
     
