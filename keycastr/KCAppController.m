@@ -40,7 +40,7 @@ static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
 static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
-static NSString* kKCSupplementalAlertText = @"\n\nPlease check the box next to KeyCastr in the Input Monitoring menu within the Security & Privacy System Preferences pane. This will grant KeyCastr access to the Accessibility API in order to broadcast your keyboard inputs.\n\nIf your version of macOS doesn't have an Input Monitoring menu or if KeyCastr isn't listed, please add KeyCastr to the Accessibility menu instead. If KeyCastr is already listed under the Accessibility menu, please remove it and try again.\n";
+static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility API in order to broadcast your keyboard inputs.\n\nWithin the System Preferences application, open the Security & Privacy preferences and add KeyCastr to the Accessibility list within the Privacy tab. If KeyCastr is already listed under the Accessibility menu, please remove it and try again.\n";
 
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
@@ -163,10 +163,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     NSError *error = nil;
     if (![keyboardTap installTapWithError:&error]) {
         // Only display a custom error message if we're running on macOS < 10.15
-        NSOperatingSystemVersion minimumSupportedOSVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
-        BOOL hasOwnPermissionsAlert = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minimumSupportedOSVersion];
+        NSOperatingSystemVersion minVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
+        BOOL supportsNewPermissionsAlert = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minVersion];
 
-        if (!hasOwnPermissionsAlert) {
+        if (!supportsNewPermissionsAlert) {
             [self displayPermissionsAlertWithError:error];
         }
         return NO;
