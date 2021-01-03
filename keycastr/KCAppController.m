@@ -181,7 +181,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     if (![keyboardTap installTapWithError:&error]) {
         // Only display a custom error message if we're running on macOS < 10.15
         NSOperatingSystemVersion minVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
-        BOOL supportsNewPermissionsAlert = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minVersion];
+        BOOL supportsNewPermissionsAlert = [NSProcessInfo.processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] && [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minVersion];
 
         if (!supportsNewPermissionsAlert) {
             [self displayPermissionsAlertWithError:error];
@@ -263,6 +263,17 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	if (currentVisualizer != nil)
 		[currentVisualizer noteFlagsChanged:flags];
 }
+
+- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(NSEvent *)event {
+    // HAXX
+    // Also, this is the wrong place for this check since mouse event preferences should be handled at the visualizer level
+    if (![NSUserDefaults.standardUserDefaults boolForKey:@"default.includeMouseClicks"])
+        return;
+    
+    KCKeystroke *stroke = [[[KCKeystroke alloc] initWithKeyCode:666 modifiers:event.modifierFlags characters:@"✷" charactersIgnoringModifiers:@"✷"] autorelease];
+    [currentVisualizer noteKeyEvent:stroke];
+}
+
 
 -(NSStatusItem*) createStatusItem
 {
