@@ -52,6 +52,9 @@ CGEventRef eventTapCallback(
     KCKeyboardTap* keyTap = (KCKeyboardTap*)vp;
     switch (type)
     {
+        case kCGEventLeftMouseDown:
+            [keyTap _noteMouseDown:event];
+            break;
         case kCGEventKeyDown:
             [keyTap _noteKeyEvent:event];
             break;
@@ -121,7 +124,7 @@ CGEventRef eventTapCallback(
                            kCGSessionEventTap,
                            kCGHeadInsertEventTap,
                            kCGEventTapOptionListenOnly,
-                           CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged),
+                           CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged),
                            eventTapCallback,
                            self
                            );
@@ -200,6 +203,13 @@ CGEventRef eventTapCallback(
                                                         characters:event.characters
                                        charactersIgnoringModifiers:event.charactersIgnoringModifiers] autorelease];
     [self noteKeystroke:keystroke];
+}
+
+- (void)_noteMouseDown:(CGEventRef)eventRef
+{
+    NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
+
+    [_delegate keyboardTap:self noteMouseEvent:event];
 }
 
 -(void) noteKeystroke:(KCKeystroke*)keystroke

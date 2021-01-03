@@ -34,6 +34,7 @@
 
 -(void) keyboardTap:(KCKeyboardTap*)keyboardTap noteKeystroke:(KCKeystroke*)keystroke;
 -(void) keyboardTap:(KCKeyboardTap*)keyboardTap noteFlagsChanged:(uint32_t)newFlags;
+-(void) keyboardTap:(KCKeyboardTap*)keyboardTap noteMouseEvent:(NSEvent *)event;
 
 @end
 

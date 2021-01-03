@@ -146,6 +146,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
             UTF8("\xf0\x9f\x96\xa5"), @160, // mission control
             UTF8("\xf0\x9f\x9a\x80"), @131, // launcher
             UTF8("fn"), @179, // fn key
+			UTF8("\xF0\x9F\x96\xB1"), @666, // Haxx
 			nil];
 	}
 	return d;
