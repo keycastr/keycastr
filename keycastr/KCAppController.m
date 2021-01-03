@@ -104,6 +104,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
             SRShortcutModifierFlagsKey: @(toggleShortcutKey.flags)}];
 
     [prefsWindowController nudge];
+    [self updateAboutPanel];
 
     [[NSUserDefaults standardUserDefaults] addObserver:self
                                             forKeyPath:kKCPrefDisplayIcon
@@ -338,6 +339,19 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     {
         [statusShortcutItem setKeyEquivalent:@""];
         [dockShortcutItem setKeyEquivalent:@""];
+    }
+}
+
+- (void)updateAboutPanel
+{
+    for (NSView *subview in aboutWindow.contentView.subviews) {
+        if ([subview isKindOfClass:[NSTextField class]]) {
+            NSTextField *textField = (NSTextField *)subview;
+            NSString *prefix = @"Version ";
+            if ([textField.stringValue rangeOfString:prefix].location == 0) {
+                [textField setStringValue:[prefix stringByAppendingString:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]];
+            }
+        }
     }
 }
 
