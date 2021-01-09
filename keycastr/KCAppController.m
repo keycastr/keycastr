@@ -563,10 +563,3 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 @end
-
-// This class needs to exist for compatibility with the legacy MainMenu.nib
-@interface SRRecorderCell : NSActionCell
-@end
-
-@implementation SRRecorderCell
-@end
