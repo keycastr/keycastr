@@ -49,7 +49,7 @@
 		AF443C7225A115A1005C11AC /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF443C7325A115A1005C11AC /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */ = {isa = PBXBuildFile; fileRef = AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */; };
-		AFC1721C2377CFF500292155 /* KCVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFC1721B2377CFF500292155 /* KCVisualizerTests.m */; };
+		AFC1721C2377CFF500292155 /* KCKeystroke_ConversionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFC1721B2377CFF500292155 /* KCKeystroke_ConversionTests.m */; };
 		AFC1721E2377CFF500292155 /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 /* End PBXBuildFile section */
 
@@ -299,7 +299,7 @@
 		AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		AFB1F705235BC9AB0092F4A9 /* KeyCastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KeyCastr.entitlements; sourceTree = "<group>"; };
 		AFC172192377CFF500292155 /* KCVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFC1721B2377CFF500292155 /* KCVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCVisualizerTests.m; sourceTree = "<group>"; };
+		AFC1721B2377CFF500292155 /* KCKeystroke_ConversionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCKeystroke_ConversionTests.m; sourceTree = "<group>"; };
 		AFC1721D2377CFF500292155 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -525,7 +525,7 @@
 		AFC1721A2377CFF500292155 /* KCVisualizerTests */ = {
 			isa = PBXGroup;
 			children = (
-				AFC1721B2377CFF500292155 /* KCVisualizerTests.m */,
+				AFC1721B2377CFF500292155 /* KCKeystroke_ConversionTests.m */,
 				AFC1721D2377CFF500292155 /* Info.plist */,
 			);
 			path = KCVisualizerTests;
@@ -909,7 +909,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFC1721C2377CFF500292155 /* KCVisualizerTests.m in Sources */,
+				AFC1721C2377CFF500292155 /* KCKeystroke_ConversionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

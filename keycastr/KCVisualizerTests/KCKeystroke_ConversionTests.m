@@ -1,6 +1,6 @@
 //
-//  KCVisualizerTests.m
-//  KCVisualizerTests
+//  KCKeystroke_ConversionTests.m
+//  KCKeystroke_ConversionTests
 //
 //  Created by Andrew Kitchen on 11/9/19.
 //
@@ -14,11 +14,11 @@
 
  The correct ordering for printing out modifiers should be ctrl-option-shift-command, according to how they're displayed in menus within Apple's apps. This means we'll need to adjust all of this once the general heuristic is sorted out.
  */
-@interface KCVisualizerTests : XCTestCase
+@interface KCKeystroke_ConversionTests : XCTestCase
 
 @end
 
-@implementation KCVisualizerTests
+@implementation KCKeystroke_ConversionTests
 
 #pragma mark - Numbers
 
