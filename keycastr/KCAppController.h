@@ -34,25 +34,7 @@
 
 @class KCPrefsWindowController;
 
-/** Application Controller
-
-
-*/
 @interface KCAppController : NSObject <NSApplicationDelegate>
-{
-	IBOutlet NSMenu* statusMenu;
-	IBOutlet NSWindow* aboutWindow;
-	IBOutlet NSWindow* preferencesWindow;
-	IBOutlet KCPrefsWindowController* prefsWindowController;
-	NSWindow* visualizerWindow;
-	NSStatusItem* statusItem;
-	id<KCVisualizer> currentVisualizer;
-	IBOutlet SRRecorderControl* shortcutRecorder;
-	IBOutlet NSMenuItem* statusShortcutItem;
-	IBOutlet NSMenuItem* dockShortcutItem;
-	BOOL _isCapturing;
-    KCKeyboardTap* keyboardTap;
-}
 
 -(IBAction) orderFrontKeyCastrAboutPanel:(id)sender;
 -(IBAction) orderFrontKeyCastrPreferencesPanel:(id)sender;

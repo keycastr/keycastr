@@ -53,11 +53,25 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 @property (nonatomic, assign) BOOL showInMenuBar;
 @property (nonatomic, assign) KeyCombo toggleKeyCombo;
 
-@property (nonatomic, assign) IBOutlet QCView *aboutQCView;
+@property (nonatomic, assign) IBOutlet NSMenu *statusMenu;
+@property (nonatomic, assign) IBOutlet NSWindow *aboutWindow;
+@property (nonatomic, assign) IBOutlet QCView   *aboutQCView;
+@property (nonatomic, assign) IBOutlet NSWindow *preferencesWindow;
+@property (nonatomic, assign) IBOutlet KCPrefsWindowController *prefsWindowController;
+@property (nonatomic, assign) IBOutlet SRRecorderControl *shortcutRecorder;
+@property (nonatomic, assign) IBOutlet NSMenuItem *statusShortcutItem;
+@property (nonatomic, assign) IBOutlet NSMenuItem *dockShortcutItem;
 
 @end
 
-@implementation KCAppController
+@implementation KCAppController {
+	NSStatusItem *statusItem;
+	id <KCVisualizer> currentVisualizer;
+	BOOL _isCapturing;
+	KCKeyboardTap *keyboardTap;
+}
+
+@synthesize statusMenu, aboutWindow, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem;
 
 #pragma mark -
 #pragma mark Startup Procedures
@@ -103,7 +117,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
     [self changeKeyComboTo:toggleShortcutKey];
     [shortcutRecorder setObjectValue:@{SRShortcutKeyCode: @(toggleShortcutKey.code),
-            SRShortcutModifierFlagsKey: @(toggleShortcutKey.flags)}];
+                                       SRShortcutModifierFlagsKey: @(toggleShortcutKey.flags)}];
 
     [prefsWindowController nudge];
     [self updateAboutPanel];
