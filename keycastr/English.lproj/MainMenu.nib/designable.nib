@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="1040" identifier="macosx"/>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -149,7 +149,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -225,6 +225,7 @@
                                                 <constraint firstItem="420" firstAttribute="leading" secondItem="418" secondAttribute="trailing" constant="10" id="ASO-R4-kP5"/>
                                                 <constraint firstItem="418" firstAttribute="top" secondItem="410" secondAttribute="top" constant="20" symbolic="YES" id="AhR-0d-QJW"/>
                                                 <constraint firstItem="446" firstAttribute="trailing" secondItem="418" secondAttribute="trailing" id="B0l-8L-Veq"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="420" secondAttribute="trailing" constant="20" symbolic="YES" id="Gc3-NV-ODD"/>
                                                 <constraint firstItem="J1Q-sG-Zms" firstAttribute="leading" secondItem="420" secondAttribute="leading" id="KcZ-du-wqH"/>
                                                 <constraint firstItem="446" firstAttribute="top" secondItem="418" secondAttribute="bottom" constant="15" id="Ki8-5m-GAo"/>
                                                 <constraint firstItem="420" firstAttribute="centerY" secondItem="418" secondAttribute="centerY" id="MKc-AT-Q0J"/>
