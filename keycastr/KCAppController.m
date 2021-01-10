@@ -30,6 +30,7 @@
 #import "KCDefaultVisualizer.h"
 #import "KCPrefsWindowController.h"
 #import "ShortcutRecorder/SRKeyCodeTransformer.h"
+#import <Quartz/Quartz.h>
 
 typedef struct _KeyCombo {
     unsigned int flags; // 0 for no flags
@@ -47,11 +48,12 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 @interface KCAppController ()<KCKeyboardTapDelegate>
 
-@property NSInteger prefDisplayIcon;
-@property BOOL showInDock;
-@property BOOL showInMenuBar;
-
+@property (nonatomic, assign) NSInteger prefDisplayIcon;
+@property (nonatomic, assign) BOOL showInDock;
+@property (nonatomic, assign) BOOL showInMenuBar;
 @property (nonatomic, assign) KeyCombo toggleKeyCombo;
+
+@property (nonatomic, assign) IBOutlet QCView *aboutQCView;
 
 @end
 
@@ -353,6 +355,9 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
             }
         }
     }
+
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"KeyCastrAbout" ofType:@"qtz"];
+	[_aboutQCView loadCompositionFromFile:filePath];
 }
 
 -(void) orderFrontKeyCastrAboutPanel:(id)sender

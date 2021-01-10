@@ -17,6 +17,7 @@
         </customObject>
         <customObject id="375" customClass="KCAppController">
             <connections>
+                <outlet property="aboutQCView" destination="386" id="ppu-GG-BnQ"/>
                 <outlet property="aboutWindow" destination="384" id="395"/>
                 <outlet property="dockShortcutItem" destination="516" id="521"/>
                 <outlet property="preferencesWindow" destination="371" id="394"/>
@@ -429,6 +430,7 @@ Q29weXJpZ2h0IAPCqTIwMDkgU3RlcGhlbiBEZWtlbg
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="67" y="436"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>
