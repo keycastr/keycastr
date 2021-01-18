@@ -141,7 +141,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	if (_modifiers & NSShiftKeyMask)
 	{
 		isShifted = YES;
-		if (isCommand)
+		if (isOption || isCommand)
 			[mutableResponse appendString:kShiftKeyString];
 		else
 			needsShiftGlyph = YES;

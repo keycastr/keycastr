@@ -30,6 +30,12 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃7");
 }
 
+- (void)test_KCKeystroke_convertsShiftNumberToShiftNumber {
+    // shift-7
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:26 modifiers:131330 characters:@"&" charactersIgnoringModifiers:@"&"];
+    XCTAssertEqualObjects(keystroke.convertToString, @"⇧7");
+}
+
 - (void)test_KCKeystroke_convertsCtrlShiftNumberToNumber {
     // ctrl-shift-7
     KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:26 modifiers:393475 characters:@"7" charactersIgnoringModifiers:@"&"];
