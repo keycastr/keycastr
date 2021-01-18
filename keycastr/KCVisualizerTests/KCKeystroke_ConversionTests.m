@@ -12,6 +12,8 @@
 /**
  NOTE: This is not a comprehensive set of tests, but serves as a sanity check for handling letters vs. numbers when certain modifiers are applied.
 
+ These tests were written assuming a US-English layout. They may break when run in other locales unless the keyboard layout is overridden.
+
  The correct ordering for printing out modifiers should be ctrl-option-shift-command, according to how they're displayed in menus within Apple's apps. This means we'll need to adjust all of this once the general heuristic is sorted out.
  */
 @interface KCKeystroke_ConversionTests : XCTestCase
@@ -56,7 +58,7 @@
 - (void)test_KCKeystroke_convertsCmdOptShiftNumberToShiftedNumber {
     // cmd-opt-shift-7 -> &
     KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode: 26 modifiers: 1704234 characters:@"‡" charactersIgnoringModifiers:@"&"];
-    XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧⌘&");
+    XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧⌘7");
 }
 
 
@@ -92,16 +94,14 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃⌥⇧A");
 }
 
-- (void)test_KCKeystroke_convertsOptLetterToLetter {
+- (void)test_KCKeystroke_convertsOptLetterToShiftedLetter {
     // opt-U
     KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:32 modifiers:524576 characters:nil charactersIgnoringModifiers:@"u"];
-    XCTAssertEqualObjects(keystroke.convertToString, @"⌥U");
+    XCTAssertEqualObjects(keystroke.convertToString, @"⌥u");
 }
 
-#pragma mark - Other layouts
-
-- (void)test_KCKeystroke_convertsAZERTYShiftOptionNumberToNumber {
-    // AZERTY - shift-opt-» (-> 7)
+- (void)test_KCKeystroke_convertsShiftOptionNumberToNumber {
+    // shift-opt-7
     KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧7");
 }

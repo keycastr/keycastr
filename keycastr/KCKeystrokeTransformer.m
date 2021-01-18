@@ -27,6 +27,7 @@
 
 #import "KCKeystrokeTransformer.h"
 #import "KCKeystroke.h"
+#import <PTHotKey/PTKeyCodeTranslator.h>
 
 @interface KCKeystrokeTransformer (Private)
 
@@ -116,25 +117,24 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
 -(id) transformedValue:(id)value
 {
-	KCKeystroke* keystroke = (KCKeystroke*)value;
-	NSMutableString* mutableResponse = [NSMutableString string];
+	KCKeystroke *keystroke = (KCKeystroke *)value;
+	NSMutableString *mutableResponse = [NSMutableString string];
 
-	NSEventModifierFlags _modifiers = [keystroke modifiers];
-	uint16_t _keyCode = [keystroke keyCode];
+    uint16_t _keyCode = keystroke.keyCode;
+    NSEventModifierFlags _modifiers = keystroke.modifiers;
+    BOOL isOption = (_modifiers & NSAlternateKeyMask) != 0;
+    BOOL isCommand = keystroke.isCommand;
 
-	BOOL isShifted = NO;
-	BOOL needsShiftGlyph = NO;
-	BOOL isCommand = NO;
+    BOOL isShifted = NO;
+    BOOL needsShiftGlyph = NO;
 
 	if (_modifiers & NSControlKeyMask)
 	{
-		isCommand = YES;
 		[mutableResponse appendString:kControlKeyString];
 	}
 
-	if (_modifiers & NSAlternateKeyMask)
+	if (isOption)
 	{
-		isCommand = YES;
 		[mutableResponse appendString:kAltKeyString];
 	}
 
@@ -154,11 +154,11 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 			[mutableResponse appendString:kShiftKeyString];
 			needsShiftGlyph = NO;
 		}
-		isCommand = YES;
 		[mutableResponse appendString:kCommandKeyString];
 	}
 
-	if (isShifted && !isCommand)
+    // check for bare shift-tab as left tab special case
+    if (isShifted && !isCommand && !isOption)
     {
         if ([@(_keyCode) isEqualToNumber:@48]) {
             [mutableResponse appendString:kLeftTabString];
@@ -166,27 +166,21 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         }
     }
 
+    if (needsShiftGlyph) {
+        [mutableResponse appendString:kShiftKeyString];
+        needsShiftGlyph = NO;
+    }
+    
 	NSString *specialKeyString = [[self _specialKeys] objectForKey:@(_keyCode)];
 	if (specialKeyString)
 	{
-        if (needsShiftGlyph) {
-			[mutableResponse appendString:kShiftKeyString];
-        }
 		[mutableResponse appendString:specialKeyString];
-
         return mutableResponse;
 	}
 
-    //TODO: maybe this doesn't make sense as we're checking -characters and then returning -charactersIgnoringModifiers
-    if (keystroke.isLetter) {
-        [mutableResponse appendString:keystroke.charactersIgnoringModifiers];
-    }
-    else {
-        [mutableResponse appendString:[self preferredCharactersForKeystroke:keystroke]];
-    }
+    [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
 
-    // If this is a command string, put it in uppercase.
-    if (isCommand)
+    if (isCommand || isShifted)
 	{
         mutableResponse = [[[mutableResponse uppercaseString] mutableCopy] autorelease];
 	}
@@ -194,17 +188,9 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	return mutableResponse;
 }
 
-- (NSString *)preferredCharactersForKeystroke:(KCKeystroke *)keystroke {
-    static NSCharacterSet *alphanumericSet = nil;
-    if (alphanumericSet == nil) {
-        alphanumericSet = [NSCharacterSet alphanumericCharacterSet];
-    }
-
-	if ((keystroke.characters.length > 0) && [alphanumericSet characterIsMember:[keystroke.characters characterAtIndex:0]]) {
-		return keystroke.characters;
-	} else {
-		return keystroke.charactersIgnoringModifiers;
-	}
+- (NSString *)translatedCharacterForKeystroke:(KCKeystroke *)keystroke {
+    PTKeyCodeTranslator *keyCodeTranslator = [PTKeyCodeTranslator currentTranslator];
+    return [keyCodeTranslator translateKeyCode:keystroke.keyCode];
 }
 
 @end

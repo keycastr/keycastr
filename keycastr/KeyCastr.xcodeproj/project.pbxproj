@@ -48,6 +48,9 @@
 		AF408C1D258710E70010C0EF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; };
 		AF443C7225A115A1005C11AC /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF443C7325A115A1005C11AC /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF6B810925AB84F700C6FA9D /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */; };
+		AF6B810A25AB860E00C6FA9D /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */; };
+		AF6B810B25AB861C00C6FA9D /* PTHotKey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */ = {isa = PBXBuildFile; fileRef = AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */; };
 		AFC1721C2377CFF500292155 /* KCKeystroke_ConversionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFC1721B2377CFF500292155 /* KCKeystroke_ConversionTests.m */; };
 		AFC1721E2377CFF500292155 /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
@@ -88,6 +91,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3D1648AB0F451D4500CA65AD;
 			remoteInfo = Svelte;
+		};
+		AF6B80F625AB84F100C6FA9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E273122D1349EC9000A84433;
+			remoteInfo = PTHotKey.framework;
 		};
 		AF6DD4022586E03A00EDC9D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -235,6 +245,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				AF6B810B25AB861C00C6FA9D /* PTHotKey.framework in CopyFiles */,
 				AF443C7225A115A1005C11AC /* Sparkle.framework in CopyFiles */,
 				AF443C7325A115A1005C11AC /* ShortcutRecorder.framework in CopyFiles */,
 				3D1646D10F43DCA700CA65AD /* KCVisualizer.framework in CopyFiles */,
@@ -316,6 +327,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF6B810925AB84F700C6FA9D /* PTHotKey.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +343,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF6B810A25AB860E00C6FA9D /* PTHotKey.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				3D3F52BA0F30C68B001C7272 /* Quartz.framework in Frameworks */,
 				3D1646F40F43DD8300CA65AD /* KCVisualizer.framework in Frameworks */,
@@ -577,6 +590,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AF6B80F725AB84F100C6FA9D /* PBXTargetDependency */,
 			);
 			name = KCVisualizer;
 			productName = KCVisualizer;
@@ -940,6 +954,11 @@
 			isa = PBXTargetDependency;
 			target = 3D1648AB0F451D4500CA65AD /* Svelte */;
 			targetProxy = 3D1648C50F451EE400CA65AD /* PBXContainerItemProxy */;
+		};
+		AF6B80F725AB84F100C6FA9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PTHotKey.framework;
+			targetProxy = AF6B80F625AB84F100C6FA9D /* PBXContainerItemProxy */;
 		};
 		AF6DD4342586E0A700EDC9D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -37,8 +37,6 @@
 - (id)initWithKeyCode:(uint16_t)keyCode modifiers:(NSEventModifierFlags)modifiers characters:(NSString *)characters charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers;
 
 - (BOOL)isCommand;
-- (BOOL)isLetter;
-
 - (NSString *)convertToString;
 
 @end

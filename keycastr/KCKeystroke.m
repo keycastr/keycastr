@@ -50,16 +50,11 @@
     [super dealloc];
 }
 
+/**
+ A KeyStroke is a command if it includes a CMD or CTRL key; option and shift are only considered modifiers.
+ */
 - (BOOL)isCommand {
-    return (_modifiers & (NSAlternateKeyMask | NSControlKeyMask | NSCommandKeyMask)) != 0;
-}
-
-- (BOOL)isLetter {
-    if (self.characters.length) {
-        unichar character = [self.characters characterAtIndex:0];
-        return [[NSCharacterSet letterCharacterSet] characterIsMember:character];
-    }
-    return NO;
+    return (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
 }
 
 - (NSString *)convertToString {
