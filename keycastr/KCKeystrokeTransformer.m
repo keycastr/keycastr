@@ -110,6 +110,10 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 			UTF8("F19"), NSNum(80), // F19
 			UTF8("F20"), NSNum(90), // F20
 			UTF8("\xe2\x90\xa3\xe2\x80\x8b"), NSNum(49), // space
+            UTF8("\xf0\x9f\x94\x85"), @145, // low brightness
+            UTF8("\xf0\x9f\x94\x86"), @144, // high brightness
+            UTF8("\xf0\x9f\x96\xa5"), @160, // mission control
+            UTF8("\xf0\x9f\x9a\x80"), @131, // launcher
 			nil];
 	}
 	return d;

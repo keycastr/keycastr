@@ -112,4 +112,28 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧7");
 }
 
+#pragma mark - Function Row
+
+- (void)test_KCKeystroke_convertsFnF1ToBrightnessDecrease {
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:145 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    XCTAssertEqualObjects(keystroke.convertToString, @"🔅");
+}
+
+- (void)test_KCKeystroke_convertsFnF2ToBrightnessIncrease {
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:144 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    XCTAssertEqualObjects(keystroke.convertToString, @"🔆");
+}
+
+- (void)test_KCKeystroke_convertsFnF3ToMissionControl {
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:160 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    XCTAssertEqualObjects(keystroke.convertToString, @"🖥");
+}
+
+- (void)test_KCKeystroke_convertsFnF4ToLauncher {
+    KCKeystroke *keystroke = [[KCKeystroke alloc] initWithKeyCode:131 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    XCTAssertEqualObjects(keystroke.convertToString, @"🚀");
+}
+
+
+
 @end
