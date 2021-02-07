@@ -48,10 +48,10 @@
 		AF408C1D258710E70010C0EF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; };
 		AF443C7225A115A1005C11AC /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF443C7325A115A1005C11AC /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */ = {isa = PBXBuildFile; fileRef = AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */; };
 		AF6B810925AB84F700C6FA9D /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */; };
 		AF6B810A25AB860E00C6FA9D /* PTHotKey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */; };
 		AF6B810B25AB861C00C6FA9D /* PTHotKey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD4052586E03A00EDC9D4 /* PTHotKey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */ = {isa = PBXBuildFile; fileRef = AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */; };
 		AFC1721C2377CFF500292155 /* KCKeystroke_ConversionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFC1721B2377CFF500292155 /* KCKeystroke_ConversionTests.m */; };
 		AFC1721E2377CFF500292155 /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 /* End PBXBuildFile section */
@@ -1155,7 +1155,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = "0.9.10-pre";
+				MARKETING_VERSION = 0.9.10;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1471,7 +1471,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = "0.9.10-pre";
+				MARKETING_VERSION = 0.9.10;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1501,7 +1501,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = "0.9.10-pre";
+				MARKETING_VERSION = 0.9.10;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "KeyCastr Developer ID";
