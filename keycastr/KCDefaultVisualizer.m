@@ -436,15 +436,6 @@ static const int kKCBezelBorder = 6;
 		nil];
 }
 
--(NSShadow*) shadow
-{
-	NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
-	[shadow setShadowColor:[NSColor colorWithCalibratedWhite:0 alpha:_opacity]];
-	[shadow setShadowBlurRadius:2];
-	[shadow setShadowOffset:NSMakeSize(0,-1)];
-	return shadow;
-}
-
 -(void) setAlphaValue:(float)opacity
 {
 	_opacity = opacity;
@@ -461,7 +452,6 @@ static const int kKCBezelBorder = 6;
 	[[_backgroundColor colorWithAlphaComponent:_opacity * [_backgroundColor alphaComponent]] setFill];
 	[bgPath fill];
 
-	[[self shadow] set];
 	[_layoutManager drawGlyphsForGlyphRange:NSMakeRange(0,[_textStorage length]) atPoint:NSMakePoint(kKCBezelBorder, kKCBezelBorder)];
 }
 

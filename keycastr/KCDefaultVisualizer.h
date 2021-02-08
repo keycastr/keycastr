@@ -52,7 +52,6 @@
 -(id) initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color;
 -(NSDictionary*) attributes;
 -(void) maybeResize;
--(NSShadow*) shadow;
 -(void) setAlphaValue:(float)opacity;
 -(void) appendString:(NSString*)t;
 -(void) scheduleFadeOut;
