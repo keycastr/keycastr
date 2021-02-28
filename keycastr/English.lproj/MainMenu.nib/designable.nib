@@ -133,6 +133,7 @@
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-208" y="535"/>
         </menu>
         <menu id="514">
             <items>
@@ -144,6 +145,7 @@
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-68" y="686"/>
         </menu>
         <window title="KeyCastr" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="371" userLabel="Prefs">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
@@ -212,9 +214,11 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <customView verifyAmbiguity="ignoreSizes" translatesAutoresizingMaskIntoConstraints="NO" id="J1Q-sG-Zms" customClass="SRRecorderControl">
-                                                    <rect key="frame" x="165" y="49" width="102" height="25"/>
+                                                    <rect key="frame" x="165" y="49" width="112" height="25"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="eK4-Fh-hia"/>
                                                         <constraint firstAttribute="height" constant="25" id="hLq-xG-0AL"/>
+                                                        <constraint firstAttribute="width" constant="112" id="nQT-sS-wpQ"/>
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="delegate" destination="375" id="F1v-ra-SAD"/>
@@ -394,7 +398,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="194" width="256" height="316"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <view key="contentView" id="385">
                 <rect key="frame" x="0.0" y="0.0" width="256" height="316"/>
                 <autoresizingMask key="autoresizingMask"/>
