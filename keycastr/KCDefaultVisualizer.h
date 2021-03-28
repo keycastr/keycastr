@@ -29,8 +29,6 @@
 #import "KCVisualizer.h"
 
 @interface KCDefaultVisualizerFactory : KCVisualizerFactory <KCVisualizerFactory>
-{
-}
 
 -(NSString*) visualizerNibName;
 -(Class) visualizerClass;
@@ -79,6 +77,8 @@
 - (void)abandonCurrentBezelView;
 - (void)addKeystroke:(KCKeystroke *)keystroke;
 - (void)addRunningAnimation:(KCBezelAnimation *)animation;
+
+- (instancetype)init;
 
 @end
 

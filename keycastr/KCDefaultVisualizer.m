@@ -49,23 +49,20 @@
 
 @end
 
-@interface KCDefaultVisualizer (Private)
-
--(void) _createVisualizerWindow;
-
-@end
-
 @implementation KCDefaultVisualizer
 
--(id) init
+- (instancetype)init
 {
-	if (!(self = [super init]))
-		return nil;
+    if (!(self = [super init]))
+        return nil;
 
-	return self;
+    visualizerWindow = [[KCDefaultVisualizerWindow alloc] init];
+
+    return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [visualizerWindow release];
     [super dealloc];
 }
@@ -80,29 +77,13 @@
     [super awakeFromNib];
 }
 
--(void) _createVisualizerWindow
-{
-	if (visualizerWindow == nil)
-	{
-        NSRect screenFrame = [NSScreen mainScreen].frame;
-		NSRect frameRect = NSMakeRect(0, 100, NSWidth(screenFrame), 100);
-		visualizerWindow = [[KCDefaultVisualizerWindow alloc]
-			initWithContentRect:frameRect
-			styleMask:NSBorderlessWindowMask
-			backing:NSBackingStoreBuffered
-			defer:NO];
-	}
-}
-
 -(void) showVisualizer:(id)sender
 {
-	[self _createVisualizerWindow];
 	[visualizerWindow orderFront:self];
 }
 
 -(void) hideVisualizer:(id)sender
 {
-	[self _createVisualizerWindow];
 	[visualizerWindow orderOut:self];
 }
 
@@ -128,7 +109,17 @@
 
 @implementation KCDefaultVisualizerWindow
 
--(id) initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+- (instancetype)init
+{
+    NSRect screenFrame = [NSScreen mainScreen].frame;
+    NSRect frameRect = NSMakeRect(0, 100, NSWidth(screenFrame), 100);
+    return [self initWithContentRect:frameRect
+                           styleMask:NSWindowStyleMaskBorderless
+                             backing:NSBackingStoreBuffered
+                               defer:NO];
+}
+
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
     if (!(self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]))
         return nil;
