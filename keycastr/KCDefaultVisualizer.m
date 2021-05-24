@@ -112,17 +112,20 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 @end
 
-static NSRect KC_optimalRect() {
+static NSRect KC_defaultFrame() {
     CGFloat width = NSWidth(NSScreen.mainScreen.frame) - 2 * kKCDefaultBezelPadding;
     return NSMakeRect(kKCDefaultBezelPadding, kKCDefaultBezelPadding, width, kKCDefaultBezelHeight);
 }
 
-@implementation KCDefaultVisualizerWindow
+@implementation KCDefaultVisualizerWindow {
+	BOOL _shouldResize;
+	BOOL _dragging;
+}
 
 
 - (instancetype)init
 {
-    return [self initWithContentRect:KC_optimalRect()
+    return [self initWithContentRect:KC_defaultFrame()
                            styleMask:NSWindowStyleMaskBorderless
                              backing:NSBackingStoreBuffered
                                defer:NO];
@@ -135,7 +138,6 @@ static NSRect KC_optimalRect() {
     
     _runningAnimations = [[NSMutableArray alloc] init];
     
-    [self setFrameUsingName:@"KCBezelWindow default.bezelWindow"];
     [self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
     
     CGFloat padding = 10;
@@ -163,11 +165,6 @@ static NSRect KC_optimalRect() {
                                                  name:NSApplicationDidChangeScreenParametersNotification
                                                object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didMove:)
-                                                 name:NSWindowDidMoveNotification
-                                               object:self];
-
     NSLog(@"================> %@", NSStringFromRect(self.frame));
 
     return self;
@@ -186,18 +183,12 @@ static NSRect KC_optimalRect() {
     [self resetFrame];
 }
 
-- (void)didMove:(NSNotification *)notification {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
-
-    _didMove = YES;
-}
-
 - (void)resizeWithinCurrentScreen {
     NSLog(@"================> %@", NSStringFromSelector(_cmd));
 
     NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
 	CGFloat optimalWidth = NSWidth(screenRect) - NSMinX(self.frame) - kKCDefaultBezelPadding;
-    CGRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, kKCDefaultBezelHeight);
+    CGRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, fmaxf(kKCDefaultBezelHeight, NSHeight(self.frame)));
 	[self setFrame:frame display:NO];
 
     [self saveFrameUsingName:@"KCBezelWindow default.bezelWindow"];
@@ -210,9 +201,9 @@ static NSRect KC_optimalRect() {
     // mainScreen is the screen currently receiving keyboard events; screens[0] is the screen with the menu bar
     // our layout should extend from the origin (bottom left) to the right edge of the screen
 
-    [self setFrame:KC_optimalRect() display:NO];
-//    [self saveFrameUsingName:@"KCBezelWindow default.bezelWindow"];
-//    NSLog(@"=============== saved => %@", [self stringWithSavedFrame]);
+    [self setFrame:KC_defaultFrame() display:NO];
+    [self saveFrameUsingName:@"KCBezelWindow default.bezelWindow"];
+    NSLog(@"=============== saved => %@", [self stringWithSavedFrame]);
 }
 
 - (void)abandonCurrentBezelView {
@@ -289,6 +280,12 @@ static NSRect KC_optimalRect() {
 -(void) removeRunningAnimation:(KCBezelAnimation*)animation
 {
 	[_runningAnimations removeObject:animation];
+
+    if (_runningAnimations.count == 0 && _shouldResize) {
+        NSLog(@"================> %@", @"Resizing...");
+        _shouldResize = NO;
+        [self resizeWithinCurrentScreen];
+    }
 }
 
 - (void)_suspendAnimations
@@ -324,20 +321,13 @@ static NSRect KC_optimalRect() {
 - (void)mouseUp:(NSEvent*)theEvent
 {
     _dragging = NO;
-
-    if (_didMove) {
-        NSLog(@"================> %@", @"Resizing...");
-        [self resizeWithinCurrentScreen];
-
-        _didMove = NO;
-    }
-
+    _shouldResize = YES;
     [self _resumeAnimations];
+
     [super mouseUp:theEvent];
 }
 
 @end
-
 
 
 @implementation KCBezelAnimation
@@ -380,8 +370,6 @@ static NSRect KC_optimalRect() {
 -(void) setCurrentProgress:(NSAnimationProgress)progress
 {
 	[super setCurrentProgress:progress];
-
-//	NSLog( @"%f", progress );
 
 	[_bezelView setAlphaValue:(1 - progress)];
 	[_bezelView setNeedsDisplay:YES];

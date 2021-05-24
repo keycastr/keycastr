@@ -71,8 +71,6 @@
 {
 	KCDefaultVisualizerBezelView* _currentBezelView;
 	NSMutableArray* _runningAnimations;
-	BOOL _dragging;
-    BOOL _didMove;
 }
 
 - (void)abandonCurrentBezelView;
