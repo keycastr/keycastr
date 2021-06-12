@@ -165,6 +165,11 @@ static NSRect KC_defaultFrame() {
                                                  name:NSApplicationDidChangeScreenParametersNotification
                                                object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillTerminate:)
+                                                 name:NSApplicationWillTerminateNotification
+                                               object:nil];
+
     NSLog(@"================> %@", NSStringFromRect(self.frame));
 
     return self;
@@ -174,6 +179,14 @@ static NSRect KC_defaultFrame() {
     [_runningAnimations removeAllObjects];
     [_runningAnimations release];
     [super dealloc];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    NSLog(@"================> %@", NSStringFromSelector(_cmd));
+    if (_runningAnimations.count) {
+		[self _suspendAnimations];
+		[self resizePreservingOrigin];
+    }
 }
 
 // Called when the attached screens configuration changes. This should be optional.
@@ -188,11 +201,21 @@ static NSRect KC_defaultFrame() {
 
     NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
 	CGFloat optimalWidth = NSWidth(screenRect) - NSMinX(self.frame) - kKCDefaultBezelPadding;
-    CGRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, fmaxf(kKCDefaultBezelHeight, NSHeight(self.frame)));
+    NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, fmaxf(kKCDefaultBezelHeight, NSHeight(self.frame)));
 	[self setFrame:frame display:NO];
 
-    [self saveFrameUsingName:@"KCBezelWindow default.bezelWindow"];
-    NSLog(@"=============== saved => %@", [self stringWithSavedFrame]);
+    [self saveFrameUsingName:self.frameAutosaveName];
+}
+
+- (void)resizePreservingOrigin {
+    NSLog(@"================> %@", NSStringFromSelector(_cmd));
+    NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
+    CGFloat optimalWidth = NSWidth(screenRect) - NSMinX(self.frame) - kKCDefaultBezelPadding;
+
+    NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, kKCDefaultBezelHeight);
+	[self setFrame:frame display:NO];
+
+	[self saveFrameUsingName:self.frameAutosaveName];
 }
 
 - (void)resetFrame {
@@ -202,7 +225,7 @@ static NSRect KC_defaultFrame() {
     // our layout should extend from the origin (bottom left) to the right edge of the screen
 
     [self setFrame:KC_defaultFrame() display:NO];
-    [self saveFrameUsingName:@"KCBezelWindow default.bezelWindow"];
+    [self saveFrameUsingName:self.frameAutosaveName];
     NSLog(@"=============== saved => %@", [self stringWithSavedFrame]);
 }
 
@@ -281,10 +304,13 @@ static NSRect KC_defaultFrame() {
 {
 	[_runningAnimations removeObject:animation];
 
-    if (_runningAnimations.count == 0 && _shouldResize) {
-        NSLog(@"================> %@", @"Resizing...");
-        _shouldResize = NO;
-        [self resizeWithinCurrentScreen];
+    if (_runningAnimations.count == 0) {
+        [self saveFrameUsingName:self.frameAutosaveName];
+        if (_shouldResize) {
+            NSLog(@"================> %@", @"Resizing...");
+            _shouldResize = NO;
+            [self resizeWithinCurrentScreen];
+        }
     }
 }
 
