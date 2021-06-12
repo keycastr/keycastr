@@ -122,7 +122,6 @@ static NSRect KC_defaultFrame() {
 	BOOL _dragging;
 }
 
-
 - (instancetype)init
 {
     return [self initWithContentRect:KC_defaultFrame()
@@ -175,9 +174,7 @@ static NSRect KC_defaultFrame() {
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    if (_runningAnimations.count) {
-		[self _suspendAnimations];
-    }
+    [self _suspendAnimations];
     [self resizePreservingOrigin];
 }
 
@@ -275,17 +272,19 @@ static NSRect KC_defaultFrame() {
 
 -(void) addRunningAnimation:(KCBezelAnimation*)animation
 {
-	[_runningAnimations addObject:animation];
-	if (_dragging)
+    [_runningAnimations addObject:animation];
+    [self saveFrameUsingName:self.frameAutosaveName];
+
+    if (_dragging)
 		[animation stopAnimation];
 }
 
 -(void) removeRunningAnimation:(KCBezelAnimation*)animation
 {
 	[_runningAnimations removeObject:animation];
+    [self saveFrameUsingName:self.frameAutosaveName];
 
     if (_runningAnimations.count == 0) {
-        [self saveFrameUsingName:self.frameAutosaveName];
         if (_shouldResize) {
             _shouldResize = NO;
             [self resizeWithinCurrentScreen];
