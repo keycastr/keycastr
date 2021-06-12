@@ -176,8 +176,8 @@ static NSRect KC_defaultFrame() {
 - (void)applicationWillTerminate:(NSNotification *)notification {
     if (_runningAnimations.count) {
 		[self _suspendAnimations];
-		[self resizePreservingOrigin];
     }
+    [self resizePreservingOrigin];
 }
 
 // Called when the attached screens configuration changes. This should be optional.
