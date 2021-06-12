@@ -139,6 +139,7 @@ static NSRect KC_defaultFrame() {
     _runningAnimations = [[NSMutableArray alloc] init];
     
     [self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
+    [self resizePreservingOrigin];
     
     CGFloat padding = 10;
     NSRect boundingRect = NSInsetRect([NSScreen mainScreen].frame, padding, padding);
@@ -194,8 +195,6 @@ static NSRect KC_defaultFrame() {
 	CGFloat optimalWidth = NSWidth(screenRect) - NSMinX(self.frame) - kKCDefaultBezelPadding;
     NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, fmaxf(kKCDefaultBezelHeight, NSHeight(self.frame)));
 	[self setFrame:frame display:NO];
-
-    [self saveFrameUsingName:self.frameAutosaveName];
 }
 
 - (void)resizePreservingOrigin {
@@ -205,8 +204,6 @@ static NSRect KC_defaultFrame() {
 
     NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, kKCDefaultBezelHeight);
 	[self setFrame:frame display:NO];
-
-	[self saveFrameUsingName:self.frameAutosaveName];
 }
 
 - (void)resetFrame {
