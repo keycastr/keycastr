@@ -143,8 +143,6 @@ static NSRect KC_defaultFrame() {
     CGFloat padding = 10;
     NSRect boundingRect = NSInsetRect([NSScreen mainScreen].frame, padding, padding);
     if (!NSPointInRect(self.frame.origin, boundingRect)) {
-        NSLog(@"=============== It's no good! => %@", NSStringFromRect(self.frame));
-
         [self resetFrame];
     }
     
@@ -153,9 +151,6 @@ static NSRect KC_defaultFrame() {
 
     [self setBackgroundColor:[NSColor clearColor]];
     [self setAlphaValue:1];
-
-//    [self setBackgroundColor:[NSColor yellowColor]];
-//    [self setAlphaValue:0.5];
 
     [self setMovableByWindowBackground:YES];
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
@@ -169,9 +164,6 @@ static NSRect KC_defaultFrame() {
                                              selector:@selector(applicationWillTerminate:)
                                                  name:NSApplicationWillTerminateNotification
                                                object:nil];
-
-    NSLog(@"================> %@", NSStringFromRect(self.frame));
-
     return self;
 }
 
@@ -182,7 +174,6 @@ static NSRect KC_defaultFrame() {
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
     if (_runningAnimations.count) {
 		[self _suspendAnimations];
 		[self resizePreservingOrigin];
@@ -221,12 +212,8 @@ static NSRect KC_defaultFrame() {
 - (void)resetFrame {
     NSLog(@"================> %@", NSStringFromSelector(_cmd));
 
-    // mainScreen is the screen currently receiving keyboard events; screens[0] is the screen with the menu bar
-    // our layout should extend from the origin (bottom left) to the right edge of the screen
-
     [self setFrame:KC_defaultFrame() display:NO];
     [self saveFrameUsingName:self.frameAutosaveName];
-    NSLog(@"=============== saved => %@", [self stringWithSavedFrame]);
 }
 
 - (void)abandonCurrentBezelView {
@@ -258,16 +245,12 @@ static NSRect KC_defaultFrame() {
 
 	if (_currentBezelView == nil)
 	{
-        NSColor *backgroundColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
-
         if (!(NSWidth(self.frame) > 0)) {
             NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(self.frame));
             [self resetFrame];
-//            maxWidth = 1000;
-//            frame.size = NSMakeSize(maxWidth, fmaxf(kKCDefaultBezelHeight, frame.size.height));
-//            [self setFrame:frame display:YES];
-//            NSLog(@"New frame: %@", NSStringFromRect(frame));
         }
+
+        NSColor *backgroundColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
 		_currentBezelView = [[KCDefaultVisualizerBezelView alloc]
 			initWithMaxWidth:NSWidth(self.frame)
 			text:charString
@@ -307,7 +290,6 @@ static NSRect KC_defaultFrame() {
     if (_runningAnimations.count == 0) {
         [self saveFrameUsingName:self.frameAutosaveName];
         if (_shouldResize) {
-            NSLog(@"================> %@", @"Resizing...");
             _shouldResize = NO;
             [self resizeWithinCurrentScreen];
         }
@@ -377,14 +359,14 @@ static NSRect KC_defaultFrame() {
 {
 	if ([self isAnimating])
 		return;
-		
+
 	if (duration < 0.01)
 	{
 		// just do it immediately
 		[self animationDidEnd:self];
 		return;
 	}
-	
+
 	[self setDelegate:self];
 	[self setDuration:duration];
 	[self setFrameRate:30];
@@ -407,7 +389,7 @@ static NSRect KC_defaultFrame() {
 	KCDefaultVisualizerWindow* w = (KCDefaultVisualizerWindow*)[_bezelView window];
 	[w removeRunningAnimation:self];
 	[_bezelView removeFromSuperview];
-	
+
 	NSArray* a = [[w contentView] subviews];
 	NSUInteger vc = [a count];
 	int i;
@@ -418,7 +400,7 @@ static NSRect KC_defaultFrame() {
 		r.origin.y += deltaY;
 		[v setFrame:r];
 	}
-	
+
 	NSRect r = [w frame];
 	r.size.height -= deltaY;
 	if (r.size.height < 0)
@@ -564,110 +546,3 @@ static const int kKCBezelBorder = 6;
 }
 
 @end
-
-/*
-@implementation KCDefaultVisualizerKeystrokeView
-
--(id) initWithFrame:(NSRect)frame
-{
-	// always, always start with a zero-height frame
-	frame.size.height = 0;
-    if (![super initWithFrame:frame])
-		return nil;
-
-	_actualHeight = 0;
-	_sticky = NO;
-
-	_buf = [[NSTextStorage alloc] initWithString:@""];
-	NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(frame.size.width, FLT_MAX)];
-	NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-	[layoutManager addTextContainer:textContainer];
-	[_buf addLayoutManager:layoutManager];
-	[layoutManager release];
-	[textContainer release];
-	[_buf setAttributes:[self attributes] range:NSMakeRange(0, [_buf length])];
-
-    return self;
-}
-
--(void) dealloc
-{
-	if (_buf)
-	{
-		[_buf release];
-		_buf = nil;
-	}
-	[super dealloc];
-}
-
--(BOOL) isFlipped
-{
-	return YES;
-}
-
--(NSShadow*) sharedShadow
-{
-	static NSShadow* shadow = nil;
-	if (shadow == nil)
-	{
-		shadow = [[NSShadow alloc] init];
-		[shadow setShadowColor:[NSColor blackColor]];
-		[shadow setShadowBlurRadius:2];
-		[shadow setShadowOffset:NSMakeSize(0,-1)];
-	}
-	return shadow;
-}
-
--(NSDictionary*) attributes
-{
-	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-	return [NSDictionary dictionaryWithObjectsAndKeys:
-		[NSFont systemFontOfSize:[ud floatForKey:@"default.fontSize"]], NSFontAttributeName,
-		[ud colorForKey:@"default.textColor"], NSForegroundColorAttributeName,
-		nil];
-}
-
--(void) drawRect:(NSRect)rect
-{
-	[_buf setAttributes:[self attributes] range:NSMakeRange(0, [_buf length])];
-	[[self sharedShadow] set];
-	NSLayoutManager *lm = [[_buf layoutManagers] objectAtIndex:0];
-	[lm drawGlyphsForGlyphRange:NSMakeRange(0,[_buf length]) atPoint:NSZeroPoint];
-}
-
--(float) heightForString
-{
-	NSLayoutManager *lm = [[_buf layoutManagers] objectAtIndex:0];
-	NSTextContainer *tc = [[lm textContainers] objectAtIndex:0];
-	[lm glyphRangeForTextContainer:tc];
-	return [lm usedRectForTextContainer:tc].size.height;
-}
-
--(void) resize
-{
-	float h = [self heightForString];
-	if (h != _actualHeight)
-	{
-		// kick off an animation
-		_actualHeight = h;
-		// [(KCBezelView*)[self superview] animateKeystrokeView:self toHeight:h];
-	}
-}
-
--(void) appendString:(NSString*)str
-{
-	if (!_sticky)
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeOut:) object:nil];
-	NSAttributedString *s = [[NSAttributedString alloc] initWithString:str];
-	[_buf appendAttributedString:s];
-	[s release];
-	[_buf setAttributes:[self attributes] range:NSMakeRange(0, [_buf length])];
-	[self resize];
-	[self setNeedsDisplay:YES];
-	if (!_sticky)
-		[self performSelector:@selector(fadeOut:) withObject:nil afterDelay:[[NSUserDefaults standardUserDefaults] floatForKey:@"fadeDelay"]];
-}
-
-
-@end
-*/
