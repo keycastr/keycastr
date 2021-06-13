@@ -157,11 +157,6 @@ static NSRect KC_defaultFrame() {
 
     [self setMovableByWindowBackground:YES];
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(screenParametersDidChange:)
-                                                 name:NSApplicationDidChangeScreenParametersNotification
-                                               object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillTerminate:)
@@ -182,24 +177,14 @@ static NSRect KC_defaultFrame() {
     [self saveFrameUsingName:self.frameAutosaveName];
 }
 
-// Called when the attached screens configuration changes. This should be optional.
-- (void)screenParametersDidChange:(NSNotification *)notification {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
-
-//    [self resetFrame];
-}
-
 - (void)resizePreservingHeight:(BOOL)keepHeight {
     NSLog(@"================> %@", NSStringFromSelector(_cmd));
-    NSLog(@"================> current screen: %@", self.screen.localizedName);
 
     NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
 
+    // Need to calculate a different width if our origin is dragged to a screen to the left
     CGFloat optimalWidth;
-    // if our origin is offscreen
     if (NSMinX(self.frame) < NSMinX(self.screen.frame)) {
-        NSLog(@"================> %@", @"Offscreen?");
-
         optimalWidth = NSMinX(self.screen.frame) - NSMinX(self.frame) - kKCDefaultBezelPadding;
     } else {
         optimalWidth = fabs(NSMaxX(screenRect) - NSMinX(self.frame)) - kKCDefaultBezelPadding;
