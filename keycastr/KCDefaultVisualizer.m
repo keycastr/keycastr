@@ -136,13 +136,16 @@ static NSRect KC_defaultFrame() {
         return nil;
     
     _runningAnimations = [[NSMutableArray alloc] init];
-    
+
+    [self setFrameUsingName:@"KCBezelWindow default.bezelWindow" force:YES];
     [self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
-    [self resizePreservingOrigin];
+    [self resizePreservingHeight:NO];
     
     CGFloat padding = 10;
     NSRect boundingRect = NSInsetRect([NSScreen mainScreen].frame, padding, padding);
     if (!NSPointInRect(self.frame.origin, boundingRect)) {
+        NSLog(@"================> Out of range: %@", NSStringFromRect(self.frame));
+
         [self resetFrame];
     }
     
@@ -175,31 +178,41 @@ static NSRect KC_defaultFrame() {
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
     [self _suspendAnimations];
-    [self resizePreservingOrigin];
+    [self resizePreservingHeight:NO];
+    [self saveFrameUsingName:self.frameAutosaveName];
 }
 
 // Called when the attached screens configuration changes. This should be optional.
 - (void)screenParametersDidChange:(NSNotification *)notification {
     NSLog(@"================> %@", NSStringFromSelector(_cmd));
 
-    [self resetFrame];
+//    [self resetFrame];
 }
 
-- (void)resizeWithinCurrentScreen {
+- (void)resizePreservingHeight:(BOOL)keepHeight {
     NSLog(@"================> %@", NSStringFromSelector(_cmd));
+    NSLog(@"================> current screen: %@", self.screen.localizedName);
 
     NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
-	CGFloat optimalWidth = NSWidth(screenRect) - NSMinX(self.frame) - kKCDefaultBezelPadding;
-    NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, fmaxf(kKCDefaultBezelHeight, NSHeight(self.frame)));
-	[self setFrame:frame display:NO];
-}
 
-- (void)resizePreservingOrigin {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
-    NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
-    CGFloat optimalWidth = NSWidth(screenRect) - NSMinX(self.frame) - kKCDefaultBezelPadding;
+    CGFloat optimalWidth;
+    // if our origin is offscreen
+    if (NSMinX(self.frame) < NSMinX(self.screen.frame)) {
+        NSLog(@"================> %@", @"Offscreen?");
 
-    NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, kKCDefaultBezelHeight);
+        optimalWidth = NSMinX(self.screen.frame) - NSMinX(self.frame) - kKCDefaultBezelPadding;
+    } else {
+        optimalWidth = fabs(NSMaxX(screenRect) - NSMinX(self.frame)) - kKCDefaultBezelPadding;
+    }
+
+    CGFloat height;
+    if (keepHeight) {
+        height = fmaxf(kKCDefaultBezelHeight, NSHeight(self.frame));
+    } else {
+        height = kKCDefaultBezelHeight;
+    }
+
+    NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, height);
 	[self setFrame:frame display:NO];
 }
 
@@ -207,7 +220,6 @@ static NSRect KC_defaultFrame() {
     NSLog(@"================> %@", NSStringFromSelector(_cmd));
 
     [self setFrame:KC_defaultFrame() display:NO];
-    [self saveFrameUsingName:self.frameAutosaveName];
 }
 
 - (void)abandonCurrentBezelView {
@@ -287,7 +299,7 @@ static NSRect KC_defaultFrame() {
     if (_runningAnimations.count == 0) {
         if (_shouldResize) {
             _shouldResize = NO;
-            [self resizeWithinCurrentScreen];
+            [self resizePreservingHeight:YES];
         }
     }
 }
