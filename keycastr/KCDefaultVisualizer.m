@@ -30,6 +30,11 @@
 #import "NSUserDefaults+Utility.h"
 
 
+// TODO: seems this should be based on the font height, or shouldn't be needed at all
+static const CGFloat kKCDefaultBezelHeight = 32.0;
+static const CGFloat kKCDefaultBezelPadding = 10.0;
+
+
 @implementation KCDefaultVisualizerFactory
 
 -(NSString*) visualizerNibName
@@ -97,7 +102,7 @@
     return [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.commandKeysOnly"] boolValue];
 }
 
-- (void)noteKeyEvent:(KCKeystroke*)keystroke
+- (void)noteKeyEvent:(KCKeystroke *)keystroke
 {
     if (![keystroke isCommand] && [self shouldOnlyDisplayCommandKeys]) {
 		return;
@@ -107,47 +112,56 @@
 
 @end
 
-@implementation KCDefaultVisualizerWindow
+static NSRect KC_defaultFrame() {
+    CGFloat width = NSWidth(NSScreen.mainScreen.frame) - 2 * kKCDefaultBezelPadding;
+    return NSMakeRect(kKCDefaultBezelPadding, kKCDefaultBezelPadding, width, kKCDefaultBezelHeight);
+}
+
+@implementation KCDefaultVisualizerWindow {
+	BOOL _shouldResize;
+	BOOL _dragging;
+}
 
 - (instancetype)init
 {
-    NSRect screenFrame = [NSScreen mainScreen].frame;
-    NSRect frameRect = NSMakeRect(0, 100, NSWidth(screenFrame), 100);
-    return [self initWithContentRect:frameRect
+    return [self initWithContentRect:KC_defaultFrame()
                            styleMask:NSWindowStyleMaskBorderless
                              backing:NSBackingStoreBuffered
                                defer:NO];
 }
 
-- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)styleMask backing:(NSBackingStoreType)backing defer:(BOOL)defer
 {
-    if (!(self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]))
+    if (!(self = [super initWithContentRect:contentRect styleMask:styleMask backing:backing defer:defer]))
         return nil;
     
     _runningAnimations = [[NSMutableArray alloc] init];
-    
-    [self setFrameUsingName:@"KCBezelWindow default.bezelWindow"];
+
+    [self setFrameUsingName:@"KCBezelWindow default.bezelWindow" force:YES];
     [self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
+    [self resizePreservingHeight:NO];
     
     CGFloat padding = 10;
     NSRect boundingRect = NSInsetRect([NSScreen mainScreen].frame, padding, padding);
     if (!NSPointInRect(self.frame.origin, boundingRect)) {
+        NSLog(@"================> Out of range: %@", NSStringFromRect(self.frame));
+
         [self resetFrame];
     }
     
     [self setLevel:NSScreenSaverWindowLevel];
     [self setOpaque:NO];
+
     [self setBackgroundColor:[NSColor clearColor]];
-    
     [self setAlphaValue:1];
+
     [self setMovableByWindowBackground:YES];
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(screenParametersDidChange)
-                                                 name:NSApplicationDidChangeScreenParametersNotification
+                                             selector:@selector(applicationWillTerminate:)
+                                                 name:NSApplicationWillTerminateNotification
                                                object:nil];
-    
     return self;
 }
 
@@ -157,14 +171,40 @@
     [super dealloc];
 }
 
-- (void)screenParametersDidChange {
-    [self resetFrame];
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [self _suspendAnimations];
+    [self resizePreservingHeight:NO];
+    [self saveFrameUsingName:self.frameAutosaveName];
+}
+
+- (void)resizePreservingHeight:(BOOL)keepHeight {
+    NSLog(@"================> %@", NSStringFromSelector(_cmd));
+
+    NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
+
+    // Need to calculate a different width if our origin is dragged to a screen to the left
+    CGFloat optimalWidth;
+    if (NSMinX(self.frame) < NSMinX(self.screen.frame)) {
+        optimalWidth = NSMinX(self.screen.frame) - NSMinX(self.frame) - kKCDefaultBezelPadding;
+    } else {
+        optimalWidth = fabs(NSMaxX(screenRect) - NSMinX(self.frame)) - kKCDefaultBezelPadding;
+    }
+
+    CGFloat height;
+    if (keepHeight) {
+        height = fmaxf(kKCDefaultBezelHeight, NSHeight(self.frame));
+    } else {
+        height = kKCDefaultBezelHeight;
+    }
+
+    NSRect frame = NSMakeRect(NSMinX(self.frame), NSMinY(self.frame), optimalWidth, height);
+	[self setFrame:frame display:NO];
 }
 
 - (void)resetFrame {
-    CGFloat padding = 10;
-    NSRect defaultFrame = NSMakeRect(padding, padding, self.frame.size.width, self.frame.size.height);
-    [self setFrame:defaultFrame display:NO];
+    NSLog(@"================> %@", NSStringFromSelector(_cmd));
+
+    [self setFrame:KC_defaultFrame() display:NO];
 }
 
 - (void)abandonCurrentBezelView {
@@ -188,33 +228,29 @@
 {
 	[self _cancelLineBreak];
 	NSString* charString = [keystroke convertToString];
-//		NSLog( @"%d", [keystroke isCommand] );
-	if ([keystroke isCommand])
+
+    if ([keystroke isCommand])
 	{
         [self abandonCurrentBezelView];
 	}
 
 	if (_currentBezelView == nil)
 	{
-		NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-        NSRect frame = [self frame];
-
-        CGFloat maxWidth = frame.size.width;
-        if (!(maxWidth > 0)) {
-            NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(frame));
-            maxWidth = 200;
-            frame.size = NSMakeSize(maxWidth, fmaxf(32.0, frame.size.height));
-            [self setFrame:frame display:YES];
-            NSLog(@"New frame: %@", NSStringFromRect(frame));
+        if (!(NSWidth(self.frame) > 0)) {
+            NSLog(@"Fixing frame; width not greater than 0: %@", NSStringFromRect(self.frame));
+            [self resetFrame];
         }
+
+        NSColor *backgroundColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
 		_currentBezelView = [[KCDefaultVisualizerBezelView alloc]
-			initWithMaxWidth:maxWidth
+			initWithMaxWidth:NSWidth(self.frame)
 			text:charString
-			backgroundColor:[userDefaults colorForKey:@"default.bezelColor"]
+			backgroundColor:backgroundColor
 			];
-		frame.size.height += 10 + _currentBezelView.frame.size.height;
-		[_currentBezelView setAutoresizingMask:NSViewMinYMargin];
-		
+        [_currentBezelView setAutoresizingMask:NSViewMinYMargin];
+
+        NSRect frame = self.frame;
+        frame.size.height += 10 + _currentBezelView.frame.size.height;
 		[self setFrame:frame display:YES animate:NO];
 
 		[[self contentView] addSubview:_currentBezelView];
@@ -233,17 +269,27 @@
 
 -(void) addRunningAnimation:(KCBezelAnimation*)animation
 {
-	[_runningAnimations addObject:animation];
-	if (_dragging)
+    [_runningAnimations addObject:animation];
+    [self saveFrameUsingName:self.frameAutosaveName];
+
+    if (_dragging)
 		[animation stopAnimation];
 }
 
 -(void) removeRunningAnimation:(KCBezelAnimation*)animation
 {
 	[_runningAnimations removeObject:animation];
+    [self saveFrameUsingName:self.frameAutosaveName];
+
+    if (_runningAnimations.count == 0) {
+        if (_shouldResize) {
+            _shouldResize = NO;
+            [self resizePreservingHeight:YES];
+        }
+    }
 }
 
--(void) _suspendAnimations
+- (void)_suspendAnimations
 {
 	NSUInteger vc = [_runningAnimations count];
 	int i;
@@ -254,7 +300,7 @@
 	}
 }
 
--(void) _resumeAnimations
+- (void)_resumeAnimations
 {
 	NSUInteger vc = [_runningAnimations count];
 	int i;
@@ -265,22 +311,24 @@
 	}
 }
 
--(void) mouseDown:(NSEvent*)theEvent
+- (void)mouseDown:(NSEvent*)theEvent
 {
-	_dragging = YES;
-	[self _suspendAnimations];
-	[super mouseDown:theEvent];
+    _dragging = YES;
+    [self _suspendAnimations];
+
+    [super mouseDown:theEvent];
 }
 
--(void) mouseUp:(NSEvent*)theEvent
+- (void)mouseUp:(NSEvent*)theEvent
 {
-	[super mouseUp:theEvent];
-	[self _resumeAnimations];
-	_dragging = NO;
+    _dragging = NO;
+    _shouldResize = YES;
+    [self _resumeAnimations];
+
+    [super mouseUp:theEvent];
 }
 
 @end
-
 
 
 @implementation KCBezelAnimation
@@ -304,14 +352,14 @@
 {
 	if ([self isAnimating])
 		return;
-		
+
 	if (duration < 0.01)
 	{
 		// just do it immediately
 		[self animationDidEnd:self];
 		return;
 	}
-	
+
 	[self setDelegate:self];
 	[self setDuration:duration];
 	[self setFrameRate:30];
@@ -324,8 +372,6 @@
 {
 	[super setCurrentProgress:progress];
 
-//	NSLog( @"%f", progress );
-
 	[_bezelView setAlphaValue:(1 - progress)];
 	[_bezelView setNeedsDisplay:YES];
 }
@@ -336,7 +382,7 @@
 	KCDefaultVisualizerWindow* w = (KCDefaultVisualizerWindow*)[_bezelView window];
 	[w removeRunningAnimation:self];
 	[_bezelView removeFromSuperview];
-	
+
 	NSArray* a = [[w contentView] subviews];
 	NSUInteger vc = [a count];
 	int i;
@@ -347,7 +393,7 @@
 		r.origin.y += deltaY;
 		[v setFrame:r];
 	}
-	
+
 	NSRect r = [w frame];
 	r.size.height -= deltaY;
 	if (r.size.height < 0)
@@ -362,12 +408,10 @@
 
 static const int kKCBezelBorder = 6;
 
--(id) initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color
+- (id)initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color
 {
-	if (!(self = [super initWithFrame:NSMakeRect(0,0,maxWidth,32)]))
-	{
+	if (!(self = [super initWithFrame:NSMakeRect(0, 0, maxWidth, kKCDefaultBezelHeight)]))
 		return nil;
-	}
 
 	_opacity = 1.0;
 
@@ -495,110 +539,3 @@ static const int kKCBezelBorder = 6;
 }
 
 @end
-
-/*
-@implementation KCDefaultVisualizerKeystrokeView
-
--(id) initWithFrame:(NSRect)frame
-{
-	// always, always start with a zero-height frame
-	frame.size.height = 0;
-    if (![super initWithFrame:frame])
-		return nil;
-
-	_actualHeight = 0;
-	_sticky = NO;
-
-	_buf = [[NSTextStorage alloc] initWithString:@""];
-	NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(frame.size.width, FLT_MAX)];
-	NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-	[layoutManager addTextContainer:textContainer];
-	[_buf addLayoutManager:layoutManager];
-	[layoutManager release];
-	[textContainer release];
-	[_buf setAttributes:[self attributes] range:NSMakeRange(0, [_buf length])];
-
-    return self;
-}
-
--(void) dealloc
-{
-	if (_buf)
-	{
-		[_buf release];
-		_buf = nil;
-	}
-	[super dealloc];
-}
-
--(BOOL) isFlipped
-{
-	return YES;
-}
-
--(NSShadow*) sharedShadow
-{
-	static NSShadow* shadow = nil;
-	if (shadow == nil)
-	{
-		shadow = [[NSShadow alloc] init];
-		[shadow setShadowColor:[NSColor blackColor]];
-		[shadow setShadowBlurRadius:2];
-		[shadow setShadowOffset:NSMakeSize(0,-1)];
-	}
-	return shadow;
-}
-
--(NSDictionary*) attributes
-{
-	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-	return [NSDictionary dictionaryWithObjectsAndKeys:
-		[NSFont systemFontOfSize:[ud floatForKey:@"default.fontSize"]], NSFontAttributeName,
-		[ud colorForKey:@"default.textColor"], NSForegroundColorAttributeName,
-		nil];
-}
-
--(void) drawRect:(NSRect)rect
-{
-	[_buf setAttributes:[self attributes] range:NSMakeRange(0, [_buf length])];
-	[[self sharedShadow] set];
-	NSLayoutManager *lm = [[_buf layoutManagers] objectAtIndex:0];
-	[lm drawGlyphsForGlyphRange:NSMakeRange(0,[_buf length]) atPoint:NSZeroPoint];
-}
-
--(float) heightForString
-{
-	NSLayoutManager *lm = [[_buf layoutManagers] objectAtIndex:0];
-	NSTextContainer *tc = [[lm textContainers] objectAtIndex:0];
-	[lm glyphRangeForTextContainer:tc];
-	return [lm usedRectForTextContainer:tc].size.height;
-}
-
--(void) resize
-{
-	float h = [self heightForString];
-	if (h != _actualHeight)
-	{
-		// kick off an animation
-		_actualHeight = h;
-		// [(KCBezelView*)[self superview] animateKeystrokeView:self toHeight:h];
-	}
-}
-
--(void) appendString:(NSString*)str
-{
-	if (!_sticky)
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeOut:) object:nil];
-	NSAttributedString *s = [[NSAttributedString alloc] initWithString:str];
-	[_buf appendAttributedString:s];
-	[s release];
-	[_buf setAttributes:[self attributes] range:NSMakeRange(0, [_buf length])];
-	[self resize];
-	[self setNeedsDisplay:YES];
-	if (!_sticky)
-		[self performSelector:@selector(fadeOut:) withObject:nil afterDelay:[[NSUserDefaults standardUserDefaults] floatForKey:@"fadeDelay"]];
-}
-
-
-@end
-*/
