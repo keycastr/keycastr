@@ -178,8 +178,6 @@ static NSRect KC_defaultFrame() {
 }
 
 - (void)resizePreservingHeight:(BOOL)keepHeight {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
-
     NSRect screenRect = self.screen ? self.screen.frame : NSScreen.mainScreen.frame;
 
     // Need to calculate a different width if our origin is dragged to a screen to the left
@@ -202,8 +200,6 @@ static NSRect KC_defaultFrame() {
 }
 
 - (void)resetFrame {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
-
     [self setFrame:KC_defaultFrame() display:NO];
 }
 
