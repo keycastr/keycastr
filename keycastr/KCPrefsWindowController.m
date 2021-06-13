@@ -119,7 +119,7 @@
 {
 	[tabView retain];
 	[tabView removeFromSuperview];
-	toolbarItemIdentifiers = [[NSMutableArray alloc] initWithObjects:NSToolbarFlexibleSpaceItemIdentifier, nil];
+	toolbarItemIdentifiers = [[NSMutableArray alloc] init];
 	preferenceViews = [[NSMutableArray alloc] init];
 	toolbarItems = [[NSMutableDictionary alloc] init];
 	int tag = 0;
@@ -149,14 +149,13 @@
 		[toolbarItems setObject:item forKey:[tvi label]];
 		tag++;
 	}
-	[toolbarItemIdentifiers addObject:NSToolbarFlexibleSpaceItemIdentifier];
-	
+
 	toolbar = [[NSToolbar alloc] initWithIdentifier:@"KeyCastrToolbar"];
 	[toolbar setAllowsUserCustomization:NO];
 	[toolbar setAutosavesConfiguration:NO];
 	[toolbar setDisplayMode:NSToolbarDisplayModeIconAndLabel];
 	[toolbar setDelegate:self];
-	[toolbar setSelectedItemIdentifier:[toolbarItemIdentifiers objectAtIndex:1]];
+	[toolbar setSelectedItemIdentifier:[toolbarItemIdentifiers objectAtIndex:0]];
 	[prefsWindow setToolbar:toolbar];
 
 	NSView* currentView = [preferenceViews objectAtIndex:0];
@@ -170,6 +169,14 @@
 	[self changeVisualizerFrom:nil to:v];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visualizerChanged:) name:@"KCVisualizerChanged" object:nil];
 	_selectedPreferencePane = 0;
+}
+
+- (void)dealloc {
+    [toolbar release];
+    [toolbarItems release];
+    [toolbarItemIdentifiers release];
+    [preferenceViews release];
+    [super dealloc];
 }
 
 @end
