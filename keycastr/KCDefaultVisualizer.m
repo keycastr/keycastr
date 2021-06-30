@@ -107,7 +107,38 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
     if (![keystroke isCommand] && [self shouldOnlyDisplayCommandKeys]) {
 		return;
 	}
+
+	[self cancelFlagOnlyKeystrokeDebounce];
 	[visualizerWindow addKeystroke:keystroke];
+}
+
+- (void) noteFlagsChanged:(uint32_t)flags
+{
+	if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"default.enableShowModifierPresses"] boolValue])
+	{
+		KCKeystroke *stroke = [[KCKeystroke alloc] initWithKeyCode:0 modifiers:flags charactersIgnoringModifiers: @""];
+
+		[self cancelFlagOnlyKeystrokeDebounce];
+
+		if (flags == 0 || flags == NSShiftKeyMask)
+		{
+			// If there are no flags or this is _only_ a shift key, do nothing
+			return;
+		}
+
+		// Debounce because flags change one by one, .e.g we will get three events if we hold down three modifier keys at once
+		lastFlagChangeKeystroke = stroke;
+		[visualizerWindow performSelector:@selector(addKeystroke:) withObject:stroke afterDelay: 0.3];
+	}
+}
+
+- (void)cancelFlagOnlyKeystrokeDebounce
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:visualizerWindow selector:@selector(addKeystroke:) object: lastFlagChangeKeystroke];
+    lastFlagChangeKeystroke = nil;
+
+    // Fade out sticky modifier key bezels
+    [visualizerWindow scheduleStickyBezelFadeOutIfNeeded];
 }
 
 @end
@@ -250,12 +281,29 @@ static NSRect KC_defaultFrame() {
 		[self setFrame:frame display:YES animate:NO];
 
 		[[self contentView] addSubview:_currentBezelView];
+
+		if (keystroke.keyCode != 0)
+		{
+			// If this is a real key down, schedule the fade out
+			// In other words, leave the bezel on screen whilst modified keys are held down
+			[_currentBezelView scheduleFadeOut];
+		}
 	}
 	else
 	{
 		[_currentBezelView appendString:charString];
 	}
-    [self _scheduleLineBreak];
+
+	if (keystroke.keyCode != 0)
+	{
+		[self _scheduleLineBreak];
+	}
+}
+
+-(void) scheduleStickyBezelFadeOutIfNeeded
+{
+    [_currentBezelView scheduleFadeOut];
+    [self abandonCurrentBezelView];
 }
 
 -(void) abandonCurrentView
@@ -424,7 +472,6 @@ static const int kKCBezelBorder = 6;
 	[self setAutoresizingMask:NSViewMinYMargin];
 
 	[self maybeResize];
-	[self scheduleFadeOut];
 
 	return self;
 }

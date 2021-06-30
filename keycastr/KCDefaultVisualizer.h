@@ -76,6 +76,7 @@
 - (void)abandonCurrentBezelView;
 - (void)addKeystroke:(KCKeystroke *)keystroke;
 - (void)addRunningAnimation:(KCBezelAnimation *)animation;
+- (void)scheduleStickyBezelFadeOutIfNeeded;
 
 - (instancetype)init;
 
@@ -84,6 +85,7 @@
 @interface KCDefaultVisualizer : KCVisualizer <KCVisualizer>
 {
 	KCDefaultVisualizerWindow* visualizerWindow;
+	KCKeystroke *lastFlagChangeKeystroke;
 }
 
 -(NSString*) visualizerName;
