@@ -28,6 +28,7 @@
 #import "KCAppController.h"
 #import "KCKeyboardTap.h"
 #import "KCDefaultVisualizer.h"
+#import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
 #import "ShortcutRecorder/SRKeyCodeTransformer.h"
 #import <Quartz/Quartz.h>
@@ -46,7 +47,7 @@ static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access t
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
-@interface KCAppController ()<KCKeyboardTapDelegate>
+@interface KCAppController () <KCKeyboardTapDelegate>
 
 @property (nonatomic, assign) NSInteger prefDisplayIcon;
 @property (nonatomic, assign) BOOL showInDock;
@@ -65,10 +66,12 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 @end
 
 @implementation KCAppController {
-	NSStatusItem *statusItem;
-	id <KCVisualizer> currentVisualizer;
-	BOOL _isCapturing;
-	KCKeyboardTap *keyboardTap;
+    NSStatusItem *statusItem;
+    KCKeyboardTap *keyboardTap;
+    id<KCVisualizer> currentVisualizer;
+    KCMouseEventVisualizer *mouseEventVisualizer;
+
+    BOOL _isCapturing;
 }
 
 @synthesize statusMenu, aboutWindow, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem;
@@ -76,16 +79,16 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 #pragma mark -
 #pragma mark Startup Procedures
 
--(id) init
-{
-	if (!(self = [super init]))
-		return nil;
+- (id)init {
+    if (!(self = [super init]))
+        return nil;
 
     keyboardTap = [KCKeyboardTap new];
     keyboardTap.delegate = self;
 
     [self _setupDefaults];
     [self registerVisualizers];
+    mouseEventVisualizer = [KCMouseEventVisualizer new];
 
     [NSColor setIgnoresAlpha:NO];
 
@@ -96,6 +99,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [keyboardTap release];
     [statusItem release];
     [currentVisualizer release];
+    [mouseEventVisualizer release];
+
     [super dealloc];
 }
 
@@ -251,29 +256,40 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 		return;
 	}
 	
-	if (!_isCapturing)
+    if (!_isCapturing) {
 		return;
+    }
 
-	if (currentVisualizer != nil)
+    if (currentVisualizer != nil) {
 		[currentVisualizer noteKeyEvent:keystroke];
+    }
 }
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteFlagsChanged:(uint32_t)flags
 {
-	if (currentVisualizer != nil)
+    if (currentVisualizer != nil) {
 		[currentVisualizer noteFlagsChanged:flags];
+    }
 }
 
 - (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(NSEvent *)event {
-    // HAXX
-    // Also, this is the wrong place for this check since mouse event preferences should be handled at the visualizer level
-    if (![NSUserDefaults.standardUserDefaults boolForKey:@"default.includeMouseClicks"])
+    // TODO: need to let through paired mouseUp events after isCapturing or includeMouseClicks are disabled, otherwise we can end up with a stuck visualizer animation
+    // TODO: need a different preferences key since mouse clicks can be composed with other visualizers
+    if (!_isCapturing || ![NSUserDefaults.standardUserDefaults boolForKey:@"default.includeMouseClicks"]) {
         return;
-    
-    KCKeystroke *stroke = [[[KCKeystroke alloc] initWithKeyCode:666 modifiers:event.modifierFlags characters:@"✷" charactersIgnoringModifiers:@"✷"] autorelease];
-    [currentVisualizer noteKeyEvent:stroke];
-}
+    }
 
+    [mouseEventVisualizer noteMouseEvent:event];
+
+    // TODO: display clicks within the visualizer without relying on magic numbers
+    if (event.type == NSEventTypeLeftMouseDown || event.type == NSEventTypeRightMouseDown) {
+        KCKeystroke *stroke = [[[KCKeystroke alloc] initWithKeyCode:666
+                                                          modifiers:event.modifierFlags
+                                                         characters:@"✷"
+                                        charactersIgnoringModifiers:@"✷"] autorelease];
+        [currentVisualizer noteKeyEvent:stroke];
+    }
+}
 
 -(NSStatusItem*) createStatusItem
 {

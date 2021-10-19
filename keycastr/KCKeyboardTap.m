@@ -29,8 +29,9 @@
 
 @interface KCKeyboardTap (Private)
 
--(void) _noteKeyEvent:(CGEventRef)eventRef;
--(void) _noteFlagsChanged:(CGEventRef)event;
+- (void)_noteMouseEvent:(CGEventRef)eventRef;
+- (void)_noteKeyEvent:(CGEventRef)eventRef;
+- (void)_noteFlagsChanged:(CGEventRef)event;
 
 @end
 
@@ -44,16 +45,24 @@ CGEventRef nullEventTapCallback(
 }
 
 CGEventRef eventTapCallback(
-   CGEventTapProxy proxy, 
-   CGEventType type, 
-   CGEventRef event, 
+   CGEventTapProxy proxy,
+   CGEventType type,
+   CGEventRef event,
    void *vp)
 {
     KCKeyboardTap* keyTap = (KCKeyboardTap*)vp;
     switch (type)
     {
         case kCGEventLeftMouseDown:
-            [keyTap _noteMouseDown:event];
+        case kCGEventRightMouseDown:
+        case kCGEventLeftMouseUp:
+        case kCGEventRightMouseUp:
+        case kCGEventLeftMouseDragged:
+        case kCGEventRightMouseDragged:
+        case kCGEventOtherMouseDown:
+        case kCGEventOtherMouseUp:
+        case kCGEventOtherMouseDragged:
+            [keyTap _noteMouseEvent:event];
             break;
         case kCGEventKeyDown:
             [keyTap _noteKeyEvent:event];
@@ -124,7 +133,17 @@ CGEventRef eventTapCallback(
                            kCGSessionEventTap,
                            kCGHeadInsertEventTap,
                            kCGEventTapOptionListenOnly,
-                           CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged),
+                           CGEventMaskBit(kCGEventLeftMouseDown)
+                                   | CGEventMaskBit(kCGEventLeftMouseUp)
+                                   | CGEventMaskBit(kCGEventRightMouseDown)
+                                   | CGEventMaskBit(kCGEventRightMouseUp)
+                                   | CGEventMaskBit(kCGEventLeftMouseDragged)
+                                   | CGEventMaskBit(kCGEventRightMouseDragged)
+                                   | CGEventMaskBit(kCGEventKeyDown)
+                                   | CGEventMaskBit(kCGEventFlagsChanged)
+                                   | CGEventMaskBit(kCGEventOtherMouseDown)
+                                   | CGEventMaskBit(kCGEventOtherMouseUp)
+                                   | CGEventMaskBit(kCGEventOtherMouseDragged),
                            eventTapCallback,
                            self
                            );
@@ -205,10 +224,9 @@ CGEventRef eventTapCallback(
     [self noteKeystroke:keystroke];
 }
 
-- (void)_noteMouseDown:(CGEventRef)eventRef
+- (void)_noteMouseEvent:(CGEventRef)eventRef
 {
     NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
-
     [_delegate keyboardTap:self noteMouseEvent:event];
 }
 
