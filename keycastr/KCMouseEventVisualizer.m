@@ -77,7 +77,6 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
 
 @end
 
-
 @implementation KCMouseVisualizerWindow
 
 - (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)styleMask backing:(NSBackingStoreType)backing defer:(BOOL)defer {
@@ -161,19 +160,19 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
     for (NSInteger i = 0; i < count; i++) {
         NSPoint points[3];
         switch ([path elementAtIndex:i associatedPoints:points]) {
-            case NSMoveToBezierPathElement: {
+            case NSBezierPathElementMoveTo: {
                 CGPathMoveToPoint(cgPath, NULL, points[0].x, points[0].y);
                 break;
             }
-            case NSLineToBezierPathElement: {
+            case NSBezierPathElementLineTo: {
                 CGPathAddLineToPoint(cgPath, NULL, points[0].x, points[0].y);
                 break;
             }
-            case NSCurveToBezierPathElement: {
+            case NSBezierPathElementCurveTo: {
                 CGPathAddCurveToPoint(cgPath, NULL, points[0].x, points[0].y, points[1].x, points[1].y, points[2].x, points[2].y);
                 break;
             }
-            case NSClosePathBezierPathElement: {
+            case NSBezierPathElementClosePath: {
                 CGPathCloseSubpath(cgPath);
                 break;
             }
