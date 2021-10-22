@@ -66,14 +66,28 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
     [_window updateWithMouseEvent:event];
 }
 
+#pragma mark - KCMouseOptionsProvider
+
+- (NSArray<NSString *> *)mouseOptionNames {
+    return @[@"None", @"With Mouse Pointer", @"With Current Visualizer", @"With Pointer and Visualizer"];
+}
+
+- (NSString *)currentMouseOptionName {
+    return @"None";
+}
+
+- (void)setCurrentMouseOptionName:(NSString *)currentMouseOptionName {
+    NSLog(@"================> currentMouseOptionName: %@", currentMouseOptionName);
+}
+
 @end
 
 #pragma mark - KCMouseVisualizerWindow
 
 @interface KCMouseVisualizerWindow ()
 
-@property (nonatomic, retain) CAShapeLayer *circle;
-@property (nonatomic, retain) CABasicAnimation *animation;
+@property (nonatomic, strong) CAShapeLayer *circle;
+@property (nonatomic, strong) CABasicAnimation *animation;
 
 @end
 

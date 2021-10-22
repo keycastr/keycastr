@@ -150,24 +150,24 @@
         <window title="KeyCastr" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" toolbarStyle="preference" id="371" userLabel="Prefs">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="352"/>
+            <rect key="contentRect" x="335" y="390" width="480" height="451"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="352"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="451"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="402">
-                        <rect key="frame" x="13" y="2" width="454" height="344"/>
+                        <rect key="frame" x="13" y="2" width="454" height="443"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="403">
                                 <view key="view" id="406">
-                                    <rect key="frame" x="10" y="33" width="434" height="298"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="397"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="410">
-                                            <rect key="frame" x="18" y="161" width="398" height="117"/>
+                                            <rect key="frame" x="18" y="260" width="398" height="117"/>
                                             <subviews>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446">
                                                     <rect key="frame" x="18" y="50" width="139" height="16"/>
@@ -252,28 +252,28 @@
                             </tabViewItem>
                             <tabViewItem label="Display" identifier="2" id="404">
                                 <view key="view" id="405">
-                                    <rect key="frame" x="10" y="33" width="434" height="298"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="397"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="411">
-                                            <rect key="frame" x="20" y="20" width="394" height="258"/>
+                                            <rect key="frame" x="20" y="20" width="394" height="357"/>
                                             <subviews>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="426">
-                                                    <rect key="frame" x="0.0" y="199" width="394" height="59"/>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="426" userLabel="Selected Visualizer Container View">
+                                                    <rect key="frame" x="0.0" y="298" width="394" height="59"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="427">
-                                                            <rect key="frame" x="18" y="21" width="122" height="17"/>
+                                                            <rect key="frame" x="18" y="21" width="136" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="Zba-BR-Ul0"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Selected visualizer:" id="428">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Selected Visualizer:" id="428">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="429">
-                                                            <rect key="frame" x="143" y="15" width="235" height="26"/>
+                                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="429" userLabel="Visualizers">
+                                                            <rect key="frame" x="157" y="15" width="221" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="432" id="430">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -307,11 +307,69 @@
                                                         <constraint firstItem="429" firstAttribute="centerY" secondItem="427" secondAttribute="centerY" id="e4U-9v-C4m"/>
                                                     </constraints>
                                                 </customView>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="eb6-kp-O9f" userLabel="Mouse Options Container View">
+                                                    <rect key="frame" x="0.0" y="240" width="394" height="59"/>
+                                                    <subviews>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pWi-b6-ckn">
+                                                            <rect key="frame" x="18" y="21" width="136" height="17"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="17" id="SoD-Xf-t6l"/>
+                                                            </constraints>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display Mouse Clicks:" id="PCE-SD-Jdo">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cF8-nO-kwo" userLabel="Mouse Options">
+                                                            <rect key="frame" x="157" y="15" width="221" height="26"/>
+                                                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="X49-dy-Ux7" id="E8m-p9-ZAp">
+                                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                <font key="font" metaFont="menu"/>
+                                                                <menu key="menu" title="OtherViews" id="Q6f-lL-Zpo">
+                                                                    <items>
+                                                                        <menuItem title="Item 1" state="on" id="X49-dy-Ux7"/>
+                                                                        <menuItem title="Item 2" id="bfr-r0-Tbs"/>
+                                                                        <menuItem title="Item 3" id="MhG-I6-QNr"/>
+                                                                    </items>
+                                                                </menu>
+                                                            </popUpButtonCell>
+                                                            <connections>
+                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseOptionNames" id="Z4X-b2-OMG"/>
+                                                                <binding destination="375" name="selectedValue" keyPath="mouseEventVisualizer.currentMouseOptionName" previousBinding="Z4X-b2-OMG" id="6iZ-al-RzH"/>
+                                                            </connections>
+                                                        </popUpButton>
+                                                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
+                                                            <rect key="frame" x="0.0" y="-2" width="394" height="5"/>
+                                                        </box>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="top" secondItem="eb6-kp-O9f" secondAttribute="top" constant="19" id="1hd-vB-Sak"/>
+                                                        <constraint firstItem="cVt-cZ-Yk1" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" id="Eh8-4A-q9r"/>
+                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="leading" secondItem="pWi-b6-ckn" secondAttribute="trailing" constant="8" symbolic="YES" id="IBL-ep-FoM"/>
+                                                        <constraint firstItem="pWi-b6-ckn" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" constant="20" symbolic="YES" id="Iy0-tW-kVn"/>
+                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="baseline" secondItem="pWi-b6-ckn" secondAttribute="firstBaseline" id="PZH-CR-IW1"/>
+                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="centerY" secondItem="pWi-b6-ckn" secondAttribute="centerY" id="S8H-4d-nxe"/>
+                                                        <constraint firstAttribute="bottom" secondItem="cVt-cZ-Yk1" secondAttribute="bottom" id="beM-Gf-hXe"/>
+                                                        <constraint firstAttribute="trailing" secondItem="cVt-cZ-Yk1" secondAttribute="trailing" id="qBs-y2-jtp"/>
+                                                        <constraint firstItem="pWi-b6-ckn" firstAttribute="centerY" secondItem="eb6-kp-O9f" secondAttribute="centerY" id="zr4-nB-bmJ"/>
+                                                    </constraints>
+                                                </customView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="426" firstAttribute="top" secondItem="411" secondAttribute="top" id="1Ab-H7-bCx"/>
+                                                <constraint firstItem="426" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="7Fk-Cn-60D"/>
                                                 <constraint firstItem="426" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="7Xe-N7-6ra"/>
+                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="FNg-LN-KJQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="L0z-xl-lkI"/>
+                                                <constraint firstAttribute="trailing" secondItem="eb6-kp-O9f" secondAttribute="trailing" id="LiA-gp-fpA"/>
+                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="426" secondAttribute="leading" id="P0K-Hi-dPV"/>
+                                                <constraint firstItem="cF8-nO-kwo" firstAttribute="trailing" secondItem="429" secondAttribute="trailing" id="RxI-dU-MHu"/>
+                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="height" secondItem="426" secondAttribute="height" id="drL-t1-XcD"/>
                                                 <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="lIh-gp-Fjd"/>
+                                                <constraint firstItem="cF8-nO-kwo" firstAttribute="width" secondItem="429" secondAttribute="width" id="nSk-Uu-SU0"/>
+                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="top" secondItem="411" secondAttribute="top" constant="58" id="pnn-de-Ba6"/>
+                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="rXA-cP-0dy"/>
                                             </constraints>
                                         </customView>
                                     </subviews>
@@ -325,11 +383,11 @@
                             </tabViewItem>
                             <tabViewItem label="Update" identifier="Item 2" id="408">
                                 <view key="view" id="409">
-                                    <rect key="frame" x="10" y="33" width="434" height="298"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="397"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="412">
-                                            <rect key="frame" x="20" y="178" width="394" height="100"/>
+                                            <rect key="frame" x="20" y="277" width="394" height="100"/>
                                             <subviews>
                                                 <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="451">
                                                     <rect key="frame" x="18" y="63" width="200" height="18"/>
@@ -428,26 +486,22 @@
             <connections>
                 <outlet property="delegate" destination="375" id="477"/>
             </connections>
-            <point key="canvasLocation" x="-305" y="-124"/>
+            <point key="canvasLocation" x="-266" y="-56.5"/>
         </window>
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="384" userLabel="About">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="194" width="256" height="316"/>
+            <rect key="contentRect" x="196" y="194" width="325" height="390"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
             <view key="contentView" id="385">
-                <rect key="frame" x="0.0" y="0.0" width="256" height="316"/>
+                <rect key="frame" x="0.0" y="0.0" width="325" height="390"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <qcView autostartsRendering="YES" translatesAutoresizingMaskIntoConstraints="NO" id="386">
-                        <rect key="frame" x="0.0" y="68" width="256" height="256"/>
-                        <color key="eraseColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </qcView>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="387">
-                        <rect key="frame" x="-5" y="65" width="280" height="5"/>
+                        <rect key="frame" x="-5" y="65" width="349" height="5"/>
                     </box>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="388">
-                        <rect key="frame" x="17" y="42" width="222" height="17"/>
+                        <rect key="frame" x="17" y="42" width="291" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="Gaw-jL-GIC"/>
                         </constraints>
@@ -458,16 +512,20 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="392">
-                        <rect key="frame" x="17" y="20" width="180" height="14"/>
+                        <rect key="frame" x="17" y="20" width="291" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="393">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title" base64-UTF8="YES">
-Q29weXJpZ2h0IAPCqTIwMDkgU3RlcGhlbiBEZWtlbg
+Q29weXJpZ2h0IAPCqSAyMDA5IFN0ZXBoZW4gRGVrZW4gYW5kIEFuZHJldyBLaXRjaGVuA
 </string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <qcView autostartsRendering="YES" translatesAutoresizingMaskIntoConstraints="NO" id="386">
+                        <rect key="frame" x="0.0" y="68" width="325" height="322"/>
+                        <color key="eraseColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </qcView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="392" firstAttribute="leading" secondItem="388" secondAttribute="leading" id="2Aq-fd-WvK"/>
@@ -478,14 +536,14 @@ Q29weXJpZ2h0IAPCqTIwMDkgU3RlcGhlbiBEZWtlbg
                     <constraint firstItem="387" firstAttribute="leading" secondItem="385" secondAttribute="leading" constant="-5" id="Gkt-5T-WVp"/>
                     <constraint firstItem="388" firstAttribute="centerX" secondItem="386" secondAttribute="centerX" id="JLS-zo-6NX"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="392" secondAttribute="trailing" constant="19" id="Pae-tG-1Kw"/>
-                    <constraint firstItem="386" firstAttribute="top" secondItem="385" secondAttribute="top" constant="-8" id="UAS-VT-dIT"/>
+                    <constraint firstItem="386" firstAttribute="top" secondItem="385" secondAttribute="top" id="UAS-VT-dIT"/>
                     <constraint firstItem="388" firstAttribute="leading" secondItem="385" secondAttribute="leading" constant="19" id="a39-oT-bEQ"/>
                     <constraint firstItem="386" firstAttribute="leading" secondItem="385" secondAttribute="leading" id="gmt-Oe-wOq"/>
                     <constraint firstItem="387" firstAttribute="top" secondItem="386" secondAttribute="bottom" id="h14-nt-DEG"/>
                     <constraint firstItem="388" firstAttribute="centerX" secondItem="385" secondAttribute="centerX" id="swr-nt-11V"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="67" y="436"/>
+            <point key="canvasLocation" x="90" y="687"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>

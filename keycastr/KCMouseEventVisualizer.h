@@ -28,7 +28,14 @@
 #import <Foundation/Foundation.h>
 
 
-@interface KCMouseEventVisualizer : NSObject
+@protocol KCMouseOptionsProvider <NSObject>
+
+@property (nonatomic, strong, readonly) NSArray<NSString *> *mouseOptionNames;
+@property (nonatomic, strong) NSString *currentMouseOptionName;
+
+@end
+
+@interface KCMouseEventVisualizer : NSObject <KCMouseOptionsProvider>
 
 - (void)noteMouseEvent:(NSEvent *)event;
 
