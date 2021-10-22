@@ -275,7 +275,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 - (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(NSEvent *)event {
     // TODO: need to let through paired mouseUp events after isCapturing or includeMouseClicks are disabled, otherwise we can end up with a stuck visualizer animation
     // TODO: need a different preferences key since mouse clicks can be composed with other visualizers
-    if (!_isCapturing || ![NSUserDefaults.standardUserDefaults boolForKey:@"default.includeMouseClicks"]) {
+    if (!_isCapturing) { // TODO: } || ![NSUserDefaults.standardUserDefaults boolForKey:@"default.includeMouseClicks"]) {
         return;
     }
 
