@@ -46,8 +46,6 @@
 -(void) setIsCapturing:(BOOL)capture;
 -(void) registerVisualizers;
 
--(NSStatusItem*) createStatusItem;
-
 -(NSArray*) availableVisualizerNames;
 
 -(NSString*) currentVisualizerName;
@@ -55,8 +53,5 @@
 
 -(id<KCVisualizer>) currentVisualizer;
 -(void) setCurrentVisualizer:(id<KCVisualizer>)newVisualizer;
-
--(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke;
--(void) keyboardTap:(KCKeyboardTap*)tap noteFlagsChanged:(uint32_t)flags;
 
 @end
