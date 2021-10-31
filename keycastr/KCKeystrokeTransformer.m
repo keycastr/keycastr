@@ -27,16 +27,19 @@
 
 #import "KCKeystrokeTransformer.h"
 #import "KCKeystroke.h"
-#import <PTHotKey/PTKeyCodeTranslator.h>
+#import <Carbon/Carbon.h>
 
-@interface KCKeystrokeTransformer (Private)
 
--(NSDictionary*) _specialKeys;
+@interface KCKeystrokeTransformer ()
+
+@property (nonatomic, readonly) struct __TISInputSource *keyboardLayout;
 
 @end
 
-
-@implementation KCKeystrokeTransformer
+@implementation KCKeystrokeTransformer {
+	TISInputSourceRef _keyboardLayout;
+	const UCKeyboardLayout *_uchrData;
+}
 
 static NSString* kCommandKeyString = @"\xe2\x8c\x98";
 static NSString* kAltKeyString = @"\xe2\x8c\xa5";
@@ -46,6 +49,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
 #define UTF8(x) [NSString stringWithUTF8String:x]
 #define NSNum(x) [NSNumber numberWithInt:x]
+
+@synthesize keyboardLayout = _keyboardLayout;
 
 +(BOOL) allowsReverseTransformation
 {
@@ -57,14 +62,40 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	return [NSString class];
 }
 
-+(KCKeystrokeTransformer*) sharedTransformer
++ (id)currentTransformer
 {
-	static KCKeystrokeTransformer* xformer = nil;
-	if (xformer == nil)
-	{
-		xformer = [[KCKeystrokeTransformer alloc] init];
-	}
-	return xformer;
+    static KCKeystrokeTransformer *currentTransformer = nil;
+    TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
+
+    if (currentTransformer == nil) {
+        currentTransformer = [[KCKeystrokeTransformer alloc] initWithKeyboardLayout:currentLayout];
+    } else if (currentTransformer.keyboardLayout != currentLayout) {
+        currentTransformer = [[KCKeystrokeTransformer alloc] initWithKeyboardLayout:currentLayout];
+    }
+
+    CFRelease(currentLayout);
+
+    return currentTransformer;
+}
+
+- (id)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout
+{
+    if (self = [super init]) {
+        _keyboardLayout = keyboardLayout;
+        CFRetain(_keyboardLayout);
+
+        CFDataRef uchr = TISGetInputSourceProperty(_keyboardLayout , kTISPropertyUnicodeKeyLayoutData);
+        _uchrData = ( const UCKeyboardLayout* )CFDataGetBytePtr(uchr);
+    }
+
+    return self;
+}
+
+- (void)dealloc
+{
+	CFRelease(_keyboardLayout);
+
+    [super dealloc];
 }
 
 -(NSDictionary*) _specialKeys
@@ -194,8 +225,16 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 }
 
 - (NSString *)translatedCharacterForKeystroke:(KCKeystroke *)keystroke {
-    PTKeyCodeTranslator *keyCodeTranslator = [PTKeyCodeTranslator currentTranslator];
-    return [keyCodeTranslator translateKeyCode:keystroke.keyCode];
+    return [self translateKeyCode:keystroke.keyCode];
 }
+
+- (NSString *)translateKeyCode:(uint16_t)keyCode {
+    UniCharCount maxStringLength = 4, actualStringLength;
+    UniChar unicodeString[4];
+    static UInt32 deadKeyState = 0;
+    UCKeyTranslate(_uchrData, keyCode, kUCKeyActionDisplay, 0, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
+    return [NSString stringWithCharacters:unicodeString length:1];
+}
+
 
 @end

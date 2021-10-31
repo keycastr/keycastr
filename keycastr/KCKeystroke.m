@@ -58,7 +58,7 @@
 }
 
 - (NSString *)convertToString {
-    return [[KCKeystrokeTransformer sharedTransformer] transformedValue:self];
+    return [[KCKeystrokeTransformer currentTransformer] transformedValue:self];
 }
 
 - (NSString *)description {

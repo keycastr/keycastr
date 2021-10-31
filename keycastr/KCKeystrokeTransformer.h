@@ -30,10 +30,14 @@
 
 @interface KCKeystrokeTransformer : NSValueTransformer
 
-+(BOOL) allowsReverseTransformation;
-+(Class) transformedValueClass;
-+(KCKeystrokeTransformer*) sharedTransformer;
++ (id)currentTransformer;
 
--(id) transformedValue:(id)value;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
++ (BOOL)allowsReverseTransformation;
++ (Class)transformedValueClass;
+
+- (id)transformedValue:(id)value;
 
 @end
