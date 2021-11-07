@@ -1,6 +1,6 @@
 [submodule "keycastr/Externals/ShortcutRecorder"]
 	path = keycastr/Externals/ShortcutRecorder
-	url = git@github.com:Kentzo/ShortcutRecorder.git
+	url = https://github.com/Kentzo/ShortcutRecorder.git
 [submodule "keycastr/Externals/Sparkle"]
 	path = keycastr/Externals/Sparkle
-	url = git@github.com:sparkle-project/Sparkle.git
+	url = https://github.com/sparkle-project/Sparkle.git
