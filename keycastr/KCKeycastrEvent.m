@@ -23,21 +23,36 @@
 //    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 //    OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //    ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#import <AppKit/AppKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import "KCMouseEvent.h"
+#import "KCKeycastrEvent.h"
+#import "KCKeystrokeTransformer.h"
 
 
-#import <Foundation/Foundation.h>
+@implementation KCKeycastrEvent {
+    NSEventType _type;
+    NSEventModifierFlags _modifierFlags;
+}
 
-@class KCMouseEvent;
++ (instancetype)eventWithNSEvent:(NSEvent *)event {
+    return [[[self alloc] initWithNSEvent:event] autorelease];
+}
 
-@protocol KCMouseOptionsProvider <NSObject>
+- (instancetype)initWithNSEvent:(NSEvent *)event {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
 
-@property (nonatomic, strong, readonly) NSArray<NSString *> *mouseOptionNames;
-@property (nonatomic, strong) NSString *currentMouseOptionName;
+    _type = event.type;
+    _modifierFlags = event.modifierFlags;
 
-@end
+    return self;
+}
 
-@interface KCMouseEventVisualizer : NSObject <KCMouseOptionsProvider>
-
-- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
+- (NSString *)convertToString {
+    return [[KCKeystrokeTransformer currentTransformer] transformedValue:self];
+}
 
 @end

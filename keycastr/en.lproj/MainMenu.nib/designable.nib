@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
-        <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -151,7 +151,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="451"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="451"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -335,8 +335,8 @@
                                                                 </menu>
                                                             </popUpButtonCell>
                                                             <connections>
-                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseOptionNames" id="Z4X-b2-OMG"/>
                                                                 <binding destination="375" name="selectedValue" keyPath="mouseEventVisualizer.currentMouseOptionName" previousBinding="Z4X-b2-OMG" id="6iZ-al-RzH"/>
+                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseOptionNames" id="Z4X-b2-OMG"/>
                                                             </connections>
                                                         </popUpButton>
                                                         <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
@@ -492,7 +492,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="194" width="325" height="390"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" id="385">
                 <rect key="frame" x="0.0" y="0.0" width="325" height="390"/>
                 <autoresizingMask key="autoresizingMask"/>

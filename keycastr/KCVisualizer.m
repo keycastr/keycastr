@@ -65,25 +65,28 @@
 
 -(NSString*) visualizerName
 {
-	@throw [NSException exceptionWithName:@"KCNotImplementedException" reason:@"The method visualizerName must be implemented in a subclass." userInfo:nil];
+	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
 
 -(void) showVisualizer:(id)sender
 {
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 -(void) hideVisualizer:(id)sender
 {
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 -(void) deactivateVisualizer:(id)sender
 {
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 -(void) noteKeyEvent:(KCKeystroke*)keystroke
 {
-	// Default implementation does nothing.
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 -(void) noteFlagsChanged:(uint32_t)flags
@@ -97,13 +100,13 @@
 
 -(NSString*) visualizerNibName
 {
-	@throw [NSException exceptionWithName:@"KCNotImplementedException" reason:@"The method visualizerNibName must be implemented in a subclass." userInfo:nil];
-	return nil;
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 -(Class) visualizerClass
 {
-	@throw [NSException exceptionWithName:@"KCNotImplementedException" reason:@"The method visualizerClass must be implemented in a subclass." userInfo:nil];
+    [self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
 
@@ -119,7 +122,7 @@
 
 -(NSString*) visualizerName
 {
-	@throw [NSException exceptionWithName:@"KCNotImplementedException" reason:@"The method visualizerName must be implemented in a subclass." userInfo:nil];
+	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
 

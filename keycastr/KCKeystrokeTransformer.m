@@ -28,6 +28,7 @@
 #import "KCKeystrokeTransformer.h"
 #import "KCKeystroke.h"
 #import <Carbon/Carbon.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 @interface KCKeystrokeTransformer ()
@@ -146,7 +147,6 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
             UTF8("\xf0\x9f\x96\xa5"), @160, // mission control
             UTF8("\xf0\x9f\x9a\x80"), @131, // launcher
             UTF8("fn"), @179, // fn key
-			UTF8("\xF0\x9F\x96\xB1"), @666, // Haxx
 			nil];
 	}
 	return d;
@@ -158,7 +158,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	NSMutableString *mutableResponse = [NSMutableString string];
 
     uint16_t _keyCode = keystroke.keyCode;
-    NSEventModifierFlags _modifiers = keystroke.modifiers;
+    NSEventModifierFlags _modifiers = keystroke.modifierFlags;
     BOOL isOption = (_modifiers & NSAlternateKeyMask) != 0;
     BOOL isCommand = keystroke.isCommand;
 

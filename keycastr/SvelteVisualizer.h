@@ -27,6 +27,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KCVisualizer.h"
+#import "KCKeystroke.h"
 
 @interface SvelteVisualizerFactory : KCVisualizerFactory <KCVisualizerFactory>
 {

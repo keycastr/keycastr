@@ -26,8 +26,9 @@
 
 
 #import "KCKeyboardTap.h"
+#import "KCKeycastrEvent.h"
 
-@interface KCKeyboardTap (Private)
+@interface KCKeyboardTap ()
 
 - (void)_noteMouseEvent:(CGEventRef)eventRef;
 - (void)_noteKeyEvent:(CGEventRef)eventRef;
@@ -217,17 +218,15 @@ CGEventRef eventTapCallback(
 -(void) _noteKeyEvent:(CGEventRef)eventRef
 {
     NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
-    KCKeystroke* keystroke = [[[KCKeystroke alloc] initWithKeyCode:event.keyCode
-                                                         modifiers:event.modifierFlags
-                                                        characters:event.characters
-                                       charactersIgnoringModifiers:event.charactersIgnoringModifiers] autorelease];
+    KCKeystroke* keystroke = [KCKeystroke eventWithNSEvent:event];
     [self noteKeystroke:keystroke];
 }
 
 - (void)_noteMouseEvent:(CGEventRef)eventRef
 {
     NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
-    [_delegate keyboardTap:self noteMouseEvent:event];
+    KCMouseEvent *mouseEvent = [KCMouseEvent eventWithNSEvent:event];
+    [_delegate keyboardTap:self noteMouseEvent:mouseEvent];
 }
 
 -(void) noteKeystroke:(KCKeystroke*)keystroke

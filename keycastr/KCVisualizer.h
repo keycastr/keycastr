@@ -26,7 +26,8 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "KCKeystroke.h"
+
+@class KCKeystroke, KCMouseEvent;
 
 @protocol KCVisualizer<NSObject>
 
