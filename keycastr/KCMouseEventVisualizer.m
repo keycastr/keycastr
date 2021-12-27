@@ -31,17 +31,26 @@
 #import <AppKit/AppKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "KCMouseEventVisualizer.h"
+#import "KCMouseEvent.h"
 #import "NSUserDefaults+Utility.h"
+#import "KCKeycastrEvent.h"
 
 static CGFloat const kKCMouseVisualizerRadius = 22.0;
 
 @interface KCMouseVisualizerWindow : NSWindow
 
-- (void)updateWithMouseEvent:(NSEvent *)event;
+- (void)updateWithMouseEvent:(KCMouseEvent *)event;
 
 @end
 
 #pragma mark - KCMouseEventVisualizer
+
+@interface KCMouseEventVisualizer ()
+
+@property (nonatomic, strong) NSArray<NSString *> *mouseOptionNames;
+@property (nonatomic, assign) NSUInteger selectedMouseOptionIndex;
+
+@end
 
 @implementation KCMouseEventVisualizer {
     KCMouseVisualizerWindow *_window;
@@ -51,6 +60,14 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
     if (!(self = [super init])) {
         return nil;
     }
+
+    _mouseOptionNames = @[@"None",
+            @"With Mouse Pointer",
+//             @"With Current Visualizer",
+//             @"With Pointer and Visualizer"
+    ];
+
+    // TODO: set _selectedMouseOptionIndex from NSUserDefaults
 
     CGFloat diameter = 2 * kKCMouseVisualizerRadius;
     _window = [[KCMouseVisualizerWindow alloc] initWithContentRect:NSMakeRect(0, 0, diameter, diameter)
@@ -62,22 +79,35 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
     return self;
 }
 
-- (void)noteMouseEvent:(NSEvent *)event {
-    [_window updateWithMouseEvent:event];
+- (BOOL)isMouseUp:(KCMouseEvent *)mouseEvent {
+    return mouseEvent.type == NSEventTypeLeftMouseUp
+    || mouseEvent.type == NSEventTypeRightMouseUp
+    || mouseEvent.type == NSEventTypeOtherMouseUp;
+}
+
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {
+    if (self.selectedMouseOptionIndex > 0 || [self isMouseUp:mouseEvent]) {
+        [_window updateWithMouseEvent:mouseEvent];
+    }
+
+    // TODO: delegate back out so that the currentVisualizer can also show the event, if supported & enabled
 }
 
 #pragma mark - KCMouseOptionsProvider
 
-- (NSArray<NSString *> *)mouseOptionNames {
-    return @[@"None", @"With Mouse Pointer", @"With Current Visualizer", @"With Pointer and Visualizer"];
-}
-
 - (NSString *)currentMouseOptionName {
-    return @"None";
+    return [self.mouseOptionNames objectAtIndex:self.selectedMouseOptionIndex];
 }
 
 - (void)setCurrentMouseOptionName:(NSString *)currentMouseOptionName {
     NSLog(@"================> currentMouseOptionName: %@", currentMouseOptionName);
+
+    self.selectedMouseOptionIndex = [self.mouseOptionNames indexOfObject:currentMouseOptionName];
+}
+
+- (void)setSelectedMouseOptionIndex:(NSUInteger)selectedMouseOptionIndex {
+    // TODO: also set in NSUserDefaults
+    _selectedMouseOptionIndex = selectedMouseOptionIndex;
 }
 
 @end
@@ -108,7 +138,7 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
     return self;
 }
 
-- (void)updateWithMouseEvent:(NSEvent *)event {
+- (void)updateWithMouseEvent:(KCMouseEvent *)event {
 
     if (!self.circle) {
         CGFloat diameter = 2 * kKCMouseVisualizerRadius;

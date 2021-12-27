@@ -28,16 +28,20 @@
 #import "KCKeystroke.h"
 #import "KCKeystrokeTransformer.h"
 
-@implementation KCKeystroke
+@implementation KCKeystroke {
+    NSString *_characters;
+    NSString *_charactersIgnoringModifiers;
+}
 
-- (id)initWithKeyCode:(uint16_t)keyCode modifiers:(NSEventModifierFlags)modifiers characters:(NSString *)characters charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers {
-    if (!(self = [super init]))
+- (instancetype)initWithNSEvent:(NSEvent *)event {
+    self = [super initWithNSEvent:event];
+    if (!self) {
         return nil;
+    }
 
-    _keyCode = keyCode;
-    _modifiers = modifiers;
-    _characters = [characters copy];
-    _charactersIgnoringModifiers = [charactersIgnoringModifiers copy];
+    _keyCode = event.keyCode;
+    _characters = [event.characters copy];
+    _charactersIgnoringModifiers = [event.charactersIgnoringModifiers copy];
 
     return self;
 }
@@ -47,6 +51,7 @@
 	_charactersIgnoringModifiers = nil;
     [_characters release];
     _characters = nil;
+
     [super dealloc];
 }
 
@@ -54,16 +59,12 @@
  A KeyStroke is a command if it includes a CMD or CTRL key; option and shift are only considered modifiers.
  */
 - (BOOL)isCommand {
-    return (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
-}
-
-- (NSString *)convertToString {
-    return [[KCKeystrokeTransformer currentTransformer] transformedValue:self];
+    return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
 }
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<KCKeystroke: keyCode: %hu, modifiers: %lu, characters: %@, charactersIgnoringModifiers: %@>",
-            _keyCode, (unsigned long)_modifiers, _characters, _charactersIgnoringModifiers];
+            self.keyCode, self.modifierFlags, _characters, _charactersIgnoringModifiers];
 }
 
 @end

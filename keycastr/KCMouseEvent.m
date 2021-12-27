@@ -23,21 +23,25 @@
 //    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 //    OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //    ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#import "KCMouseEvent.h"
+#import <QuartzCore/QuartzCore.h>
+#import <AppKit/AppKit.h>
 
+@implementation KCMouseEvent
 
-#import <Foundation/Foundation.h>
+- (instancetype)initWithNSEvent:(NSEvent *)event {
+    self = [super initWithNSEvent:event];
+    if (!self) {
+        return nil;
+    }
 
-@class KCMouseEvent;
+    _locationInWindow = event.locationInWindow;
 
-@protocol KCMouseOptionsProvider <NSObject>
+    return self;
+}
 
-@property (nonatomic, strong, readonly) NSArray<NSString *> *mouseOptionNames;
-@property (nonatomic, strong) NSString *currentMouseOptionName;
-
-@end
-
-@interface KCMouseEventVisualizer : NSObject <KCMouseOptionsProvider>
-
-- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<KCMouseEvent: locationInWindow: %@, modifiers: %lu>", NSStringFromPoint(self.locationInWindow), self.modifierFlags];
+}
 
 @end

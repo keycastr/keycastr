@@ -31,6 +31,7 @@
 #import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
 #import "ShortcutRecorder/SRKeyCodeTransformer.h"
+#import "KCKeycastrEvent.h"
 #import <Quartz/Quartz.h>
 
 typedef struct _KeyCombo {
@@ -121,8 +122,9 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 
     [self changeKeyComboTo:toggleShortcutKey];
-    [shortcutRecorder setObjectValue:@{SRShortcutKeyCode: @(toggleShortcutKey.code),
-                                       SRShortcutModifierFlagsKey: @(toggleShortcutKey.flags)}];
+    SRShortcut *shortcut = [SRShortcut shortcutWithDictionary:@{SRShortcutKeyKeyCode: @(toggleShortcutKey.code),
+                                                                SRShortcutKeyModifierFlags: @(toggleShortcutKey.flags)}];
+    [shortcutRecorder setObjectValue:shortcut];
 
     [prefsWindowController nudge];
     [self updateAboutPanel];
@@ -250,7 +252,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
 {
-	if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifiers] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (self.toggleKeyCombo.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
+	if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifierFlags] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (self.toggleKeyCombo.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
 	{
         [self toggleRecording:self];
 		return;
@@ -272,23 +274,14 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 }
 
-- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(NSEvent *)event {
-    // TODO: need to let through paired mouseUp events after isCapturing or includeMouseClicks are disabled, otherwise we can end up with a stuck visualizer animation
-    // TODO: need a different preferences key since mouse clicks can be composed with other visualizers
-    if (!_isCapturing) { // TODO: } || ![NSUserDefaults.standardUserDefaults boolForKey:@"default.includeMouseClicks"]) {
+- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(KCMouseEvent *)mouseEvent {
+    // TODO: need to let mouseUp events through after isCapturing or mouse events are disabled, otherwise we can end up with a stuck visualizer animation
+    if (!_isCapturing) {
         return;
     }
 
-    [mouseEventVisualizer noteMouseEvent:event];
+    [mouseEventVisualizer noteMouseEvent:mouseEvent];
 
-    // TODO: display clicks within the visualizer without relying on magic numbers
-    if (event.type == NSEventTypeLeftMouseDown || event.type == NSEventTypeRightMouseDown) {
-        KCKeystroke *stroke = [[[KCKeystroke alloc] initWithKeyCode:666
-                                                          modifiers:event.modifierFlags
-                                                         characters:@"✷"
-                                        charactersIgnoringModifiers:@"✷"] autorelease];
-        [currentVisualizer noteKeyEvent:stroke];
-    }
 }
 
 -(NSStatusItem*) createStatusItem
@@ -599,13 +592,14 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)shortcutRecorderDidEndRecording:(SRRecorderControl *)aRecorder;
 {
-    NSDictionary *toggleShortcut = aRecorder.objectValue;
+    SRShortcut *toggleShortcut = aRecorder.objectValue;
     KeyCombo newKeyCombo;
-    newKeyCombo.code = [toggleShortcut[SRShortcutKeyCode] shortValue];
-    newKeyCombo.flags = [toggleShortcut[SRShortcutModifierFlagsKey] unsignedIntValue];
+    newKeyCombo.code = [toggleShortcut[SRShortcutKeyKeyCode] shortValue];
+    newKeyCombo.flags = [toggleShortcut[SRShortcutKeyModifierFlags] unsignedIntValue];
 
     [self changeKeyComboTo:newKeyCombo];
     [[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithBytes:&newKeyCombo length:sizeof(newKeyCombo)] forKey:kKCPrefCapturingHotKey];
 }
 
 @end
+

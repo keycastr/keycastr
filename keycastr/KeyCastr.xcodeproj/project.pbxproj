@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */; };
 		324AD36C18A447EB8EDCE7B7 /* KCDefaultVisualizer.nib in Resources */ = {isa = PBXBuildFile; fileRef = 324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */; };
+		324AD7AC994A031550F38591 /* KCKeycastrEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADBA0D37774E36EA35A2E /* KCKeycastrEvent.m */; };
 		324AD844390E162E4229CD1B /* KCDefaultVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADC930C7D14543CCB1327 /* KCDefaultVisualizer.m */; };
+		324ADBB15522719676E80D5F /* KCMouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 324ADE9FD592FD181805CDF3 /* KCMouseEvent.h */; };
 		324ADBC2EAD3FC5FD3C369FE /* KCMouseEventVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 324AD07485304123A4E743E0 /* KCMouseEventVisualizer.h */; };
 		324ADBCB6A0995C04527E1D8 /* NSBezierPath+RoundedRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 324AD5B73A2BC2916E285219 /* NSBezierPath+RoundedRect.m */; };
+		324ADDDF7A11FD8A03BE1995 /* KCMouseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADE0BF78E9FB58C02F49B /* KCMouseEvent.m */; };
 		324ADE7F91EC0CAFD38BA4BA /* KCMouseEventVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADDDFBC424496DA228C39 /* KCMouseEventVisualizer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3D1640500F3BCC6900CA65AD /* KeyCastrStatusItemActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D16404E0F3BCC6900CA65AD /* KeyCastrStatusItemActive.png */; };
 		3D1640510F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D16404F0F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png */; };
@@ -93,19 +97,19 @@
 			remoteGlobalIDString = 3D1648AB0F451D4500CA65AD;
 			remoteInfo = Svelte;
 		};
-		AF546FA6272DEDB600EA6AFD /* PBXContainerItemProxy */ = {
+		AF0FB730274874C4001B292E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E273122E1349EC9000A84433;
-			remoteInfo = PTHotKey.framework;
+			remoteGlobalIDString = BAC79C07216FCE8E00E45F23;
+			remoteInfo = Inspector;
 		};
-		AF546FA8272DEDB600EA6AFD /* PBXContainerItemProxy */ = {
+		AF0FB732274874C4001B292E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 0D6B2468180304DE00CE1142;
-			remoteInfo = Demo;
+			remoteGlobalIDString = BA722EC52161619200EFF192;
+			remoteInfo = "Unit Tests";
 		};
 		AF6DD4022586E03A00EDC9D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -258,10 +262,14 @@
 		324AD07485304123A4E743E0 /* KCMouseEventVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCMouseEventVisualizer.h; sourceTree = SOURCE_ROOT; };
 		324AD08A82A3657D73DC13DF /* KCDefaultVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCDefaultVisualizer.h; sourceTree = "<group>"; };
 		324AD5B73A2BC2916E285219 /* NSBezierPath+RoundedRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+RoundedRect.m"; sourceTree = "<group>"; };
+		324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKeycastrEvent.h; sourceTree = "<group>"; };
 		324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KCDefaultVisualizer.nib; sourceTree = "<group>"; };
 		324ADA987B1C0B9D0D36CBDF /* NSBezierPath+RoundedRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+RoundedRect.h"; sourceTree = "<group>"; };
+		324ADBA0D37774E36EA35A2E /* KCKeycastrEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKeycastrEvent.m; sourceTree = "<group>"; };
 		324ADC930C7D14543CCB1327 /* KCDefaultVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCDefaultVisualizer.m; sourceTree = "<group>"; };
 		324ADDDFBC424496DA228C39 /* KCMouseEventVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCMouseEventVisualizer.m; sourceTree = SOURCE_ROOT; };
+		324ADE0BF78E9FB58C02F49B /* KCMouseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCMouseEvent.m; sourceTree = "<group>"; };
+		324ADE9FD592FD181805CDF3 /* KCMouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCMouseEvent.h; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* KeyCastr_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCastr_Prefix.pch; sourceTree = "<group>"; };
 		3D16404E0F3BCC6900CA65AD /* KeyCastrStatusItemActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeyCastrStatusItemActive.png; sourceTree = "<group>"; };
 		3D16404F0F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeyCastrStatusItemInactive.png; sourceTree = "<group>"; };
@@ -472,10 +480,14 @@
 		3D1646FC0F43DDC100CA65AD /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */,
+				324ADBA0D37774E36EA35A2E /* KCKeycastrEvent.m */,
 				3DC3146F0F33EEF400B67D65 /* KCKeystroke.h */,
 				3DC314700F33EEF400B67D65 /* KCKeystroke.m */,
 				3D1645DD0F43CD0600CA65AD /* KCKeystrokeTransformer.h */,
 				3D1645DE0F43CD0600CA65AD /* KCKeystrokeTransformer.m */,
+				324ADE9FD592FD181805CDF3 /* KCMouseEvent.h */,
+				324ADE0BF78E9FB58C02F49B /* KCMouseEvent.m */,
 				3D1646B70F43DBD700CA65AD /* KCVisualizer-Info.plist */,
 				3D3F54DD0F31448A001C7272 /* KCVisualizer.h */,
 				3D3F54DE0F31448A001C7272 /* KCVisualizer.m */,
@@ -518,9 +530,9 @@
 		AF6DD3FD2586E03A00EDC9D4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				AF0FB731274874C4001B292E /* Inspector.app */,
 				AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */,
-				AF546FA7272DEDB600EA6AFD /* PTHotKey.framework */,
-				AF546FA9272DEDB600EA6AFD /* Demo.app */,
+				AF0FB733274874C4001B292E /* Unit Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -564,6 +576,8 @@
 				3D1646C50F43DC4C00CA65AD /* KCKeystroke.h in Headers */,
 				3D1646C60F43DC5000CA65AD /* KCKeystrokeTransformer.h in Headers */,
 				324ADBC2EAD3FC5FD3C369FE /* KCMouseEventVisualizer.h in Headers */,
+				324ADBB15522719676E80D5F /* KCMouseEvent.h in Headers */,
+				324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,18 +741,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		AF546FA7272DEDB600EA6AFD /* PTHotKey.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PTHotKey.framework;
-			remoteRef = AF546FA6272DEDB600EA6AFD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AF546FA9272DEDB600EA6AFD /* Demo.app */ = {
+		AF0FB731274874C4001B292E /* Inspector.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = Demo.app;
-			remoteRef = AF546FA8272DEDB600EA6AFD /* PBXContainerItemProxy */;
+			path = Inspector.app;
+			remoteRef = AF0FB730274874C4001B292E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AF0FB733274874C4001B292E /* Unit Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Unit Tests.xctest";
+			remoteRef = AF0FB732274874C4001B292E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */ = {
@@ -906,6 +920,8 @@
 				3D1646C40F43DC4C00CA65AD /* KCKeystroke.m in Sources */,
 				3D1646C70F43DC5100CA65AD /* KCKeystrokeTransformer.m in Sources */,
 				324ADE7F91EC0CAFD38BA4BA /* KCMouseEventVisualizer.m in Sources */,
+				324ADDDF7A11FD8A03BE1995 /* KCMouseEvent.m in Sources */,
+				324AD7AC994A031550F38591 /* KCKeycastrEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,20 +24,12 @@
 //    OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //    ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 #import <Foundation/Foundation.h>
+#import "KCKeycastrEvent.h"
 
-@class KCMouseEvent;
 
-@protocol KCMouseOptionsProvider <NSObject>
+@interface KCMouseEvent : KCKeycastrEvent
 
-@property (nonatomic, strong, readonly) NSArray<NSString *> *mouseOptionNames;
-@property (nonatomic, strong) NSString *currentMouseOptionName;
-
-@end
-
-@interface KCMouseEventVisualizer : NSObject <KCMouseOptionsProvider>
-
-- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
+@property (nonatomic, readonly) NSPoint locationInWindow;
 
 @end

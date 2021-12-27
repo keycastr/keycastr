@@ -26,17 +26,12 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "KCKeycastrEvent.h"
 
-@interface KCKeystroke : NSObject
+@interface KCKeystroke : KCKeycastrEvent
 
 @property (nonatomic, readonly) uint16_t keyCode;
-@property (nonatomic, readonly) NSEventModifierFlags modifiers;
-@property (nonatomic, copy, readonly) NSString *characters;
-@property (nonatomic, copy, readonly) NSString *charactersIgnoringModifiers;
-
-- (id)initWithKeyCode:(uint16_t)keyCode modifiers:(NSEventModifierFlags)modifiers characters:(NSString *)characters charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers;
 
 - (BOOL)isCommand;
-- (NSString *)convertToString;
 
 @end

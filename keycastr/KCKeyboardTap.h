@@ -27,14 +27,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KCKeystroke.h"
+#import "KCMouseEvent.h"
 
 @class KCKeyboardTap;
 
 @protocol KCKeyboardTapDelegate
 
--(void) keyboardTap:(KCKeyboardTap*)keyboardTap noteKeystroke:(KCKeystroke*)keystroke;
--(void) keyboardTap:(KCKeyboardTap*)keyboardTap noteFlagsChanged:(uint32_t)newFlags;
--(void) keyboardTap:(KCKeyboardTap*)keyboardTap noteMouseEvent:(NSEvent *)event;
+- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteKeystroke:(KCKeystroke *)keystroke;
+- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(KCMouseEvent *)mouseEvent;
+- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteFlagsChanged:(uint32_t)newFlags;
 
 @end
 
@@ -48,10 +49,7 @@
 @property (nonatomic, assign) id<KCKeyboardTapDelegate> delegate;
 @property (nonatomic, assign, readonly) BOOL tapInstalled;
 
--(BOOL) installTapWithError:(NSError**)error;
--(void) removeTap;
-
--(void) noteKeystroke:(KCKeystroke*)keystroke;
--(void) noteFlagsChanged:(uint32_t)newFlags;
+- (BOOL)installTapWithError:(NSError **)error;
+- (void)removeTap;
 
 @end
