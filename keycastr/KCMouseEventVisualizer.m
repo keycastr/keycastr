@@ -67,16 +67,18 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
 //             @"With Pointer and Visualizer"
     ];
 
-    // TODO: set _selectedMouseOptionIndex from NSUserDefaults
+    // TODO: set selectedMouseOptionIndex from NSUserDefaults
 
+    return self;
+}
+
+- (void)createWindow {
     CGFloat diameter = 2 * kKCMouseVisualizerRadius;
     _window = [[KCMouseVisualizerWindow alloc] initWithContentRect:NSMakeRect(0, 0, diameter, diameter)
                                                          styleMask:NSWindowStyleMaskBorderless
                                                            backing:NSBackingStoreBuffered
                                                              defer:NO];
     [_window orderFrontRegardless];
-
-    return self;
 }
 
 - (BOOL)isMouseUp:(KCMouseEvent *)mouseEvent {
@@ -90,7 +92,7 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
         [_window updateWithMouseEvent:mouseEvent];
     }
 
-    // TODO: delegate back out so that the currentVisualizer can also show the event, if supported & enabled
+    // TODO: delegate back out so that the currentVisualizer can also show the event, if enabled
 }
 
 #pragma mark - KCMouseOptionsProvider
@@ -107,7 +109,15 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
 
 - (void)setSelectedMouseOptionIndex:(NSUInteger)selectedMouseOptionIndex {
     // TODO: also set in NSUserDefaults
+    // TODO: if NONE or delegate only then release the _window
     _selectedMouseOptionIndex = selectedMouseOptionIndex;
+
+    if (selectedMouseOptionIndex == 0) {
+        [_window orderOut:self];
+        _window = nil;
+    } else if (_window == nil) {
+        [self createWindow];
+    }
 }
 
 @end
@@ -135,11 +145,24 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
 
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 
+    // TODO: this should be its own color config.
+    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:@"values.default.bezelColor" options:NSKeyValueObservingOptionNew context:NULL];
+
     return self;
 }
 
-- (void)updateWithMouseEvent:(KCMouseEvent *)event {
+- (void)dealloc {
+    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:@"values.default.bezelColor"];
+}
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"values.default.bezelColor"]) {
+        [self.circle removeFromSuperlayer];
+        self.circle = nil;
+    }
+}
+
+- (void)updateWithMouseEvent:(KCMouseEvent *)event {
     if (!self.circle) {
         CGFloat diameter = 2 * kKCMouseVisualizerRadius;
         CGFloat lineWidth = 2.0;
