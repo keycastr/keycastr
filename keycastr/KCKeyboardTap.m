@@ -201,16 +201,16 @@ CGEventRef eventTapCallback(
 	CGEventFlags f = CGEventGetFlags( event );
 
 	if (f & kCGEventFlagMaskShift)
-		modifiers |= NSShiftKeyMask;
+        modifiers |= NSEventModifierFlagShift;
 	
 	if (f & kCGEventFlagMaskCommand)
-		modifiers |= NSCommandKeyMask;
+        modifiers |= NSEventModifierFlagCommand;
 
 	if (f & kCGEventFlagMaskControl)
-		modifiers |= NSControlKeyMask;
+        modifiers |= NSEventModifierFlagControl;
 	
 	if (f & kCGEventFlagMaskAlternate)
-		modifiers |= NSAlternateKeyMask;
+        modifiers |= NSEventModifierFlagOption;
 
 	[self noteFlagsChanged:modifiers];
 }
