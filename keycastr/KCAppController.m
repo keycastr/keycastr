@@ -169,7 +169,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [alert addButtonWithTitle:@"Open System Preferences"];
     alert.messageText = @"Additional Permissions Required";
     alert.informativeText = [error.localizedDescription stringByAppendingString:kKCSupplementalAlertText];
-    alert.alertStyle = NSCriticalAlertStyle;
+    alert.alertStyle = NSAlertStyleCritical;
 
     switch ([alert runModal]) {
         case NSAlertFirstButtonReturn:
@@ -210,7 +210,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	// Set up user-defaults defaults
 	KeyCombo keyCombo;
 	keyCombo.code = 40;
-	keyCombo.flags = NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
+    keyCombo.flags = NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand;
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud synchronize];
 
@@ -252,7 +252,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
 {
-	if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifierFlags] & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)) == (self.toggleKeyCombo.flags & (NSControlKeyMask | NSCommandKeyMask | NSShiftKeyMask | NSAlternateKeyMask)))
+    if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifierFlags] & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)) == (self.toggleKeyCombo.flags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)))
 	{
         [self toggleRecording:self];
 		return;
@@ -602,4 +602,3 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 @end
-
