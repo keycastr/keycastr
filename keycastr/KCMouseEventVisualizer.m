@@ -47,8 +47,8 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
 
 @interface KCMouseEventVisualizer ()
 
-@property (nonatomic, strong) NSArray<NSString *> *mouseOptionNames;
-@property (nonatomic, assign) NSUInteger selectedMouseOptionIndex;
+@property (nonatomic, strong) NSArray<NSString *> *mouseDisplayOptionNames;
+@property (nonatomic, assign) NSInteger selectedMouseDisplayOptionIndex;
 
 @end
 
@@ -56,18 +56,20 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
     KCMouseVisualizerWindow *_window;
 }
 
+static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
+
 - (instancetype)init {
     if (!(self = [super init])) {
         return nil;
     }
 
-    _mouseOptionNames = @[@"None",
+    _mouseDisplayOptionNames = @[@"None",
             @"With Mouse Pointer",
 //             @"With Current Visualizer",
 //             @"With Pointer and Visualizer"
     ];
 
-    // TODO: set selectedMouseOptionIndex from NSUserDefaults
+    self.selectedMouseDisplayOptionIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kKCMouseVisualizerDisplayOptionKey];
 
     return self;
 }
@@ -88,31 +90,31 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
 }
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {
-    if (self.selectedMouseOptionIndex > 0 || [self isMouseUp:mouseEvent]) {
+    if (self.selectedMouseDisplayOptionIndex > 0 || [self isMouseUp:mouseEvent]) {
         [_window updateWithMouseEvent:mouseEvent];
     }
 
     // TODO: delegate back out so that the currentVisualizer can also show the event, if enabled
 }
 
-#pragma mark - KCMouseOptionsProvider
+#pragma mark - KCMouseDisplayOptionsProvider
 
-- (NSString *)currentMouseOptionName {
-    return [self.mouseOptionNames objectAtIndex:self.selectedMouseOptionIndex];
+- (NSString *)currentMouseDisplayOptionName {
+    return self.mouseDisplayOptionNames[self.selectedMouseDisplayOptionIndex];
 }
 
-- (void)setCurrentMouseOptionName:(NSString *)currentMouseOptionName {
-    NSLog(@"================> currentMouseOptionName: %@", currentMouseOptionName);
-
-    self.selectedMouseOptionIndex = [self.mouseOptionNames indexOfObject:currentMouseOptionName];
+- (void)setCurrentMouseDisplayOptionName:(NSString *)currentMouseDisplayOptionName {
+    self.selectedMouseDisplayOptionIndex = [self.mouseDisplayOptionNames indexOfObject:currentMouseDisplayOptionName];
 }
 
-- (void)setSelectedMouseOptionIndex:(NSUInteger)selectedMouseOptionIndex {
-    // TODO: also set in NSUserDefaults
-    // TODO: if NONE or delegate only then release the _window
-    _selectedMouseOptionIndex = selectedMouseOptionIndex;
+- (void)setSelectedMouseDisplayOptionIndex:(NSInteger)selectedMouseDisplayOptionIndex {
+    _selectedMouseDisplayOptionIndex = selectedMouseDisplayOptionIndex;
 
-    if (selectedMouseOptionIndex == 0) {
+    [[NSUserDefaults standardUserDefaults] setInteger:selectedMouseDisplayOptionIndex
+                                               forKey:kKCMouseVisualizerDisplayOptionKey];
+
+    // if NONE or delegate-only then release the _window
+    if (selectedMouseDisplayOptionIndex == 0) {
         [_window orderOut:self];
         _window = nil;
     } else if (_window == nil) {

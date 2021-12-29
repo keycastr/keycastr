@@ -151,7 +151,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="451"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="451"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -286,8 +286,8 @@
                                                                 </menu>
                                                             </popUpButtonCell>
                                                             <connections>
-                                                                <binding destination="375" name="selectedValue" keyPath="mouseEventVisualizer.currentMouseOptionName" previousBinding="Z4X-b2-OMG" id="6iZ-al-RzH"/>
-                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseOptionNames" id="Z4X-b2-OMG"/>
+                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseDisplayOptionNames" id="4z5-fd-Xr6"/>
+                                                                <binding destination="375" name="selectedValue" keyPath="mouseEventVisualizer.currentMouseDisplayOptionName" previousBinding="4z5-fd-Xr6" id="Prx-im-xRZ"/>
                                                             </connections>
                                                         </popUpButton>
                                                         <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
@@ -492,7 +492,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="194" width="325" height="390"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" id="385">
                 <rect key="frame" x="0.0" y="0.0" width="325" height="390"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -547,9 +547,4 @@ Q29weXJpZ2h0IAPCqSAyMDA5IFN0ZXBoZW4gRGVrZW4gYW5kIEFuZHJldyBLaXRjaGVuA
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>
-    <designables>
-        <designable name="J1Q-sG-Zms">
-            <size key="intrinsicContentSize" width="102" height="25"/>
-        </designable>
-    </designables>
 </document>
