@@ -29,14 +29,14 @@
 
 @class KCMouseEvent;
 
-@protocol KCMouseOptionsProvider <NSObject>
+@protocol KCMouseDisplayOptionsProvider <NSObject>
 
-@property (nonatomic, strong, readonly) NSArray<NSString *> *mouseOptionNames;
-@property (nonatomic, strong) NSString *currentMouseOptionName;
+@property (nonatomic, strong, readonly) NSArray<NSString *> *mouseDisplayOptionNames;
+@property (nonatomic, strong) NSString *currentMouseDisplayOptionName;
 
 @end
 
-@interface KCMouseEventVisualizer : NSObject <KCMouseOptionsProvider>
+@interface KCMouseEventVisualizer : NSObject <KCMouseDisplayOptionsProvider>
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
 
