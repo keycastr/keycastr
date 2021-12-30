@@ -151,7 +151,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="451"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="451"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -191,7 +191,7 @@
                                                     <rect key="frame" x="162" y="75" width="195" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="In the menu bar and Dock" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" inset="2" selectedItem="425" id="421">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="system"/>
                                                         <menu key="menu" title="OtherViews" id="422">
                                                             <items>
                                                                 <menuItem title="In the menu bar" tag="1" id="423"/>
@@ -229,7 +229,6 @@
                                                 <constraint firstItem="420" firstAttribute="leading" secondItem="418" secondAttribute="trailing" constant="10" id="ASO-R4-kP5"/>
                                                 <constraint firstItem="418" firstAttribute="top" secondItem="410" secondAttribute="top" constant="20" symbolic="YES" id="AhR-0d-QJW"/>
                                                 <constraint firstItem="446" firstAttribute="trailing" secondItem="418" secondAttribute="trailing" id="B0l-8L-Veq"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="420" secondAttribute="trailing" constant="20" symbolic="YES" id="Gc3-NV-ODD"/>
                                                 <constraint firstAttribute="bottom" secondItem="444" secondAttribute="bottom" constant="20" symbolic="YES" id="K1i-2f-vZ5"/>
                                                 <constraint firstItem="J1Q-sG-Zms" firstAttribute="leading" secondItem="420" secondAttribute="leading" id="KcZ-du-wqH"/>
                                                 <constraint firstItem="446" firstAttribute="top" secondItem="418" secondAttribute="bottom" constant="15" id="Ki8-5m-GAo"/>
@@ -492,7 +491,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="194" width="325" height="390"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="385">
                 <rect key="frame" x="0.0" y="0.0" width="325" height="390"/>
                 <autoresizingMask key="autoresizingMask"/>
