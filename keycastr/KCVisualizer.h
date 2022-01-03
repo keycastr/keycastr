@@ -38,8 +38,9 @@
 -(void) hideVisualizer:(id)sender;
 -(void) deactivateVisualizer:(id)sender;
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke;
--(void) noteFlagsChanged:(uint32_t)flags;
+- (void)noteKeyEvent:(KCKeystroke *)keystroke;
+- (void)noteFlagsChanged:(NSEventModifierFlags)flags;
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
 
 @end
 
@@ -62,16 +63,6 @@
 +(void) registerVisualizerFactory:(id<KCVisualizerFactory>)factory withName:(NSString*)name;
 +(id<KCVisualizer>) visualizerWithName:(NSString*)visualizerName;
 +(NSArray*) availableVisualizerFactories;
-
--(NSView*) preferencesView;
--(NSString*) visualizerName;
-
--(void) showVisualizer:(id)sender;
--(void) hideVisualizer:(id)sender;
--(void) deactivateVisualizer:(id)sender;
-
--(void) noteKeyEvent:(KCKeystroke*)keystroke;
--(void) noteFlagsChanged:(uint32_t)flags;
 
 @end
 

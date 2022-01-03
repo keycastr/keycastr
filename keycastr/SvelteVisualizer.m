@@ -47,7 +47,10 @@
 
 @end
 
-@implementation SvelteVisualizerView
+@implementation SvelteVisualizerView {
+    NSEventModifierFlags _flags;
+	NSString *_displayedString;
+}
 
 -(void) drawRect:(NSRect)rect
 {
@@ -86,28 +89,28 @@
 		[ps autorelease], NSParagraphStyleAttributeName,
         nil];
 
-	if (_flags & NSShiftKeyMask)
+    if (_flags & NSEventModifierFlagShift)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
 	size = [shiftKeyString sizeWithAttributes:attr];
 	[shiftKeyString drawInRect:NSMakeRect(0,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
 
-	if (_flags & NSControlKeyMask)
+    if (_flags & NSEventModifierFlagControl)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
 	size = [controlKeyString sizeWithAttributes:attr];
 	[controlKeyString drawInRect:NSMakeRect(oneQuarter,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
 
-	if (_flags & NSAlternateKeyMask)
+    if (_flags & NSEventModifierFlagOption)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
 	size = [altKeyString sizeWithAttributes:attr];
 	[altKeyString drawInRect:NSMakeRect(oneQuarter*2,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
 
-	if (_flags & NSCommandKeyMask)
+    if (_flags & NSEventModifierFlagCommand)
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	else
 		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
@@ -150,7 +153,7 @@
 	[self setNeedsDisplay:YES];
 }
 
--(void) noteFlagsChanged:(uint32_t)flags
+-(void) noteFlagsChanged:(NSEventModifierFlags)flags
 {
     [_displayedString autorelease];
     _displayedString = nil;
@@ -161,7 +164,11 @@
 @end
 
 
-@implementation SvelteVisualizer
+@implementation SvelteVisualizer {
+	NSWindow *_visualizerWindow;
+	SvelteVisualizerView *_visualizerView;
+	BOOL _displayAll;
+}
 
 -(NSString*) visualizerName
 {
@@ -175,7 +182,7 @@
     
     NSRect r = { 10, 10, 200, 100 };
     _visualizerWindow = [[NSWindow alloc] initWithContentRect:r
-                                                    styleMask:NSBorderlessWindowMask
+                                                    styleMask:NSWindowStyleMaskBorderless
                                                       backing:NSBackingStoreBuffered
                                                         defer:NO];
     [_visualizerWindow setLevel:NSScreenSaverWindowLevel];
@@ -231,7 +238,7 @@
 	[_visualizerView noteKeyEvent:keystroke];
 }
 
--(void) noteFlagsChanged:(uint32_t)flags
+- (void)noteFlagsChanged:(NSEventModifierFlags)flags
 {
 	[_visualizerView noteFlagsChanged:flags];
 }

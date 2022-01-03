@@ -28,6 +28,9 @@
 #import <Foundation/Foundation.h>
 
 @class KCMouseEvent;
+@class KCMouseEventVisualizer;
+
+#pragma mark - KCMouseDisplayOptionsProvider
 
 @protocol KCMouseDisplayOptionsProvider <NSObject>
 
@@ -36,7 +39,19 @@
 
 @end
 
+#pragma mark - KCMouseEventVisualizerDelegate
+
+@protocol KCMouseEventVisualizerDelegate <NSObject>
+
+- (void)mouseEventVisualizer:(KCMouseEventVisualizer *)visualizer didNoteMouseEvent:(KCMouseEvent *)mouseEvent;
+
+@end
+
+#pragma mark - KCMouseEventVisualizer
+
 @interface KCMouseEventVisualizer : NSObject <KCMouseDisplayOptionsProvider>
+
+@property (nonatomic, weak) id<KCMouseEventVisualizerDelegate> delegate;
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
 

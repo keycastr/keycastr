@@ -73,8 +73,8 @@
 	NSMutableArray* _runningAnimations;
 }
 
-- (void)abandonCurrentBezelView;
 - (void)addKeystroke:(KCKeystroke *)keystroke;
+- (void)addMouseEvent:(KCMouseEvent *)mouseEvent;
 - (void)addRunningAnimation:(KCBezelAnimation *)animation;
 
 - (instancetype)init;
