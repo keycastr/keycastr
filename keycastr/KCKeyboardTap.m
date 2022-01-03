@@ -197,7 +197,7 @@ CGEventRef eventTapCallback(
 
 -(void) _noteFlagsChanged:(CGEventRef)event
 {
-	uint32_t modifiers = 0;
+	NSEventModifierFlags modifiers = 0;
 	CGEventFlags f = CGEventGetFlags( event );
 
 	if (f & kCGEventFlagMaskShift)
@@ -234,7 +234,7 @@ CGEventRef eventTapCallback(
     [_delegate keyboardTap:self noteKeystroke:keystroke];
 }
 
--(void) noteFlagsChanged:(uint32_t)newFlags
+-(void) noteFlagsChanged:(NSEventModifierFlags)newFlags
 {
     [_delegate keyboardTap:self noteFlagsChanged:newFlags];
 }

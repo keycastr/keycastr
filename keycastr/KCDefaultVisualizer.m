@@ -26,6 +26,7 @@
 
 
 #import "KCDefaultVisualizer.h"
+#import "KCKeystroke.h"
 #import "NSBezierPath+RoundedRect.h"
 #import "NSUserDefaults+Utility.h"
 
@@ -108,6 +109,11 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 		return;
 	}
 	[visualizerWindow addKeystroke:keystroke];
+}
+
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
+{
+	[visualizerWindow addMouseEvent:mouseEvent];
 }
 
 @end
@@ -220,7 +226,12 @@ static NSRect KC_defaultFrame() {
 			   afterDelay:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.keystrokeDelay"]];
 }
 
--(void) addKeystroke:(KCKeystroke*)keystroke
+- (void)addMouseEvent:(KCMouseEvent *)mouseEvent
+{
+    NSLog(@"================> %@", NSStringFromSelector(_cmd));
+}
+
+- (void)addKeystroke:(KCKeystroke *)keystroke
 {
 	[self _cancelLineBreak];
 	NSString* charString = [keystroke convertToString];
@@ -237,13 +248,11 @@ static NSRect KC_defaultFrame() {
             [self resetFrame];
         }
 
-        NSColor *backgroundColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
-		_currentBezelView = [[KCDefaultVisualizerBezelView alloc]
-			initWithMaxWidth:NSWidth(self.frame)
-			text:charString
-			backgroundColor:backgroundColor
-			];
-        [_currentBezelView setAutoresizingMask:NSViewMinYMargin];
+		NSColor *backgroundColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
+		_currentBezelView = [[KCDefaultVisualizerBezelView alloc] initWithMaxWidth:NSWidth(self.frame)
+																			  text:charString
+																   backgroundColor:backgroundColor];
+		[_currentBezelView setAutoresizingMask:NSViewMinYMargin];
 
         NSRect frame = self.frame;
         frame.size.height += 10 + _currentBezelView.frame.size.height;
@@ -256,11 +265,6 @@ static NSRect KC_defaultFrame() {
 		[_currentBezelView appendString:charString];
 	}
     [self _scheduleLineBreak];
-}
-
--(void) abandonCurrentView
-{
-	[self _cancelLineBreak];
 }
 
 -(void) addRunningAnimation:(KCBezelAnimation*)animation
@@ -451,7 +455,6 @@ static const int kKCBezelBorder = 6;
 -(void) beginFadeOut:(id)sender
 {
 	KCDefaultVisualizerWindow* w = (KCDefaultVisualizerWindow*)[self window];
-	// [w abandonCurrentView];
 	KCBezelAnimation* anim = [[KCBezelAnimation alloc] initWithBezelView:self];
 	[anim fadeOutOverDuration:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.fadeDuration"]];
 	[w addRunningAnimation:[anim autorelease]];

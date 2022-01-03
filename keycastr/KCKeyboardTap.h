@@ -35,7 +35,7 @@
 
 - (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteKeystroke:(KCKeystroke *)keystroke;
 - (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(KCMouseEvent *)mouseEvent;
-- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteFlagsChanged:(uint32_t)newFlags;
+- (void)keyboardTap:(KCKeyboardTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags;
 
 @end
 

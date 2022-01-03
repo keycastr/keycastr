@@ -30,37 +30,13 @@
 #import "KCKeystroke.h"
 
 @interface SvelteVisualizerFactory : KCVisualizerFactory <KCVisualizerFactory>
-{
-}
-
--(NSString*) visualizerNibName;
--(Class) visualizerClass;
--(NSString*) visualizerName;
 
 @end
 
 @interface SvelteVisualizerView : NSView
-{
-	uint32_t _flags;
-	NSString* _displayedString;
-}
-
--(void) noteKeyEvent:(KCKeystroke*)keystroke;
--(void) noteFlagsChanged:(uint32_t)flags;
 
 @end
 
 @interface SvelteVisualizer : KCVisualizer <KCVisualizer>
-{
-	NSWindow* _visualizerWindow;
-	SvelteVisualizerView* _visualizerView;
-    BOOL _displayAll;
-}
-
--(NSString*) visualizerName;
--(void) deactivateVisualizer:(id)sender;
-
--(void) noteKeyEvent:(KCKeystroke*)keystroke;
--(void) noteFlagsChanged:(uint32_t)flags;
 
 @end

@@ -48,7 +48,7 @@ static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access t
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
-@interface KCAppController () <KCKeyboardTapDelegate>
+@interface KCAppController () <KCKeyboardTapDelegate, KCMouseEventVisualizerDelegate>
 
 @property (nonatomic, assign) NSInteger prefDisplayIcon;
 @property (nonatomic, assign) BOOL showInDock;
@@ -89,7 +89,9 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
     [self _setupDefaults];
     [self registerVisualizers];
+
     mouseEventVisualizer = [KCMouseEventVisualizer new];
+    mouseEventVisualizer.delegate = self;
 
     [NSColor setIgnoresAlpha:NO];
 
@@ -267,7 +269,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 }
 
--(void) keyboardTap:(KCKeyboardTap*)tap noteFlagsChanged:(uint32_t)flags
+- (void)keyboardTap:(KCKeyboardTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags
 {
     if (currentVisualizer != nil) {
 		[currentVisualizer noteFlagsChanged:flags];
@@ -281,7 +283,11 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 
     [mouseEventVisualizer noteMouseEvent:mouseEvent];
+}
 
+- (void)mouseEventVisualizer:(KCMouseEventVisualizer *)visualizer didNoteMouseEvent:(KCMouseEvent *)mouseEvent
+{
+    [currentVisualizer noteMouseEvent:mouseEvent];
 }
 
 -(NSStatusItem*) createStatusItem

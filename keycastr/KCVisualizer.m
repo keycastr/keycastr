@@ -89,9 +89,14 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
--(void) noteFlagsChanged:(uint32_t)flags
+- (void)noteFlagsChanged:(NSEventModifierFlags)flags
 {
 	// Default implementation does nothing.
+}
+
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
+{
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 @end
