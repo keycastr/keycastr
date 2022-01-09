@@ -70,7 +70,7 @@
 	[bp fill];
 	
 	NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
-	[ps setAlignment:NSCenterTextAlignment];
+    [ps setAlignment:NSTextAlignmentCenter];
 	
 	NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
 	NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
