@@ -156,9 +156,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="451"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="402">
+                    <tabView translatesAutoresizingMaskIntoConstraints="NO" id="402">
                         <rect key="frame" x="13" y="2" width="454" height="443"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="403">
@@ -191,7 +190,7 @@
                                                     <rect key="frame" x="162" y="75" width="195" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="In the menu bar and Dock" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" inset="2" selectedItem="425" id="421">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="system"/>
+                                                        <font key="font" metaFont="menu"/>
                                                         <menu key="menu" title="OtherViews" id="422">
                                                             <items>
                                                                 <menuItem title="In the menu bar" tag="1" id="423"/>
@@ -237,6 +236,7 @@
                                                 <constraint firstItem="444" firstAttribute="top" secondItem="J1Q-sG-Zms" secondAttribute="bottom" constant="10" id="WKQ-Xm-f9J"/>
                                                 <constraint firstItem="J1Q-sG-Zms" firstAttribute="centerY" secondItem="446" secondAttribute="centerY" id="YnR-do-Ets"/>
                                                 <constraint firstItem="418" firstAttribute="leading" secondItem="410" secondAttribute="leading" constant="19" id="frE-vs-mvf"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="420" secondAttribute="trailing" constant="20" symbolic="YES" id="pVd-0x-Mux"/>
                                                 <constraint firstItem="444" firstAttribute="leading" secondItem="J1Q-sG-Zms" secondAttribute="leading" id="qEJ-kF-57p"/>
                                                 <constraint firstItem="446" firstAttribute="leading" secondItem="410" secondAttribute="leading" constant="20" symbolic="YES" id="r9m-A4-bWf"/>
                                             </constraints>
@@ -261,18 +261,18 @@
                                                     <rect key="frame" x="0.0" y="298" width="394" height="59"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pWi-b6-ckn">
-                                                            <rect key="frame" x="18" y="21" width="136" height="17"/>
+                                                            <rect key="frame" x="18" y="21" width="141" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="SoD-Xf-t6l"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display Mouse Clicks:" id="PCE-SD-Jdo">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display Mouse Events:" id="PCE-SD-Jdo">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cF8-nO-kwo" userLabel="Mouse Options">
-                                                            <rect key="frame" x="157" y="15" width="221" height="26"/>
+                                                            <rect key="frame" x="162" y="15" width="216" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="X49-dy-Ux7" id="E8m-p9-ZAp">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -285,8 +285,8 @@
                                                                 </menu>
                                                             </popUpButtonCell>
                                                             <connections>
-                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseDisplayOptionNames" id="4z5-fd-Xr6"/>
                                                                 <binding destination="375" name="selectedValue" keyPath="mouseEventVisualizer.currentMouseDisplayOptionName" previousBinding="4z5-fd-Xr6" id="Prx-im-xRZ"/>
+                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseDisplayOptionNames" id="4z5-fd-Xr6"/>
                                                             </connections>
                                                         </popUpButton>
                                                         <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
@@ -309,7 +309,7 @@
                                                     <rect key="frame" x="0.0" y="240" width="394" height="59"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="427">
-                                                            <rect key="frame" x="18" y="21" width="136" height="17"/>
+                                                            <rect key="frame" x="18" y="21" width="141" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="Zba-BR-Ul0"/>
                                                             </constraints>
@@ -320,7 +320,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="429" userLabel="Visualizers">
-                                                            <rect key="frame" x="157" y="15" width="221" height="26"/>
+                                                            <rect key="frame" x="162" y="15" width="216" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="432" id="430">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -463,7 +463,9 @@
                                                 <constraint firstItem="453" firstAttribute="leading" relation="lessThanOrEqual" secondItem="457" secondAttribute="trailing" priority="750" constant="165" id="Bwd-mK-EDY"/>
                                                 <constraint firstAttribute="bottom" secondItem="455" secondAttribute="bottom" priority="750" constant="20" symbolic="YES" id="C9f-X2-aHf"/>
                                                 <constraint firstAttribute="trailing" secondItem="453" secondAttribute="trailing" constant="20" symbolic="YES" id="MEG-U3-HHf"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="451" secondAttribute="trailing" constant="20" symbolic="YES" id="MWa-M8-HeB"/>
                                                 <constraint firstItem="451" firstAttribute="leading" secondItem="412" secondAttribute="leading" constant="20" symbolic="YES" id="Wdg-09-OeY"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="459" secondAttribute="trailing" constant="20" symbolic="YES" id="lVd-PZ-Pb0"/>
                                                 <constraint firstItem="457" firstAttribute="leading" secondItem="455" secondAttribute="trailing" constant="6" id="lhO-MH-0Y5"/>
                                                 <constraint firstItem="455" firstAttribute="top" secondItem="459" secondAttribute="bottom" constant="8" symbolic="YES" id="n42-Rv-hV1"/>
                                                 <constraint firstItem="459" firstAttribute="top" secondItem="451" secondAttribute="bottom" constant="6" id="uuu-lo-b8g"/>
@@ -481,6 +483,12 @@
                         </tabViewItems>
                     </tabView>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="402" secondAttribute="trailing" constant="20" symbolic="YES" id="0kG-h1-NYo"/>
+                    <constraint firstItem="402" firstAttribute="centerY" secondItem="372" secondAttribute="centerY" id="1hh-jm-bCH"/>
+                    <constraint firstItem="402" firstAttribute="top" secondItem="372" secondAttribute="top" constant="12" symbolic="YES" id="Ohd-N8-e97"/>
+                    <constraint firstItem="402" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="20" symbolic="YES" id="Umm-iE-YI9"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="375" id="477"/>
@@ -546,4 +554,9 @@ Q29weXJpZ2h0IAPCqSAyMDA5IFN0ZXBoZW4gRGVrZW4gYW5kIEFuZHJldyBLaXRjaGVuA
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>
+    <designables>
+        <designable name="J1Q-sG-Zms">
+            <size key="intrinsicContentSize" width="144" height="21"/>
+        </designable>
+    </designables>
 </document>

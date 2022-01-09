@@ -64,9 +64,9 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
     }
 
     _mouseDisplayOptionNames = @[@"None",
-            @"With Mouse Pointer",
-            @"With Current Visualizer",
-            @"With Pointer and Visualizer"
+            @"With mouse pointer",
+            @"With current visualizer",
+            @"With pointer and visualizer"
     ];
 
     self.selectedMouseDisplayOptionIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kKCMouseVisualizerDisplayOptionKey];
