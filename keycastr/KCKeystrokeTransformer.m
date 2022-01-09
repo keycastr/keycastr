@@ -159,13 +159,13 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
     uint16_t _keyCode = keystroke.keyCode;
     NSEventModifierFlags _modifiers = keystroke.modifierFlags;
-    BOOL isOption = (_modifiers & NSAlternateKeyMask) != 0;
+    BOOL isOption = (_modifiers & NSEventModifierFlagOption) != 0;
     BOOL isCommand = keystroke.isCommand;
 
     BOOL isShifted = NO;
     BOOL needsShiftGlyph = NO;
 
-	if (_modifiers & NSControlKeyMask)
+    if (_modifiers & NSEventModifierFlagControl)
 	{
 		[mutableResponse appendString:kControlKeyString];
 	}
@@ -175,7 +175,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kAltKeyString];
 	}
 
-	if (_modifiers & NSShiftKeyMask)
+    if (_modifiers & NSEventModifierFlagShift)
 	{
 		isShifted = YES;
 		if (isOption || isCommand)
@@ -184,7 +184,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 			needsShiftGlyph = YES;
 	}
 
-	if (_modifiers & NSCommandKeyMask)
+    if (_modifiers & NSEventModifierFlagCommand)
 	{
 		if (needsShiftGlyph)
 		{
