@@ -261,18 +261,18 @@
                                                     <rect key="frame" x="0.0" y="298" width="394" height="59"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pWi-b6-ckn">
-                                                            <rect key="frame" x="18" y="21" width="141" height="17"/>
+                                                            <rect key="frame" x="18" y="21" width="140" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="SoD-Xf-t6l"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display Mouse Events:" id="PCE-SD-Jdo">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display mouse events:" id="PCE-SD-Jdo">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cF8-nO-kwo" userLabel="Mouse Options">
-                                                            <rect key="frame" x="162" y="15" width="216" height="26"/>
+                                                            <rect key="frame" x="161" y="15" width="217" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="X49-dy-Ux7" id="E8m-p9-ZAp">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -309,18 +309,18 @@
                                                     <rect key="frame" x="0.0" y="240" width="394" height="59"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="427">
-                                                            <rect key="frame" x="18" y="21" width="141" height="17"/>
+                                                            <rect key="frame" x="18" y="21" width="140" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="Zba-BR-Ul0"/>
                                                             </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Selected Visualizer:" id="428">
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Selected visualizer:" id="428">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="429" userLabel="Visualizers">
-                                                            <rect key="frame" x="162" y="15" width="216" height="26"/>
+                                                            <rect key="frame" x="161" y="15" width="217" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="432" id="430">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
