@@ -74,6 +74,10 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
     return self;
 }
 
+- (void)dealloc {
+    [self releaseWindow];
+}
+
 - (void)createWindow {
     CGFloat diameter = 2 * kKCMouseVisualizerRadius;
     _window = [[KCMouseVisualizerWindow alloc] initWithContentRect:NSMakeRect(0, 0, diameter, diameter)
@@ -81,6 +85,11 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
                                                            backing:NSBackingStoreBuffered
                                                              defer:NO];
     [_window orderFrontRegardless];
+}
+
+- (void)releaseWindow {
+    [_window orderOut:self];
+    _window = nil;
 }
 
 - (BOOL)isMouseUp:(KCMouseEvent *)mouseEvent {
@@ -116,10 +125,13 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
     [[NSUserDefaults standardUserDefaults] setInteger:selectedMouseDisplayOptionIndex
                                                forKey:kKCMouseVisualizerDisplayOptionKey];
 
+    [self selectedMouseDisplayOptionDidChange:selectedMouseDisplayOptionIndex];
+}
+
+- (void)selectedMouseDisplayOptionDidChange:(NSInteger)selectedMouseDisplayOptionIndex {
     // if NONE or delegate-only then release the _window
     if (selectedMouseDisplayOptionIndex == 0) {
-        [_window orderOut:self];
-        _window = nil;
+        [self releaseWindow];
     } else if (_window == nil) {
         [self createWindow];
     }
@@ -169,15 +181,20 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 
 - (void)updateWithMouseEvent:(KCMouseEvent *)event {
     if (!self.circle) {
+        self.circle = [CAShapeLayer layer];
+
         CGFloat diameter = 2 * kKCMouseVisualizerRadius;
         CGFloat lineWidth = 2.0;
-
-        self.circle = [CAShapeLayer layer];
         NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(lineWidth, lineWidth, diameter - 2 * lineWidth, diameter - 2 * lineWidth)
                                                              xRadius:kKCMouseVisualizerRadius
                                                              yRadius:kKCMouseVisualizerRadius];
-        self.circle.path = [self CGPathWithPath:path];
-        self.circle.strokeColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"].CGColor;
+        CGMutablePathRef pathRef = [self newCGPathWithBezierPath:path];
+        self.circle.path = pathRef;
+        CGPathRelease(pathRef);
+
+        NSColor *bezelColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
+        self.circle.strokeColor = bezelColor.CGColor;
+
         self.circle.fillColor = NSColor.clearColor.CGColor;
         self.circle.lineWidth = lineWidth;
         self.circle.opacity = 0.0;
@@ -225,7 +242,7 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
     }
 }
 
-- (CGMutablePathRef)CGPathWithPath:(NSBezierPath *)path {
+- (CGMutablePathRef)newCGPathWithBezierPath:(NSBezierPath *)path {
     CGMutablePathRef cgPath = CGPathCreateMutable();
     NSInteger count = [path elementCount];
 
