@@ -32,6 +32,7 @@
 
 #pragma mark - KCMouseDisplayOptionsProvider
 
+/// Note: this protocol exists and is implemented, but its use is being temporarily short-circuited by the `-isEnabled` flag in order to release an MVP.
 @protocol KCMouseDisplayOptionsProvider <NSObject>
 
 @property (nonatomic, strong, readonly) NSArray<NSString *> *mouseDisplayOptionNames;
@@ -51,6 +52,8 @@
 
 @interface KCMouseEventVisualizer : NSObject <KCMouseDisplayOptionsProvider>
 
+/// Note: this property is temporary, to be replaced in an upcoming release by the ability to display mouse clicks with the pointer, wtihin the current visualizer, or both.
+@property (nonatomic, getter=isEnabled) BOOL enabled;
 @property (nonatomic, weak) id<KCMouseEventVisualizerDelegate> delegate;
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
