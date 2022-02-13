@@ -257,59 +257,11 @@
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="411">
                                             <rect key="frame" x="20" y="20" width="394" height="357"/>
                                             <subviews>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="eb6-kp-O9f" userLabel="Mouse Options Container View">
-                                                    <rect key="frame" x="0.0" y="298" width="394" height="59"/>
-                                                    <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pWi-b6-ckn">
-                                                            <rect key="frame" x="18" y="21" width="140" height="17"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="17" id="SoD-Xf-t6l"/>
-                                                            </constraints>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Display mouse events:" id="PCE-SD-Jdo">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cF8-nO-kwo" userLabel="Mouse Options">
-                                                            <rect key="frame" x="161" y="15" width="217" height="26"/>
-                                                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="X49-dy-Ux7" id="E8m-p9-ZAp">
-                                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                <font key="font" metaFont="menu"/>
-                                                                <menu key="menu" title="OtherViews" id="Q6f-lL-Zpo">
-                                                                    <items>
-                                                                        <menuItem title="Item 1" state="on" id="X49-dy-Ux7"/>
-                                                                        <menuItem title="Item 2" id="bfr-r0-Tbs"/>
-                                                                        <menuItem title="Item 3" id="MhG-I6-QNr"/>
-                                                                    </items>
-                                                                </menu>
-                                                            </popUpButtonCell>
-                                                            <connections>
-                                                                <binding destination="375" name="selectedValue" keyPath="mouseEventVisualizer.currentMouseDisplayOptionName" previousBinding="4z5-fd-Xr6" id="Prx-im-xRZ"/>
-                                                                <binding destination="375" name="contentValues" keyPath="mouseEventVisualizer.mouseDisplayOptionNames" id="4z5-fd-Xr6"/>
-                                                            </connections>
-                                                        </popUpButton>
-                                                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
-                                                            <rect key="frame" x="0.0" y="-2" width="394" height="5"/>
-                                                        </box>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="top" secondItem="eb6-kp-O9f" secondAttribute="top" constant="19" id="1hd-vB-Sak"/>
-                                                        <constraint firstItem="cVt-cZ-Yk1" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" id="Eh8-4A-q9r"/>
-                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="leading" secondItem="pWi-b6-ckn" secondAttribute="trailing" constant="8" symbolic="YES" id="IBL-ep-FoM"/>
-                                                        <constraint firstItem="pWi-b6-ckn" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" constant="20" symbolic="YES" id="Iy0-tW-kVn"/>
-                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="baseline" secondItem="pWi-b6-ckn" secondAttribute="firstBaseline" id="PZH-CR-IW1"/>
-                                                        <constraint firstItem="cF8-nO-kwo" firstAttribute="centerY" secondItem="pWi-b6-ckn" secondAttribute="centerY" id="S8H-4d-nxe"/>
-                                                        <constraint firstAttribute="bottom" secondItem="cVt-cZ-Yk1" secondAttribute="bottom" id="beM-Gf-hXe"/>
-                                                        <constraint firstAttribute="trailing" secondItem="cVt-cZ-Yk1" secondAttribute="trailing" id="qBs-y2-jtp"/>
-                                                        <constraint firstItem="pWi-b6-ckn" firstAttribute="centerY" secondItem="eb6-kp-O9f" secondAttribute="centerY" id="zr4-nB-bmJ"/>
-                                                    </constraints>
-                                                </customView>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="426" userLabel="Selected Visualizer Container View">
-                                                    <rect key="frame" x="0.0" y="240" width="394" height="59"/>
+                                                    <rect key="frame" x="0.0" y="297" width="394" height="61"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="427">
-                                                            <rect key="frame" x="18" y="21" width="140" height="17"/>
+                                                            <rect key="frame" x="18" y="22" width="136" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="Zba-BR-Ul0"/>
                                                             </constraints>
@@ -320,7 +272,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="429" userLabel="Visualizers">
-                                                            <rect key="frame" x="161" y="15" width="217" height="26"/>
+                                                            <rect key="frame" x="157" y="16" width="221" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="432" id="430">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -349,25 +301,50 @@
                                                         <constraint firstItem="429" firstAttribute="baseline" secondItem="427" secondAttribute="firstBaseline" id="HPa-YT-TBr"/>
                                                         <constraint firstAttribute="trailing" secondItem="429" secondAttribute="trailing" constant="20" symbolic="YES" id="TWS-3T-LtO"/>
                                                         <constraint firstItem="435" firstAttribute="leading" secondItem="426" secondAttribute="leading" id="Thn-8A-gmu"/>
-                                                        <constraint firstItem="429" firstAttribute="top" secondItem="426" secondAttribute="top" constant="19" id="VQy-N3-cqU"/>
+                                                        <constraint firstItem="429" firstAttribute="top" secondItem="426" secondAttribute="top" constant="20" id="VQy-N3-cqU"/>
                                                         <constraint firstItem="429" firstAttribute="leading" secondItem="427" secondAttribute="trailing" constant="8" symbolic="YES" id="dny-iF-2eO"/>
                                                         <constraint firstItem="429" firstAttribute="centerY" secondItem="427" secondAttribute="centerY" id="e4U-9v-C4m"/>
                                                     </constraints>
                                                 </customView>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="eb6-kp-O9f" userLabel="Mouse Options Container View">
+                                                    <rect key="frame" x="0.0" y="237" width="394" height="61"/>
+                                                    <subviews>
+                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W8J-qt-fsu">
+                                                            <rect key="frame" x="19" y="22" width="156" height="18"/>
+                                                            <buttonCell key="cell" type="check" title="Display mouse clicks:" bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="ZLR-k1-ZKz">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <binding destination="375" name="value" keyPath="mouseEventVisualizer.enabled" id="C6F-jS-26h"/>
+                                                            </connections>
+                                                        </button>
+                                                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
+                                                            <rect key="frame" x="0.0" y="-2" width="394" height="5"/>
+                                                        </box>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="W8J-qt-fsu" secondAttribute="trailing" constant="20" symbolic="YES" id="6SA-Lt-PqD"/>
+                                                        <constraint firstItem="cVt-cZ-Yk1" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" id="Eh8-4A-q9r"/>
+                                                        <constraint firstItem="W8J-qt-fsu" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" constant="19" id="Gwl-Cs-6U2"/>
+                                                        <constraint firstAttribute="bottom" secondItem="cVt-cZ-Yk1" secondAttribute="bottom" id="beM-Gf-hXe"/>
+                                                        <constraint firstItem="W8J-qt-fsu" firstAttribute="centerY" secondItem="eb6-kp-O9f" secondAttribute="centerY" id="ccg-4z-Xmx"/>
+                                                        <constraint firstAttribute="trailing" secondItem="cVt-cZ-Yk1" secondAttribute="trailing" id="qBs-y2-jtp"/>
+                                                    </constraints>
+                                                </customView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="426" firstAttribute="top" secondItem="411" secondAttribute="top" constant="58" id="1Ab-H7-bCx"/>
+                                                <constraint firstItem="426" firstAttribute="top" secondItem="411" secondAttribute="top" constant="-1" id="1Ab-H7-bCx"/>
                                                 <constraint firstItem="426" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="7Fk-Cn-60D"/>
                                                 <constraint firstItem="426" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="7Xe-N7-6ra"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="FNg-LN-KJQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="L0z-xl-lkI"/>
                                                 <constraint firstAttribute="trailing" secondItem="eb6-kp-O9f" secondAttribute="trailing" id="LiA-gp-fpA"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="426" secondAttribute="leading" id="P0K-Hi-dPV"/>
-                                                <constraint firstItem="cF8-nO-kwo" firstAttribute="trailing" secondItem="429" secondAttribute="trailing" id="RxI-dU-MHu"/>
+                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="top" secondItem="411" secondAttribute="top" constant="59" id="Zec-vm-rAh"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="height" secondItem="426" secondAttribute="height" id="drL-t1-XcD"/>
                                                 <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="lIh-gp-Fjd"/>
-                                                <constraint firstItem="cF8-nO-kwo" firstAttribute="width" secondItem="429" secondAttribute="width" id="nSk-Uu-SU0"/>
-                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="top" secondItem="411" secondAttribute="top" id="pnn-de-Ba6"/>
+                                                <constraint firstItem="W8J-qt-fsu" firstAttribute="trailing" secondItem="427" secondAttribute="trailing" constant="21" id="oWI-DG-8LI"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="rXA-cP-0dy"/>
                                             </constraints>
                                         </customView>
@@ -554,9 +531,4 @@ Q29weXJpZ2h0IAPCqSAyMDA5IFN0ZXBoZW4gRGVrZW4gYW5kIEFuZHJldyBLaXRjaGVuA
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>
-    <designables>
-        <designable name="J1Q-sG-Zms">
-            <size key="intrinsicContentSize" width="144" height="21"/>
-        </designable>
-    </designables>
 </document>

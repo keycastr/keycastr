@@ -65,8 +65,8 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 
     _mouseDisplayOptionNames = @[@"None",
             @"with mouse pointer",
-            @"with current visualizer",
-            @"with pointer and visualizer"
+//            @"with current visualizer",
+//            @"with pointer and visualizer"
     ];
 
     self.selectedMouseDisplayOptionIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kKCMouseVisualizerDisplayOptionKey];
@@ -107,6 +107,14 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
     if (self.selectedMouseDisplayOptionIndex >= 2) {
         [self.delegate mouseEventVisualizer:self didNoteMouseEvent:mouseEvent];
     }
+}
+
+- (BOOL)isEnabled {
+    return (self.selectedMouseDisplayOptionIndex > 0);
+}
+
+- (void)setEnabled:(BOOL)enabled {
+    self.selectedMouseDisplayOptionIndex = enabled ? 1 : 0;
 }
 
 #pragma mark - KCMouseDisplayOptionsProvider
