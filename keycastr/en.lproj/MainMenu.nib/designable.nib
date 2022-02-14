@@ -309,7 +309,7 @@
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="eb6-kp-O9f" userLabel="Mouse Options Container View">
                                                     <rect key="frame" x="0.0" y="237" width="394" height="61"/>
                                                     <subviews>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W8J-qt-fsu">
+                                                        <button verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8J-qt-fsu">
                                                             <rect key="frame" x="19" y="22" width="156" height="18"/>
                                                             <buttonCell key="cell" type="check" title="Display mouse clicks:" bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="ZLR-k1-ZKz">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
