@@ -18,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button horizontalHuggingPriority="1000" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BmP-1Z-8xN">
-                    <rect key="frame" x="20" y="22" width="160" height="19"/>
+                    <rect key="frame" x="20" y="23" width="160" height="19"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="KU4-I5-ZJr"/>
                     </constraints>
@@ -36,7 +36,7 @@
             </subviews>
             <constraints>
                 <constraint firstItem="BmP-1Z-8xN" firstAttribute="leading" secondItem="8" secondAttribute="leading" constant="20" symbolic="YES" id="1TF-5V-uCv"/>
-                <constraint firstItem="BmP-1Z-8xN" firstAttribute="top" secondItem="8" secondAttribute="top" constant="20" id="R06-0Y-eqt"/>
+                <constraint firstItem="BmP-1Z-8xN" firstAttribute="top" secondItem="8" secondAttribute="top" constant="19" id="R06-0Y-eqt"/>
             </constraints>
             <point key="canvasLocation" x="244" y="134"/>
         </customView>

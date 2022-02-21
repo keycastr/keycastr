@@ -18,20 +18,16 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="56">
-                    <rect key="frame" x="20" y="306" width="160" height="19"/>
+                    <rect key="frame" x="21" y="306" width="152" height="19"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="ynX-ja-1LL"/>
                     </constraints>
-                    <buttonCell key="cell" type="check" title="Display all keystrokes:" bezelStyle="regularSquare" imagePosition="right" alignment="left" inset="2" id="123">
+                    <buttonCell key="cell" type="check" title="Command keys only:" bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="123">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="9" name="value" keyPath="values.default.commandKeysOnly" id="sLz-Bb-4tq">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
+                        <binding destination="9" name="value" keyPath="values.default.commandKeysOnly" id="ha9-in-MwS"/>
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" id="8PJ-cL-aOJ">
@@ -304,7 +300,6 @@
                 <constraint firstItem="2" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" id="Q2L-sq-5q6"/>
                 <constraint firstItem="38" firstAttribute="leading" secondItem="24" secondAttribute="leading" id="QZs-lU-Ck9"/>
                 <constraint firstItem="18" firstAttribute="top" secondItem="52" secondAttribute="bottom" constant="8" symbolic="YES" id="R8m-Lz-kp2"/>
-                <constraint firstItem="56" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Rdz-Ko-iPL"/>
                 <constraint firstItem="36" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="StK-p0-lxO"/>
                 <constraint firstAttribute="bottom" secondItem="13" secondAttribute="bottom" constant="20" symbolic="YES" id="TYp-gD-Zlf"/>
                 <constraint firstItem="32" firstAttribute="leading" secondItem="24" secondAttribute="leading" id="U4Y-1C-OGz"/>
@@ -314,6 +309,7 @@
                 <constraint firstItem="32" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="Vf8-r5-iET"/>
                 <constraint firstItem="30" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="Yrb-Qc-UgY"/>
                 <constraint firstItem="54" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="1" id="a6R-GG-UVm"/>
+                <constraint firstAttribute="trailing" secondItem="56" secondAttribute="trailing" constant="213" id="bXB-gO-7kw"/>
                 <constraint firstItem="28" firstAttribute="top" secondItem="24" secondAttribute="bottom" constant="4" id="bYm-bf-dy7"/>
                 <constraint firstItem="50" firstAttribute="firstBaseline" secondItem="38" secondAttribute="firstBaseline" id="gU5-1G-uMg"/>
                 <constraint firstItem="54" firstAttribute="height" secondItem="52" secondAttribute="height" id="h9s-gK-Kwn"/>
