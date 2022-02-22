@@ -8,7 +8,7 @@ KeyCastr enables you to share your keystrokes when creating screencasts, present
 
 It is also possible to develop your own visualizer on top of KeyCastr -- pull requests are welcome!
 
-![display preferences](assets/preferences.png)
+![display preferences](https://user-images.githubusercontent.com/378648/155045108-0bfaa8b3-80c8-46ef-8d56-fe56e026c3e0.mov)
 
 ## Installation
 
