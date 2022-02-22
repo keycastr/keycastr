@@ -44,9 +44,10 @@ The default position is on the bottom left of your display. To modify the positi
 
 ## Security Concerns
 
-From time to time questions arise as to the trustworthiness of KeyCastr as an application which receives input events from macOS. KeyCastr is completely free and open source, and does not employ any networking mechanisms other than that included with the ubiquitous [Sparkle framework](https://sparkle-project.org/) for managing application updates. KeyCastr will never receive or display your passwords, so long as the website or application you are using treats password entry as secure, e.g. `<input type="password">` or equivalent.
+Any application in the Accessibility or Input Monitoring sections of the Security & Privacy pane in macOS's Preferences.app is capable of receiving all your input events. We encourage you to inspect these lists carefully, remove applications which you don't believe need to monitor your input, and ask tough questions of the companies which produce the software you use.
 
-Please understand that any application in the Accessibility or Input Monitoring sections of the Security & Privacy pane in macOS's Preferences.app is capable of receiving all your input events. We encourage you to inspect these lists carefully, remove applications which you don't believe need to monitor your input, and ask tough questions of the companies which produce the closed source software you use.
+KeyCastr is completely free and open source, and does not employ any networking mechanisms other than that included with the ubiquitous [Sparkle framework](https://sparkle-project.org/) for managing application updates. KeyCastr will never receive or display your passwords, so long as the website or application you are using treats password entry as secure, e.g. `<input type="password">` or equivalent.
+
 
 ## History and Credits
 
