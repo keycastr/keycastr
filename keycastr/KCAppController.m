@@ -43,7 +43,7 @@ static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
 static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
-static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility API in order to broadcast your keyboard inputs.\n\nWithin the System Preferences application, open the Security & Privacy preferences and add KeyCastr to the Accessibility list within the Privacy tab. If KeyCastr is already listed under the Accessibility menu, please remove it and try again.\n";
+static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility and/or Input Monitoring API in order to broadcast your keyboard inputs.\n\nWithin the System Preferences application, open the Security & Privacy preferences and add KeyCastr to the Accessibility and/or Input Monitoring list within the Privacy tab. If KeyCastr is already listed under the menus, please remove it and try again.\n";
 
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
