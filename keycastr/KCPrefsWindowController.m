@@ -27,6 +27,7 @@
 
 #import "KCPrefsWindowController.h"
 #import "KCAppController.h"
+#import "KCVisualizer.h"
 
 @implementation KCPrefsWindowController
 

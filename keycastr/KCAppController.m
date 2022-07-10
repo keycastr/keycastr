@@ -25,14 +25,13 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+#import <Quartz/Quartz.h>
+#import <ShortcutRecorder/ShortcutRecorder.h>
 #import "KCAppController.h"
-#import "KCKeyboardTap.h"
 #import "KCDefaultVisualizer.h"
+#import "KCKeyboardTap.h"
 #import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
-#import "ShortcutRecorder/SRKeyCodeTransformer.h"
-#import "KCKeycastrEvent.h"
-#import <Quartz/Quartz.h>
 
 typedef struct _KeyCombo {
     unsigned int flags; // 0 for no flags

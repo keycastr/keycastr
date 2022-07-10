@@ -27,12 +27,8 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "KCVisualizer.h"
-#import "KCKeyboardTap.h"
-#import "KCKeystroke.h"
-#import "ShortcutRecorder/ShortcutRecorder.h"
 
-@class KCPrefsWindowController;
+@protocol KCVisualizer;
 
 @interface KCAppController : NSObject <NSApplicationDelegate>
 
