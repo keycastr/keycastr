@@ -36,6 +36,29 @@ To add KeyCastr to the list click the <kbd>&plus;</kbd> button and select KeyCas
 
 If KeyCastr is already in the list you can remove it with the <kbd>&minus;</kbd> button and add it again in order to be certain that the right copy of the application is specified.
 
+### Troubleshooting permissions
+
+There are two likely causes for the app seeming not to work:
+
+1. Not receiving keystroke events from macOS due to security settings
+1. The window being offscreen.
+
+Sometimes switching from the Default to the Svelte visualizer can help you
+figure out which problem it is.
+
+To troubleshoot, We recommend that you:
+
+- Quit the KeyCastr app
+- Remove KeyCastr from any of the Privacy areas in the Security & Privacy
+  preferences panel (typically the Accessibility or Input Monitoring areas)
+- Start the KeyCastr app
+- When you see the "Keystroke Receiving" dialog from macOS, click "Open System
+  Preferences" or open the Preferences app yourself
+- Under Input Monitoring, enable KeyCastr by unlocking your preferences and
+  clicking the box next to KeyCastr which should have been automatically added
+  to the list
+- When macOS prompts you, restart KeyCastr. Or you can do it manually.
+
 ## Position on Screen
 
 The default position is on the bottom left of your display. To modify the position of displayed keystrokes, click and drag the text like so:
