@@ -1596,10 +1596,12 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 68TUCLNAPS;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 68TUCLNAPS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1616,6 +1618,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "KeyCastr Developer ID";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "KeyCastr Developer ID";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
