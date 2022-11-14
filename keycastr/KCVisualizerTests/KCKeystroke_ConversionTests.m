@@ -148,6 +148,17 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"🚀");
 }
 
+#pragma mark - JIS layout
+
+- (void)test_KCKeystroke_convertsEisūKey {
+    KCKeystroke *keystroke = [self keystrokeWithKeyCode:102 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
+    XCTAssertEqualObjects(keystroke.convertToString, @"英数");
+}
+
+- (void)test_KCKeystroke_convertsKanaKey {
+    KCKeystroke *keystroke = [self keystrokeWithKeyCode:104 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
+    XCTAssertEqualObjects(keystroke.convertToString, @"かな");
+}
 
 
 @end
