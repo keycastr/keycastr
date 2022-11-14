@@ -111,7 +111,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 			UTF8("\xe2\x87\xa0"), NSNum(123), // left
 			UTF8("\xe2\x87\xa5"), NSNum(48), // tab
 			UTF8("\xe2\x8e\x8b"), NSNum(53), // escape
-			UTF8("\xe2\x8e\x8b"), NSNum(71), // escape
+			UTF8("\xe2\x8c\xa7"), NSNum(71), // clear
 			UTF8("\xe2\x8c\xab"), NSNum(51), // delete
 			UTF8("\xe2\x8c\xa6"), NSNum(117), // forward delete
 			UTF8("\xe2\x83\x9d"), NSNum(114), // help
@@ -141,12 +141,15 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 			UTF8("F18"), NSNum(79), // F18
 			UTF8("F19"), NSNum(80), // F19
 			UTF8("F20"), NSNum(90), // F20
-			UTF8("\xe2\x90\xa3\xe2\x80\x8b"), NSNum(49), // space
+			UTF8("\xe2\x90\xa3\xe2\x80\x8b"), @49, // space
             UTF8("\xf0\x9f\x94\x85"), @145, // low brightness
             UTF8("\xf0\x9f\x94\x86"), @144, // high brightness
             UTF8("\xf0\x9f\x96\xa5"), @160, // mission control
             UTF8("\xf0\x9f\x9a\x80"), @131, // launcher
-            UTF8("fn"), @179, // fn key
+            UTF8("\xF0\x9F\x94\x8D"), @177, // spotlight key (left-pointing magnifying glass)
+            UTF8("\xF0\x9F\x8E\xA4"), @176, // dictation key (microphone)
+            UTF8("\xe2\x8f\xbe"), @178, // focus key (unicode power sleep symbol)
+            @"fn", @179, // fn key (could also be globe symbol on newer keyboards)
             @"英数", @0x66, // eisū key, JIS keyboards only
             @"かな", @0x68, // kana key, JIS keyboards only
 			nil];
@@ -238,6 +241,5 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     UCKeyTranslate(_uchrData, keyCode, kUCKeyActionDisplay, 0, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
     return [NSString stringWithCharacters:unicodeString length:1];
 }
-
 
 @end
