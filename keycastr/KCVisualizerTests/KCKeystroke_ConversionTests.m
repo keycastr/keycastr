@@ -74,9 +74,8 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⌘7");
 }
 
-// Until we come up with a clever way of resolving keycaps, it doesn't seem to be possible to convert to a number here
 - (void)test_KCKeystroke_convertsCmdOptShiftNumberToShiftedNumber {
-    // cmd-opt-shift-7 -> &
+    // cmd-opt-shift-7
     KCKeystroke *keystroke = [self keystrokeWithKeyCode: 26 modifiers: 1704234 characters:@"‡" charactersIgnoringModifiers:@"&"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧⌘7");
 }
