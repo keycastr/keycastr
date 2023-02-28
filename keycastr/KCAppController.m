@@ -41,6 +41,7 @@ typedef struct _KeyCombo {
 static NSString* kKCPrefCapturingHotKey = @"capturingHotKey";
 static NSString* kKCPrefVisibleAtLaunch = @"alwaysShowPrefs";
 static NSString* kKCPrefDisplayIcon = @"displayIcon";
+static NSString* kKCPrefCaptureStatus = @"isCapturing";
 static NSString* kKCPrefSelectedVisualizer = @"selectedVisualizer";
 static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access to the Accessibility and/or Input Monitoring API in order to broadcast your keyboard inputs.\n\nWithin the System Preferences application, open the Security & Privacy preferences and add KeyCastr to the Accessibility and/or Input Monitoring list within the Privacy tab. If KeyCastr is already listed under the menus, please remove it and try again.\n";
 
@@ -107,7 +108,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 - (void)awakeFromNib {
-    [self setIsCapturing:NO];
+    [self setIsCapturing:[[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefCaptureStatus]];
     
     // Set current visualizer from user preferences
     [self setCurrentVisualizerName:[[NSUserDefaults standardUserDefaults] objectForKey:kKCPrefSelectedVisualizer]];
@@ -144,7 +145,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
         return;
     }
 
-    [self setIsCapturing:YES];
+    [self setIsCapturing:[[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefCaptureStatus]];
 
     // Show the preferences window if desired
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefVisibleAtLaunch]) {
@@ -218,6 +219,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	[ud registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithInt:3], kKCPrefDisplayIcon,
 		@"Default", kKCPrefSelectedVisualizer,
+        [NSNumber numberWithBool:true], kKCPrefCaptureStatus,
 		[NSNumber numberWithBool:YES], kKCPrefVisibleAtLaunch,
 		[NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)], kKCPrefCapturingHotKey,
 
@@ -414,7 +416,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) toggleRecording:(id)sender
 {
-	[self setIsCapturing:![self isCapturing]];
+    BOOL res = ![self isCapturing];
+	[self setIsCapturing:res];
+    [[NSUserDefaults standardUserDefaults] setBool:res forKey:kKCPrefCaptureStatus];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void) stopPretending:(id)what
