@@ -29,24 +29,24 @@
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
 
-@class KCKeyboardTap;
+@class KCEventTap;
 
-@protocol KCKeyboardTapDelegate
+@protocol KCEventTapDelegate
 
-- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteKeystroke:(KCKeystroke *)keystroke;
-- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(KCMouseEvent *)mouseEvent;
-- (void)keyboardTap:(KCKeyboardTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags;
+- (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke;
+- (void)eventTap:(KCEventTap *)tap noteMouseEvent:(KCMouseEvent *)mouseEvent;
+- (void)eventTap:(KCEventTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags;
 
 @end
 
-@interface KCKeyboardTap : NSObject {
-    id<KCKeyboardTapDelegate> _delegate;
-    CFMachPortRef keyboardTap;
-    CFRunLoopRef keyboardTapRunLoop;
-    CFRunLoopSourceRef keyboardTapEventSource;
+@interface KCEventTap : NSObject {
+    id<KCEventTapDelegate> _delegate;
+    CFMachPortRef eventTap;
+    CFRunLoopRef eventTapRunLoop;
+    CFRunLoopSourceRef eventTapEventSource;
 }
 
-@property (nonatomic, assign) id<KCKeyboardTapDelegate> delegate;
+@property (nonatomic, assign) id<KCEventTapDelegate> delegate;
 @property (nonatomic, assign, readonly) BOOL tapInstalled;
 
 - (BOOL)installTapWithError:(NSError **)error;

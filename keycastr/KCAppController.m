@@ -29,7 +29,7 @@
 #import <ShortcutRecorder/ShortcutRecorder.h>
 #import "KCAppController.h"
 #import "KCDefaultVisualizer.h"
-#import "KCKeyboardTap.h"
+#import "KCEventTap.h"
 #import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
 
@@ -47,7 +47,7 @@ static NSString* kKCSupplementalAlertText = @"\n\nPlease grant KeyCastr access t
 static NSInteger kKCPrefDisplayIconInMenuBar = 0x01;
 static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
-@interface KCAppController () <KCKeyboardTapDelegate, KCMouseEventVisualizerDelegate>
+@interface KCAppController () <KCEventTapDelegate, KCMouseEventVisualizerDelegate>
 
 @property (nonatomic, assign) NSInteger prefDisplayIcon;
 @property (nonatomic, assign) BOOL showInDock;
@@ -67,7 +67,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 @implementation KCAppController {
     NSStatusItem *statusItem;
-    KCKeyboardTap *keyboardTap;
+    KCEventTap *eventTap;
     id<KCVisualizer> currentVisualizer;
     KCMouseEventVisualizer *mouseEventVisualizer;
 
@@ -83,8 +83,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     if (!(self = [super init]))
         return nil;
 
-    keyboardTap = [KCKeyboardTap new];
-    keyboardTap.delegate = self;
+    eventTap = [KCEventTap new];
+    eventTap.delegate = self;
 
     [self _setupDefaults];
     [self registerVisualizers];
@@ -98,7 +98,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 - (void)dealloc {
-    [keyboardTap release];
+    [eventTap release];
     [statusItem release];
     [currentVisualizer release];
     [mouseEventVisualizer release];
@@ -154,7 +154,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    [keyboardTap removeTap];
+    [eventTap removeTap];
 }
 
 - (void)openPrefsPane:(id)sender {
@@ -186,7 +186,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (BOOL)installTap {
     NSError *error = nil;
-    if (![keyboardTap installTapWithError:&error]) {
+    if (![eventTap installTapWithError:&error]) {
         // Only display a custom error message if we're running on macOS < 10.15
         NSOperatingSystemVersion minVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
         BOOL supportsNewPermissionsAlert = [NSProcessInfo.processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] && [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minVersion];
@@ -251,7 +251,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	[ud synchronize];
 }
 
--(void) keyboardTap:(KCKeyboardTap*)tap noteKeystroke:(KCKeystroke*)keystroke
+- (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke
 {
     if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifierFlags] & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)) == (self.toggleKeyCombo.flags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)))
 	{
@@ -268,14 +268,15 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 }
 
-- (void)keyboardTap:(KCKeyboardTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags
+- (void)eventTap:(KCEventTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags
 {
     if (currentVisualizer != nil) {
 		[currentVisualizer noteFlagsChanged:flags];
     }
 }
 
-- (void)keyboardTap:(KCKeyboardTap *)keyboardTap noteMouseEvent:(KCMouseEvent *)mouseEvent {
+- (void)eventTap:(KCEventTap *)eventTap noteMouseEvent:(KCMouseEvent *)mouseEvent
+{
     // TODO: need to let mouseUp events through after isCapturing or mouse events are disabled, otherwise we can end up with a stuck visualizer animation
     if (!_isCapturing) {
         return;
@@ -485,7 +486,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) setIsCapturing:(BOOL)capture
 {
-    if (capture && !keyboardTap.tapInstalled) {
+    if (capture && !eventTap.tapInstalled) {
         return;
     }
 

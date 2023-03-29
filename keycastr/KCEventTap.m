@@ -25,10 +25,10 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#import "KCKeyboardTap.h"
+#import "KCEventTap.h"
 #import "KCKeycastrEvent.h"
 
-@interface KCKeyboardTap ()
+@interface KCEventTap ()
 
 - (void)_noteMouseEvent:(CGEventRef)eventRef;
 - (void)_noteKeyEvent:(CGEventRef)eventRef;
@@ -51,7 +51,7 @@ CGEventRef eventTapCallback(
    CGEventRef event,
    void *vp)
 {
-    KCKeyboardTap* keyTap = (KCKeyboardTap*)vp;
+    KCEventTap* keyTap = (KCEventTap*)vp;
     switch (type)
     {
         case kCGEventLeftMouseDown:
@@ -77,7 +77,7 @@ CGEventRef eventTapCallback(
     return NULL;
 }
 
-@implementation KCKeyboardTap
+@implementation KCEventTap
 
 @synthesize delegate = _delegate;
 
@@ -130,7 +130,7 @@ CGEventRef eventTapCallback(
     }
     CFRelease( tapKeyDown );
     
-    keyboardTap = CGEventTapCreate(
+    eventTap = CGEventTapCreate(
                            kCGSessionEventTap,
                            kCGHeadInsertEventTap,
                            kCGEventTapOptionListenOnly,
@@ -149,33 +149,33 @@ CGEventRef eventTapCallback(
                            self
                            );
     
-    if (keyboardTap == NULL) {
+    if (eventTap == NULL) {
         if (error != NULL) {
             *error = [self constructErrorWithDescription:@"Could not create keyDown|flagsChanged event tap!"];
         }
         return NO;
     }
     
-    keyboardTapEventSource = CFMachPortCreateRunLoopSource(NULL, keyboardTap, 0);
-    if (keyboardTapEventSource == NULL) {
-        CFRelease(keyboardTap);
+    eventTapEventSource = CFMachPortCreateRunLoopSource(NULL, eventTap, 0);
+    if (eventTapEventSource == NULL) {
+        CFRelease(eventTap);
         if (error != NULL) {
             *error = [self constructErrorWithDescription:@"Could not create run loop source!"];
         }
         return NO;
     }
     
-    keyboardTapRunLoop = CFRunLoopGetCurrent();
-    if (keyboardTapRunLoop == NULL) {
-        CFRelease(keyboardTapEventSource);
-        CFRelease(keyboardTap);
+    eventTapRunLoop = CFRunLoopGetCurrent();
+    if (eventTapRunLoop == NULL) {
+        CFRelease(eventTapEventSource);
+        CFRelease(eventTap);
         if (error != NULL) {
             *error = [self constructErrorWithDescription:@"Could not get current run loop!"];
         }
         return NO;
     }
     
-    CFRunLoopAddSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
+    CFRunLoopAddSource(eventTapRunLoop, eventTapEventSource, kCFRunLoopDefaultMode);
 
     _tapInstalled = YES;
     
@@ -187,10 +187,10 @@ CGEventRef eventTapCallback(
         return;
     }
     
-    CFRunLoopRemoveSource(keyboardTapRunLoop, keyboardTapEventSource, kCFRunLoopDefaultMode);
-    CFRelease(keyboardTapRunLoop);
-    CFRelease(keyboardTapEventSource);
-    CFRelease(keyboardTap);
+    CFRunLoopRemoveSource(eventTapRunLoop, eventTapEventSource, kCFRunLoopDefaultMode);
+    CFRelease(eventTapRunLoop);
+    CFRelease(eventTapEventSource);
+    CFRelease(eventTap);
 
     _tapInstalled = NO;
 }
@@ -226,17 +226,17 @@ CGEventRef eventTapCallback(
 {
     NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
     KCMouseEvent *mouseEvent = [KCMouseEvent eventWithNSEvent:event];
-    [_delegate keyboardTap:self noteMouseEvent:mouseEvent];
+    [_delegate eventTap:self noteMouseEvent:mouseEvent];
 }
 
 -(void) noteKeystroke:(KCKeystroke*)keystroke
 {
-    [_delegate keyboardTap:self noteKeystroke:keystroke];
+    [_delegate eventTap:self noteKeystroke:keystroke];
 }
 
 -(void) noteFlagsChanged:(NSEventModifierFlags)newFlags
 {
-    [_delegate keyboardTap:self noteFlagsChanged:newFlags];
+    [_delegate eventTap:self noteFlagsChanged:newFlags];
 }
 
 @end
