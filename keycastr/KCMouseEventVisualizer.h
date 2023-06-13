@@ -52,7 +52,7 @@
 
 @interface KCMouseEventVisualizer : NSObject <KCMouseDisplayOptionsProvider>
 
-/// Note: this property is temporary, to be replaced in an upcoming release by the ability to display mouse clicks with the pointer, wtihin the current visualizer, or both.
+/// Note: this property is temporary, to be replaced in an upcoming release by the ability to display mouse clicks with the pointer, within the current visualizer, or both.
 @property (nonatomic, getter=isEnabled) BOOL enabled;
 @property (nonatomic, weak) id<KCMouseEventVisualizerDelegate> delegate;
 
