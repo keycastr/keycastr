@@ -102,7 +102,7 @@
 }
 
 - (void)test_KCKeystroke_convertsCtrlOptLetterToUppercaseLetter {
-    // crtl-opt-A
+    // ctrl-opt-A
     KCKeystroke *keystroke = [self keystrokeWithKeyCode:0 modifiers:786721 characters:@"\\^A" charactersIgnoringModifiers:@"a"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃⌥A");
 }
