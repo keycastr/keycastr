@@ -1,4 +1,4 @@
-//    Copyright (c) 2021 Andrew Kitchen
+//    Copyright (c) 2023 Andrew Kitchen
 //    All rights reserved.
 //
 //    Redistribution and use in source and binary forms, with or without modification,
@@ -25,7 +25,7 @@
 //    ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #if !__has_feature(objc_arc)
-#error "ARC is required for this compilation unit -- enable with --fobjc-arc"
+#error "ARC is required for this file -- enable with --fobjc-arc"
 #endif
 
 #import <AppKit/AppKit.h>
@@ -65,11 +65,11 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 
     _mouseDisplayOptionNames = @[@"None",
             @"with mouse pointer",
-//            @"with current visualizer",
-//            @"with pointer and visualizer"
+            @"with current visualizer",
+            @"with pointer and visualizer"
     ];
 
-    self.selectedMouseDisplayOptionIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kKCMouseVisualizerDisplayOptionKey];
+    self.selectedMouseDisplayOptionIndex = [NSUserDefaults.standardUserDefaults integerForKey:kKCMouseVisualizerDisplayOptionKey];
 
     return self;
 }
@@ -99,7 +99,8 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 }
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {
-    if (self.selectedMouseDisplayOptionIndex > 0 || [self isMouseUp:mouseEvent]) {
+    // TODO: this works but is a little gross
+    if (self.selectedMouseDisplayOptionIndex == 1 || self.selectedMouseDisplayOptionIndex == 3 || [self isMouseUp:mouseEvent]) {
         [_window updateWithMouseEvent:mouseEvent];
     }
 
@@ -111,10 +112,6 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 
 - (BOOL)isEnabled {
     return (self.selectedMouseDisplayOptionIndex > 0);
-}
-
-- (void)setEnabled:(BOOL)enabled {
-    self.selectedMouseDisplayOptionIndex = enabled ? 1 : 0;
 }
 
 #pragma mark - KCMouseDisplayOptionsProvider

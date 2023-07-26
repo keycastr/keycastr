@@ -29,6 +29,7 @@
 
 #import "KCDefaultVisualizer.h"
 #import "KCKeystroke.h"
+#import "KCMouseEvent.h"
 #import "NSBezierPath+RoundedRect.h"
 #import "NSUserDefaults+Utility.h"
 
@@ -120,7 +121,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 @end
 
-static NSRect KC_defaultFrame() {
+static NSRect KC_defaultFrame(void) {
     CGFloat width = NSWidth(NSScreen.mainScreen.frame) - 2 * kKCDefaultBezelPadding;
     return NSMakeRect(kKCDefaultBezelPadding, kKCDefaultBezelPadding, width, kKCDefaultBezelHeight);
 }
@@ -230,19 +231,27 @@ static NSRect KC_defaultFrame() {
 
 - (void)addMouseEvent:(KCMouseEvent *)mouseEvent
 {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
+//    // TODO: refactor to enable reading modifiers from mouse events
+//    [self appendString:[mouseEvent convertToString]];
+    if (mouseEvent.type == NSEventTypeLeftMouseDown) {
+        [self appendString:@"🖱️"];
+    }
 }
 
 - (void)addKeystroke:(KCKeystroke *)keystroke
 {
-	[self _cancelLineBreak];
-	NSString* charString = [keystroke convertToString];
+    [self _cancelLineBreak];
 
     if ([keystroke isCommand])
-	{
+    {
         [self abandonCurrentBezelView];
-	}
+    }
 
+    [self appendString:[keystroke convertToString]];
+}
+
+- (void)appendString:(NSString *)string
+{
 	if (_currentBezelView == nil)
 	{
         if (!(NSWidth(self.frame) > 0)) {
@@ -252,7 +261,7 @@ static NSRect KC_defaultFrame() {
 
 		NSColor *backgroundColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
 		_currentBezelView = [[KCDefaultVisualizerBezelView alloc] initWithMaxWidth:NSWidth(self.frame)
-																			  text:charString
+																			  text:string
 																   backgroundColor:backgroundColor];
 		[_currentBezelView setAutoresizingMask:NSViewMinYMargin];
 
@@ -264,7 +273,7 @@ static NSRect KC_defaultFrame() {
 	}
 	else
 	{
-		[_currentBezelView appendString:charString];
+		[_currentBezelView appendString:string];
 	}
     [self _scheduleLineBreak];
 }

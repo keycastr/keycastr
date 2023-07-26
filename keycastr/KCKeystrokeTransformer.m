@@ -127,27 +127,27 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
              UTF8("\xf0\x9f\x8e\xa4"), @176, // dictation key (microphone)
              UTF8("\xe2\x8f\xbe"), @178,     // focus key (unicode power sleep symbol)
              UTF8("\xe2\x90\xa3\xe2\x80\x8b"), @49, // space
-             @"fn", @179,  // fn key (could also be globe symbol on newer keyboards)
-             @"F1", @122,  // F1
-             @"F2", @120,  // F2
-             @"F3", @99,   // F3
-             @"F4", @118,  // F4
-             @"F5", @96,   // F5
-             @"F6", @97,   // F6
-             @"F7", @98,   // F7
-             @"F8", @100,  // F8
-             @"F9", @101,  // F9
-             @"F10", @109, // F10
-             @"F11", @103, // F11
-             @"F12", @111, // F12
-             @"F13", @105, // F13
-             @"F14", @107, // F14
-             @"F15", @113, // F15
-             @"F16", @106, // F16
-             @"F17", @64,  // F17
-             @"F18", @79,  // F18
-             @"F19", @80,  // F19
-             @"F20", @90,  // F20
+             @"fn ", @179,  // fn key (could also be globe symbol on newer keyboards)
+             @"F1 ", @122,  // F1
+             @"F2 ", @120,  // F2
+             @"F3 ", @99,   // F3
+             @"F4 ", @118,  // F4
+             @"F5 ", @96,   // F5
+             @"F6 ", @97,   // F6
+             @"F7 ", @98,   // F7
+             @"F8 ", @100,  // F8
+             @"F9 ", @101,  // F9
+             @"F10 ", @109, // F10
+             @"F11 ", @103, // F11
+             @"F12 ", @111, // F12
+             @"F13 ", @105, // F13
+             @"F14 ", @107, // F14
+             @"F15 ", @113, // F15
+             @"F16 ", @106, // F16
+             @"F17 ", @64,  // F17
+             @"F18 ", @79,  // F18
+             @"F19 ", @80,  // F19
+             @"F20 ", @90,  // F20
              @"英数", @0x66, // eisū key, JIS keyboards only
              @"かな", @0x68, // kana key, JIS keyboards only
              nil];
@@ -158,7 +158,6 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 - (id)transformedValue:(id)value
 {
 	KCKeystroke *keystroke = (KCKeystroke *)value;
-	NSMutableString *mutableResponse = [NSMutableString string];
 
     uint16_t _keyCode = keystroke.keyCode;
     NSEventModifierFlags _modifiers = keystroke.modifierFlags;
@@ -168,6 +167,13 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     BOOL isShifted = NO;
     BOOL needsShiftGlyph = NO;
 
+    NSMutableString *mutableResponse = [NSMutableString string];
+
+    if (_modifiers & kCGEventFlagMaskSecondaryFn)
+    {
+        [mutableResponse appendString:@"fn "];
+    }
+    
     if (_modifiers & NSEventModifierFlagControl)
 	{
 		[mutableResponse appendString:kControlKeyString];

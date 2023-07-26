@@ -32,14 +32,14 @@
 
 @interface KCAppController : NSObject <NSApplicationDelegate>
 
+@property (nonatomic) BOOL isCapturing;
+
 -(IBAction) orderFrontKeyCastrAboutPanel:(id)sender;
 -(IBAction) orderFrontKeyCastrPreferencesPanel:(id)sender;
 -(IBAction) toggleRecording:(id)sender;
 -(IBAction) pretendToDoSomethingImportant:(id)sender;
 -(IBAction) changeIconPreference:(id)sender;
 
--(BOOL) isCapturing;
--(void) setIsCapturing:(BOOL)capture;
 -(void) registerVisualizers;
 
 -(NSArray*) availableVisualizerNames;
@@ -49,5 +49,11 @@
 
 -(id<KCVisualizer>) currentVisualizer;
 -(void) setCurrentVisualizer:(id<KCVisualizer>)newVisualizer;
+
+- (NSArray *)availableMouseDisplayOptionNames;
+
+- (NSString *)currentMouseDisplayOptionName;
+- (void)setCurrentMouseDisplayOptionName:(NSString *)displayOptionName;
+
 
 @end

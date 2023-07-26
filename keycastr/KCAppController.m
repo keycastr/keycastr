@@ -138,8 +138,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
                                                context:nil];
 }
 
-- (void)applicationWillFinishLaunching:(NSNotification *)notification {
-
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
     [NSApp activateIgnoringOtherApps:YES];
 
     if (![self installTap]) {
@@ -481,9 +480,16 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	return rval;
 }
 
--(BOOL) isCapturing
-{
-	return _isCapturing;
+- (NSArray *)availableMouseDisplayOptionNames {
+    return mouseEventVisualizer.mouseDisplayOptionNames;
+}
+
+- (NSString *)currentMouseDisplayOptionName {
+    return mouseEventVisualizer.currentMouseDisplayOptionName;
+}
+
+- (void)setCurrentMouseDisplayOptionName:(NSString *)displayOptionName {
+    mouseEventVisualizer.currentMouseDisplayOptionName = displayOptionName;
 }
 
 -(void) setIsCapturing:(BOOL)capture
