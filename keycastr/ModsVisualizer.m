@@ -24,9 +24,11 @@
 //	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#define MODS_WIDTH 400
 
 #import "ModsVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
+#import "KCKeystroke.h"
 
 @implementation ModsVisualizerFactory
 
@@ -49,53 +51,50 @@
 
 @implementation ModsVisualizerView
 
+- (unsigned short) flagsCount {
+	unsigned short count = 0;
+	
+	if (_flags & NSEventModifierFlagShift) {
+		count += 1;
+	}
+	
+	if (_flags & NSEventModifierFlagControl) {
+		count += 1;
+	}
+	
+	if (_flags & NSEventModifierFlagOption) {
+		count += 1;
+	}
+	
+	if (_flags & NSEventModifierFlagCommand) {
+		count += 1;
+	}
+	
+	return count;
+}
+
 -(void) drawRect:(NSRect)rect
 {
 	NSRect frame = [self frame];
 	NSRect bgFrame = [self frame];
-	float oneQuarter = floorf(frame.size.width / 4);
-	bgFrame.size.width = 0;
+	float oneQuarter = floorf(MODS_WIDTH / 4);
+	
 	CGFloat x = frame.size.width, y;
 	NSSize size;
 
-	bgFrame.origin.x = frame.size.width;
 	[[NSColor clearColor] setFill];
 	NSRectFill(frame);
 
-	if (_flags & NSShiftKeyMask) {
-		bgFrame.size.width += oneQuarter;
-		bgFrame.origin.x -= oneQuarter;
-	}
-
-	if (_flags & NSControlKeyMask) {
-		bgFrame.size.width += oneQuarter;
-		bgFrame.origin.x -= oneQuarter;
-	}
-
-	if (_flags & NSAlternateKeyMask) {
-		bgFrame.size.width += oneQuarter;
-		bgFrame.origin.x -= oneQuarter;
-	}
-
-	if (_flags & NSCommandKeyMask) {
-		bgFrame.size.width += oneQuarter;
-		bgFrame.origin.x -= oneQuarter;
-	}
-
 	if (bgFrame.size.width > 0) {
-				[[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
-				NSBezierPath* bp = [NSBezierPath bezierPath];
-				[bp appendRoundedRect:bgFrame radius:10];
-				[bp fill];
+		[[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
+		NSBezierPath* bp = [NSBezierPath bezierPath];
+		[bp appendRoundedRect:bgFrame radius:10];
+		[bp fill];
 	}
 
 	NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
-	[ps setAlignment:NSCenterTextAlignment];
+	[ps setAlignment:NSTextAlignmentCenter];
 
-	NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
-	NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
-	NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
-	NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
 	NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
 	[shadow setShadowColor:[NSColor blackColor]];
 	[shadow setShadowBlurRadius:2];
@@ -108,28 +107,32 @@
 		NSParagraphStyleAttributeName:  [ps autorelease]
 	} mutableCopy];
 
-	if (_flags & NSShiftKeyMask) {
+	if (_flags & NSEventModifierFlagShift) {
+		NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
 		size = [shiftKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
 		x -= oneQuarter;
 		[shiftKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
 	}
 
-	if (_flags & NSControlKeyMask) {
+	if (_flags & NSEventModifierFlagControl) {
+		NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
 		size = [controlKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
 		x -= oneQuarter;
 		[controlKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
 	}
 
-	if (_flags & NSAlternateKeyMask) {
+	if (_flags & NSEventModifierFlagOption) {
+		NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
 		size = [altKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
 		x -= oneQuarter;
 		[altKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
 	}
 
-	if (_flags & NSCommandKeyMask) {
+	if (_flags & NSEventModifierFlagCommand) {
+		NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
 		size = [commandKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
 		x -= oneQuarter;
@@ -139,8 +142,11 @@
 
 -(void) noteFlagsChanged:(uint32_t)flags
 {
-		_flags = flags;
-		[self setNeedsDisplay:YES];
+	_flags = flags;
+	NSRect frame = self.frame;
+	frame.size.width = MODS_WIDTH / 4 * (CGFloat)[self flagsCount];
+	self.frame = frame;
+	[self setNeedsDisplay:YES];
 }
 
 @end
@@ -158,30 +164,30 @@
 	if (!(self = [super init]))
 		return nil;
 
-	NSRect r = { 10, 10, 400, 100 };
+	NSRect windowFrame = { MODS_WIDTH, 100, 0, 100 };
 	_visualizerWindow = [[NSWindow alloc]
-		initWithContentRect:r
-		styleMask:NSBorderlessWindowMask
+		 initWithContentRect:windowFrame
+		styleMask:NSWindowStyleMaskBorderless
 		backing:NSBackingStoreBuffered
 		defer:NO];
 	[_visualizerWindow setLevel:NSScreenSaverWindowLevel];
 	[_visualizerWindow setBackgroundColor:[NSColor clearColor]];
 	[_visualizerWindow setMovableByWindowBackground:YES];
-	[_visualizerWindow setFrame:r display:NO];
 	[_visualizerWindow setFrameAutosaveName:@"mods visualizerFrame"];
-	[_visualizerWindow setFrameUsingName:@"mods visualizerFrame"];
+	[_visualizerWindow setFrameUsingName:@"mods visualizerFrame" force:YES];
 	[_visualizerWindow setOpaque:NO];
 
-	_visualizerView = [[ModsVisualizerView alloc] initWithFrame:r];
+	_visualizerView = [[ModsVisualizerView alloc] init];
 	[_visualizerWindow setContentView:_visualizerView];
+	[_visualizerView noteFlagsChanged:0];
 
 	return self;
 }
 
 - (void)dealloc {
-		[_visualizerWindow release];
-		[_visualizerView release];
-		[super dealloc];
+	[_visualizerWindow release];
+	[_visualizerView release];
+	[super dealloc];
 }
 
 -(void) showVisualizer:(id)sender
@@ -202,6 +208,19 @@
 -(void) noteFlagsChanged:(uint32_t)flags
 {
 	[_visualizerView noteFlagsChanged:flags];
+	NSRect r = _visualizerWindow.frame;
+	CGFloat right = r.origin.x + r.size.width;
+	r.size.width = _visualizerView.frame.size.width;
+	r.origin.x = right - r.size.width;
+	[_visualizerWindow setFrame:r display:NO];
+}
+
+- (void)noteKeyEvent:(KCKeystroke *)keystroke {}
+
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {}
+
++ (NSDictionary<NSString *,NSObject *> *)visualizerDefaults {
+	return @{};
 }
 
 @end
