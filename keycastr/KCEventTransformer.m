@@ -25,19 +25,20 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#import "KCKeystrokeTransformer.h"
+#import "KCEventTransformer.h"
 #import "KCKeystroke.h"
+#import "KCMouseEvent.h"
 #import <Carbon/Carbon.h>
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface KCKeystrokeTransformer ()
+@interface KCEventTransformer ()
 
 @property (nonatomic, readonly) struct __TISInputSource *keyboardLayout;
 
 @end
 
-@implementation KCKeystrokeTransformer {
+@implementation KCEventTransformer {
 	TISInputSourceRef _keyboardLayout;
 	const UCKeyboardLayout *_uchrData;
 }
@@ -62,15 +63,15 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	return [NSString class];
 }
 
-+ (id)currentTransformer
++ (instancetype)currentTransformer
 {
-    static KCKeystrokeTransformer *currentTransformer = nil;
+    static KCEventTransformer *currentTransformer = nil;
     TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
 
     if (currentTransformer == nil) {
-        currentTransformer = [[KCKeystrokeTransformer alloc] initWithKeyboardLayout:currentLayout];
+        currentTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout];
     } else if (currentTransformer.keyboardLayout != currentLayout) {
-        currentTransformer = [[KCKeystrokeTransformer alloc] initWithKeyboardLayout:currentLayout];
+        currentTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout];
     }
 
     CFRelease(currentLayout);
@@ -78,7 +79,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     return currentTransformer;
 }
 
-- (id)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout
+- (instancetype)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout
 {
     if (self = [super init]) {
         _keyboardLayout = keyboardLayout;
@@ -155,16 +156,12 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     return d;
 }
 
-- (id)transformedValue:(id)value
+- (id)transformedValue:(KCKeycastrEvent *)event
 {
-	KCKeystroke *keystroke = (KCKeystroke *)value;
-
-    uint16_t _keyCode = keystroke.keyCode;
-    NSEventModifierFlags _modifiers = keystroke.modifierFlags;
+    NSEventModifierFlags _modifiers = event.modifierFlags;
     BOOL isOption = (_modifiers & NSEventModifierFlagOption) != 0;
-    BOOL isCommand = keystroke.isCommand;
+    BOOL isShifted = (_modifiers & NSEventModifierFlagShift) != 0;
 
-    BOOL isShifted = NO;
     BOOL needsShiftGlyph = NO;
 
     NSMutableString *mutableResponse = [NSMutableString string];
@@ -184,10 +181,9 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kAltKeyString];
 	}
 
-    if (_modifiers & NSEventModifierFlagShift)
+    if (isShifted)
 	{
-		isShifted = YES;
-		if (isOption || isCommand)
+		if (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand))
 			[mutableResponse appendString:kShiftKeyString];
 		else
 			needsShiftGlyph = YES;
@@ -203,8 +199,21 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kCommandKeyString];
 	}
 
+    if ([event isKindOfClass:KCMouseEvent.class]) {
+        if (needsShiftGlyph) {
+            [mutableResponse appendString:kShiftKeyString];
+            needsShiftGlyph = NO;
+        }
+        [mutableResponse appendString:@"🖱️"];
+        return mutableResponse;
+    }
+    
+    KCKeystroke *keystroke = (KCKeystroke *)event;
+    uint16_t _keyCode = keystroke.keyCode;
+    BOOL isCommandKey = keystroke.isCommandKey;
+    
     // check for bare shift-tab as left tab special case
-    if (isShifted && !isCommand && !isOption)
+    if (isShifted && !isCommandKey && !isOption)
     {
         if ([@(_keyCode) isEqualToNumber:@48]) {
             [mutableResponse appendString:kLeftTabString];
@@ -225,8 +234,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	}
 
     [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
-
-    if (isCommand || isShifted)
+    
+    if (isCommandKey || isShifted)
 	{
         mutableResponse = [[[mutableResponse uppercaseString] mutableCopy] autorelease];
 	}

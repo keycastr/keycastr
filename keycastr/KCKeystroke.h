@@ -32,6 +32,7 @@
 
 @property (nonatomic, readonly) uint16_t keyCode;
 
-- (BOOL)isCommand;
+/// A KeyStroke is a command key if it includes a CTRL or CMD key; option and shift are only considered modifiers.
+- (BOOL)isCommandKey;
 
 @end

@@ -108,7 +108,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (void)noteKeyEvent:(KCKeystroke *)keystroke
 {
-    if (![keystroke isCommand] && [self shouldOnlyDisplayCommandKeys]) {
+    if (![keystroke isCommandKey] && [self shouldOnlyDisplayCommandKeys]) {
 		return;
 	}
 	[visualizerWindow addKeystroke:keystroke];
@@ -116,6 +116,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
 {
+    // TODO: these should be filtered or de-bounced
 	[visualizerWindow addMouseEvent:mouseEvent];
 }
 
@@ -231,10 +232,8 @@ static NSRect KC_defaultFrame(void) {
 
 - (void)addMouseEvent:(KCMouseEvent *)mouseEvent
 {
-//    // TODO: refactor to enable reading modifiers from mouse events
-//    [self appendString:[mouseEvent convertToString]];
     if (mouseEvent.type == NSEventTypeLeftMouseDown) {
-        [self appendString:@"🖱️"];
+        [self appendString:[mouseEvent convertToString]];
     }
 }
 
@@ -242,7 +241,7 @@ static NSRect KC_defaultFrame(void) {
 {
     [self _cancelLineBreak];
 
-    if ([keystroke isCommand])
+    if ([keystroke isCommandKey])
     {
         [self abandonCurrentBezelView];
     }

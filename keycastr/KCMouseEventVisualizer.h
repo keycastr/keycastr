@@ -36,6 +36,7 @@
 
 @property (nonatomic, strong, readonly) NSArray<NSString *> *mouseDisplayOptionNames;
 @property (nonatomic, strong) NSString *currentMouseDisplayOptionName;
+@property (nonatomic, assign) NSInteger selectedMouseDisplayOptionIndex;
 
 @end
 

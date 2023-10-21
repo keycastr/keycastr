@@ -27,10 +27,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class KCKeycastrEvent;
 
-@interface KCKeystrokeTransformer : NSValueTransformer
+@interface KCEventTransformer : NSValueTransformer
 
-+ (id)currentTransformer;
++ (instancetype)currentTransformer;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
@@ -38,6 +39,6 @@
 + (BOOL)allowsReverseTransformation;
 + (Class)transformedValueClass;
 
-- (id)transformedValue:(id)value;
+- (id)transformedValue:(KCKeycastrEvent *)event;
 
 @end

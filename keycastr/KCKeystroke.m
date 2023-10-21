@@ -26,7 +26,7 @@
 
 
 #import "KCKeystroke.h"
-#import "KCKeystrokeTransformer.h"
+#import "KCEventTransformer.h"
 
 @implementation KCKeystroke {
     NSString *_characters;
@@ -55,10 +55,7 @@
     [super dealloc];
 }
 
-/**
- A KeyStroke is a command if it includes a CMD or CTRL key; option and shift are only considered modifiers.
- */
-- (BOOL)isCommand {
+- (BOOL)isCommandKey {
     return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
 }
 

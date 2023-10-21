@@ -162,11 +162,11 @@
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="403">
                                 <view key="view" id="406">
-                                    <rect key="frame" x="10" y="33" width="424" height="442"/>
+                                    <rect key="frame" x="10" y="33" width="422" height="412"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="410">
-                                            <rect key="frame" x="18" y="305" width="388" height="117"/>
+                                            <rect key="frame" x="18" y="275" width="386" height="117"/>
                                             <subviews>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446">
                                                     <rect key="frame" x="18" y="50" width="139" height="16"/>
@@ -177,7 +177,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="444">
-                                                    <rect key="frame" x="163" y="19" width="205" height="18"/>
+                                                    <rect key="frame" x="163" y="19" width="203" height="18"/>
                                                     <buttonCell key="cell" type="check" title="Show preferences at launch" bezelStyle="regularSquare" imagePosition="leading" alignment="left" state="on" inset="2" id="445">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>

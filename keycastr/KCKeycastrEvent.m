@@ -27,7 +27,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "KCMouseEvent.h"
 #import "KCKeycastrEvent.h"
-#import "KCKeystrokeTransformer.h"
+#import "KCEventTransformer.h"
 
 
 @implementation KCKeycastrEvent {
@@ -52,7 +52,7 @@
 }
 
 - (NSString *)convertToString {
-    return [[KCKeystrokeTransformer currentTransformer] transformedValue:self];
+    return [[KCEventTransformer currentTransformer] transformedValue:self];
 }
 
 @end

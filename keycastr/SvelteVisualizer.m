@@ -233,9 +233,14 @@
 
 -(void) noteKeyEvent:(KCKeystroke*)keystroke
 {
-	if (!_displayAll && ![keystroke isCommand])
+	if (!_displayAll && ![keystroke isCommandKey])
 		return;
 	[_visualizerView noteKeyEvent:keystroke];
+}
+
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
+{
+    NSLog(@"================> %@", NSStringFromSelector(_cmd));
 }
 
 - (void)noteFlagsChanged:(NSEventModifierFlags)flags

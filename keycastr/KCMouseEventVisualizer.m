@@ -48,13 +48,13 @@ static CGFloat const kKCMouseVisualizerRadius = 22.0;
 @interface KCMouseEventVisualizer ()
 
 @property (nonatomic, strong) NSArray<NSString *> *mouseDisplayOptionNames;
-@property (nonatomic, assign) NSInteger selectedMouseDisplayOptionIndex;
+@property (nonatomic, strong) KCMouseVisualizerWindow *window;
 
 @end
 
-@implementation KCMouseEventVisualizer {
-    KCMouseVisualizerWindow *_window;
-}
+@implementation KCMouseEventVisualizer 
+
+@synthesize selectedMouseDisplayOptionIndex = _selectedMouseDisplayOptionIndex;
 
 static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 
@@ -99,12 +99,12 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 }
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {
-    // TODO: this works but is a little gross
+    // Options 1 & 3 include displaying the mouse click in the mouse visualizer. MouseUp should always be sent for consistency.
     if (self.selectedMouseDisplayOptionIndex == 1 || self.selectedMouseDisplayOptionIndex == 3 || [self isMouseUp:mouseEvent]) {
         [_window updateWithMouseEvent:mouseEvent];
     }
 
-    // Options 2 & 3 include displaying mouse events in the main visualizer
+    // Options 2 & 3 include displaying mouse events in the keystroke visualizer.
     if (self.selectedMouseDisplayOptionIndex >= 2) {
         [self.delegate mouseEventVisualizer:self didNoteMouseEvent:mouseEvent];
     }
