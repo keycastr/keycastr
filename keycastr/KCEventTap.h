@@ -27,31 +27,25 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#import <Cocoa/Cocoa.h>
-#import "KCKeystroke.h"
-#import "KCMouseEvent.h"
+#import <Foundation/Foundation.h>
 
-@class KCEventTap;
+@class KCKeystroke, KCMouseEvent;
+@protocol KCEventTapDelegate;
 
-@protocol KCEventTapDelegate
-
-- (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke;
-- (void)eventTap:(KCEventTap *)tap noteMouseEvent:(KCMouseEvent *)mouseEvent;
-- (void)eventTap:(KCEventTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags;
-
-@end
-
-@interface KCEventTap : NSObject {
-    id<KCEventTapDelegate> _delegate;
-    CFMachPortRef eventTap;
-    CFRunLoopRef eventTapRunLoop;
-    CFRunLoopSourceRef eventTapEventSource;
-}
+@interface KCEventTap : NSObject
 
 @property (nonatomic, assign) id<KCEventTapDelegate> delegate;
 @property (nonatomic, assign, readonly) BOOL tapInstalled;
 
 - (BOOL)installTapWithError:(NSError **)error;
 - (void)removeTap;
+
+@end
+
+@protocol KCEventTapDelegate
+
+- (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke;
+- (void)eventTap:(KCEventTap *)tap noteMouseEvent:(KCMouseEvent *)mouseEvent;
+- (void)eventTap:(KCEventTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags;
 
 @end

@@ -28,9 +28,15 @@
 
 
 #import "KCEventTap.h"
+#import "KCKeystroke.h"
 #import "KCKeycastrEvent.h"
+#import "KCMouseEvent.h"
 
-@interface KCEventTap ()
+@interface KCEventTap () {
+    CFMachPortRef eventTap;
+    CFRunLoopRef eventTapRunLoop;
+    CFRunLoopSourceRef eventTapEventSource;
+}
 
 - (void)_noteMouseEvent:(CGEventRef)eventRef;
 - (void)_noteKeyEvent:(CGEventRef)eventRef;
