@@ -233,6 +233,7 @@ static NSRect KC_defaultFrame(void) {
 - (void)addMouseEvent:(KCMouseEvent *)mouseEvent
 {
     if (mouseEvent.type == NSEventTypeLeftMouseDown) {
+        [self abandonCurrentBezelView];
         [self appendString:[mouseEvent convertToString]];
     }
 }
