@@ -27,7 +27,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class KCKeystroke, KCMouseEvent;
+@class KCKeyEvent, KCMouseEvent;
 
 @protocol KCVisualizer<NSObject>
 
@@ -38,7 +38,7 @@
 -(void) hideVisualizer:(id)sender;
 -(void) deactivateVisualizer:(id)sender;
 
-- (void)noteKeyEvent:(KCKeystroke *)keystroke;
+- (void)noteKeyEvent:(KCKeyEvent *)event;
 - (void)noteFlagsChanged:(NSEventModifierFlags)flags;
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
 

@@ -69,6 +69,8 @@
 
 @end
 
+@class KCKeystroke;
+
 @interface KCDefaultVisualizerWindow : NSWindow
 {
 	KCDefaultVisualizerBezelView* _currentBezelView;

@@ -29,6 +29,9 @@
 
 #import "SvelteVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
+#import "KCKeycastrEvent.h"
+#import "KCKeystroke.h"
+#import "KCMouseEvent.h"
 
 @implementation SvelteVisualizerFactory
 
@@ -136,11 +139,11 @@
 	}
 }
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke
+- (void)noteKeyEvent:(KCKeycastrEvent *)event
 {
     if (_displayedString) {
         [_displayedString autorelease];
-        _displayedString = [[_displayedString stringByAppendingString:[keystroke convertToString]] retain];
+        _displayedString = [[_displayedString stringByAppendingString:[event convertToString]] retain];
 
 
         if (_displayedString.length > 6) {
@@ -150,7 +153,7 @@
         }
     }
     else {
-        _displayedString = [[keystroke convertToString] retain];
+        _displayedString = [[event convertToString] retain];
     }
 	[self setNeedsDisplay:YES];
 }
@@ -233,7 +236,7 @@
 	[_visualizerWindow orderOut:self];
 }
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke
+- (void)noteKeyEvent:(KCKeystroke *)keystroke
 {
 	if (!_displayAll && ![keystroke isCommandKey])
 		return;
@@ -242,7 +245,15 @@
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
 {
-    NSLog(@"================> %@", NSStringFromSelector(_cmd));
+    NSEventMask eventMask = NSEventMaskFromType(mouseEvent.type);
+    if (eventMask & (NSEventMaskLeftMouseDown | NSEventMaskRightMouseDown | NSEventMaskOtherMouseDown)) {
+        [_visualizerView noteKeyEvent:mouseEvent];
+    }
+
+    if (eventMask & (NSEventMaskLeftMouseUp | NSEventMaskRightMouseUp | NSEventMaskOtherMouseUp)) {
+        [_visualizerView noteFlagsChanged:mouseEvent.modifierFlags];
+    }
+
 }
 
 - (void)noteFlagsChanged:(NSEventModifierFlags)flags

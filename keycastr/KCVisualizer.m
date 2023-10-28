@@ -84,7 +84,7 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
--(void) noteKeyEvent:(KCKeystroke*)keystroke
+- (void)noteKeyEvent:(KCKeyEvent *)event
 {
     [self doesNotRecognizeSelector:_cmd];
 }
