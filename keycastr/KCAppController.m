@@ -32,6 +32,7 @@
 #import "KCAppController.h"
 #import "KCDefaultVisualizer.h"
 #import "KCEventTap.h"
+#import "KCKeystroke.h"
 #import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
 
