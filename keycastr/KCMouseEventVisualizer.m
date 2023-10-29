@@ -80,6 +80,8 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 }
 
 - (void)createWindow {
+    if (NSApp == nil) return;
+    
     CGFloat diameter = 2 * kKCMouseVisualizerRadius;
     _window = [[KCMouseVisualizerWindow alloc] initWithContentRect:NSMakeRect(0, 0, diameter, diameter)
                                                          styleMask:NSWindowStyleMaskBorderless
