@@ -272,6 +272,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)eventTap:(KCEventTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags
 {
+    if (!_isCapturing) {
+        return;
+    }
+    
     if (currentVisualizer != nil) {
 		[currentVisualizer noteFlagsChanged:flags];
     }
