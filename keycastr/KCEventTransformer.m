@@ -168,11 +168,6 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
     NSMutableString *mutableResponse = [NSMutableString string];
 
-    if (_modifiers & kCGEventFlagMaskSecondaryFn)
-    {
-        [mutableResponse appendString:@"fn "];
-    }
-    
     if (_modifiers & NSEventModifierFlagControl)
 	{
 		[mutableResponse appendString:kControlKeyString];
