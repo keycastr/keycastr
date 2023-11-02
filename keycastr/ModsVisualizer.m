@@ -24,7 +24,7 @@
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#define MODS_WIDTH 400
+#define MODS_WIDTH 100
 
 #import "ModsVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
@@ -51,6 +51,10 @@
 - (unsigned short)flagsCount  {
     unsigned short count = 0;
 
+	if (_flags & NSEventModifierFlagFunction) {
+		count += 1;
+	}
+
     if (_flags & NSEventModifierFlagControl) {
         count += 1;
     }
@@ -73,7 +77,7 @@
 - (void)drawRect:(NSRect)rect {
     NSRect frame = [self frame];
     NSRect bgFrame = [self frame];
-    float oneQuarter = floorf(MODS_WIDTH / 4);
+    float oneQuarter = floorf(MODS_WIDTH);
 
     CGFloat x = frame.size.width, y;
     NSSize size;
@@ -103,13 +107,21 @@
         NSParagraphStyleAttributeName:  [ps autorelease]
     } mutableCopy];
 
-    if (_flags & NSEventModifierFlagControl) {
-        NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
-        size = [controlKeyString sizeWithAttributes:attr];
-        y = (frame.size.height - size.height) / 2.0;
-        x -= oneQuarter;
-        [controlKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
-    }
+	if (_flags & NSEventModifierFlagCommand) {
+		NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
+		size = [commandKeyString sizeWithAttributes:attr];
+		y = (frame.size.height - size.height) / 2.0;
+		x -= oneQuarter;
+		[commandKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+	}
+
+	if (_flags & NSEventModifierFlagShift) {
+		NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
+		size = [shiftKeyString sizeWithAttributes:attr];
+		y = (frame.size.height - size.height) / 2.0;
+		x -= oneQuarter;
+		[shiftKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+	}
 
     if (_flags & NSEventModifierFlagOption) {
         NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
@@ -119,27 +131,27 @@
         [altKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
     }
 
-    if (_flags & NSEventModifierFlagShift) {
-        NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
-        size = [shiftKeyString sizeWithAttributes:attr];
-        y = (frame.size.height - size.height) / 2.0;
-        x -= oneQuarter;
-        [shiftKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
-    }
+	if (_flags & NSEventModifierFlagControl) {
+		NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
+		size = [controlKeyString sizeWithAttributes:attr];
+		y = (frame.size.height - size.height) / 2.0;
+		x -= oneQuarter;
+		[controlKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+	}
 
-    if (_flags & NSEventModifierFlagCommand) {
-        NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
-        size = [commandKeyString sizeWithAttributes:attr];
-        y = (frame.size.height - size.height) / 2.0;
-        x -= oneQuarter;
-        [commandKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
-    }
+	if (_flags & NSEventModifierFlagFunction) {
+		NSString* controlKeyString = [NSString stringWithUTF8String:"fn"];
+		size = [controlKeyString sizeWithAttributes:attr];
+		y = (frame.size.height - size.height) / 2.0;
+		x -= oneQuarter;
+		[controlKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+	}
 }
 
 - (void)noteFlagsChanged:(uint32_t)flags {
     _flags = flags;
     NSRect frame = self.frame;
-    frame.size.width = MODS_WIDTH / 4 * (CGFloat)[self flagsCount];
+    frame.size.width = MODS_WIDTH * (CGFloat)[self flagsCount];
     self.frame = frame;
     [self setNeedsDisplay:YES];
 }
@@ -203,7 +215,7 @@
     [_visualizerWindow setFrame:r display:NO];
 }
 
-- (void)noteKeyEvent:(KCKeystroke  *)keystroke  {}
+- (void)noteKeyEvent:(KCKeycastrEvent *)event {}
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {}
 
