@@ -219,6 +219,9 @@ CGEventRef eventTapCallback(
 	
 	if (f & kCGEventFlagMaskAlternate)
         modifiers |= NSEventModifierFlagOption;
+	
+	if (f & kCGEventFlagMaskSecondaryFn)
+		modifiers |= NSEventModifierFlagFunction;
 
 	[self noteFlagsChanged:modifiers];
 }
