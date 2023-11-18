@@ -115,7 +115,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
              UTF8("\xe2\x8c\xa7"), @71,  // clear
              UTF8("\xe2\x8c\xab"), @51,  // delete
              UTF8("\xe2\x8c\xa6"), @117, // forward delete
-             UTF8("\xe2\x83\x9d"), @114, // help
+             UTF8("?\xe2\x83\x9d"), @114, // help
              UTF8("\xe2\x86\x96"), @115, // home
              UTF8("\xe2\x86\x98"), @119, // end
              UTF8("\xe2\x87\x9e"), @116, // pgup
