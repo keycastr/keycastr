@@ -1,6 +1,6 @@
 # KeyCastr
 
-KeyCastr, an open source keystroke visualizer.
+KeyCastr, an open-source keystroke visualizer.
 
 ![header image](assets/KeyCastr_header.png)
 
@@ -24,7 +24,7 @@ brew install --cask keycastr
 
 KeyCastr requires your permission to receive events from macOS in order to broadcast your keystrokes and mouse clicks.
 
-On newer versions of macOS (10.15+) there is an Input Monitoring menu under Security & Privacy within the System Preferences app, and KeyCastr will appear there automatically the first time you run it. Simply unlock this menu and check the box next to KeyCastr to enable it.
+On newer versions of macOS (10.15+), there is an Input Monitoring menu under Security & Privacy within the System Preferences app, and KeyCastr will appear there automatically the first time you run it. Simply unlock this menu and check the box next to KeyCastr to enable it.
 
 ![input_monitoring](assets/input_monitoring.png)
 
@@ -41,7 +41,7 @@ If KeyCastr is already in the list you can remove it with the <kbd>&minus;</kbd>
 There are two likely causes for the app seeming not to work:
 
 1. Not receiving keystroke events from macOS due to security settings
-1. The window being offscreen.
+1. The window is offscreen.
 
 Sometimes switching from the Default to the Svelte visualizer can help you
 figure out which problem it is.
@@ -67,18 +67,17 @@ The default position is on the bottom left of your display. To modify the positi
 
 ## Security Concerns
 
-Any application in the Accessibility or Input Monitoring sections of the Security & Privacy pane in macOS's Preferences.app is capable of receiving all your input events. We encourage you to inspect these lists carefully, remove applications which you don't believe need to monitor your input, and ask tough questions of the companies which produce the software you use.
+Any application in the Accessibility or Input Monitoring sections of the Security & Privacy pane in macOS's Preferences.app is capable of receiving all your input events. We encourage you to inspect these lists carefully, remove applications that you don't believe need to monitor your input and ask tough questions of the companies which produce the software you use.
 
-KeyCastr is completely free and open source, and does not employ any networking mechanisms other than that included with the ubiquitous [Sparkle framework](https://sparkle-project.org/) for managing application updates. KeyCastr will never receive or display your passwords, so long as the website or application you are using treats password entry as secure, e.g. `<input type="password">` or equivalent.
-
+KeyCastr is completely free, and open-source and does not employ any networking mechanisms other than that included with the ubiquitous [Sparkle framework](https://sparkle-project.org/) for managing application updates. KeyCastr will never receive or display your passwords, so long as the website or application you are using treats password entry as secure, e.g. `<input type="password">` or equivalent.
 
 ## History and Credits
 
- - [sdeken](https://github.com/sdeken) wrote the original version.
- - [akitchen](https://github.com/akitchen) occasional development and maintenance.
- - [elia](https://github.com/elia) created `keycastr` organization and forked into it.
- - [lqez](https://github.com/lqez) added a new menu bar icon.
- - [QuintB](https://github.com/QuintB) designed an updated application icon to match the icon style in modern versions of macOS.
+- [sdeken](https://github.com/sdeken) wrote the original version.
+- [akitchen](https://github.com/akitchen) occasional development and maintenance.
+- [elia](https://github.com/elia) created `keycastr` organization and forked into it.
+- [lqez](https://github.com/lqez) added a new menu bar icon.
+- [QuintB](https://github.com/QuintB) designed an updated application icon to match the icon style in modern versions of macOS.
 
 ## License
 
