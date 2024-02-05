@@ -58,7 +58,7 @@
 }
 
 - (BOOL)isCommandKey {
-    return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
+    return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagOption)) != 0;
 }
 
 - (NSString *)description {
