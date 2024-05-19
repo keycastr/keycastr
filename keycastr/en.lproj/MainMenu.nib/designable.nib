@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22155" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22155"/>
-        <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="22155"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -384,11 +384,11 @@
                             </tabViewItem>
                             <tabViewItem label="Update" identifier="Item 2" id="408">
                                 <view key="view" id="409">
-                                    <rect key="frame" x="10" y="33" width="434" height="397"/>
+                                    <rect key="frame" x="10" y="33" width="422" height="412"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="412">
-                                            <rect key="frame" x="20" y="277" width="394" height="100"/>
+                                            <rect key="frame" x="20" y="292" width="382" height="100"/>
                                             <subviews>
                                                 <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="451">
                                                     <rect key="frame" x="18" y="63" width="200" height="18"/>
@@ -412,7 +412,7 @@
                                                     </connections>
                                                 </button>
                                                 <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="453">
-                                                    <rect key="frame" x="292" y="12" width="88" height="27"/>
+                                                    <rect key="frame" x="280" y="12" width="88" height="27"/>
                                                     <buttonCell key="cell" type="push" title="Check Now" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="454">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
@@ -502,15 +502,15 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="194" width="256" height="317"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
-            <view key="contentView" misplaced="YES" id="385">
-                <rect key="frame" x="0.0" y="0.0" width="256" height="317"/>
+            <view key="contentView" id="385">
+                <rect key="frame" x="0.0" y="0.0" width="256" height="337"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="387">
-                        <rect key="frame" x="0.0" y="78" width="258" height="5"/>
+                        <rect key="frame" x="0.0" y="78" width="256" height="5"/>
                     </box>
                     <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="388">
-                        <rect key="frame" x="18" y="56" width="85" height="16"/>
+                        <rect key="frame" x="18" y="56" width="83" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Version 0.8.0" id="389">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -518,19 +518,19 @@
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="none" preferredMaxLayoutWidth="226" translatesAutoresizingMaskIntoConstraints="NO" id="392">
-                        <rect key="frame" x="18" y="20" width="222" height="28"/>
+                        <rect key="frame" x="18" y="20" width="220" height="28"/>
                         <textFieldCell key="cell" controlSize="small" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" id="393">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title" base64-UTF8="YES">
-Q29weXJpZ2h0IAPCqSAyMDA5LTIwMjMgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFuZCBj
-b250cmlidXRvcnM
+Q29weXJpZ2h0IAPCqSAyMDA5LXByZXNlbnQgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFu
+ZCBjb250cmlidXRvcnM
 </string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <qcView autostartsRendering="YES" translatesAutoresizingMaskIntoConstraints="NO" id="386">
-                        <rect key="frame" x="1" y="81" width="256" height="256"/>
+                        <rect key="frame" x="0.0" y="81" width="256" height="256"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="256" id="hLn-Dy-hdQ"/>
                             <constraint firstAttribute="width" constant="256" id="tOE-mZ-U4T"/>
