@@ -14,7 +14,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1" userLabel="Preferences" customClass="KCDefaultVisualizerPreferencesView">
-            <rect key="frame" x="0.0" y="0.0" width="396" height="381"/>
+            <rect key="frame" x="0.0" y="0.0" width="396" height="383"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
@@ -247,7 +247,7 @@
                     </connections>
                 </colorWell>
                 <button verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="56">
-                    <rect key="frame" x="161" y="344" width="152" height="18"/>
+                    <rect key="frame" x="161" y="346" width="152" height="18"/>
                     <buttonCell key="cell" type="radio" title="Command Keys Only" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="123">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -258,7 +258,7 @@
                     </connections>
                 </button>
                 <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Tl-2J-YBO" userLabel="All Modified Keys Button">
-                    <rect key="frame" x="161" y="322" width="130" height="18"/>
+                    <rect key="frame" x="161" y="324" width="130" height="18"/>
                     <buttonCell key="cell" type="radio" title="All Modified Keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="yg3-BT-nUP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -269,7 +269,7 @@
                     </connections>
                 </button>
                 <button tag="2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wva-Xt-LhR">
-                    <rect key="frame" x="161" y="300" width="74" height="18"/>
+                    <rect key="frame" x="161" y="302" width="74" height="18"/>
                     <buttonCell key="cell" type="radio" title="All Keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uCf-M1-rtX">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -280,7 +280,7 @@
                     </connections>
                 </button>
                 <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8ph-mh-BBf">
-                    <rect key="frame" x="105" y="345" width="52" height="16"/>
+                    <rect key="frame" x="105" y="347" width="52" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Display:" id="6mL-ee-0MX">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -288,7 +288,7 @@
                     </textFieldCell>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" id="8PJ-cL-aOJ">
-                    <rect key="frame" x="6" y="281" width="384" height="5"/>
+                    <rect key="frame" x="6" y="283" width="384" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </box>
             </subviews>
