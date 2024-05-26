@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2014-2023 Andrew Kitchen
+//	Copyright (c) 2014-2024 Andrew Kitchen
 //
 //	All rights reserved.
 //
@@ -58,6 +58,14 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 @end
 
+
+@implementation KCDefaultVisualizerPreferencesView
+
+@synthesize commandKeysOnlyButton, allModifiedKeysButton, allKeysButton;
+
+@end
+
+
 @implementation KCDefaultVisualizer
 
 @dynamic preferencesView;
@@ -90,7 +98,26 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (IBAction)preferencesViewDidSelectDisplayOption:(id)sender
 {
-    NSLog(@"================> %@", sender);
+    KCDefaultVisualizerDisplayOption mode = KCDefaultVisualizerDisplayOptionDefault;
+    if (sender == self.preferencesView.commandKeysOnlyButton) {
+        mode = KCDefaultVisualizerDisplayOptionCommandKeysOnly;
+    }
+    else if (sender == self.preferencesView.allModifiedKeysButton) {
+        mode = KCDefaultVisualizerDisplayOptionAllModifiedKeys;
+    }
+    else if (sender == self.preferencesView.allKeysButton) {
+        mode = KCDefaultVisualizerDisplayOptionAllKeys;
+    }
+    
+    [self setDisplayMode:mode];
+}
+
+- (void)setDisplayMode:(KCDefaultVisualizerDisplayOption)mode
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionCommandKeysOnly) forKey:@"default.commandKeysOnly"];
+    [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionAllModifiedKeys) forKey:@"default.allModifiedKeys"];
+    [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionAllKeys) forKey:@"default.allKeys"];
 }
 
 -(void) showVisualizer:(id)sender
@@ -113,18 +140,26 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
     return [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.commandKeysOnly"] boolValue];
 }
 
+- (BOOL)shouldOnlyDisplayModifiedKeys
+{
+    return [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.allModifiedKeys"] boolValue];
+}
+
 - (void)noteKeyEvent:(KCKeystroke *)keystroke
 {
     if (![keystroke isCommandKey] && [self shouldOnlyDisplayCommandKeys]) {
-		return;
-	}
-	[visualizerWindow addKeystroke:keystroke];
+        return;
+    }
+    if (![keystroke isModified] && [self shouldOnlyDisplayModifiedKeys]) {
+        return;
+    }
+    
+    [visualizerWindow addKeystroke:keystroke];
 }
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
 {
-    // TODO: these should be filtered or de-bounced
-	[visualizerWindow addMouseEvent:mouseEvent];
+    [visualizerWindow addMouseEvent:mouseEvent];
 }
 
 @end
@@ -554,11 +589,5 @@ static const int kKCBezelBorder = 6;
 {
 	return YES;
 }
-
-@end
-
-@implementation KCDefaultVisualizerPreferencesView
-
-@synthesize commandKeysOnlyButton, allModifiedKeysButton, allKeysButton;
 
 @end

@@ -254,9 +254,10 @@
                     </buttonCell>
                     <connections>
                         <action selector="preferencesViewDidSelectDisplayOption:" target="-2" id="4O5-Cb-Cy2"/>
+                        <binding destination="9" name="value" keyPath="values.default.commandKeysOnly" id="TEL-ve-bVh"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Tl-2J-YBO" userLabel="All Modified Keys Button">
+                <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Tl-2J-YBO" userLabel="All Modified Keys Button">
                     <rect key="frame" x="161" y="322" width="130" height="18"/>
                     <buttonCell key="cell" type="radio" title="All Modified Keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="yg3-BT-nUP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -264,9 +265,10 @@
                     </buttonCell>
                     <connections>
                         <action selector="preferencesViewDidSelectDisplayOption:" target="-2" id="RxX-iy-y6G"/>
+                        <binding destination="9" name="value" keyPath="values.default.allModifiedKeys" id="8uF-RA-gxC"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wva-Xt-LhR">
+                <button tag="2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wva-Xt-LhR">
                     <rect key="frame" x="161" y="300" width="74" height="18"/>
                     <buttonCell key="cell" type="radio" title="All Keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uCf-M1-rtX">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -274,6 +276,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="preferencesViewDidSelectDisplayOption:" target="-2" id="Kt4-6J-rth"/>
+                        <binding destination="9" name="value" keyPath="values.default.allKeys" id="dUM-9e-oZf"/>
                     </connections>
                 </button>
                 <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8ph-mh-BBf">

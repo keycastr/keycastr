@@ -34,7 +34,10 @@
 
 @property (nonatomic, readonly) uint16_t keyCode;
 
-/// A KeyStroke is a command key if it includes a CTRL or CMD key; option and shift are only considered modifiers.
+/// A Keystroke is a command key if it includes a Control or Command key; Option and Shift are only considered modifiers.
 - (BOOL)isCommandKey;
+
+/// Indicates whether a Keystroke has any of the Control, Command, Option or Shift modifiers applied.
+- (BOOL)isModified;
 
 @end

@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2014-2023 Andrew Kitchen
+//	Copyright (c) 2014-2024 Andrew Kitchen
 //
 //	All rights reserved.
 //
@@ -85,6 +85,13 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, KCDefaultVisualizerDisplayOption) {
+    KCDefaultVisualizerDisplayOptionCommandKeysOnly = 0,
+    KCDefaultVisualizerDisplayOptionAllModifiedKeys,
+    KCDefaultVisualizerDisplayOptionAllKeys,
+    KCDefaultVisualizerDisplayOptionDefault = KCDefaultVisualizerDisplayOptionCommandKeysOnly
+};
+
 @interface  KCDefaultVisualizerPreferencesView : NSView
 
 @property (nonatomic, assign) IBOutlet NSButton *commandKeysOnlyButton;
@@ -100,10 +107,10 @@
 
 @property (nonatomic, retain) IBOutlet KCDefaultVisualizerPreferencesView *preferencesView;
 
+- (IBAction)preferencesViewDidSelectDisplayOption:(id)sender;
+
 -(NSString*) visualizerName;
 -(void) deactivateVisualizer:(id)sender;
 
-- (IBAction)preferencesViewDidSelectDisplayOption:(id)sender;
 
 @end
-
