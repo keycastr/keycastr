@@ -60,7 +60,7 @@
 
 -(NSView*) preferencesView
 {
-	return preferencesView;
+    return _preferencesView;
 }
 
 -(NSString*) visualizerName

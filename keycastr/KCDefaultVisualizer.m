@@ -60,6 +60,8 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 @implementation KCDefaultVisualizer
 
+@dynamic preferencesView;
+
 - (instancetype)init
 {
     if (!(self = [super init]))
@@ -84,6 +86,11 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 -(void) awakeFromNib
 {
     [super awakeFromNib];
+}
+
+- (IBAction)preferencesViewDidSelectDisplayOption:(id)sender
+{
+    NSLog(@"================> %@", sender);
 }
 
 -(void) showVisualizer:(id)sender
@@ -547,5 +554,11 @@ static const int kKCBezelBorder = 6;
 {
 	return YES;
 }
+
+@end
+
+@implementation KCDefaultVisualizerPreferencesView
+
+@synthesize commandKeysOnlyButton, allModifiedKeysButton, allKeysButton;
 
 @end

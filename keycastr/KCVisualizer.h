@@ -56,9 +56,8 @@
 
 
 @interface KCVisualizer : NSObject <KCVisualizer>
-{
-	IBOutlet NSView* preferencesView;
-}
+
+@property (nonatomic, retain) IBOutlet NSView* preferencesView;
 
 +(void) registerVisualizerFactory:(id<KCVisualizerFactory>)factory withName:(NSString*)name;
 +(id<KCVisualizer>) visualizerWithName:(NSString*)visualizerName;

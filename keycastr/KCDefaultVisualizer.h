@@ -85,13 +85,25 @@
 
 @end
 
+@interface  KCDefaultVisualizerPreferencesView : NSView
+
+@property (nonatomic, assign) IBOutlet NSButton *commandKeysOnlyButton;
+@property (nonatomic, assign) IBOutlet NSButton *allModifiedKeysButton;
+@property (nonatomic, assign) IBOutlet NSButton *allKeysButton;
+
+@end
+
 @interface KCDefaultVisualizer : KCVisualizer <KCVisualizer>
 {
 	KCDefaultVisualizerWindow* visualizerWindow;
 }
 
+@property (nonatomic, retain) IBOutlet KCDefaultVisualizerPreferencesView *preferencesView;
+
 -(NSString*) visualizerName;
 -(void) deactivateVisualizer:(id)sender;
+
+- (IBAction)preferencesViewDidSelectDisplayOption:(id)sender;
 
 @end
 

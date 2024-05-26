@@ -557,4 +557,9 @@ ZCBjb250cmlidXRvcnM
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>
+    <designables>
+        <designable name="J1Q-sG-Zms">
+            <size key="intrinsicContentSize" width="143" height="21"/>
+        </designable>
+    </designables>
 </document>
