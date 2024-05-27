@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,11 +17,8 @@
             <rect key="frame" x="0.0" y="0.0" width="370" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button horizontalHuggingPriority="1000" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BmP-1Z-8xN">
+                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BmP-1Z-8xN">
                     <rect key="frame" x="20" y="23" width="160" height="19"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="17" id="KU4-I5-ZJr"/>
-                    </constraints>
                     <buttonCell key="cell" type="check" title="Display all keystrokes:" bezelStyle="regularSquare" imagePosition="right" alignment="left" state="on" inset="2" id="DWq-JT-zxO">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -29,9 +26,9 @@
                             <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.displayAll" id="FCh-5O-6YO"/>
                         </connections>
                     </buttonCell>
-                    <connections>
-                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.allKeystrokes" id="y3Q-P9-dw1"/>
-                    </connections>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="KU4-I5-ZJr"/>
+                    </constraints>
                 </button>
             </subviews>
             <constraints>
