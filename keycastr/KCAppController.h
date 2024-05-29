@@ -1,4 +1,6 @@
 //	Copyright (c) 2009 Stephen Deken
+//	Copyright (c) 2020-2024 Andrew Kitchen
+//
 //	All rights reserved.
 // 
 //	Redistribution and use in source and binary forms, with or without modification,
@@ -54,6 +56,5 @@
 
 - (NSString *)currentMouseDisplayOptionName;
 - (void)setCurrentMouseDisplayOptionName:(NSString *)displayOptionName;
-
 
 @end

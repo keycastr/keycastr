@@ -1,4 +1,4 @@
-//  Copyright (c) 2020-2023 Andrew Kitchen
+//  Copyright (c) 2020-2024 Andrew Kitchen
 //
 //  All rights reserved.
 //
@@ -28,19 +28,18 @@
 #import <XCTest/XCTest.h>
 #import "KCKeystroke.h"
 
-
 /**
  NOTE: This is not a comprehensive set of tests, but serves as a sanity check for handling letters vs. numbers when certain modifiers are applied.
 
  These tests were written assuming a US-English layout. They may break when run in other locales unless the keyboard layout is overridden.
 
- The correct ordering for printing out modifiers should be ctrl-option-shift-command, according to how they're displayed in menus within Apple's apps. This means we'll need to adjust all of this once the general heuristic is sorted out.
+ The correct ordering for printing out modifiers should be Control-Option-Shift-Command, according to how they're displayed in menus within Apple's apps.
  */
-@interface KCKeystroke_ConversionTests : XCTestCase
+@interface KCKeystrokeConversionTests : XCTestCase
 
 @end
 
-@implementation KCKeystroke_ConversionTests
+@implementation KCKeystrokeConversionTests
 
 - (KCKeystroke *)keystrokeWithKeyCode:(unsigned short)keyCode modifiers:(NSEventModifierFlags)modifiers characters:(NSString *)characters charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers {
     NSEvent *fakeEvent = [NSEvent keyEventWithType:NSEventTypeKeyDown
@@ -178,6 +177,5 @@
     KCKeystroke *keystroke = [self keystrokeWithKeyCode:104 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"かな");
 }
-
 
 @end

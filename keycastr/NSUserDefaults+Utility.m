@@ -1,4 +1,6 @@
 //	Copyright (c) 2009 Stephen Deken
+//	Copyright (c) 2024 Andrew Kitchen
+//
 //	All rights reserved.
 // 
 //	Redistribution and use in source and binary forms, with or without modification,
@@ -31,7 +33,7 @@
 
 -(void) setColor:(NSColor*)aColor forKey:(NSString*)aKey
 {
-    NSData *theData = [NSArchiver archivedDataWithRootObject:aColor];
+    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:aColor];
     [self setObject:theData forKey:aKey];
 }
 
@@ -40,13 +42,13 @@
     NSColor *theColor=nil;
     NSData *theData=[self dataForKey:aKey];
     if (theData != nil)
-        theColor=(NSColor *)[NSUnarchiver unarchiveObjectWithData:theData];
+        theColor=(NSColor *)[NSKeyedUnarchiver unarchiveObjectWithData:theData];
     return theColor;
 }
 
 -(void) setImage:(NSImage*)anImage forKey:(NSString*)aKey
 {
-    NSData *theData = [NSArchiver archivedDataWithRootObject:anImage];
+    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:anImage];
     [self setObject:theData forKey:aKey];
 }
 
@@ -55,7 +57,7 @@
     NSImage *theImage=nil;
     NSData *theData=[self dataForKey:aKey];
     if (theData != nil)
-        theImage=(NSImage*)[NSUnarchiver unarchiveObjectWithData:theData];
+        theImage=(NSImage*)[NSKeyedUnarchiver unarchiveObjectWithData:theData];
     return theImage;
 }
 

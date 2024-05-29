@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2014-2023 Andrew Kitchen
+//	Copyright (c) 2014-2024 Andrew Kitchen
 //
 //	All rights reserved.
 //
@@ -35,6 +35,7 @@
 #import "KCKeystroke.h"
 #import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
+#import "KCUserDefaultsMigration.h"
 
 typedef struct _KeyCombo {
     unsigned int flags; // 0 for no flags
@@ -89,7 +90,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     eventTap = [KCEventTap new];
     eventTap.delegate = self;
 
-    [self _setupDefaults];
+    [self registerDefaults];
     [self registerVisualizers];
 
     mouseEventVisualizer = [KCMouseEventVisualizer new];
@@ -208,49 +209,28 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	[ud removeObjectForKey:old];
 }
 
--(void) _setupDefaults
+- (void)registerDefaults
 {
-	// Set up user-defaults defaults
-	KeyCombo keyCombo;
-	keyCombo.code = 40;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [KCUserDefaultsMigration performMigration:userDefaults];
+    
+    // Set up user-defaults defaults
+    KeyCombo keyCombo;
+    keyCombo.code = 40;
     keyCombo.flags = NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand;
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud synchronize];
-
-	[ud registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-		[NSNumber numberWithInt:3], kKCPrefDisplayIcon,
-		@"Default", kKCPrefSelectedVisualizer,
-		[NSNumber numberWithBool:YES], kKCPrefVisibleAtLaunch,
-		[NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)], kKCPrefCapturingHotKey,
-
-		[NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]], @"default.bezelColor",
-		[NSNumber numberWithFloat:2.0], @"default.fadeDelay",
-		[NSNumber numberWithFloat:0.2], @"default.fadeDuration",
-		[NSNumber numberWithFloat:16.0], @"default.fontSize",
-		[NSNumber numberWithFloat:0.5], @"default.keystrokeDelay",
-		[NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]], @"default.textColor",
-		nil]];
-
-	if ([ud objectForKey:@"fontSize"] != nil)
-	{
-		// Clean up old 0.7.x defaults
-		[self _mapOldPreference:@"bezelColor" toNewPreference:@"default.bezelColor"];
-		[self _mapOldPreference:@"fadeDelay" toNewPreference:@"default.fadeDelay"];
-		[self _mapOldPreference:@"fontSize" toNewPreference:@"default.fontSize"];
-		[self _mapOldPreference:@"keystrokeDelay" toNewPreference:@"default.keystrokeDelay"];
-		[self _mapOldPreference:@"textColor" toNewPreference:@"default.textColor"];
-		[self _mapOldPreference:@"onlyCommandKeys" toNewPreference:@"default.commandKeysOnly"];
-		NSDictionary* oldKey = [ud objectForKey:@"ShortcutRecorder toggleCapture"];
-		if (oldKey != nil)
-		{
-			keyCombo.code = [[oldKey objectForKey:@"keyCode"] intValue];
-			keyCombo.flags = [[oldKey objectForKey:@"modifierFlags"] intValue];
-			[ud setObject:[NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)] forKey:kKCPrefCapturingHotKey];
-			[ud removeObjectForKey:@"ShortcutRecorder toggleCapture"];
-		}
-		[ud removeObjectForKey:@"launchedOnce"];
-	}
-	[ud synchronize];
+    
+    [userDefaults registerDefaults:@{ kKCPrefDisplayIcon: @3,
+                                      kKCPrefSelectedVisualizer: @"Default",
+                                      kKCPrefVisibleAtLaunch: @YES,
+                                      kKCPrefCapturingHotKey: [NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)],
+                                      @"default.commandKeysOnly": @YES,
+                                      @"default.fadeDelay": @2.0,
+                                      @"default.fadeDuration": @0.2,
+                                      @"default.fontSize": @16.0,
+                                      @"default.keystrokeDelay": @0.5,
+                                      @"default.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]],
+                                      @"default.textColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]],
+                                   }];
 }
 
 - (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke

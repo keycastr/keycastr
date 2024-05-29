@@ -217,9 +217,9 @@
                     </constraints>
                     <color key="color" red="0.0" green="0.0" blue="0.0" alpha="0.80000000999999998" colorSpace="calibratedRGB"/>
                     <connections>
-                        <binding destination="9" name="value" keyPath="values.default.bezelColor" id="68">
+                        <binding destination="9" name="value" keyPath="values.default.bezelColor" id="XH7-UM-LVE">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -239,9 +239,9 @@
                     <rect key="frame" x="160" y="18" width="50" height="26"/>
                     <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
-                        <binding destination="9" name="value" keyPath="values.default.textColor" id="70">
+                        <binding destination="9" name="value" keyPath="values.default.textColor" id="kgR-IO-J5m">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">NSKeyedUnarchiveFromData</string>
                             </dictionary>
                         </binding>
                     </connections>
