@@ -288,10 +288,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	{
 		statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:30] retain];
 		[statusItem setMenu:statusMenu];
-		[statusItem setImage:(_isCapturing
+		[statusItem.button setImage:(_isCapturing
 			? [NSImage imageNamed:@"KeyCastrStatusItemActive"]
 			: [NSImage imageNamed:@"KeyCastrStatusItemInactive"])];
-		[statusItem setHighlightMode:YES];
+		statusItem.button.cell.highlighted = YES;
 	}
 	return statusItem;
 }
@@ -490,7 +490,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 
 	_isCapturing = capture;
-	[statusItem setImage:(_isCapturing
+	[statusItem.button setImage:(_isCapturing
 		? [NSImage imageNamed:@"KeyCastrStatusItemActive"]
 		: [NSImage imageNamed:@"KeyCastrStatusItemInactive"])
 		];
