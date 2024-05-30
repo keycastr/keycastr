@@ -219,6 +219,12 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     keyCombo.code = 40;
     keyCombo.flags = NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand;
     
+    NSData *defaultBezelColorData = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]
+                                                          requiringSecureCoding:NO
+                                                                          error:NULL];
+    NSData *defaultTextColorData = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]
+                                                         requiringSecureCoding:NO
+                                                                         error:NULL];
     [userDefaults registerDefaults:@{ kKCPrefDisplayIcon: @3,
                                       kKCPrefSelectedVisualizer: @"Default",
                                       kKCPrefVisibleAtLaunch: @YES,
@@ -228,8 +234,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
                                       @"default.fadeDuration": @0.2,
                                       @"default.fontSize": @16.0,
                                       @"default.keystrokeDelay": @0.5,
-                                      @"default.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]],
-                                      @"default.textColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]],
+                                      @"default.bezelColor": defaultBezelColorData,
+                                      @"default.textColor": defaultTextColorData,
                                    }];
 }
 

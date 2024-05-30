@@ -33,7 +33,9 @@
 
 -(void) setColor:(NSColor*)aColor forKey:(NSString*)aKey
 {
-    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:aColor];
+    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:aColor
+                                            requiringSecureCoding:NO
+                                                            error:NULL];
     [self setObject:theData forKey:aKey];
 }
 
@@ -42,13 +44,17 @@
     NSColor *theColor=nil;
     NSData *theData=[self dataForKey:aKey];
     if (theData != nil)
-        theColor=(NSColor *)[NSKeyedUnarchiver unarchiveObjectWithData:theData];
+        theColor = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class]
+                                                     fromData:theData
+                                                        error:NULL];
     return theColor;
 }
 
 -(void) setImage:(NSImage*)anImage forKey:(NSString*)aKey
 {
-    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:anImage];
+    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:anImage
+                                            requiringSecureCoding:NO
+                                                            error:NULL];
     [self setObject:theData forKey:aKey];
 }
 
@@ -57,7 +63,9 @@
     NSImage *theImage=nil;
     NSData *theData=[self dataForKey:aKey];
     if (theData != nil)
-        theImage=(NSImage*)[NSKeyedUnarchiver unarchiveObjectWithData:theData];
+        theImage = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSImage class]
+                                                     fromData:theData
+                                                        error:NULL];
     return theImage;
 }
 

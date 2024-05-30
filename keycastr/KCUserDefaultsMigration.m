@@ -40,7 +40,9 @@
         NSColor *color = [NSUnarchiver unarchiveObjectWithData:colorData];
         if (color) {
             NSLog(@"================> Migrating %@ : %@", colorKey, color);
-            NSData *newColorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+            NSData *newColorData = [NSKeyedArchiver archivedDataWithRootObject:color
+                                                         requiringSecureCoding:NO
+                                                                         error:NULL];
             [userDefaults setObject:newColorData forKey:colorKey];
         } else {
             NSLog(@"================> %@ : No migration needed...", colorKey);
