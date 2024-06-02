@@ -54,6 +54,8 @@
 		AF408C1D258710E70010C0EF /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; };
 		AF443C7225A115A1005C11AC /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD41C2586E04C00EDC9D4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF443C7325A115A1005C11AC /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF6DD4032586E03A00EDC9D4 /* ShortcutRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF5457292C0CDB2E00064C82 /* KCColorValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */; };
+		AF54572A2C0CDB2E00064C82 /* KCColorValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */; };
 		AF546FAC272DFFBE00EA6AFD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF546FAB272DFFBE00EA6AFD /* Carbon.framework */; };
 		AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */ = {isa = PBXBuildFile; fileRef = AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */; };
 		AF7C0341271F694500CE1F8D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF7C0340271F694500CE1F8D /* QuartzCore.framework */; };
@@ -353,6 +355,8 @@
 		AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItem@2x.png"; sourceTree = "<group>"; };
 		AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemActive@2x.png"; sourceTree = "<group>"; };
 		AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemInactive@2x.png"; sourceTree = "<group>"; };
+		AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCColorValueTransformer.h; sourceTree = "<group>"; };
+		AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCColorValueTransformer.m; sourceTree = "<group>"; };
 		AF546FAB272DFFBE00EA6AFD /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = KeyCastrAbout.qtz; sourceTree = "<group>"; };
 		AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
@@ -530,6 +534,8 @@
 		3D1646FC0F43DDC100CA65AD /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */,
+				AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */,
 				3D1645DD0F43CD0600CA65AD /* KCEventTransformer.h */,
 				3D1645DE0F43CD0600CA65AD /* KCEventTransformer.m */,
 				324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */,
@@ -636,6 +642,7 @@
 				3D1646C30F43DC4700CA65AD /* KCVisualizer.h in Headers */,
 				3D1646C50F43DC4C00CA65AD /* KCKeystroke.h in Headers */,
 				3D1646C60F43DC5000CA65AD /* KCEventTransformer.h in Headers */,
+				AF54572A2C0CDB2E00064C82 /* KCColorValueTransformer.h in Headers */,
 				324ADBC2EAD3FC5FD3C369FE /* KCMouseEventVisualizer.h in Headers */,
 				324ADBB15522719676E80D5F /* KCMouseEvent.h in Headers */,
 				324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */,
@@ -1020,6 +1027,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D1646C20F43DC4700CA65AD /* KCVisualizer.m in Sources */,
+				AF5457292C0CDB2E00064C82 /* KCColorValueTransformer.m in Sources */,
 				AFF68CBA2C05776000B98D92 /* KCUserDefaultsMigration.m in Sources */,
 				3D1646C40F43DC4C00CA65AD /* KCKeystroke.m in Sources */,
 				3D1646C70F43DC5100CA65AD /* KCEventTransformer.m in Sources */,

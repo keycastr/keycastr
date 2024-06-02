@@ -25,33 +25,12 @@
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#import <Foundation/Foundation.h>
 
-#import <XCTest/XCTest.h>
-#import <KCVisualizer/KCUserDefaultsMigration.h>
+NS_ASSUME_NONNULL_BEGIN
 
-@interface KCUserDefaultsMigrationTests : XCTestCase
-
-@end
-
-@implementation KCUserDefaultsMigrationTests
-
-- (void)test_migratingUserDefaults {
-    NSArray *colorKeyNames = [KCUserDefaultsMigration colorKeyNames];
-    NSUserDefaults *exampleDefaults = [[NSUserDefaults alloc] initWithSuiteName:NSStringFromClass([self class])];
-    [exampleDefaults setObject:[NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]] forKey:colorKeyNames.firstObject];
-    
-    NSData *data = [exampleDefaults dataForKey:colorKeyNames.firstObject];
-    NSColor *color = [NSUnarchiver unarchiveObjectWithData:data];
-    
-    XCTAssertEqualWithAccuracy(0.8, color.alphaComponent, 0.01);
-    
-    [KCUserDefaultsMigration performMigration:exampleDefaults];
-    
-    data = [exampleDefaults dataForKey:colorKeyNames.firstObject];
-    color = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class] fromData:data error:NULL];
-    
-    XCTAssertNotNil(color);
-    XCTAssertEqualWithAccuracy(0.8, color.alphaComponent, 0.01);
-}
+@interface KCColorValueTransformer : NSSecureUnarchiveFromDataTransformer
 
 @end
+
+NS_ASSUME_NONNULL_END
