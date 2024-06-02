@@ -300,7 +300,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 2483028224; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -357,6 +356,8 @@
 		AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemInactive@2x.png"; sourceTree = "<group>"; };
 		AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCColorValueTransformer.h; sourceTree = "<group>"; };
 		AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCColorValueTransformer.m; sourceTree = "<group>"; };
+		AF5457412C0CE25700064C82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AF5457422C0CE26D00064C82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		AF546FAB272DFFBE00EA6AFD /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = KeyCastrAbout.qtz; sourceTree = "<group>"; };
 		AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
@@ -367,7 +368,6 @@
 		AFC172192377CFF500292155 /* KCVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC1721B2377CFF500292155 /* KCKeystrokeConversionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCKeystrokeConversionTests.m; sourceTree = "<group>"; };
 		AFC1721D2377CFF500292155 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AFCE82C726767970002A22EA /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		AFF68CA02C05480600B98D92 /* KCUserDefaultsMigrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCUserDefaultsMigrationTests.m; sourceTree = "<group>"; };
 		AFF68CB82C05776000B98D92 /* KCUserDefaultsMigration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCUserDefaultsMigration.h; sourceTree = "<group>"; };
 		AFF68CB92C05776000B98D92 /* KCUserDefaultsMigration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCUserDefaultsMigration.m; sourceTree = "<group>"; };
@@ -779,11 +779,11 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "KeyCastr" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				English,
+				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* KeyCastr */;
 			projectDirPath = "";
@@ -1116,7 +1116,7 @@
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C165DFE840E0CC02AAC07 /* English */,
+				AF5457412C0CE25700064C82 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1124,7 +1124,7 @@
 		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				AFCE82C726767970002A22EA /* en */,
+				AF5457422C0CE26D00064C82 /* Base */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
@@ -1423,6 +1423,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1461,6 +1462,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -150,14 +149,14 @@
         <window title="KeyCastr" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" toolbarStyle="preference" id="371" userLabel="Prefs">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="468" height="466"/>
+            <rect key="contentRect" x="335" y="390" width="471" height="466"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
-            <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="469" height="466"/>
+            <view key="contentView" misplaced="YES" id="372">
+                <rect key="frame" x="0.0" y="0.0" width="473" height="466"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView translatesAutoresizingMaskIntoConstraints="NO" id="402">
-                        <rect key="frame" x="13" y="2" width="443" height="458"/>
+                        <rect key="frame" x="13" y="2" width="447" height="458"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="403">
@@ -251,14 +250,14 @@
                             </tabViewItem>
                             <tabViewItem label="Display" identifier="2" id="404">
                                 <view key="view" id="405">
-                                    <rect key="frame" x="10" y="33" width="423" height="412"/>
+                                    <rect key="frame" x="10" y="33" width="427" height="412"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="411">
-                                            <rect key="frame" x="20" y="20" width="383" height="372"/>
+                                            <rect key="frame" x="20" y="20" width="387" height="372"/>
                                             <subviews>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="426" userLabel="Selected Visualizer Container View">
-                                                    <rect key="frame" x="0.0" y="312" width="383" height="61"/>
+                                                    <rect key="frame" x="0.0" y="312" width="387" height="61"/>
                                                     <subviews>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="427">
                                                             <rect key="frame" x="35" y="22" width="124" height="17"/>
@@ -272,7 +271,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton imageHugsTitle="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="429" userLabel="Visualizers">
-                                                            <rect key="frame" x="162" y="16" width="205" height="26"/>
+                                                            <rect key="frame" x="162" y="16" width="209" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="432" id="430">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -290,7 +289,7 @@
                                                             </connections>
                                                         </popUpButton>
                                                         <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="435">
-                                                            <rect key="frame" x="0.0" y="-2" width="383" height="5"/>
+                                                            <rect key="frame" x="0.0" y="-2" width="387" height="5"/>
                                                         </box>
                                                     </subviews>
                                                     <constraints>
@@ -307,10 +306,10 @@
                                                     </constraints>
                                                 </customView>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="eb6-kp-O9f" userLabel="Mouse Options Container View">
-                                                    <rect key="frame" x="0.0" y="252" width="383" height="61"/>
+                                                    <rect key="frame" x="0.0" y="252" width="387" height="61"/>
                                                     <subviews>
                                                         <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
-                                                            <rect key="frame" x="0.0" y="-2" width="383" height="5"/>
+                                                            <rect key="frame" x="0.0" y="-2" width="387" height="5"/>
                                                         </box>
                                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i4K-FF-bg4">
                                                             <rect key="frame" x="18" y="22" width="141" height="17"/>
@@ -324,7 +323,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M4E-xg-OPh" userLabel="Mouse Display Options">
-                                                            <rect key="frame" x="162" y="17" width="205" height="25"/>
+                                                            <rect key="frame" x="162" y="17" width="209" height="25"/>
                                                             <popUpButtonCell key="cell" type="push" title="with pointer and visualizer" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="b75-G6-B4y" id="7h2-NY-2W2">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
@@ -337,7 +336,7 @@
                                                                 </menu>
                                                             </popUpButtonCell>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="198" id="p39-R6-Fxu"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="202" id="p39-R6-Fxu"/>
                                                             </constraints>
                                                             <connections>
                                                                 <binding destination="375" name="contentValues" keyPath="availableMouseDisplayOptionNames" id="o5O-Wp-pDz"/>
@@ -495,22 +494,22 @@
             <connections>
                 <outlet property="delegate" destination="375" id="477"/>
             </connections>
-            <point key="canvasLocation" x="-262" y="-49"/>
+            <point key="canvasLocation" x="-262.5" y="-49"/>
         </window>
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="384" userLabel="About">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="194" width="256" height="317"/>
+            <rect key="contentRect" x="196" y="194" width="256" height="337"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
             <view key="contentView" id="385">
-                <rect key="frame" x="0.0" y="0.0" width="256" height="337"/>
+                <rect key="frame" x="0.0" y="0.0" width="258" height="337"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="387">
-                        <rect key="frame" x="0.0" y="78" width="256" height="5"/>
+                        <rect key="frame" x="0.0" y="78" width="258" height="5"/>
                     </box>
                     <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="388">
-                        <rect key="frame" x="18" y="56" width="83" height="16"/>
+                        <rect key="frame" x="18" y="56" width="85" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Version 0.8.0" id="389">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -518,19 +517,19 @@
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="none" preferredMaxLayoutWidth="226" translatesAutoresizingMaskIntoConstraints="NO" id="392">
-                        <rect key="frame" x="18" y="20" width="220" height="28"/>
+                        <rect key="frame" x="18" y="20" width="222" height="28"/>
                         <textFieldCell key="cell" controlSize="small" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" id="393">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title" base64-UTF8="YES">
-Q29weXJpZ2h0IAPCqSAyMDA5LXByZXNlbnQgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFu
-ZCBjb250cmlidXRvcnM
+Q29weXJpZ2h0IAPCqSAyMDA5LTIwMjQgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFuZCBj
+b250cmlidXRvcnM
 </string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <qcView autostartsRendering="YES" translatesAutoresizingMaskIntoConstraints="NO" id="386">
-                        <rect key="frame" x="0.0" y="81" width="256" height="256"/>
+                        <rect key="frame" x="1" y="81" width="256" height="256"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="256" id="hLn-Dy-hdQ"/>
                             <constraint firstAttribute="width" constant="256" id="tOE-mZ-U4T"/>
