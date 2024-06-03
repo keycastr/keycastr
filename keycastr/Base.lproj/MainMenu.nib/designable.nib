@@ -151,21 +151,21 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="471" height="466"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
-            <view key="contentView" misplaced="YES" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="473" height="466"/>
+            <view key="contentView" id="372">
+                <rect key="frame" x="0.0" y="0.0" width="471" height="466"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView translatesAutoresizingMaskIntoConstraints="NO" id="402">
-                        <rect key="frame" x="13" y="2" width="447" height="458"/>
+                        <rect key="frame" x="13" y="2" width="445" height="458"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="403">
                                 <view key="view" id="406">
-                                    <rect key="frame" x="10" y="33" width="422" height="412"/>
+                                    <rect key="frame" x="10" y="33" width="425" height="412"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="410">
-                                            <rect key="frame" x="18" y="275" width="386" height="117"/>
+                                            <rect key="frame" x="18" y="275" width="389" height="117"/>
                                             <subviews>
                                                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446">
                                                     <rect key="frame" x="18" y="50" width="139" height="16"/>
@@ -176,7 +176,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="444">
-                                                    <rect key="frame" x="163" y="19" width="203" height="18"/>
+                                                    <rect key="frame" x="163" y="19" width="206" height="18"/>
                                                     <buttonCell key="cell" type="check" title="Show preferences at launch" bezelStyle="regularSquare" imagePosition="leading" alignment="left" state="on" inset="2" id="445">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
@@ -502,7 +502,7 @@
             <rect key="contentRect" x="196" y="194" width="256" height="337"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
             <view key="contentView" id="385">
-                <rect key="frame" x="0.0" y="0.0" width="258" height="337"/>
+                <rect key="frame" x="0.0" y="0.0" width="256" height="337"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="387">
@@ -529,10 +529,12 @@ b250cmlidXRvcnM
                         </textFieldCell>
                     </textField>
                     <qcView autostartsRendering="YES" translatesAutoresizingMaskIntoConstraints="NO" id="386">
-                        <rect key="frame" x="1" y="81" width="256" height="256"/>
+                        <rect key="frame" x="0.0" y="81" width="256" height="256"/>
                         <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="256" id="Ava-98-nwW"/>
                             <constraint firstAttribute="height" constant="256" id="hLn-Dy-hdQ"/>
                             <constraint firstAttribute="width" constant="256" id="tOE-mZ-U4T"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="256" id="vIp-Xy-p2X"/>
                         </constraints>
                         <color key="eraseColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </qcView>
@@ -540,16 +542,17 @@ b250cmlidXRvcnM
                 <constraints>
                     <constraint firstItem="387" firstAttribute="leading" secondItem="385" secondAttribute="leading" id="4LD-sS-nls"/>
                     <constraint firstItem="392" firstAttribute="top" secondItem="388" secondAttribute="bottom" constant="8" symbolic="YES" id="9tx-aX-Hxd"/>
-                    <constraint firstAttribute="trailing" secondItem="392" secondAttribute="trailing" constant="20" symbolic="YES" id="AvG-ah-dWf"/>
-                    <constraint firstAttribute="trailing" secondItem="387" secondAttribute="trailing" id="D0c-GO-EmZ"/>
+                    <constraint firstAttribute="trailing" secondItem="392" secondAttribute="trailing" constant="18" id="AvG-ah-dWf"/>
+                    <constraint firstAttribute="trailing" secondItem="387" secondAttribute="trailing" constant="-2" id="D0c-GO-EmZ"/>
                     <constraint firstItem="392" firstAttribute="leading" secondItem="385" secondAttribute="leading" constant="20" symbolic="YES" id="E6j-q0-oTt"/>
-                    <constraint firstAttribute="trailing" secondItem="388" secondAttribute="trailing" constant="157" id="Fhm-lG-uRP"/>
+                    <constraint firstAttribute="trailing" secondItem="388" secondAttribute="trailing" constant="155" id="Fhm-lG-uRP"/>
                     <constraint firstAttribute="bottom" secondItem="392" secondAttribute="bottom" constant="20" symbolic="YES" id="HXc-z2-vge"/>
                     <constraint firstItem="386" firstAttribute="top" secondItem="385" secondAttribute="top" id="Jj4-dI-NKr"/>
                     <constraint firstItem="387" firstAttribute="top" secondItem="386" secondAttribute="bottom" id="MEY-n5-Y4k"/>
+                    <constraint firstItem="386" firstAttribute="leading" secondItem="385" secondAttribute="leading" id="UQw-nQ-vWY"/>
                     <constraint firstItem="392" firstAttribute="leading" secondItem="388" secondAttribute="leading" id="YcI-9r-inR"/>
                     <constraint firstItem="388" firstAttribute="top" secondItem="387" secondAttribute="bottom" constant="8" symbolic="YES" id="myd-3l-Exp"/>
-                    <constraint firstItem="386" firstAttribute="centerX" secondItem="385" secondAttribute="centerX" id="sMN-Qp-Y0L"/>
+                    <constraint firstAttribute="trailing" secondItem="386" secondAttribute="trailing" id="rmf-TA-eIa"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="-179" y="644.5"/>
