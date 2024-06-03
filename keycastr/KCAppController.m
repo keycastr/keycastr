@@ -78,7 +78,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     BOOL _isCapturing;
 }
 
-@synthesize statusMenu, aboutWindow, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem;
+@synthesize statusMenu, aboutWindow, aboutQCView, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem;
 
 #pragma mark -
 #pragma mark Startup Procedures
@@ -389,11 +389,12 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"KeyCastrAbout" ofType:@"qtz"];
-	[_aboutQCView loadCompositionFromFile:filePath];
+    [aboutQCView loadCompositionFromFile:filePath];
 }
 
 -(void) orderFrontKeyCastrAboutPanel:(id)sender
 {
+    [aboutQCView startRendering];
 	[aboutWindow center];
 	[aboutWindow makeKeyAndOrderFront:sender];
 	[NSApp activateIgnoringOtherApps:YES];
