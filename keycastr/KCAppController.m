@@ -230,6 +230,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
                                       @"default.keystrokeDelay": @0.5,
                                       @"default.bezelColor": defaultBezelColorData,
                                       @"default.textColor": defaultTextColorData,
+                                      @"svelte.displayAll": @YES,
                                    }];
 }
 
