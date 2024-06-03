@@ -28,7 +28,7 @@
 		3D1646C70F43DC5100CA65AD /* KCEventTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1645DE0F43CD0600CA65AD /* KCEventTransformer.m */; };
 		3D1646CB0F43DC6D00CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1646D10F43DCA700CA65AD /* KCVisualizer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3D1646EB0F43DD3000CA65AD /* KCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52550F300389001C7272 /* KCAppController.m */; };
+		3D1646EB0F43DD3000CA65AD /* KCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52550F300389001C7272 /* KCAppController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3D1646F40F43DD8300CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1648B70F451D8000CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1648B90F451DAA00CA65AD /* Svelte.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1648B80F451DAA00CA65AD /* Svelte.nib */; };

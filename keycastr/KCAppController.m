@@ -26,6 +26,9 @@
 //	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#if !__has_feature(objc_arc)
+#error "ARC is required for this file -- enable with -fobjc-arc"
+#endif
 
 #import <Quartz/Quartz.h>
 #import <ShortcutRecorder/ShortcutRecorder.h>
@@ -53,6 +56,9 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 @interface KCAppController () <KCEventTapDelegate, KCMouseEventVisualizerDelegate>
 
+@property (nonatomic, strong) KCEventTap *eventTap;
+@property (nonatomic, strong) NSStatusItem *statusItem;
+
 @property (nonatomic, assign) NSInteger prefDisplayIcon;
 @property (nonatomic, assign) BOOL showInDock;
 @property (nonatomic, assign) BOOL showInMenuBar;
@@ -67,18 +73,16 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 @property (nonatomic, assign) IBOutlet NSMenuItem *statusShortcutItem;
 @property (nonatomic, assign) IBOutlet NSMenuItem *dockShortcutItem;
 
+@property (nonatomic, strong) KCMouseEventVisualizer *mouseEventVisualizer;
+@property (nonatomic, strong) id<KCVisualizer> currentVisualizer;
+
 @end
 
 @implementation KCAppController {
-    NSStatusItem *statusItem;
-    KCEventTap *eventTap;
-    id<KCVisualizer> currentVisualizer;
-    KCMouseEventVisualizer *mouseEventVisualizer;
-
     BOOL _isCapturing;
 }
 
-@synthesize statusMenu, aboutWindow, aboutQCView, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem;
+@synthesize eventTap, statusItem, statusMenu, aboutWindow, aboutQCView, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem, mouseEventVisualizer, currentVisualizer;
 
 #pragma mark -
 #pragma mark Startup Procedures
@@ -99,15 +103,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [NSColor setIgnoresAlpha:NO];
 
     return self;
-}
-
-- (void)dealloc {
-    [eventTap release];
-    [statusItem release];
-    [currentVisualizer release];
-    [mouseEventVisualizer release];
-
-    [super dealloc];
 }
 
 - (void)awakeFromNib {
@@ -164,11 +159,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     NSString *text = @"tell application \"System Preferences\" \n reveal anchor \"Privacy_Accessibility\" of pane id \"com.apple.preference.security\" \n activate \n end tell";
     NSAppleScript *script = [[NSAppleScript alloc] initWithSource:text];
     [script executeAndReturnError:nil];
-    [script release];
 }
 
 - (void)displayPermissionsAlertWithError:(NSError *)error {
-    NSAlert *alert = [[NSAlert new] autorelease];
+    NSAlert *alert = [NSAlert new];
     [alert addButtonWithTitle:@"Close"];
     [alert addButtonWithTitle:@"Open System Preferences"];
     alert.messageText = @"Additional Permissions Required";
@@ -286,7 +280,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 {
 	if (statusItem == nil)
 	{
-		statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:30] retain];
+		statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:30];
 		[statusItem setMenu:statusMenu];
 		[statusItem.button setImage:(_isCapturing
 			? [NSImage imageNamed:@"KeyCastrStatusItemActive"]
@@ -300,7 +294,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 {
 	if (statusItem != nil)
 	{
-		[statusItem release];
 		statusItem = nil;
 	}
 }
@@ -309,7 +302,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 {
 	KCVisualizerFactory* factory = [[c alloc] init];
 	[KCVisualizer registerVisualizerFactory:factory withName:[factory visualizerName]];
-    [factory autorelease];
 }
 
 -(void) loadPluginsFromDirectory:(NSString*)path
@@ -446,13 +438,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
         return;
     }
     
-    id <KCVisualizer> oldVisualizer = [currentVisualizer autorelease];
+    id <KCVisualizer> oldVisualizer = currentVisualizer;
 
     if (oldVisualizer != nil) {
         [oldVisualizer deactivateVisualizer:self];
     }
 
-    currentVisualizer = [newVisualizer retain];
+    currentVisualizer = newVisualizer;
     [newVisualizer showVisualizer:self];
 
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:newVisualizer, @"newVisualizer", oldVisualizer, @"oldVisualizer", nil];
