@@ -61,11 +61,10 @@
 @class KCDefaultVisualizerWindow;
 
 @interface KCBezelAnimation : NSAnimation<NSAnimationDelegate>
-{
-	KCDefaultVisualizerBezelView* _bezelView;
-}
 
--(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView;
+@property (nonatomic, strong) KCDefaultVisualizerBezelView *bezelView;
+
+- (KCBezelAnimation *)initWithBezelView:(KCDefaultVisualizerBezelView *)bezelView;
 
 @end
 

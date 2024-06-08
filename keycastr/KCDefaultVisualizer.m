@@ -26,6 +26,9 @@
 //	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#if !__has_feature(objc_arc)
+#error "ARC is required for this file -- enable with -fobjc-arc"
+#endif
 
 #import "KCDefaultVisualizer.h"
 #import "KCKeystroke.h"
@@ -78,12 +81,6 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
     visualizerWindow = [[KCDefaultVisualizerWindow alloc] init];
 
     return self;
-}
-
-- (void)dealloc
-{
-    [visualizerWindow release];
-    [super dealloc];
 }
 
 -(NSString*) visualizerName
@@ -239,12 +236,6 @@ static NSRect KC_defaultFrame(void) {
     return self;
 }
 
-- (void)dealloc {
-    [_runningAnimations removeAllObjects];
-    [_runningAnimations release];
-    [super dealloc];
-}
-
 - (void)applicationWillTerminate:(NSNotification *)notification {
     [self _suspendAnimations];
     [self resizePreservingHeight:NO];
@@ -278,7 +269,6 @@ static NSRect KC_defaultFrame(void) {
 }
 
 - (void)abandonCurrentBezelView {
-    [_currentBezelView release];
 	_currentBezelView = nil;
 }
 
@@ -408,19 +398,14 @@ static NSRect KC_defaultFrame(void) {
 
 @implementation KCBezelAnimation
 
--(KCBezelAnimation*) initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView
+- (KCBezelAnimation *)initWithBezelView:(KCDefaultVisualizerBezelView*)bezelView
 {
 	if (!(self = [super init]))
 		return nil;
 
-	_bezelView = [bezelView retain];
+    _bezelView = bezelView;
 
 	return self;
-}
-
-- (void)dealloc {
-    [_bezelView release];
-    [super dealloc];
 }
 
 -(void) fadeOutOverDuration:(NSTimeInterval)duration
@@ -491,7 +476,7 @@ static const int kKCBezelBorder = 6;
 	_opacity = 1.0;
 
 	_maxWidth = maxWidth;
-	_backgroundColor = [color retain];
+	_backgroundColor = color;
 
 	_textStorage = [[NSTextStorage alloc] initWithString:string];
 	_textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(_maxWidth-kKCBezelBorder*2, FLT_MAX)];
@@ -508,15 +493,6 @@ static const int kKCBezelBorder = 6;
 	return self;
 }
 
-- (void)dealloc {
-    [_backgroundColor release];
-    [_textStorage release];
-    [_textContainer release];
-    [_layoutManager release];
-
-    [super dealloc];
-}
-
 -(void) scheduleFadeOut
 {
 	NSTimeInterval fadeDelay = [[NSUserDefaults standardUserDefaults] floatForKey:@"default.fadeDelay"];
@@ -529,10 +505,10 @@ static const int kKCBezelBorder = 6;
 
 -(void) beginFadeOut:(id)sender
 {
-	KCDefaultVisualizerWindow* w = (KCDefaultVisualizerWindow*)[self window];
-	KCBezelAnimation* anim = [[KCBezelAnimation alloc] initWithBezelView:self];
-	[anim fadeOutOverDuration:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.fadeDuration"]];
-	[w addRunningAnimation:[anim autorelease]];
+	KCDefaultVisualizerWindow *window = (KCDefaultVisualizerWindow *)[self window];
+	KCBezelAnimation *animation = [[KCBezelAnimation alloc] initWithBezelView:self];
+	[animation fadeOutOverDuration:[[NSUserDefaults standardUserDefaults] floatForKey:@"default.fadeDuration"]];
+	[window addRunningAnimation:animation];
 }
 
 -(NSDictionary*) attributes
@@ -601,7 +577,7 @@ static const int kKCBezelBorder = 6;
 -(void) appendString:(NSString*)t
 {
 	[self scheduleFadeOut];
-	[_textStorage appendAttributedString:[[[NSAttributedString alloc] initWithString:t] autorelease]];
+	[_textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:t]];
 	[_textStorage setAttributes:[self attributes] range:NSMakeRange(0, [_textStorage length])];
 	[self maybeResize];
 	[self setNeedsDisplay:YES];
