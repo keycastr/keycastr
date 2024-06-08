@@ -63,42 +63,6 @@
     return _preferencesView;
 }
 
--(NSString*) visualizerName
-{
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
-}
-
--(void) showVisualizer:(id)sender
-{
-    [self doesNotRecognizeSelector:_cmd];
-}
-
--(void) hideVisualizer:(id)sender
-{
-    [self doesNotRecognizeSelector:_cmd];
-}
-
--(void) deactivateVisualizer:(id)sender
-{
-    [self doesNotRecognizeSelector:_cmd];
-}
-
-- (void)noteKeyEvent:(KCKeycastrEvent *)event
-{
-    [self doesNotRecognizeSelector:_cmd];
-}
-
-- (void)noteFlagsChanged:(NSEventModifierFlags)flags
-{
-	// Default implementation does nothing.
-}
-
-- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
-{
-    [self doesNotRecognizeSelector:_cmd];
-}
-
 @end
 
 @implementation KCVisualizerFactory

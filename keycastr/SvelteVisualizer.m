@@ -261,4 +261,8 @@
 	[_visualizerView noteFlagsChanged:flags];
 }
 
++ (NSDictionary<NSString *, NSObject *> *)visualizerDefaults {
+    return @{ @"svelte.displayAll": @YES };
+}
+
 @end

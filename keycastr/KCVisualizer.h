@@ -29,7 +29,9 @@
 
 @class KCKeycastrEvent, KCMouseEvent;
 
-@protocol KCVisualizer<NSObject>
+@protocol KCVisualizer <NSObject>
+
++ (NSDictionary<NSString *, NSObject *> *)visualizerDefaults;
 
 -(NSView*) preferencesView;
 -(NSString*) visualizerName;
@@ -55,7 +57,7 @@
 @end
 
 
-@interface KCVisualizer : NSObject <KCVisualizer>
+@interface KCVisualizer : NSObject
 
 @property (nonatomic, retain) IBOutlet NSView* preferencesView;
 

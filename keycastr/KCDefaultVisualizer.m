@@ -150,6 +150,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
     if (![keystroke isCommandKey] && [self shouldOnlyDisplayCommandKeys]) {
         return;
     }
+    
     if (![keystroke isModified] && [self shouldOnlyDisplayModifiedKeys]) {
         return;
     }
@@ -160,6 +161,27 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent
 {
     [visualizerWindow addMouseEvent:mouseEvent];
+}
+
+- (void)noteFlagsChanged:(NSEventModifierFlags)flags
+{
+    // no-op; future option to display or otherwise react to bare modifier keypresses
+}
+
++ (NSDictionary<NSString *, NSObject *> *)visualizerDefaults
+{
+    return @{ @"default.commandKeysOnly": @YES,
+              @"default.fadeDelay": @2.0,
+              @"default.fadeDuration": @0.2,
+              @"default.fontSize": @16.0,
+              @"default.keystrokeDelay": @0.5,
+              @"default.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]
+                                                           requiringSecureCoding:NO
+                                                                           error:NULL],
+              @"default.textColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]
+                                                          requiringSecureCoding:NO
+                                                                          error:NULL],
+    };
 }
 
 @end

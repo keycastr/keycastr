@@ -94,8 +94,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     eventTap = [KCEventTap new];
     eventTap.delegate = self;
 
-    [self registerDefaults];
     [self registerVisualizers];
+    [self registerDefaults];
 
     mouseEventVisualizer = [KCMouseEventVisualizer new];
     mouseEventVisualizer.delegate = self;
@@ -207,31 +207,27 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [KCUserDefaultsMigration performMigration:userDefaults];
-    
-    // Set up user-defaults defaults
+
     KeyCombo keyCombo;
     keyCombo.code = 40;
     keyCombo.flags = NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand;
+
+    NSDictionary *appDefaults = @{ kKCPrefDisplayIcon: @3,
+                                   kKCPrefSelectedVisualizer: @"Default",
+                                   kKCPrefVisibleAtLaunch: @YES,
+                                   kKCPrefCapturingHotKey: [NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)] };
     
-    NSData *defaultBezelColorData = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]
-                                                          requiringSecureCoding:NO
-                                                                          error:NULL];
-    NSData *defaultTextColorData = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]
-                                                         requiringSecureCoding:NO
-                                                                         error:NULL];
-    [userDefaults registerDefaults:@{ kKCPrefDisplayIcon: @3,
-                                      kKCPrefSelectedVisualizer: @"Default",
-                                      kKCPrefVisibleAtLaunch: @YES,
-                                      kKCPrefCapturingHotKey: [NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)],
-                                      @"default.commandKeysOnly": @YES,
-                                      @"default.fadeDelay": @2.0,
-                                      @"default.fadeDuration": @0.2,
-                                      @"default.fontSize": @16.0,
-                                      @"default.keystrokeDelay": @0.5,
-                                      @"default.bezelColor": defaultBezelColorData,
-                                      @"default.textColor": defaultTextColorData,
-                                      @"svelte.displayAll": @YES,
-                                   }];
+    NSArray *factories = [KCVisualizer availableVisualizerFactories];
+    NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+    for (KCVisualizerFactory *factory in factories) {
+        Class visualizerClass = factory.visualizerClass;
+        if ([visualizerClass conformsToProtocol:@protocol(KCVisualizer)]) {
+            [defaults addEntriesFromDictionary:[(Class<KCVisualizer>)visualizerClass visualizerDefaults]];
+        }
+    }
+    
+    [defaults addEntriesFromDictionary:appDefaults];
+    [userDefaults registerDefaults:defaults];
 }
 
 - (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke
