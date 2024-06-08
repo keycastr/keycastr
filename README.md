@@ -4,7 +4,7 @@ KeyCastr, an open source keystroke visualizer.
 
 ![header image](assets/KeyCastr_header.png)
 
-KeyCastr enables you to share your keystrokes when creating screencasts, presenting, or collaborating with others. You can choose to display all keystrokes or command keys only, and there is also an option to include mouse clicks.
+KeyCastr enables you to share your keystrokes when creating screencasts, presenting, or collaborating with others. You can choose to display command keys, all modified keys, or all keystrokes, and there is also an option to include mouse clicks.
 
 It is also possible to develop your own visualizer on top of KeyCastr -- pull requests are welcome!
 

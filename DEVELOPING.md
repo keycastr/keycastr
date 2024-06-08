@@ -4,7 +4,7 @@
 
 After cloning the repository, open the project directory in a terminal or git client and run the following command: `git submodule update --init --recursive`
 
-In order to run KeyCastr in the debugger the built product will need accessibility or input monitoring permissions just as the released app does. Remove any existing references to KeyCastr from the Accessibility and/or Input Monitoring sections in the Security & Privacy pane within the System Preferences.app. Locate the built product created by Xcode and drag it into the Accessibility or Input Monitoring list. Use ctrl-cmd-R in Xcode to run the same build again.
+In order to run KeyCastr in the debugger the built product will need accessibility or input monitoring permissions just as the released app does. Remove any existing references to KeyCastr from the Accessibility and/or Input Monitoring sections in the Security & Privacy pane within the System Preferences.app and build & run the app within Xcode. Enable the newly-created reference to the app in the settings pane within the System Preferences.app. Click 'Later' in the prompt asking whether to restart the app, and use ctrl-cmd-R in Xcode to run the same build again.
 
 ## Creating a Release
  - Update app version metadata in `Info.plist`
