@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -509,8 +510,8 @@
                         <rect key="frame" x="0.0" y="78" width="258" height="5"/>
                     </box>
                     <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="388">
-                        <rect key="frame" x="18" y="56" width="85" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Version 0.8.0" id="389">
+                        <rect key="frame" x="18" y="56" width="83" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Version 0.8.0" id="389">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -540,12 +541,12 @@ b250cmlidXRvcnM
                     </qcView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="388" secondAttribute="trailing" constant="20" symbolic="YES" id="248-AJ-Ggs"/>
                     <constraint firstItem="387" firstAttribute="leading" secondItem="385" secondAttribute="leading" id="4LD-sS-nls"/>
                     <constraint firstItem="392" firstAttribute="top" secondItem="388" secondAttribute="bottom" constant="8" symbolic="YES" id="9tx-aX-Hxd"/>
                     <constraint firstAttribute="trailing" secondItem="392" secondAttribute="trailing" constant="18" id="AvG-ah-dWf"/>
                     <constraint firstAttribute="trailing" secondItem="387" secondAttribute="trailing" constant="-2" id="D0c-GO-EmZ"/>
                     <constraint firstItem="392" firstAttribute="leading" secondItem="385" secondAttribute="leading" constant="20" symbolic="YES" id="E6j-q0-oTt"/>
-                    <constraint firstAttribute="trailing" secondItem="388" secondAttribute="trailing" constant="155" id="Fhm-lG-uRP"/>
                     <constraint firstAttribute="bottom" secondItem="392" secondAttribute="bottom" constant="20" symbolic="YES" id="HXc-z2-vge"/>
                     <constraint firstItem="386" firstAttribute="top" secondItem="385" secondAttribute="top" id="Jj4-dI-NKr"/>
                     <constraint firstItem="387" firstAttribute="top" secondItem="386" secondAttribute="bottom" id="MEY-n5-Y4k"/>
