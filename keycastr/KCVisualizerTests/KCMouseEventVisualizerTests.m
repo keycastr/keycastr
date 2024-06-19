@@ -70,8 +70,6 @@
 }
 
 - (void)testForwardingMouseEvents {
-	NSLog(@"================> mouseDisplayOptionNames: %@", self.visualizer.mouseDisplayOptionNames);
-	
     KCMouseEvent *fakeMouseEvent = [[KCMouseEvent alloc] initWithNSEvent:nil];
     
     // displayOptionNone

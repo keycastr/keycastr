@@ -33,12 +33,12 @@
 #import <Quartz/Quartz.h>
 #import <ShortcutRecorder/ShortcutRecorder.h>
 #import "KCAppController.h"
-#import "KCDefaultVisualizer.h"
 #import "KCEventTap.h"
 #import "KCKeystroke.h"
 #import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
 #import "KCUserDefaultsMigration.h"
+#import "KCVisualizer.h"
 
 typedef struct _KeyCombo {
     unsigned int flags; // 0 for no flags
@@ -196,13 +196,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     return YES;
 }
 
--(void) _mapOldPreference:(NSString*)old toNewPreference:(NSString*)new
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:[ud objectForKey:old] forKey:new];
-	[ud removeObjectForKey:old];
-}
-
 - (void)registerDefaults
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -324,27 +317,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) registerVisualizers
 {
-	// register the built-in default visualizer
-//	id factory = [[[KCDefaultVisualizerFactory alloc] init] autorelease];
-//	[KCVisualizer registerVisualizerFactory:factory withName:[factory visualizerName]];
-	
-	// register other visualizers from plug-in paths
-	NSMutableArray *pluginSearchPaths = [NSMutableArray arrayWithObject:[[NSBundle mainBundle] builtInPlugInsPath]];
-
-	NSArray *librarySearchPaths = NSSearchPathForDirectoriesInDomains( NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES );
-	if (librarySearchPaths != nil)
-	{
-		NSEnumerator *searchPathEnum = [librarySearchPaths objectEnumerator];
-		NSString *currPath;
-		while (currPath = [searchPathEnum nextObject])
-			[pluginSearchPaths addObject:[currPath stringByAppendingPathComponent:@"Application Support/KeyCastr/PlugIns"]];
-	}
-	NSEnumerator *iter = [pluginSearchPaths objectEnumerator];
-	NSString *path = nil;
-	while (path = [iter nextObject])
-	{
-		[self loadPluginsFromDirectory:path];
-	}
+	// register visualizers from plug-in paths
+    [self loadPluginsFromDirectory:[[NSBundle mainBundle] builtInPlugInsPath]];
 }
 
 -(void) changeKeyComboTo:(KeyCombo)keyCombo

@@ -34,18 +34,17 @@
     for (NSString *colorKey in colorKeyNames) {
         NSData *colorData = [userDefaults dataForKey:colorKey];
         if (!colorData) {
-            NSLog(@"================> Color data not found for key: %@ ; continuing...", colorKey);
             continue;
         }
+
+        // If the color can be unarchived by the deprecated unarchiver,
+        // we need to convert it.
         NSColor *color = [NSUnarchiver unarchiveObjectWithData:colorData];
         if (color) {
-            NSLog(@"================> Migrating %@ : %@", colorKey, color);
             NSData *newColorData = [NSKeyedArchiver archivedDataWithRootObject:color
                                                          requiringSecureCoding:NO
                                                                          error:NULL];
             [userDefaults setObject:newColorData forKey:colorKey];
-        } else {
-            NSLog(@"================> %@ : No migration needed...", colorKey);
         }
     }
 
