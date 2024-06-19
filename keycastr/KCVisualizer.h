@@ -1,4 +1,6 @@
 //	Copyright (c) 2009 Stephen Deken
+//	Copyright (c) 2024 Andrew Kitchen
+//
 //	All rights reserved.
 // 
 //	Redistribution and use in source and binary forms, with or without modification,
@@ -59,20 +61,20 @@
 
 @interface KCVisualizer : NSObject
 
-@property (nonatomic, retain) IBOutlet NSView* preferencesView;
+@property (nonatomic, retain) IBOutlet NSView * preferencesView;
 
-+(void) registerVisualizerFactory:(id<KCVisualizerFactory>)factory withName:(NSString*)name;
-+(id<KCVisualizer>) visualizerWithName:(NSString*)visualizerName;
-+(NSArray*) availableVisualizerFactories;
++ (void)loadPluginsFromDirectory:(NSString *)path;
++ (void)unloadPlugins;
+
++ (NSArray *)availableVisualizerFactories;
++ (id<KCVisualizer>)visualizerWithName:(NSString *)visualizerName;
 
 @end
 
 
 @interface KCVisualizerFactory : NSObject <KCVisualizerFactory>
-{
-}
 
--(id<KCVisualizer>) constructVisualizer;
+- (id<KCVisualizer>)constructVisualizer;
 
 @end
 

@@ -1,6 +1,8 @@
 //	Copyright (c) 2009 Stephen Deken
+//	Copyright (c) 2024 Andrew Kitchen
+//
 //	All rights reserved.
-// 
+//
 //	Redistribution and use in source and binary forms, with or without modification,
 //	are permitted provided that the following conditions are met:
 //
@@ -41,6 +43,38 @@
 	if (registry == nil)
 		registry = [[NSMutableDictionary alloc] initWithCapacity:2];
 	return registry;
+}
+
++ (void)registerVisualizerClass:(Class)c
+{
+	KCVisualizerFactory *factory = [[[c alloc] init] autorelease];
+	[KCVisualizer registerVisualizerFactory:factory withName:[factory visualizerName]];
+}
+
++ (void)loadPluginsFromDirectory:(NSString *)path
+{
+	NSDirectoryEnumerator *dir = [[NSFileManager defaultManager] enumeratorAtPath:path];
+	NSString *file = nil;
+	while (file = [dir nextObject])
+	{
+		[dir skipDescendents];
+		if (![file hasSuffix:@".kcplugin"])
+			continue;
+		NSBundle *b = [NSBundle bundleWithPath:[path stringByAppendingPathComponent:file]];
+		if ([b load] == NO)
+		{
+			NSLog( @"Could not load %@ from %@", file, path );
+		}
+		else
+		{
+			[self registerVisualizerClass:[b principalClass]];
+		}
+	}
+}
+
++ (void)unloadPlugins
+{
+	[[self _registry] removeAllObjects];
 }
 
 +(void) registerVisualizerFactory:(id<KCVisualizerFactory>)factory withName:(NSString*)name

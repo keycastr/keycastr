@@ -288,37 +288,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 	}
 }
 
--(void) registerVisualizerClass:(Class)c
-{
-	KCVisualizerFactory* factory = [[c alloc] init];
-	[KCVisualizer registerVisualizerFactory:factory withName:[factory visualizerName]];
-}
-
--(void) loadPluginsFromDirectory:(NSString*)path
-{
-	NSDirectoryEnumerator *dir = [[NSFileManager defaultManager] enumeratorAtPath:path];
-	NSString *file = nil;
-	while (file = [dir nextObject])
-	{
-		[dir skipDescendents];
-		if (![file hasSuffix:@".kcplugin"])
-			continue;
-		NSBundle *b = [NSBundle bundleWithPath:[path stringByAppendingPathComponent:file]];
-		if ([b load] == NO)
-		{
-			NSLog( @"Could not load %@ from %@", file, path );
-		}
-		else
-		{
-			[self registerVisualizerClass:[b principalClass]];
-		}
-	}
-}
-
 -(void) registerVisualizers
 {
 	// register visualizers from plug-in paths
-    [self loadPluginsFromDirectory:[[NSBundle mainBundle] builtInPlugInsPath]];
+    [KCVisualizer loadPluginsFromDirectory:[[NSBundle mainBundle] builtInPlugInsPath]];
 }
 
 -(void) changeKeyComboTo:(KeyCombo)keyCombo

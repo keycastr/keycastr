@@ -105,11 +105,11 @@ typedef NS_ENUM(NSInteger, KCDefaultVisualizerDisplayOption) {
 }
 
 @property (nonatomic, retain) IBOutlet KCDefaultVisualizerPreferencesView *preferencesView;
+@property (nonatomic, assign) KCDefaultVisualizerDisplayOption displayMode;
 
 - (IBAction)preferencesViewDidSelectDisplayOption:(id)sender;
 
--(NSString*) visualizerName;
--(void) deactivateVisualizer:(id)sender;
-
+- (BOOL)shouldOnlyDisplayCommandKeys;
+- (BOOL)shouldOnlyDisplayModifiedKeys;
 
 @end

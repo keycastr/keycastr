@@ -91,6 +91,18 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 -(void) awakeFromNib
 {
     [super awakeFromNib];
+    [self configureDisplayModeWithDefaults:NSUserDefaults.standardUserDefaults];
+}
+
+- (void)configureDisplayModeWithDefaults:(NSUserDefaults *)userDefaults
+{
+    if ([userDefaults boolForKey:@"default.commandKeysOnly"]) {
+        _displayMode = KCDefaultVisualizerDisplayOptionCommandKeysOnly;
+    } else if ([userDefaults boolForKey:@"default.allModifiedKeys"]) {
+        _displayMode = KCDefaultVisualizerDisplayOptionAllModifiedKeys;
+    } else {
+        _displayMode = KCDefaultVisualizerDisplayOptionAllKeys;
+    }
 }
 
 - (IBAction)preferencesViewDidSelectDisplayOption:(id)sender
@@ -111,6 +123,8 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (void)setDisplayMode:(KCDefaultVisualizerDisplayOption)mode
 {
+    _displayMode = mode;
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionCommandKeysOnly) forKey:@"default.commandKeysOnly"];
     [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionAllModifiedKeys) forKey:@"default.allModifiedKeys"];
@@ -134,12 +148,12 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (BOOL)shouldOnlyDisplayCommandKeys
 {
-    return [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.commandKeysOnly"] boolValue];
+    return _displayMode == KCDefaultVisualizerDisplayOptionCommandKeysOnly;
 }
 
 - (BOOL)shouldOnlyDisplayModifiedKeys
 {
-    return [[[NSUserDefaults standardUserDefaults] valueForKey:@"default.allModifiedKeys"] boolValue];
+    return _displayMode == KCDefaultVisualizerDisplayOptionAllModifiedKeys;
 }
 
 - (void)noteKeyEvent:(KCKeystroke *)keystroke
