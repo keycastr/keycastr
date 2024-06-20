@@ -196,7 +196,6 @@ CGEventRef eventTapCallback(
     }
     
     CFRunLoopRemoveSource(eventTapRunLoop, eventTapEventSource, kCFRunLoopDefaultMode);
-    CFRelease(eventTapRunLoop);
     CFRelease(eventTapEventSource);
     CFRelease(eventTap);
 
