@@ -65,8 +65,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 @property (nonatomic, assign) KeyCombo toggleKeyCombo;
 
 @property (nonatomic, assign) IBOutlet NSMenu *statusMenu;
-@property (nonatomic, assign) IBOutlet NSWindow *aboutWindow;
-@property (nonatomic, assign) IBOutlet QCView   *aboutQCView;
+@property (nonatomic, strong) IBOutlet NSWindow *aboutWindow;
+@property (nonatomic, strong) IBOutlet QCView   *aboutQCView;
 @property (nonatomic, assign) IBOutlet NSWindow *preferencesWindow;
 @property (nonatomic, assign) IBOutlet KCPrefsWindowController *prefsWindowController;
 @property (nonatomic, assign) IBOutlet SRRecorderControl *shortcutRecorder;
@@ -330,10 +330,14 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 -(void) orderFrontKeyCastrAboutPanel:(id)sender
 {
-    [aboutQCView startRendering];
-	[aboutWindow center];
-	[aboutWindow makeKeyAndOrderFront:sender];
-	[NSApp activateIgnoringOtherApps:YES];
+    [aboutWindow center];
+    [aboutWindow makeKeyAndOrderFront:sender];
+    
+    if (!aboutQCView.isRendering) {
+        [aboutQCView startRendering];
+    }
+    
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 -(void) orderFrontKeyCastrPreferencesPanel:(id)sender
