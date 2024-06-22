@@ -7,8 +7,8 @@ After cloning the repository, open the project directory in a terminal or git cl
 In order to run KeyCastr in the debugger the built product will need accessibility or input monitoring permissions just as the released app does. Remove any existing references to KeyCastr from the Accessibility and/or Input Monitoring sections in the Security & Privacy pane within the System Preferences.app and build & run the app within Xcode. Enable the newly-created reference to the app in the settings pane within the System Preferences.app. Click 'Later' in the prompt asking whether to restart the app, and use ctrl-cmd-R in Xcode to run the same build again.
 
 ## Creating a Release
- - Update app version metadata in `Info.plist`
-  - note that Sparkle uses kCFBundleVersionKey for its update version comparison, which shows up in the "Build" field in Xcode
+ - Update app version metadata in `Info.plist` by updating MARKETING_VERSION in the Xcode project file
+   - note that Sparkle uses kCFBundleVersionKey for its update version comparison, which shows up in the "Build" field in Xcode
  - Developer ID must be set up for code signing and notarization
  - Archive the app and follow Apple's instructions for uploading a release to be notarized
  - Upon receiving the success notification from Apple, export the notarized build from the project
