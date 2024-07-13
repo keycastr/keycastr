@@ -176,7 +176,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kControlKeyString];
 	}
 
-	if (hasOptionModifier && ([event isKindOfClass:[KCKeystroke class]] && [(KCKeystroke *)event isCommand]))
+	if (hasOptionModifier && (!displayModifiedKeyWhenOptionPressed || ([event isKindOfClass:[KCKeystroke class]] && [(KCKeystroke *)event isCommand])))
 	{
 		[mutableResponse appendString:kOptionKeyString];
 	}
