@@ -57,7 +57,7 @@
     [super dealloc];
 }
 
-- (BOOL)isCommandKey {
+- (BOOL)isCommand {
     return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
 }
 

@@ -238,7 +238,7 @@
 
 - (void)noteKeyEvent:(KCKeystroke *)keystroke
 {
-	if (!_displayAll && ![keystroke isCommandKey])
+	if (!_displayAll && ![keystroke isCommand])
 		return;
 	[_visualizerView noteKeyEvent:keystroke];
 }

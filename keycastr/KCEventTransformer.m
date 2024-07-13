@@ -46,7 +46,7 @@
 }
 
 static NSString* kCommandKeyString = @"\xe2\x8c\x98";
-static NSString* kAltKeyString = @"\xe2\x8c\xa5";
+static NSString* kOptionKeyString = @"\xe2\x8c\xa5";
 static NSString* kControlKeyString = @"\xe2\x8c\x83";
 static NSString* kShiftKeyString = @"\xe2\x87\xa7";
 static NSString* kLeftTabString = @"\xe2\x87\xa4";
@@ -161,8 +161,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 - (id)transformedValue:(KCKeycastrEvent *)event
 {
     NSEventModifierFlags _modifiers = event.modifierFlags;
-    BOOL isOption = _modifiers & NSEventModifierFlagOption;
-    BOOL isShifted = _modifiers & NSEventModifierFlagShift;
+    BOOL hasOptionModifier = _modifiers & NSEventModifierFlagOption;
+    BOOL hasShiftModifier = _modifiers & NSEventModifierFlagShift;
 
     BOOL needsShiftGlyph = NO;
 
@@ -175,16 +175,16 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kControlKeyString];
 	}
 
-	if (isOption && ([event isKindOfClass:[KCKeystroke class]] && [(KCKeystroke *)event isCommandKey]))
+	if (hasOptionModifier && ([event isKindOfClass:[KCKeystroke class]] && [(KCKeystroke *)event isCommand]))
 	{
-		[mutableResponse appendString:kAltKeyString];
+		[mutableResponse appendString:kOptionKeyString];
 	}
 
-    if (isShifted)
+    if (hasShiftModifier)
 	{
 		if (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand))
 			[mutableResponse appendString:kShiftKeyString];
-		else if (isOption && !displayModifiedKeyWhenOptionPressed)
+		else if (hasOptionModifier && !displayModifiedKeyWhenOptionPressed)
             [mutableResponse appendString:kShiftKeyString];
         else
 			needsShiftGlyph = !displayModifiedKeyWhenOptionPressed;
@@ -211,10 +211,9 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     
     KCKeystroke *keystroke = (KCKeystroke *)event;
     uint16_t _keyCode = keystroke.keyCode;
-    BOOL isCommandKey = keystroke.isCommandKey;
     
     // check for bare shift-tab as left tab special case
-    if (isShifted && !isCommandKey && !isOption)
+    if (hasShiftModifier && !keystroke.isCommand && !hasOptionModifier)
     {
         if ([@(_keyCode) isEqualToNumber:@48]) {
             [mutableResponse appendString:kLeftTabString];
@@ -234,13 +233,13 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         return mutableResponse;
 	}
 
-    if (displayModifiedKeyWhenOptionPressed && !keystroke.isCommandKey) {
+    if (displayModifiedKeyWhenOptionPressed && !keystroke.isCommand) {
         [mutableResponse appendString:keystroke.characters];
     } else {
         [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
     }
     
-    if (isCommandKey || isShifted)
+    if (keystroke.isCommand || hasShiftModifier)
 	{
         mutableResponse = [[[mutableResponse uppercaseString] mutableCopy] autorelease];
 	}

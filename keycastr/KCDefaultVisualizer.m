@@ -158,7 +158,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (void)noteKeyEvent:(KCKeystroke *)keystroke
 {
-    if (![keystroke isCommandKey] && [self shouldOnlyDisplayCommandKeys]) {
+    if (![keystroke isCommand] && [self shouldOnlyDisplayCommandKeys]) {
         return;
     }
     
@@ -310,7 +310,7 @@ static NSRect KC_defaultFrame(void) {
 {
     [self _cancelLineBreak];
 
-    if ([keystroke isCommandKey])
+    if ([keystroke isCommand])
     {
         [self abandonCurrentBezelView];
     }
