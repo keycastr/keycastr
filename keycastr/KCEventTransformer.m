@@ -26,6 +26,9 @@
 //	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#if !__has_feature(objc_arc)
+#error "ARC is required for this file -- enable with -fobjc-arc"
+#endif
 
 #import "KCEventTransformer.h"
 #import "KCKeystroke.h"
@@ -97,8 +100,6 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 - (void)dealloc
 {
 	CFRelease(_keyboardLayout);
-
-    [super dealloc];
 }
 
 - (NSDictionary *)_specialKeys
@@ -241,7 +242,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     
     if (keystroke.isCommand || hasShiftModifier)
 	{
-        mutableResponse = [[[mutableResponse uppercaseString] mutableCopy] autorelease];
+        mutableResponse = [[mutableResponse uppercaseString] mutableCopy];
 	}
 	
 	return mutableResponse;
