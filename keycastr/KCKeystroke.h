@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2020-2023 Andrew Kitchen
+//	Copyright (c) 2020-2024 Andrew Kitchen
 //
 //	All rights reserved.
 //
@@ -33,6 +33,8 @@
 @interface KCKeystroke : KCKeycastrEvent
 
 @property (nonatomic, readonly) uint16_t keyCode;
+@property (nonatomic, copy, readonly) NSString *characters;
+@property (nonatomic, copy, readonly) NSString *charactersIgnoringModifiers;
 
 /// A Keystroke is a command key if it includes a Control or Command key; Option and Shift are only considered modifiers.
 - (BOOL)isCommandKey;
