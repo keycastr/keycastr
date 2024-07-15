@@ -93,6 +93,12 @@
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⌘7");
 }
 
+- (void)test_KCKeystroke_convertsShiftOptionNumberToNumber {
+    // shift-opt-7
+    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
+    XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧7");
+}
+
 - (void)test_KCKeystroke_convertsCmdOptShiftNumberToShiftedNumber {
     // cmd-opt-shift-7
     KCKeystroke *keystroke = [self keystrokeWithKeyCode: 26 modifiers: 1704234 characters:@"‡" charactersIgnoringModifiers:@"&"];
@@ -136,12 +142,6 @@
     // opt-U
     KCKeystroke *keystroke = [self keystrokeWithKeyCode:32 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"u"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥u");
-}
-
-- (void)test_KCKeystroke_convertsShiftOptionNumberToNumber {
-    // shift-opt-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
-    XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧7");
 }
 
 #pragma mark - Function Row
