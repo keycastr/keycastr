@@ -206,4 +206,20 @@
     XCTSkip(@"Pending...");
 }
 
+#pragma mark - Special Cases
+
+- (void)test_tabKey {
+    // tab characters and charactersIgnoringModifiers fields are UTF8 "\t"
+    KCKeystroke *keystroke = [self keystrokeWithKeyCode:48 modifiers:256 characters:@"\t" charactersIgnoringModifiers:@"\t"];
+    XCTAssertTrue([[keystroke convertToString] isEqualToString:@"\xe2\x87\xa5"]);
+}
+
+- (void)test_shiftTab {
+    // shift-tab characters and charactersIgnoringModifiers fields are UTF8 "\U00000019"
+    // it is not possble use Objective-C @ literals with \U000000xx syntax for many 2 byte ASCII characters
+    // https://stackoverflow.com/a/27697100
+    KCKeystroke *keystroke = [self keystrokeWithKeyCode:48 modifiers:131330 characters:[NSString stringWithFormat:@"%C", 0x00000019] charactersIgnoringModifiers:[NSString stringWithFormat:@"%C", 0x00000019]];
+    XCTAssertTrue([[keystroke convertToString] isEqualToString:@"\xe2\x87\xa4"]);
+}
+
 @end
