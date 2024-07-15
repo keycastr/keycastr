@@ -29,6 +29,8 @@
 
 @implementation KCUserDefaultsMigration
 
+// TODO: migrate legacy keys from dot/namespaces to underscores, and audit for observation (KVC?)
+
 + (void)performMigration:(NSUserDefaults *)userDefaults {
     NSArray *colorKeyNames = [self colorKeyNames];
     for (NSString *colorKey in colorKeyNames) {

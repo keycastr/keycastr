@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2014-2023 Andrew Kitchen
+//	Copyright (c) 2014-2024 Andrew Kitchen
 //
 //	All rights reserved.
 // 
@@ -204,11 +204,12 @@
     
     _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
     
+    // TODO: migrate away from using NSNotificationCenter for this, as it is far too chatty
     [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
                                                       object:nil
                                                        queue:nil
-                                                  usingBlock:^(NSNotification * _Nonnull note) {
-                                                      _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
+                                                  usingBlock:^(NSNotification * _Nonnull notification) {
+                                                      _displayAll = [notification.object boolForKey:@"svelte.displayAll"];
                                                   }];
     
     return self;

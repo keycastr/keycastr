@@ -33,9 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface KCUserDefaultsMigration : NSObject
 
 ///
-/// Migrates the default visualizer's NSColor data stored in NSUserDefaults from the deprecated NSArchiver/NSUnarchiver format to the format used by the NSKeyedArchiver/NSKeyedUnarchiver. Also removes a default which was written to but otherwise unused by the svelte visualizer.
+/// Migrates the default visualizer's NSColor data stored in NSUserDefaults from the deprecated NSArchiver/NSUnarchiver format to the format used by the NSKeyedArchiver/NSKeyedUnarchiver. Also removes a default which was written to but otherwise unused by the Svelte visualizer.
 ///
-/// This method should be the only place in the codebase that references the deprecated classes. It can be removed in any release after the next release after a reasonable period of time.
+/// This method should be the only place in the codebase that references the deprecated NSArchiver/NSUnarchiver classes. It can be removed in any release after the next release after a reasonable period of time.
+///
+/// TODO: A new migration may be needed for keys with namespacing, e.g. default.bezelColor. This namespacing breaks KVO, although it seems that KVC works OK
 ///
 + (void)performMigration:(NSUserDefaults *)userDefaults;
 + (NSArray *)colorKeyNames;

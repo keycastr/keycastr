@@ -35,12 +35,12 @@
 #import "KCMouseEvent.h"
 
 @interface KCEventTransformer ()
-@property (nonatomic, readonly) struct __TISInputSource *keyboardLayout;
+@property (nonatomic, readonly) TISInputSourceRef keyboardLayout;
 @property (nonatomic, assign) BOOL displayModifiedCharacters;
 @end
 
 @implementation KCEventTransformer {
-	TISInputSourceRef _keyboardLayout;
+    NSUserDefaults *_userDefaults;
 	const UCKeyboardLayout *_uchrData;
 }
 
@@ -81,28 +81,35 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 - (instancetype)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout userDefaults:(NSUserDefaults *)userDefaults
 {
     if (self = [super init]) {
+        CFRetain(keyboardLayout);
         _keyboardLayout = keyboardLayout;
-        CFRetain(_keyboardLayout);
+        _userDefaults = userDefaults;
 
         CFDataRef uchr = TISGetInputSourceProperty(_keyboardLayout , kTISPropertyUnicodeKeyLayoutData);
         _uchrData = ( const UCKeyboardLayout* )CFDataGetBytePtr(uchr);
         
-        _displayModifiedCharacters = [userDefaults boolForKey:@"default.displayModifiedCharacters"];
-
-        __weak typeof(self) weakSelf = self;
-        [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
-                                                          object:nil
-                                                           queue:nil
-                                                      usingBlock:^(NSNotification * _Nonnull notification) {
-            weakSelf.displayModifiedCharacters = [notification.object boolForKey:@"default.displayModifiedCharacters"];
-        }];
+        _displayModifiedCharacters = [_userDefaults boolForKey:@"default_displayModifiedCharacters"];
+        [_userDefaults addObserver:self
+                        forKeyPath:@"default_displayModifiedCharacters"
+                           options:NSKeyValueObservingOptionNew
+                           context:NULL];
     }
 
     return self;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"default_displayModifiedCharacters"]) {
+        id newValue = change[NSKeyValueChangeNewKey];
+        if ([newValue respondsToSelector:@selector(boolValue)]) {
+            self.displayModifiedCharacters = [newValue boolValue];
+        }
+    }
+}
+
 - (void)dealloc
 {
+    [_userDefaults removeObserver:self forKeyPath:@"default_displayModifiedCharacters"];
 	CFRelease(_keyboardLayout);
 }
 
@@ -232,6 +239,10 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	NSString *specialKeyString = [[self _specialKeys] objectForKey:@(_keyCode)];
 	if (specialKeyString)
 	{
+//        if (hasOptionModifier && !keystroke.isCommand) {
+//            [mutableResponse appendString:kOptionKeyString];
+//        }
+
 		[mutableResponse appendString:specialKeyString];
         return mutableResponse;
 	}

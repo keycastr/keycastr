@@ -191,15 +191,15 @@
     // shift-opt-7
     KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
 
-    // shift-opt-7 transforms to "»" when default.displayModifiedCharacters is set to YES
-    [userDefaults setBool:YES forKey:@"default.displayModifiedCharacters"];
+    // shift-opt-7 transforms to "»" when default_displayModifiedCharacters is set to YES
+    [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"»");
 
-    // shift-opt-7 transforms to "⌥⇧7" when default.displayModifiedCharacters is set to NO
-    [userDefaults setBool:NO forKey:@"default.displayModifiedCharacters"];
+    // shift-opt-7 transforms to "⌥⇧7" when default_displayModifiedCharacters is set to NO
+    [userDefaults setBool:NO forKey:@"default_displayModifiedCharacters"];
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧7");
     
-    [userDefaults removeObjectForKey:@"default.displayModifiedCharacters"];
+    [userDefaults removeObjectForKey:@"default_displayModifiedCharacters"];
 }
 
 - (void)test_displayingCorrectlyWhenInputSourceKeyboardLayoutChanges {
@@ -211,7 +211,7 @@
 - (void)test_tabKey {
     // tab characters and charactersIgnoringModifiers fields are UTF8 "\t"
     KCKeystroke *keystroke = [self keystrokeWithKeyCode:48 modifiers:256 characters:@"\t" charactersIgnoringModifiers:@"\t"];
-    XCTAssertTrue([[keystroke convertToString] isEqualToString:@"\xe2\x87\xa5"]);
+    XCTAssertEqualObjects([keystroke convertToString], @"⇥");
 }
 
 - (void)test_shiftTab {
@@ -219,7 +219,7 @@
     // it is not possble use Objective-C @ literals with \U000000xx syntax for many 2 byte ASCII characters
     // https://stackoverflow.com/a/27697100
     KCKeystroke *keystroke = [self keystrokeWithKeyCode:48 modifiers:131330 characters:[NSString stringWithFormat:@"%C", 0x00000019] charactersIgnoringModifiers:[NSString stringWithFormat:@"%C", 0x00000019]];
-    XCTAssertTrue([[keystroke convertToString] isEqualToString:@"\xe2\x87\xa4"]);
+    XCTAssertEqualObjects([keystroke convertToString], @"⇤");
 }
 
 @end
