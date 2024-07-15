@@ -290,6 +290,16 @@
                     <rect key="frame" x="6" y="283" width="384" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </box>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4FL-0E-Ykx">
+                    <rect key="frame" x="241" y="303" width="121" height="18"/>
+                    <buttonCell key="cell" type="check" title="Apply Modifiers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SEj-DO-7J0">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="9" name="value" keyPath="values.default_displayModifiedCharacters" id="sXZ-s3-9aV"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="13" firstAttribute="width" secondItem="8" secondAttribute="width" id="0J1-VP-ec6"/>
@@ -333,6 +343,7 @@
                 <constraint firstItem="36" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="StK-p0-lxO"/>
                 <constraint firstAttribute="bottom" secondItem="13" secondAttribute="bottom" constant="20" symbolic="YES" id="TYp-gD-Zlf"/>
                 <constraint firstItem="32" firstAttribute="leading" secondItem="24" secondAttribute="leading" id="U4Y-1C-OGz"/>
+                <constraint firstItem="4FL-0E-Ykx" firstAttribute="centerY" secondItem="wva-Xt-LhR" secondAttribute="centerY" id="UM4-7T-snu"/>
                 <constraint firstItem="50" firstAttribute="top" secondItem="20" secondAttribute="bottom" constant="2" id="UNa-8N-WUY"/>
                 <constraint firstItem="31" firstAttribute="top" secondItem="32" secondAttribute="bottom" constant="4" id="UYl-2z-5Ai"/>
                 <constraint firstItem="16" firstAttribute="trailing" secondItem="8ph-mh-BBf" secondAttribute="trailing" id="UmG-PP-XdV"/>
@@ -360,6 +371,7 @@
                 <constraint firstItem="22" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" id="vLB-IC-fQg"/>
                 <constraint firstItem="54" firstAttribute="trailing" secondItem="52" secondAttribute="trailing" id="wgt-6B-skG"/>
                 <constraint firstItem="8" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="zBO-qC-VpU"/>
+                <constraint firstItem="4FL-0E-Ykx" firstAttribute="leading" secondItem="wva-Xt-LhR" secondAttribute="trailing" constant="8" symbolic="YES" id="zJm-dx-dcw"/>
                 <constraint firstItem="48" firstAttribute="trailing" secondItem="52" secondAttribute="trailing" id="zUY-EJ-yvK"/>
             </constraints>
             <connections>
@@ -367,7 +379,7 @@
                 <outlet property="allModifiedKeysButton" destination="2Tl-2J-YBO" id="3vh-1W-L3k"/>
                 <outlet property="commandKeysOnlyButton" destination="56" id="d8Y-jk-jDl"/>
             </connections>
-            <point key="canvasLocation" x="159.5" y="186.5"/>
+            <point key="canvasLocation" x="159" y="186"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="9" userLabel="Shared User Defaults Controller"/>
     </objects>
