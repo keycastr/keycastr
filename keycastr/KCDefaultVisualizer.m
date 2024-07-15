@@ -192,6 +192,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
               @"default.textColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:1]
                                                           requiringSecureCoding:NO
                                                                           error:NULL],
+              @"default.displayModifiedCharacters": @NO,
     };
 }
 

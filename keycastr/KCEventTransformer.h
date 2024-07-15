@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2021-2023 Andrew Kitchen
+//	Copyright (c) 2021-2024 Andrew Kitchen
 //
 //	All rights reserved.
 // 
@@ -26,8 +26,7 @@
 //	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-#import <Cocoa/Cocoa.h>
+#import <Carbon/Carbon.h>
 
 @class KCKeycastrEvent;
 
@@ -35,11 +34,10 @@
 
 + (instancetype)currentTransformer;
 
+- (instancetype)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout userDefaults:(NSUserDefaults *)userDefaults;
+
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-
-+ (BOOL)allowsReverseTransformation;
-+ (Class)transformedValueClass;
 
 - (id)transformedValue:(KCKeycastrEvent *)event;
 

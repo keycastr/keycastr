@@ -27,6 +27,7 @@
 
 #import <XCTest/XCTest.h>
 #import "KCKeystroke.h"
+#import "KCEventTransformer.h"
 
 /**
  NOTE: This is not a comprehensive set of tests, but serves as a sanity check for handling letters vs. numbers when certain modifiers are applied.
@@ -176,6 +177,33 @@
 - (void)test_KCKeystroke_convertsKanaKey {
     KCKeystroke *keystroke = [self keystrokeWithKeyCode:104 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"かな");
+}
+
+#pragma mark - Displaying keycaps vs. modified characters
+
+- (void)test_displayingKeycapsVsModifiedKeys {
+    // Use the current user's layout. Ultimately we need helper code to obtain different layouts and use them for testing.
+    TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
+    
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:NSStringFromClass([self class])];
+    KCEventTransformer *eventTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout userDefaults:userDefaults];
+
+    // shift-opt-7
+    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
+
+    // shift-opt-7 transforms to "»" when default.displayModifiedCharacters is set to YES
+    [userDefaults setBool:YES forKey:@"default.displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"»");
+
+    // shift-opt-7 transforms to "⌥⇧7" when default.displayModifiedCharacters is set to NO
+    [userDefaults setBool:NO forKey:@"default.displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧7");
+    
+    [userDefaults removeObjectForKey:@"default.displayModifiedCharacters"];
+}
+
+- (void)test_displayingCorrectlyWhenInputSourceKeyboardLayoutChanges {
+    XCTSkip(@"Pending...");
 }
 
 @end

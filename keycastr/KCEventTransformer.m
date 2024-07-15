@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2017-2023 Andrew Kitchen
+//	Copyright (c) 2017-2024 Andrew Kitchen
 //
 //	All rights reserved.
 // 
@@ -33,14 +33,10 @@
 #import "KCEventTransformer.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
-#import <Carbon/Carbon.h>
-#import <QuartzCore/QuartzCore.h>
-
 
 @interface KCEventTransformer ()
-
 @property (nonatomic, readonly) struct __TISInputSource *keyboardLayout;
-
+@property (nonatomic, assign) BOOL displayModifiedCharacters;
 @end
 
 @implementation KCEventTransformer {
@@ -73,10 +69,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     static KCEventTransformer *currentTransformer = nil;
     TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
 
-    if (currentTransformer == nil) {
-        currentTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout];
-    } else if (currentTransformer.keyboardLayout != currentLayout) {
-        currentTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout];
+    if (currentTransformer == nil || currentTransformer.keyboardLayout != currentLayout) {
+        currentTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout userDefaults:NSUserDefaults.standardUserDefaults];
     }
 
     CFRelease(currentLayout);
@@ -84,7 +78,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     return currentTransformer;
 }
 
-- (instancetype)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout
+- (instancetype)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout userDefaults:(NSUserDefaults *)userDefaults
 {
     if (self = [super init]) {
         _keyboardLayout = keyboardLayout;
@@ -92,6 +86,16 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
         CFDataRef uchr = TISGetInputSourceProperty(_keyboardLayout , kTISPropertyUnicodeKeyLayoutData);
         _uchrData = ( const UCKeyboardLayout* )CFDataGetBytePtr(uchr);
+        
+        _displayModifiedCharacters = [userDefaults boolForKey:@"default.displayModifiedCharacters"];
+
+        __weak typeof(self) weakSelf = self;
+        [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
+                                                          object:nil
+                                                           queue:nil
+                                                      usingBlock:^(NSNotification * _Nonnull notification) {
+            weakSelf.displayModifiedCharacters = [notification.object boolForKey:@"default.displayModifiedCharacters"];
+        }];
     }
 
     return self;
@@ -166,8 +170,6 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     BOOL hasShiftModifier = _modifiers & NSEventModifierFlagShift;
 
     BOOL needsShiftGlyph = NO;
-
-    BOOL displayModifiedKeyWhenOptionPressed = YES;
     
     NSMutableString *mutableResponse = [NSMutableString string];
 
@@ -176,7 +178,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kControlKeyString];
 	}
 
-	if (hasOptionModifier && (!displayModifiedKeyWhenOptionPressed || ([event isKindOfClass:[KCKeystroke class]] && [(KCKeystroke *)event isCommand])))
+	if (hasOptionModifier && (!_displayModifiedCharacters || ([event isKindOfClass:[KCKeystroke class]] && [(KCKeystroke *)event isCommand])))
 	{
 		[mutableResponse appendString:kOptionKeyString];
 	}
@@ -185,10 +187,10 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	{
 		if (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand))
 			[mutableResponse appendString:kShiftKeyString];
-		else if (hasOptionModifier && !displayModifiedKeyWhenOptionPressed)
+		else if (hasOptionModifier && !_displayModifiedCharacters)
             [mutableResponse appendString:kShiftKeyString];
         else
-			needsShiftGlyph = !displayModifiedKeyWhenOptionPressed;
+			needsShiftGlyph = !_displayModifiedCharacters;
 	}
 
     if (_modifiers & NSEventModifierFlagCommand)
@@ -234,7 +236,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         return mutableResponse;
 	}
 
-    if (displayModifiedKeyWhenOptionPressed && !keystroke.isCommand) {
+    if (_displayModifiedCharacters && !keystroke.isCommand) {
         [mutableResponse appendString:keystroke.characters];
     } else {
         [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
