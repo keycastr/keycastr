@@ -92,11 +92,6 @@
 	return [[KCVisualizer _registry] allValues];
 }
 
--(NSView*) preferencesView
-{
-    return _preferencesView;
-}
-
 @end
 
 @implementation KCVisualizerFactory

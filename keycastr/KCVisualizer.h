@@ -61,7 +61,7 @@
 
 @interface KCVisualizer : NSObject
 
-@property (nonatomic, retain) IBOutlet NSView * preferencesView;
+@property (nonatomic, assign) IBOutlet NSView *preferencesView;
 
 + (void)loadPluginsFromDirectory:(NSString *)path;
 + (void)unloadPlugins;
@@ -77,4 +77,3 @@
 - (id<KCVisualizer>)constructVisualizer;
 
 @end
-
