@@ -239,9 +239,13 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	NSString *specialKeyString = [[self _specialKeys] objectForKey:@(_keyCode)];
 	if (specialKeyString)
 	{
-//        if (hasOptionModifier && !keystroke.isCommand) {
-//            [mutableResponse appendString:kOptionKeyString];
-//        }
+        if (_displayModifiedCharacters && hasOptionModifier && !keystroke.isCommand) {
+            [mutableResponse appendString:kOptionKeyString];
+        }
+        
+        if (_displayModifiedCharacters && hasShiftModifier && !keystroke.isCommand) {
+            [mutableResponse appendString:kShiftKeyString];
+        }
 
 		[mutableResponse appendString:specialKeyString];
         return mutableResponse;

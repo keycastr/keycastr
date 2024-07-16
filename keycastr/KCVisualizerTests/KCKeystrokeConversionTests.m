@@ -222,4 +222,22 @@
     XCTAssertEqualObjects([keystroke convertToString], @"⇤");
 }
 
+- (void)test_optionShiftUp {
+    // option-shift-up (and by extension, all direction keys & special cases) should show their modifiers with displayModifiedCharacters mode both on and off
+    // opt-shift-up
+    KCKeystroke *keystroke = [self keystrokeWithKeyCode:126 modifiers:11141410 characters:[NSString stringWithFormat:@"%lu", 0x00006000002f5c00] charactersIgnoringModifiers:[NSString stringWithFormat:@"%lu", 0x00006000002f5c00]];
+    
+    TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
+        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:NSStringFromClass([self class])];
+    KCEventTransformer *eventTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout userDefaults:userDefaults];
+
+    [userDefaults setBool:NO forKey:@"default_displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧⇡");
+    
+    [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧⇡");
+    
+    [userDefaults removeObjectForKey:@"default_displayModifiedCharacters"];
+}
+
 @end
