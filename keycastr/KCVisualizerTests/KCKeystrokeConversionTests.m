@@ -37,10 +37,14 @@
  The correct ordering for printing out modifiers should be Control-Option-Shift-Command, according to how they're displayed in menus within Apple's apps.
  */
 @interface KCKeystrokeConversionTests : XCTestCase
-
+@property (nonatomic, strong) KCKeystroke *keystroke;
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
+@property (nonatomic, strong) KCEventTransformer *eventTransformer;
 @end
 
 @implementation KCKeystrokeConversionTests
+
+@synthesize keystroke = keystroke, userDefaults = userDefaults, eventTransformer = eventTransformer;
 
 - (KCKeystroke *)keystrokeWithKeyCode:(unsigned short)keyCode modifiers:(NSEventModifierFlags)modifiers characters:(NSString *)characters charactersIgnoringModifiers:(NSString *)charactersIgnoringModifiers {
     NSEvent *fakeEvent = [NSEvent keyEventWithType:NSEventTypeKeyDown
@@ -56,53 +60,69 @@
     return [[KCKeystroke alloc] initWithNSEvent:fakeEvent];
 }
 
+- (void)setUp {
+    [super setUp];
+    
+    // Use the current user's layout. Ultimately we need helper code to obtain different layouts and use them for testing.
+    TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
+    
+    userDefaults = [[NSUserDefaults alloc] initWithSuiteName:NSStringFromClass([self class])];
+    eventTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout userDefaults:userDefaults];
+
+}
+
+- (void)tearDown {
+    [super tearDown];
+    [userDefaults removeObjectForKey:@"default_displayModifiedCharacters"];
+}
+
 #pragma mark - Numbers
 
 - (void)test_KCKeystroke_convertsCtrlNumberToNumber {
     // ctrl-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:262401 characters:@"7" charactersIgnoringModifiers:@"7"];
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:262401 characters:@"7" charactersIgnoringModifiers:@"7"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃7");
 }
 
 - (void)test_KCKeystroke_convertsShiftNumberToShiftNumber {
     // shift-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:131330 characters:@"&" charactersIgnoringModifiers:@"&"];
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:131330 characters:@"&" charactersIgnoringModifiers:@"&"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⇧7");
 }
 
 - (void)test_KCKeystroke_convertsCtrlShiftNumberToNumber {
     // ctrl-shift-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:393475 characters:@"7" charactersIgnoringModifiers:@"&"];
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:393475 characters:@"7" charactersIgnoringModifiers:@"&"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃⇧7");
 }
 
 - (void)test_KCKeystroke_convertsCmdNumberToNumber {
     // cmd-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:1048840 characters:@"7" charactersIgnoringModifiers:@"7"];
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:1048840 characters:@"7" charactersIgnoringModifiers:@"7"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌘7");
 }
 
 - (void)test_KCKeystroke_convertsCmdShiftNumberToNumber {
     // cmd-shift-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:1179914 characters:@"7" charactersIgnoringModifiers:@"&"];
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:1179914 characters:@"7" charactersIgnoringModifiers:@"&"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⇧⌘7");
 }
 
 - (void)test_KCKeystroke_convertsCmdOptNumberToNumber {
     // cmd-opt-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode: 26 modifiers: 1573160 characters:@"¶" charactersIgnoringModifiers:@"7"];
+    keystroke = [self keystrokeWithKeyCode: 26 modifiers: 1573160 characters:@"¶" charactersIgnoringModifiers:@"7"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⌘7");
 }
 
 - (void)test_KCKeystroke_convertsShiftOptionNumberToNumber {
     // shift-opt-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧7");
 }
 
 - (void)test_KCKeystroke_convertsCmdOptShiftNumberToShiftedNumber {
     // cmd-opt-shift-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode: 26 modifiers: 1704234 characters:@"‡" charactersIgnoringModifiers:@"&"];
+    keystroke = [self keystrokeWithKeyCode: 26 modifiers: 1704234 characters:@"‡" charactersIgnoringModifiers:@"&"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥⇧⌘7");
 }
 
@@ -111,85 +131,79 @@
 
 - (void)test_KCKeystroke_convertsCtrlLetterToUppercaseLetter {
     // ctrl-A
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:0 modifiers:262401 characters:@"\\^A" charactersIgnoringModifiers:@"a"];
+    keystroke = [self keystrokeWithKeyCode:0 modifiers:262401 characters:@"\\^A" charactersIgnoringModifiers:@"a"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃A");
 }
 
 - (void)test_KCKeystroke_convertsCtrlShiftLetterToLetter {
     // ctrl-shift-A
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:0 modifiers:393475 characters:@"\\^A" charactersIgnoringModifiers:@"a"];
+    keystroke = [self keystrokeWithKeyCode:0 modifiers:393475 characters:@"\\^A" charactersIgnoringModifiers:@"a"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃⇧A");
 }
 
 - (void)test_KCKeystroke_convertsCtrlShiftCmdLetterToLetter {
     // ctrl-shift-cmd-A
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:0 modifiers:1442059 characters:@"\\^A" charactersIgnoringModifiers:@"A"];
+    keystroke = [self keystrokeWithKeyCode:0 modifiers:1442059 characters:@"\\^A" charactersIgnoringModifiers:@"A"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃⇧⌘A");
 }
 
 - (void)test_KCKeystroke_convertsCtrlOptLetterToUppercaseLetter {
     // crtl-opt-A
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:0 modifiers:786721 characters:@"\\^A" charactersIgnoringModifiers:@"a"];
+    keystroke = [self keystrokeWithKeyCode:0 modifiers:786721 characters:@"\\^A" charactersIgnoringModifiers:@"a"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃⌥A");
 }
 
 - (void)test_KCKeystroke_convertsCtrlOptShiftLetterToLetter {
     // ctrl-opt-shift-A
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:0 modifiers:917795 characters:@"\\^A" charactersIgnoringModifiers:@"A"];
+    keystroke = [self keystrokeWithKeyCode:0 modifiers:917795 characters:@"\\^A" charactersIgnoringModifiers:@"A"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌃⌥⇧A");
 }
 
-- (void)test_KCKeystroke_convertsOptLetterToShiftedLetter {
+- (void)test_KCKeystroke_displaysOptLetterByDefault {
     // opt-U
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:32 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"u"];
+    keystroke = [self keystrokeWithKeyCode:32 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"u"];
     XCTAssertEqualObjects(keystroke.convertToString, @"⌥u");
 }
 
 #pragma mark - Function Row
 
 - (void)test_KCKeystroke_convertsFnF1ToBrightnessDecrease {
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:145 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    keystroke = [self keystrokeWithKeyCode:145 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"🔅");
 }
 
 - (void)test_KCKeystroke_convertsFnF2ToBrightnessIncrease {
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:144 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    keystroke = [self keystrokeWithKeyCode:144 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"🔆");
 }
 
 - (void)test_KCKeystroke_convertsFnF3ToMissionControl {
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:160 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    keystroke = [self keystrokeWithKeyCode:160 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"🖥");
 }
 
 - (void)test_KCKeystroke_convertsFnF4ToLauncher {
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:131 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
+    keystroke = [self keystrokeWithKeyCode:131 modifiers:8388864 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"🚀");
 }
 
 #pragma mark - JIS layout
 
 - (void)test_KCKeystroke_convertsEisūKey {
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:102 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
+    keystroke = [self keystrokeWithKeyCode:102 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"英数");
 }
 
 - (void)test_KCKeystroke_convertsKanaKey {
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:104 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
+    keystroke = [self keystrokeWithKeyCode:104 modifiers:0 characters:@"" charactersIgnoringModifiers:@""];
     XCTAssertEqualObjects(keystroke.convertToString, @"かな");
 }
 
 #pragma mark - Displaying keycaps vs. modified characters
 
 - (void)test_displayingKeycapsVsModifiedKeys {
-    // Use the current user's layout. Ultimately we need helper code to obtain different layouts and use them for testing.
-    TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
-    
-    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:NSStringFromClass([self class])];
-    KCEventTransformer *eventTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout userDefaults:userDefaults];
-
     // shift-opt-7
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:655650 characters:@"»" charactersIgnoringModifiers:@"7"];
 
     // shift-opt-7 transforms to "»" when default_displayModifiedCharacters is set to YES
     [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
@@ -198,8 +212,6 @@
     // shift-opt-7 transforms to "⌥⇧7" when default_displayModifiedCharacters is set to NO
     [userDefaults setBool:NO forKey:@"default_displayModifiedCharacters"];
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧7");
-    
-    [userDefaults removeObjectForKey:@"default_displayModifiedCharacters"];
 }
 
 - (void)test_displayingCorrectlyWhenInputSourceKeyboardLayoutChanges {
@@ -210,7 +222,7 @@
 
 - (void)test_tabKey {
     // tab characters and charactersIgnoringModifiers fields are UTF8 "\t"
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:48 modifiers:256 characters:@"\t" charactersIgnoringModifiers:@"\t"];
+    keystroke = [self keystrokeWithKeyCode:48 modifiers:256 characters:@"\t" charactersIgnoringModifiers:@"\t"];
     XCTAssertEqualObjects([keystroke convertToString], @"⇥");
 }
 
@@ -218,26 +230,52 @@
     // shift-tab characters and charactersIgnoringModifiers fields are UTF8 "\U00000019"
     // it is not possble use Objective-C @ literals with \U000000xx syntax for many 2 byte ASCII characters
     // https://stackoverflow.com/a/27697100
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:48 modifiers:131330 characters:[NSString stringWithFormat:@"%C", 0x00000019] charactersIgnoringModifiers:[NSString stringWithFormat:@"%C", 0x00000019]];
+    keystroke = [self keystrokeWithKeyCode:48 modifiers:131330 characters:[NSString stringWithFormat:@"%C", 0x00000019] charactersIgnoringModifiers:[NSString stringWithFormat:@"%C", 0x00000019]];
     XCTAssertEqualObjects([keystroke convertToString], @"⇤");
 }
+
+#pragma mark - US English - Special Cases with Modifiers
 
 - (void)test_optionShiftUp {
     // option-shift-up (and by extension, all direction keys & special cases) should show their modifiers with displayModifiedCharacters mode both on and off
     // opt-shift-up
-    KCKeystroke *keystroke = [self keystrokeWithKeyCode:126 modifiers:11141410 characters:[NSString stringWithFormat:@"%lu", 0x00006000002f5c00] charactersIgnoringModifiers:[NSString stringWithFormat:@"%lu", 0x00006000002f5c00]];
+    keystroke = [self keystrokeWithKeyCode:126 modifiers:11141410 characters:[NSString stringWithFormat:@"%lu", 0x00006000002f5c00] charactersIgnoringModifiers:[NSString stringWithFormat:@"%lu", 0x00006000002f5c00]];
     
-    TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
-        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:NSStringFromClass([self class])];
-    KCEventTransformer *eventTransformer = [[KCEventTransformer alloc] initWithKeyboardLayout:currentLayout userDefaults:userDefaults];
-
     [userDefaults setBool:NO forKey:@"default_displayModifiedCharacters"];
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧⇡");
     
     [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧⇡");
+}
+
+- (void)test_optionUSpecialCase {
+    // opt-u should show opt-u with displayModifiedCharacters on
+    keystroke = [self keystrokeWithKeyCode:32 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"u"];
+
+    [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥u");
     
     [userDefaults removeObjectForKey:@"default_displayModifiedCharacters"];
+}
+
+- (void)test_optionESpecialCase {
+    keystroke = [self keystrokeWithKeyCode:14 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"e"];
+    
+    [userDefaults setBool:NO forKey:@"default_displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥e");
+    
+    [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥e");
+}
+
+- (void)test_optionBacktickSpecialCase {
+    keystroke = [self keystrokeWithKeyCode:50 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"`"];
+    
+    [userDefaults setBool:NO forKey:@"default_displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥`");
+
+    [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥`");
 }
 
 @end

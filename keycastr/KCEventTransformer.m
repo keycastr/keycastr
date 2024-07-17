@@ -175,7 +175,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     NSEventModifierFlags _modifiers = event.modifierFlags;
     BOOL hasOptionModifier = _modifiers & NSEventModifierFlagOption;
     BOOL hasShiftModifier = _modifiers & NSEventModifierFlagShift;
-
+    BOOL isCommand = _modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand);
+    
     BOOL needsShiftGlyph = NO;
     
     NSMutableString *mutableResponse = [NSMutableString string];
@@ -185,14 +186,14 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kControlKeyString];
 	}
 
-	if (hasOptionModifier && (!_displayModifiedCharacters || ([event isKindOfClass:[KCKeystroke class]] && [(KCKeystroke *)event isCommand])))
+	if (hasOptionModifier && (isCommand || !_displayModifiedCharacters))
 	{
 		[mutableResponse appendString:kOptionKeyString];
 	}
 
     if (hasShiftModifier)
 	{
-		if (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand))
+		if (isCommand)
 			[mutableResponse appendString:kShiftKeyString];
 		else if (hasOptionModifier && !_displayModifiedCharacters)
             [mutableResponse appendString:kShiftKeyString];
@@ -210,7 +211,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 		[mutableResponse appendString:kCommandKeyString];
 	}
 
-    if ([event isKindOfClass:KCMouseEvent.class]) {
+    if ([event isKindOfClass:[KCMouseEvent class]]) {
         if (needsShiftGlyph) {
             [mutableResponse appendString:kShiftKeyString];
             needsShiftGlyph = NO;
@@ -236,23 +237,32 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         needsShiftGlyph = NO;
     }
     
-	NSString *specialKeyString = [[self _specialKeys] objectForKey:@(_keyCode)];
-	if (specialKeyString)
-	{
-        if (_displayModifiedCharacters && hasOptionModifier && !keystroke.isCommand) {
-            [mutableResponse appendString:kOptionKeyString];
+    void(^appendModifiers)(BOOL) = ^(BOOL append) {
+        if (append && !keystroke.isCommand) {
+            if (hasOptionModifier) {
+                [mutableResponse appendString:kOptionKeyString];
+            }
+            if (hasShiftModifier) {
+                [mutableResponse appendString:kShiftKeyString];
+            }
         }
-        
-        if (_displayModifiedCharacters && hasShiftModifier && !keystroke.isCommand) {
-            [mutableResponse appendString:kShiftKeyString];
-        }
-
+    };
+    
+    NSString *specialKeyString = [[self _specialKeys] objectForKey:@(_keyCode)];
+    if (specialKeyString)
+    {
+        appendModifiers(_displayModifiedCharacters);
 		[mutableResponse appendString:specialKeyString];
         return mutableResponse;
 	}
 
     if (_displayModifiedCharacters && !keystroke.isCommand) {
-        [mutableResponse appendString:keystroke.characters];
+        if (keystroke.characters.length > 0) {
+            [mutableResponse appendString:keystroke.characters];
+        } else {
+            appendModifiers(_displayModifiedCharacters);
+            [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
+        }
     } else {
         [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
     }
