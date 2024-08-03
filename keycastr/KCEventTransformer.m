@@ -85,8 +85,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         _keyboardLayout = keyboardLayout;
         _userDefaults = userDefaults;
 
-        CFDataRef uchr = TISGetInputSourceProperty(_keyboardLayout , kTISPropertyUnicodeKeyLayoutData);
-        _uchrData = ( const UCKeyboardLayout* )CFDataGetBytePtr(uchr);
+        CFDataRef uchr = TISGetInputSourceProperty(_keyboardLayout, kTISPropertyUnicodeKeyLayoutData);
+        _uchrData = (UCKeyboardLayout *)CFDataGetBytePtr(uchr);
         
         _displayModifiedCharacters = [_userDefaults boolForKey:@"default_displayModifiedCharacters"];
         [_userDefaults addObserver:self
@@ -221,12 +221,11 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     }
     
     KCKeystroke *keystroke = (KCKeystroke *)event;
-    uint16_t _keyCode = keystroke.keyCode;
-    
+
     // check for bare shift-tab as left tab special case
     if (hasShiftModifier && !keystroke.isCommand && !hasOptionModifier)
     {
-        if ([@(_keyCode) isEqualToNumber:@48]) {
+        if (keystroke.keyCode == 48) {
             [mutableResponse appendString:kLeftTabString];
             return mutableResponse;
         }
@@ -248,7 +247,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         }
     };
     
-    NSString *specialKeyString = [[self _specialKeys] objectForKey:@(_keyCode)];
+    NSString *specialKeyString = [[self _specialKeys] objectForKey:@(keystroke.keyCode)];
     if (specialKeyString)
     {
         appendModifiers(_displayModifiedCharacters);
@@ -256,7 +255,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         return mutableResponse;
 	}
 
-    if (_displayModifiedCharacters && !keystroke.isCommand) {
+    if (_displayModifiedCharacters && !isCommand) {
         if (keystroke.characters.length > 0) {
             [mutableResponse appendString:keystroke.characters];
         } else {
@@ -267,24 +266,37 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
     }
     
-    if (keystroke.isCommand || hasShiftModifier)
-	{
-        mutableResponse = [[mutableResponse uppercaseString] mutableCopy];
+    // Commands and shifted keystrokes should be uppercased
+    if (isCommand || hasShiftModifier)
+    {
+        // Unless it is a special case
+        if (![self shouldReturnOriginalCharactersForKeyCode:keystroke.keyCode
+                                                 characters:keystroke.characters]) {
+            mutableResponse = [[mutableResponse uppercaseString] mutableCopy];
+        }
 	}
 	
 	return mutableResponse;
 }
 
 - (NSString *)translatedCharacterForKeystroke:(KCKeystroke *)keystroke {
+    if ([self shouldReturnOriginalCharactersForKeyCode:keystroke.keyCode 
+                                            characters:keystroke.characters] && keystroke.isCommand) {
+        return keystroke.characters;
+    }
     return [self translateKeyCode:keystroke.keyCode];
 }
 
+- (BOOL)shouldReturnOriginalCharactersForKeyCode:(uint16_t)keyCode characters:(NSString *)characters {
+    return (keyCode == 27 && [characters isEqual:@"ß"]);
+}
+
 - (NSString *)translateKeyCode:(uint16_t)keyCode {
-    UniCharCount maxStringLength = 4, actualStringLength;
-    UniChar unicodeString[4];
     static UInt32 deadKeyState = 0;
-    UCKeyTranslate(_uchrData, keyCode, kUCKeyActionDisplay, 0, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
-    return [NSString stringWithCharacters:unicodeString length:1];
+    UniCharCount maxLength = 4, length;
+    UniChar unicodeString[4];
+    UCKeyTranslate(_uchrData, keyCode, kUCKeyActionDisplay, 0, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &deadKeyState, maxLength, &length, unicodeString);
+    return [NSString stringWithCharacters:unicodeString length:length];
 }
 
 @end

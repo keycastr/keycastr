@@ -278,4 +278,13 @@
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥`");
 }
 
+#pragma mark - German - Special Case
+
+- (void)test_commandßDisplaysCommandß {
+    // command-ß on a German keyboard layout - Built-in captalization is SS and there is a special glyph for a capitalized sharp S.
+    // In order to avoid confusion, fall back to displaying the keycap.
+    keystroke = [self keystrokeWithKeyCode:27 modifiers:1048840 characters:@"ß" charactersIgnoringModifiers:@"ß"];
+    XCTAssertEqualObjects([keystroke convertToString], @"⌘ß");
+}
+
 @end
