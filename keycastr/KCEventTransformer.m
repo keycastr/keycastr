@@ -313,9 +313,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     // Commands and shifted keystrokes should be uppercased
     if (isCommand || hasShiftModifier)
     {
-        // Unless it is a special case
-        if (![self shouldReturnOriginalCharactersForKeyCode:keystroke.keyCode
-                                                 characters:keystroke.characters]) {
+        // Unless it is a special case - do not shift keycode 27
+        if (keystroke.keyCode != 27) {
             mutableResponse = [[mutableResponse uppercaseString] mutableCopy];
         }
 	}
