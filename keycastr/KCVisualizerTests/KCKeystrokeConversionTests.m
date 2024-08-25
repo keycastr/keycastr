@@ -26,8 +26,8 @@
 //  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import <XCTest/XCTest.h>
-#import "KCKeystroke.h"
-#import "KCEventTransformer.h"
+#import <KCVisualizer/KCKeystroke.h>
+#import <KCVisualizer/KCEventTransformer.h>
 
 /**
  NOTE: This is not a comprehensive set of tests, but serves as a sanity check for handling commands and whether to display or apply modifiers.

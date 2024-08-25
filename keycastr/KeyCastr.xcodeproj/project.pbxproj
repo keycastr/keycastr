@@ -21,10 +21,10 @@
 		3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */; };
 		3D1646690F43D76D00CA65AD /* KCDefaultVisualizer.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D16465A0F43D6E700CA65AD /* KCDefaultVisualizer.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3D1646C20F43DC4700CA65AD /* KCVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F54DE0F31448A001C7272 /* KCVisualizer.m */; };
-		3D1646C30F43DC4700CA65AD /* KCVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D3F54DD0F31448A001C7272 /* KCVisualizer.h */; };
+		3D1646C30F43DC4700CA65AD /* KCVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D3F54DD0F31448A001C7272 /* KCVisualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D1646C40F43DC4C00CA65AD /* KCKeystroke.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC314700F33EEF400B67D65 /* KCKeystroke.m */; };
-		3D1646C50F43DC4C00CA65AD /* KCKeystroke.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC3146F0F33EEF400B67D65 /* KCKeystroke.h */; };
-		3D1646C60F43DC5000CA65AD /* KCEventTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D1645DD0F43CD0600CA65AD /* KCEventTransformer.h */; };
+		3D1646C50F43DC4C00CA65AD /* KCKeystroke.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC3146F0F33EEF400B67D65 /* KCKeystroke.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3D1646C60F43DC5000CA65AD /* KCEventTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D1645DD0F43CD0600CA65AD /* KCEventTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D1646C70F43DC5100CA65AD /* KCEventTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1645DE0F43CD0600CA65AD /* KCEventTransformer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3D1646CB0F43DC6D00CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1646D10F43DCA700CA65AD /* KCVisualizer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
