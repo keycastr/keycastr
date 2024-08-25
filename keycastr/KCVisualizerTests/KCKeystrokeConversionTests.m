@@ -30,7 +30,7 @@
 #import "KCEventTransformer.h"
 
 /**
- NOTE: This is not a comprehensive set of tests, but serves as a sanity check for handling letters vs. numbers when certain modifiers are applied.
+ NOTE: This is not a comprehensive set of tests, but serves as a sanity check for handling commands and whether to display or apply modifiers.
 
  These tests were written assuming a US-English layout. They may break when run in other locales unless the keyboard layout is overridden.
 
@@ -214,10 +214,6 @@
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥⇧7");
 }
 
-- (void)test_displayingCorrectlyWhenInputSourceKeyboardLayoutChanges {
-    XCTSkip(@"Pending...");
-}
-
 #pragma mark - Special Cases
 
 - (void)test_tabKey {
@@ -254,8 +250,6 @@
 
     [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥u");
-    
-    [userDefaults removeObjectForKey:@"default_displayModifiedCharacters"];
 }
 
 - (void)test_optionESpecialCase {
