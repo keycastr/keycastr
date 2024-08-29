@@ -217,9 +217,9 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 - (id)transformedValue:(KCKeycastrEvent *)event
 {
     NSEventModifierFlags _modifiers = event.modifierFlags;
-    BOOL hasOptionModifier = _modifiers & NSEventModifierFlagOption;
-    BOOL hasShiftModifier = _modifiers & NSEventModifierFlagShift;
-    BOOL isCommand = _modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand);
+    BOOL hasOptionModifier = (_modifiers & NSEventModifierFlagOption) != 0;
+    BOOL hasShiftModifier = (_modifiers & NSEventModifierFlagShift) != 0;
+    BOOL isCommand = (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
     
     BOOL needsShiftGlyph = NO;
     
