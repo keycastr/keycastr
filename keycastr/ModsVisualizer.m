@@ -215,11 +215,31 @@
 
 - (void)noteFlagsChanged:(uint32_t)flags {
     [_visualizerView noteFlagsChanged:flags];
-    NSRect r = _visualizerWindow.frame;
-    CGFloat right = r.origin.x + r.size.width;
-    r.size.width = _visualizerView.frame.size.width;
-    r.origin.x = right - r.size.width;
-    [_visualizerWindow setFrame:r display:NO];
+    NSRect windowFrame = _visualizerWindow.frame;
+    NSScreen *screen = _visualizerWindow.screen;
+    if (!screen) {
+        for (NSScreen *s in NSScreen.screens) {
+            if (CGRectContainsPoint(s.frame, windowFrame.origin)) {
+                screen = s;
+                break;
+            }
+        }
+
+        if (!screen) {
+            screen = NSScreen.screens.firstObject;
+        }
+    }
+    
+    NSRect screenFrame = screen.frame;
+    CGFloat screenX = windowFrame.origin.x - screenFrame.origin.x;
+    if (screenX > screenFrame.size.width / 2) {
+        CGFloat right = windowFrame.origin.x + windowFrame.size.width;
+        windowFrame.size.width = _visualizerView.frame.size.width;
+        windowFrame.origin.x = right - windowFrame.size.width;
+    } else {
+        windowFrame.size.width = _visualizerView.frame.size.width;
+    }
+    [_visualizerWindow setFrame:windowFrame display:NO];
     [[NSUserDefaults standardUserDefaults] setValue:NSStringFromRect(_visualizerWindow.frame) forKey:@"mods.savedFrame"];
 }
 
