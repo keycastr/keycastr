@@ -168,7 +168,14 @@
     if (!(self = [super init]))
         return nil;
 
+    // autosave frame was not working, despite best efforts. Easy workaround to use defaults instead.
+    // (and autosave frame _uses_ defaults anyway so same thing in the end?)
+    NSString *frameValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"mods.savedFrame"];
     NSRect windowFrame = { MODS_WIDTH, 100, 0, 100 };
+    if (frameValue) {
+        windowFrame = NSRectFromString(frameValue);
+    }
+
     _visualizerWindow = [[NSWindow alloc]
          initWithContentRect:windowFrame
         styleMask:NSWindowStyleMaskBorderless
@@ -177,13 +184,13 @@
     [_visualizerWindow setLevel:NSScreenSaverWindowLevel];
     [_visualizerWindow setBackgroundColor:[NSColor clearColor]];
     [_visualizerWindow setMovableByWindowBackground:YES];
-    [_visualizerWindow setFrameAutosaveName:@"mods visualizerFrame"];
-    [_visualizerWindow setFrameUsingName:@"mods visualizerFrame" force:YES];
+    [_visualizerWindow setFrame:windowFrame display:NO];
     [_visualizerWindow setOpaque:NO];
+    [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 
     _visualizerView = [[ModsVisualizerView alloc] init];
-    [_visualizerWindow setContentView:_visualizerView];
     [_visualizerView noteFlagsChanged:0];
+    [_visualizerWindow setContentView:_visualizerView];
 
     return self;
 }
@@ -213,6 +220,7 @@
     r.size.width = _visualizerView.frame.size.width;
     r.origin.x = right - r.size.width;
     [_visualizerWindow setFrame:r display:NO];
+    [[NSUserDefaults standardUserDefaults] setValue:NSStringFromRect(_visualizerWindow.frame) forKey:@"mods.savedFrame"];
 }
 
 - (void)noteKeyEvent:(KCKeycastrEvent *)event {}
