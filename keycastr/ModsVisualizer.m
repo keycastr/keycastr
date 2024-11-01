@@ -95,7 +95,7 @@
     NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
     [ps setAlignment:NSTextAlignmentCenter];
 
-    NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
+    NSShadow* shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[NSColor blackColor]];
     [shadow setShadowBlurRadius:2];
     [shadow setShadowOffset:NSMakeSize(2,-2)];
@@ -104,7 +104,7 @@
         NSFontAttributeName:            [NSFont boldSystemFontOfSize:80],
         NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:1 alpha:0.8],
         NSShadowAttributeName:          shadow,
-        NSParagraphStyleAttributeName:  [ps autorelease]
+        NSParagraphStyleAttributeName:  ps
     } mutableCopy];
 
 	if (_flags & NSEventModifierFlagCommand) {
@@ -193,12 +193,6 @@
     [_visualizerWindow setContentView:_visualizerView];
 
     return self;
-}
-
-- (void)dealloc  {
-    [_visualizerWindow release];
-    [_visualizerView release];
-    [super dealloc];
 }
 
 - (void)showVisualizer:(id)sender {

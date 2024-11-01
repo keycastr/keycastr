@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DB8252B2226E86500E123AA /* ModsVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB825272226E86500E123AA /* ModsVisualizer.h */; };
 		1DB8252C2226E86500E123AA /* Mods.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Mods.nib */; };
 		1DB8252D2226E86500E123AA /* Mods-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825292226E86500E123AA /* Mods-Info.plist */; };
-		1DB8252E2226E86500E123AA /* ModsVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8252A2226E86500E123AA /* ModsVisualizer.m */; };
 		1DB8253E2226E8D100E123AA /* ModsVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8252A2226E86500E123AA /* ModsVisualizer.m */; };
 		1DB8253F2226E8DA00E123AA /* Mods.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Mods.nib */; };
 		1DB825402226EC2100E123AA /* Mods.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DB8253C2226E8A000E123AA /* Mods.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -499,6 +497,7 @@
 		1DB825262226E85800E123AA /* Mods */ = {
 			isa = PBXGroup;
 			children = (
+				1DB825292226E86500E123AA /* Mods-Info.plist */,
 				1DB825282226E86500E123AA /* Mods.nib */,
 				1DB825272226E86500E123AA /* ModsVisualizer.h */,
 				1DB8252A2226E86500E123AA /* ModsVisualizer.m */,
@@ -517,7 +516,6 @@
 				AF6DD3FB2586E00500EDC9D4 /* Externals */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				1DB825292226E86500E123AA /* Mods-Info.plist */,
 			);
 			name = KeyCastr;
 			sourceTree = "<group>";
@@ -582,10 +580,10 @@
 		3D1646530F43D6B800CA65AD /* Visualizers */ = {
 			isa = PBXGroup;
 			children = (
-				1DB825262226E85800E123AA /* Mods */,
-				3D1648A30F451CDA00CA65AD /* Svelte */,
-				324AD7A5D37DE702839F52C6 /* Mouse */,
 				324ADFFC6CB5410AEFDEF479 /* Default */,
+				1DB825262226E85800E123AA /* Mods */,
+				324AD7A5D37DE702839F52C6 /* Mouse */,
+				3D1648A30F451CDA00CA65AD /* Svelte */,
 			);
 			name = Visualizers;
 			sourceTree = "<group>";
@@ -707,7 +705,6 @@
 				324ADBC2EAD3FC5FD3C369FE /* KCMouseEventVisualizer.h in Headers */,
 				324ADBB15522719676E80D5F /* KCMouseEvent.h in Headers */,
 				324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */,
-				1DB8252B2226E86500E123AA /* ModsVisualizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,7 +722,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1DB825302226E8A000E123AA /* PBXTargetDependency */,
 			);
 			name = Mods;
 			productName = Svelte;
@@ -1122,7 +1118,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB8252E2226E86500E123AA /* ModsVisualizer.m in Sources */,
 				3D1646C20F43DC4700CA65AD /* KCVisualizer.m in Sources */,
 				AF5457292C0CDB2E00064C82 /* KCColorValueTransformer.m in Sources */,
 				AF7B1CF32C22376100C8C145 /* NSUserDefaults+Utility.m in Sources */,
@@ -1248,6 +1243,7 @@
 		1DB825392226E8A000E123AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1275,6 +1271,7 @@
 		1DB8253A2226E8A000E123AA /* Code Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1304,6 +1301,7 @@
 		1DB8253B2226E8A000E123AA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
