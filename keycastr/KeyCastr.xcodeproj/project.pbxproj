@@ -37,7 +37,7 @@
 		3D3F52A70F30BF1E001C7272 /* KeyCastr.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F52A60F30BF1E001C7272 /* KeyCastr.icns */; };
 		3D3F52BA0F30C68B001C7272 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3F52B90F30C68B001C7272 /* Quartz.framework */; };
 		3D3F52EB0F30CB13001C7272 /* KCPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */; };
-		3D3F540C0F30E8E7001C7272 /* KCEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F540B0F30E8E7001C7272 /* KCEventTap.m */; };
+		3D3F540C0F30E8E7001C7272 /* KCEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F540B0F30E8E7001C7272 /* KCEventTap.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54870F30F37E001C7272 /* GeneralIcon.tif */; };
 		3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54880F30F37E001C7272 /* DisplayIcon.tif */; };
 		3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */; };
@@ -796,7 +796,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					8D1107260486CEB800E47090 = {
-						DevelopmentTeam = 68TUCLNAPS;
 						ProvisioningStyle = Automatic;
 					};
 					AFC172182377CFF500292155 = {
@@ -1521,7 +1520,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "KeyCastr Developer ID";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "KeyCastr Developer ID";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "KeyCastr Developer ID Distribution";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2014-2023 Andrew Kitchen
+//	Copyright (c) 2014-2024 Andrew Kitchen
 //
 //	All rights reserved.
 //
@@ -26,6 +26,9 @@
 //	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#if !__has_feature(objc_arc)
+#error "ARC is required for this file -- enable with -fobjc-arc"
+#endif
 
 #import "KCEventTap.h"
 #import "KCKeystroke.h"
@@ -33,9 +36,10 @@
 #import "KCMouseEvent.h"
 
 @interface KCEventTap () {
-    CFMachPortRef eventTap;
-    CFRunLoopRef eventTapRunLoop;
-    CFRunLoopSourceRef eventTapEventSource;
+    CFMachPortRef keyEventTap;
+    CFMachPortRef mouseAndFlagsEventTap;
+    CFRunLoopSourceRef keyEventTapSource;
+    CFRunLoopSourceRef mouseAndFlagsEventTapSource;
 }
 
 - (void)_noteMouseEvent:(CGEventRef)eventRef;
@@ -44,22 +48,33 @@
 
 @end
 
-CGEventRef nullEventTapCallback(
+CGEventRef keyEventTapCallback(
    CGEventTapProxy proxy,
    CGEventType type,
    CGEventRef event,
-   void *vp)
+   void *context)
 {
-    return NULL;
+    KCEventTap *eventTap = (__bridge KCEventTap *)context;
+    switch (type)
+    {
+        case kCGEventKeyDown:
+            [eventTap _noteKeyEvent:event];
+            break;
+        case kCGEventKeyUp:
+            break;
+        default:
+            break;
+    }
+    return event;
 }
 
-CGEventRef eventTapCallback(
+CGEventRef mouseAndFlagsEventTapCallback(
    CGEventTapProxy proxy,
    CGEventType type,
    CGEventRef event,
-   void *vp)
+   void *context)
 {
-    KCEventTap* keyTap = (KCEventTap*)vp;
+    KCEventTap *eventTap = (__bridge KCEventTap *)context;
     switch (type)
     {
         case kCGEventLeftMouseDown:
@@ -71,23 +86,18 @@ CGEventRef eventTapCallback(
         case kCGEventOtherMouseDown:
         case kCGEventOtherMouseUp:
         case kCGEventOtherMouseDragged:
-            [keyTap _noteMouseEvent:event];
-            break;
-        case kCGEventKeyDown:
-            [keyTap _noteKeyEvent:event];
+            [eventTap _noteMouseEvent:event];
             break;
         case kCGEventFlagsChanged:
-            [keyTap _noteFlagsChanged:event];
+            [eventTap _noteFlagsChanged:event];
             break;
         default:
             break;
     }
-    return NULL;
+    return event;
 }
 
 @implementation KCEventTap
-
-@synthesize delegate = _delegate;
 
 -(id) init
 {
@@ -101,8 +111,6 @@ CGEventRef eventTapCallback(
     if (_tapInstalled) {
         [self removeTap];
     }
-
-    [super dealloc];
 }
 
 -(NSError*) constructErrorWithDescription:(NSString*)description {
@@ -121,69 +129,52 @@ CGEventRef eventTapCallback(
     // We have to try to tap the keydown event independently because CGEventTapCreate will succeed if it can
     // install the event tap for the flags changed event, which apparently doesn't require universal access
     // to be enabled.  Thus, the call would succeed but KeyCastr would be, um, useless.
-    CFMachPortRef tapKeyDown = CGEventTapCreate(
-                                         kCGSessionEventTap,
-                                         kCGHeadInsertEventTap,
-                                         kCGEventTapOptionListenOnly,
-                                         CGEventMaskBit(kCGEventKeyDown),
-                                         nullEventTapCallback,
-                                         self
-                                         );
-    
-    if (tapKeyDown == NULL) {
+    keyEventTap = CGEventTapCreate(kCGSessionEventTap,
+                                   kCGHeadInsertEventTap,
+                                   kCGEventTapOptionListenOnly,
+                                   CGEventMaskBit(kCGEventKeyDown)
+                                   | CGEventMaskBit(kCGEventKeyUp),
+                                   keyEventTapCallback,
+                                   (__bridge void *)self
+                                   );
+
+    if (keyEventTap == NULL) {
         if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not create keyDown event tap!"];
-        }
-        return NO;
-    }
-    CFRelease( tapKeyDown );
-    
-    eventTap = CGEventTapCreate(
-                           kCGSessionEventTap,
-                           kCGHeadInsertEventTap,
-                           kCGEventTapOptionListenOnly,
-                           CGEventMaskBit(kCGEventLeftMouseDown)
-                                   | CGEventMaskBit(kCGEventLeftMouseUp)
-                                   | CGEventMaskBit(kCGEventRightMouseDown)
-                                   | CGEventMaskBit(kCGEventRightMouseUp)
-                                   | CGEventMaskBit(kCGEventLeftMouseDragged)
-                                   | CGEventMaskBit(kCGEventRightMouseDragged)
-                                   | CGEventMaskBit(kCGEventKeyDown)
-                                   | CGEventMaskBit(kCGEventFlagsChanged)
-                                   | CGEventMaskBit(kCGEventOtherMouseDown)
-                                   | CGEventMaskBit(kCGEventOtherMouseUp)
-                                   | CGEventMaskBit(kCGEventOtherMouseDragged),
-                           eventTapCallback,
-                           self
-                           );
-    
-    if (eventTap == NULL) {
-        if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not create keyDown|flagsChanged event tap!"];
+            *error = [self constructErrorWithDescription:@"Could not create key event tap! Permissions needed..."];
         }
         return NO;
     }
     
-    eventTapEventSource = CFMachPortCreateRunLoopSource(NULL, eventTap, 0);
-    if (eventTapEventSource == NULL) {
-        CFRelease(eventTap);
+    mouseAndFlagsEventTap = CGEventTapCreate(kCGSessionEventTap,
+                                                    kCGHeadInsertEventTap,
+                                                    kCGEventTapOptionListenOnly,
+                                                    CGEventMaskBit(kCGEventLeftMouseDown)
+                                                    | CGEventMaskBit(kCGEventLeftMouseUp)
+                                                    | CGEventMaskBit(kCGEventRightMouseDown)
+                                                    | CGEventMaskBit(kCGEventRightMouseUp)
+                                                    | CGEventMaskBit(kCGEventLeftMouseDragged)
+                                                    | CGEventMaskBit(kCGEventRightMouseDragged)
+                                                    | CGEventMaskBit(kCGEventFlagsChanged)
+                                                    | CGEventMaskBit(kCGEventOtherMouseDown)
+                                                    | CGEventMaskBit(kCGEventOtherMouseUp)
+                                                    | CGEventMaskBit(kCGEventOtherMouseDragged),
+                                                    mouseAndFlagsEventTapCallback,
+                                                    (__bridge void *)self
+                                                    );
+    
+    if (mouseAndFlagsEventTap == NULL) {
         if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not create run loop source!"];
+            *error = [self constructErrorWithDescription:@"Could not create mouse and modifiers event tap!"];
         }
         return NO;
     }
     
-    eventTapRunLoop = CFRunLoopGetCurrent();
-    if (eventTapRunLoop == NULL) {
-        CFRelease(eventTapEventSource);
-        CFRelease(eventTap);
-        if (error != NULL) {
-            *error = [self constructErrorWithDescription:@"Could not get current run loop!"];
-        }
-        return NO;
-    }
-    
-    CFRunLoopAddSource(eventTapRunLoop, eventTapEventSource, kCFRunLoopDefaultMode);
+    keyEventTapSource = CFMachPortCreateRunLoopSource(NULL, keyEventTap, 0);
+    mouseAndFlagsEventTapSource = CFMachPortCreateRunLoopSource(NULL, mouseAndFlagsEventTap, 0);
+
+    CFRunLoopRef runLoop = CFRunLoopGetCurrent();
+    CFRunLoopAddSource(runLoop, keyEventTapSource, kCFRunLoopDefaultMode);
+    CFRunLoopAddSource(runLoop, mouseAndFlagsEventTapSource, kCFRunLoopDefaultMode);
 
     _tapInstalled = YES;
     
@@ -194,10 +185,15 @@ CGEventRef eventTapCallback(
     if (!_tapInstalled) {
         return;
     }
-    
-    CFRunLoopRemoveSource(eventTapRunLoop, eventTapEventSource, kCFRunLoopDefaultMode);
-    CFRelease(eventTapEventSource);
-    CFRelease(eventTap);
+
+    CFRunLoopSourceInvalidate(keyEventTapSource);
+    CFRunLoopSourceInvalidate(mouseAndFlagsEventTapSource);
+
+    CFRelease(keyEventTapSource);
+    CFRelease(mouseAndFlagsEventTapSource);
+
+    CFRelease(keyEventTap);
+    CFRelease(mouseAndFlagsEventTap);
 
     _tapInstalled = NO;
 }
