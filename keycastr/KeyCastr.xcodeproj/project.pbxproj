@@ -1478,7 +1478,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.10.1;
+				MARKETING_VERSION = "0.10.2-pre";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1517,7 +1517,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.10.1;
+				MARKETING_VERSION = "0.10.2-pre";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "KeyCastr Developer ID";
