@@ -795,9 +795,6 @@
 					3D1648AB0F451D4500CA65AD = {
 						ProvisioningStyle = Automatic;
 					};
-					8D1107260486CEB800E47090 = {
-						ProvisioningStyle = Automatic;
-					};
 					AFC172182377CFF500292155 = {
 						CreatedOnToolsVersion = 11.2;
 						ProvisioningStyle = Automatic;
@@ -1452,7 +1449,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = KeyCastr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
@@ -1470,6 +1466,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KeyCastr;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1496,8 +1493,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 68TUCLNAPS;
+				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 68TUCLNAPS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1509,6 +1505,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = KeyCastr_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KeyCastr;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1519,7 +1516,7 @@
 				MARKETING_VERSION = "0.10.2-pre";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
-				PROVISIONING_PROFILE_SPECIFIER = "KeyCastr Developer ID";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "KeyCastr Developer ID Distribution";
 				WRAPPER_EXTENSION = app;
 			};
