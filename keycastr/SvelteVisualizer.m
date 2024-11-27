@@ -169,10 +169,15 @@
 @end
 
 
+@interface SvelteVisualizer ()
+
+@property (nonatomic, assign) BOOL displayAll;
+
+@end
+
 @implementation SvelteVisualizer {
 	NSWindow *_visualizerWindow;
 	SvelteVisualizerView *_visualizerView;
-	BOOL _displayAll;
 }
 
 -(NSString*) visualizerName
@@ -199,17 +204,18 @@
     [_visualizerWindow setOpaque:NO];
     [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
     
-    _visualizerView = [[[SvelteVisualizerView alloc] initWithFrame:r] autorelease];
+    _visualizerView = [[SvelteVisualizerView alloc] initWithFrame:r];
     [_visualizerWindow setContentView:_visualizerView];
     
     _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
     
     // TODO: migrate away from using NSNotificationCenter for this, as it is far too chatty
+    __weak typeof(self) weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification * _Nonnull notification) {
-                                                      _displayAll = [notification.object boolForKey:@"svelte.displayAll"];
+                                                      weakSelf.displayAll = [notification.object boolForKey:@"svelte.displayAll"];
                                                   }];
     
     return self;
