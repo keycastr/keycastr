@@ -57,14 +57,6 @@
     [super dealloc];
 }
 
-- (BOOL)isCommand {
-    return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
-}
-
-- (BOOL)isModified {
-    return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagOption | NSEventModifierFlagShift)) != 0;
-}
-
 - (NSString *)description {
     return [NSString stringWithFormat:@"<KCKeystroke: keyCode: %hu, modifiers: %lu, characters: %@, charactersIgnoringModifiers: %@>",
             self.keyCode, self.modifierFlags, _characters, _charactersIgnoringModifiers];

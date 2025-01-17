@@ -219,8 +219,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     NSEventModifierFlags _modifiers = event.modifierFlags;
     BOOL hasOptionModifier = (_modifiers & NSEventModifierFlagOption) != 0;
     BOOL hasShiftModifier = (_modifiers & NSEventModifierFlagShift) != 0;
-    BOOL isCommand = (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
-    
+    BOOL isCommand = event.isCommand;
+
     BOOL needsShiftGlyph = NO;
     
     NSMutableString *mutableResponse = [NSMutableString string];
@@ -237,10 +237,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
     if (hasShiftModifier)
 	{
-		if (isCommand)
+		if (isCommand || (hasOptionModifier && !_displayModifiedCharacters))
 			[mutableResponse appendString:kShiftKeyString];
-		else if (hasOptionModifier && !_displayModifiedCharacters)
-            [mutableResponse appendString:kShiftKeyString];
         else
 			needsShiftGlyph = !_displayModifiedCharacters;
 	}
@@ -267,7 +265,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     KCKeystroke *keystroke = (KCKeystroke *)event;
 
     // check for bare shift-tab as left tab special case
-    if (hasShiftModifier && !keystroke.isCommand && !hasOptionModifier)
+    if (hasShiftModifier && !isCommand && !hasOptionModifier)
     {
         if (keystroke.keyCode == 48) {
             [mutableResponse appendString:kLeftTabString];
@@ -281,7 +279,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     }
     
     void(^appendModifiers)(BOOL) = ^(BOOL append) {
-        if (append && !keystroke.isCommand) {
+        if (append && !isCommand) {
             if (hasOptionModifier) {
                 [mutableResponse appendString:kOptionKeyString];
             }
