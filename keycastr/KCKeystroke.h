@@ -36,10 +36,4 @@
 @property (nonatomic, copy, readonly) NSString *characters;
 @property (nonatomic, copy, readonly) NSString *charactersIgnoringModifiers;
 
-/// A Keystroke is a command if it includes the Control or Command key; Option and Shift are only considered modifiers.
-- (BOOL)isCommand;
-
-/// Indicates whether a Keystroke has any of the Control, Command, Option or Shift modifiers applied.
-- (BOOL)isModified;
-
 @end

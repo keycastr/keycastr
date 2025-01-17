@@ -52,6 +52,14 @@
     return self;
 }
 
+- (BOOL)isCommand {
+    return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
+}
+
+- (BOOL)isModified {
+    return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagOption | NSEventModifierFlagShift)) != 0;
+}
+
 - (NSString *)convertToString {
     return [[KCEventTransformer currentTransformer] transformedValue:self];
 }
