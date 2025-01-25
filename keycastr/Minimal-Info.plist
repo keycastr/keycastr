@@ -17,6 +17,6 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSPrincipalClass</key>
-	<string>ModsVisualizerFactory</string>
+	<string>MinimalVisualizerFactory</string>
 </dict>
 </plist>
