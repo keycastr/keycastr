@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DB8252C2226E86500E123AA /* Mods.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Mods.nib */; };
-		1DB8252D2226E86500E123AA /* Mods-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825292226E86500E123AA /* Mods-Info.plist */; };
-		1DB8253E2226E8D100E123AA /* ModsVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8252A2226E86500E123AA /* ModsVisualizer.m */; };
-		1DB8253F2226E8DA00E123AA /* Mods.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Mods.nib */; };
-		1DB825402226EC2100E123AA /* Mods.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DB8253C2226E8A000E123AA /* Mods.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1DB8252C2226E86500E123AA /* Minimal.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Minimal.nib */; };
+		1DB8252D2226E86500E123AA /* Minimal-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825292226E86500E123AA /* Minimal-Info.plist */; };
+		1DB8253E2226E8D100E123AA /* MinimalVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8252A2226E86500E123AA /* MinimalVisualizer.m */; };
+		1DB8253F2226E8DA00E123AA /* Minimal.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Minimal.nib */; };
+		1DB825402226EC2100E123AA /* Minimal.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DB8253C2226E8A000E123AA /* Minimal.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */; };
 		324AD36C18A447EB8EDCE7B7 /* KCDefaultVisualizer.nib in Resources */ = {isa = PBXBuildFile; fileRef = 324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */; };
 		324AD7AC994A031550F38591 /* KCKeycastrEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADBA0D37774E36EA35A2E /* KCKeycastrEvent.m */; };
@@ -309,7 +309,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				1DB825402226EC2100E123AA /* Mods.kcplugin in CopyFiles */,
+				1DB825402226EC2100E123AA /* Minimal.kcplugin in CopyFiles */,
 				3D1648C20F451EDB00CA65AD /* Svelte.kcplugin in CopyFiles */,
 				3D1646690F43D76D00CA65AD /* KCDefaultVisualizer.kcplugin in CopyFiles */,
 			);
@@ -342,11 +342,11 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		1DB825272226E86500E123AA /* ModsVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModsVisualizer.h; sourceTree = "<group>"; };
-		1DB825282226E86500E123AA /* Mods.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Mods.nib; sourceTree = "<group>"; };
-		1DB825292226E86500E123AA /* Mods-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mods-Info.plist"; sourceTree = "<group>"; };
-		1DB8252A2226E86500E123AA /* ModsVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModsVisualizer.m; sourceTree = "<group>"; };
-		1DB8253C2226E8A000E123AA /* Mods.kcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mods.kcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DB825272226E86500E123AA /* MinimalVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinimalVisualizer.h; sourceTree = "<group>"; };
+		1DB825282226E86500E123AA /* Minimal.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Minimal.nib; sourceTree = "<group>"; };
+		1DB825292226E86500E123AA /* Minimal-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Minimal-Info.plist"; sourceTree = "<group>"; };
+		1DB8252A2226E86500E123AA /* MinimalVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinimalVisualizer.m; sourceTree = "<group>"; };
+		1DB8253C2226E8A000E123AA /* Minimal.kcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Minimal.kcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -489,20 +489,20 @@
 				3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */,
 				3D1648AC0F451D4500CA65AD /* Svelte.kcplugin */,
 				AFC172192377CFF500292155 /* KCVisualizerTests.xctest */,
-				1DB8253C2226E8A000E123AA /* Mods.kcplugin */,
+				1DB8253C2226E8A000E123AA /* Minimal.kcplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1DB825262226E85800E123AA /* Mods */ = {
+		1DB825262226E85800E123AA /* Minimal */ = {
 			isa = PBXGroup;
 			children = (
-				1DB825292226E86500E123AA /* Mods-Info.plist */,
-				1DB825282226E86500E123AA /* Mods.nib */,
-				1DB825272226E86500E123AA /* ModsVisualizer.h */,
-				1DB8252A2226E86500E123AA /* ModsVisualizer.m */,
+				1DB825292226E86500E123AA /* Minimal-Info.plist */,
+				1DB825282226E86500E123AA /* Minimal.nib */,
+				1DB825272226E86500E123AA /* MinimalVisualizer.h */,
+				1DB8252A2226E86500E123AA /* MinimalVisualizer.m */,
 			);
-			name = Mods;
+			name = Minimal;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* KeyCastr */ = {
@@ -581,7 +581,7 @@
 			isa = PBXGroup;
 			children = (
 				324ADFFC6CB5410AEFDEF479 /* Default */,
-				1DB825262226E85800E123AA /* Mods */,
+				1DB825262226E85800E123AA /* Minimal */,
 				324AD7A5D37DE702839F52C6 /* Mouse */,
 				3D1648A30F451CDA00CA65AD /* Svelte */,
 			);
@@ -711,9 +711,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1DB8252F2226E8A000E123AA /* Mods */ = {
+		1DB8252F2226E8A000E123AA /* Minimal */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DB825382226E8A000E123AA /* Build configuration list for PBXNativeTarget "Mods" */;
+			buildConfigurationList = 1DB825382226E8A000E123AA /* Build configuration list for PBXNativeTarget "Minimal" */;
 			buildPhases = (
 				1DB825322226E8A000E123AA /* Resources */,
 				1DB825342226E8A000E123AA /* Sources */,
@@ -723,9 +723,9 @@
 			);
 			dependencies = (
 			);
-			name = Mods;
+			name = Minimal;
 			productName = Svelte;
-			productReference = 1DB8253C2226E8A000E123AA /* Mods.kcplugin */;
+			productReference = 1DB8253C2226E8A000E123AA /* Minimal.kcplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		3D1646590F43D6E700CA65AD /* KCDefaultVisualizer */ = {
@@ -873,9 +873,9 @@
 			projectRoot = "";
 			targets = (
 				3D1646B50F43DBD700CA65AD /* KCVisualizer */,
-				1DB8252F2226E8A000E123AA /* Mods */,
-				3D1648AB0F451D4500CA65AD /* Svelte */,
 				3D1646590F43D6E700CA65AD /* KCDefaultVisualizer */,
+				1DB8252F2226E8A000E123AA /* Minimal */,
+				3D1648AB0F451D4500CA65AD /* Svelte */,
 				8D1107260486CEB800E47090 /* KeyCastr */,
 				AFC172182377CFF500292155 /* KCVisualizerTests */,
 			);
@@ -1037,7 +1037,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB8253F2226E8DA00E123AA /* Mods.nib in Resources */,
+				1DB8253F2226E8DA00E123AA /* Minimal.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,8 +1053,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB8252C2226E86500E123AA /* Mods.nib in Resources */,
-				1DB8252D2226E86500E123AA /* Mods-Info.plist in Resources */,
+				1DB8252C2226E86500E123AA /* Minimal.nib in Resources */,
+				1DB8252D2226E86500E123AA /* Minimal-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1101,7 +1101,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB8253E2226E8D100E123AA /* ModsVisualizer.m in Sources */,
+				1DB8253E2226E8D100E123AA /* MinimalVisualizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1165,7 +1165,7 @@
 /* Begin PBXTargetDependency section */
 		1DB825422226EC3200E123AA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1DB8252F2226E8A000E123AA /* Mods */;
+			target = 1DB8252F2226E8A000E123AA /* Minimal */;
 			targetProxy = 1DB825412226EC3200E123AA /* PBXContainerItemProxy */;
 		};
 		3D1646D50F43DCB200CA65AD /* PBXTargetDependency */ = {
@@ -1256,7 +1256,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Mods-Info.plist";
+				INFOPLIST_FILE = "Minimal-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1265,7 +1265,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Mods;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Minimal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kcplugin;
@@ -1287,7 +1287,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Mods-Info.plist";
+				INFOPLIST_FILE = "Minimal-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1296,7 +1296,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Mods;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Minimal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kcplugin;
@@ -1725,7 +1725,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DB825382226E8A000E123AA /* Build configuration list for PBXNativeTarget "Mods" */ = {
+		1DB825382226E8A000E123AA /* Build configuration list for PBXNativeTarget "Minimal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DB825392226E8A000E123AA /* Debug */,

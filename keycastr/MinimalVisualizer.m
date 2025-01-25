@@ -26,27 +26,27 @@
 
 #define MODS_WIDTH 100
 
-#import "ModsVisualizer.h"
+#import "MinimalVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
 #import "KCKeystroke.h"
 
-@implementation ModsVisualizerFactory
+@implementation MinimalVisualizerFactory
 
 - (NSString *)visualizerNibName {
-    return @"Mods";
+    return @"Minimal";
 }
 
 - (Class)visualizerClass {
-    return [ModsVisualizer class];
+    return [MinimalVisualizer class];
 }
 
 - (NSString *)visualizerName {
-    return @"Mods";
+    return @"Minimal";
 }
 
 @end
 
-@implementation ModsVisualizerView
+@implementation MinimalVisualizerView
 
 - (unsigned short)flagsCount  {
     unsigned short count = 0;
@@ -158,10 +158,10 @@
 
 @end
 
-@implementation ModsVisualizer
+@implementation MinimalVisualizer
 
 - (NSString *)visualizerName {
-    return @"Mods";
+    return @"Minimal";
 }
 
 - (id)init {
@@ -170,7 +170,7 @@
 
     // autosave frame was not working, despite best efforts. Easy workaround to use defaults instead.
     // (and autosave frame _uses_ defaults anyway so same thing in the end?)
-    NSString *frameValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"mods.savedFrame"];
+    NSString *frameValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"minimal.savedFrame"];
     NSRect windowFrame = { MODS_WIDTH, 100, 0, 100 };
     if (frameValue) {
         windowFrame = NSRectFromString(frameValue);
@@ -188,7 +188,7 @@
     [_visualizerWindow setOpaque:NO];
     [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 
-    _visualizerView = [[ModsVisualizerView alloc] init];
+    _visualizerView = [[MinimalVisualizerView alloc] init];
     [_visualizerView noteFlagsChanged:0];
     [_visualizerWindow setContentView:_visualizerView];
 
@@ -234,7 +234,7 @@
         windowFrame.size.width = _visualizerView.frame.size.width;
     }
     [_visualizerWindow setFrame:windowFrame display:NO];
-    [[NSUserDefaults standardUserDefaults] setValue:NSStringFromRect(_visualizerWindow.frame) forKey:@"mods.savedFrame"];
+    [[NSUserDefaults standardUserDefaults] setValue:NSStringFromRect(_visualizerWindow.frame) forKey:@"minimal.savedFrame"];
 }
 
 - (void)noteKeyEvent:(KCKeycastrEvent *)event {}

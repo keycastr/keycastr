@@ -28,7 +28,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KCVisualizer.h"
 
-@interface ModsVisualizerFactory : KCVisualizerFactory <KCVisualizerFactory>
+@interface MinimalVisualizerFactory : KCVisualizerFactory <KCVisualizerFactory>
 {
 }
 
@@ -38,7 +38,7 @@
 
 @end
 
-@interface ModsVisualizerView : NSView
+@interface MinimalVisualizerView : NSView
 {
     uint32_t _flags;
 }
@@ -47,10 +47,10 @@
 
 @end
 
-@interface ModsVisualizer : KCVisualizer <KCVisualizer>
+@interface MinimalVisualizer : KCVisualizer <KCVisualizer>
 {
     NSWindow* _visualizerWindow;
-    ModsVisualizerView* _visualizerView;
+    MinimalVisualizerView* _visualizerView;
 }
 
 - (NSString*)visualizerName;
