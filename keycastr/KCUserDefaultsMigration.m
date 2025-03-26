@@ -32,21 +32,24 @@
 // TODO: migrate legacy keys from dot/namespaces to underscores, and audit for observation (KVC?)
 
 + (void)performMigration:(NSUserDefaults *)userDefaults {
-    NSArray *colorKeyNames = [self colorKeyNames];
-    for (NSString *colorKey in colorKeyNames) {
-        NSData *colorData = [userDefaults dataForKey:colorKey];
-        if (!colorData) {
-            continue;
-        }
+    // Only migrate if we're running on macOS 10.14 or later or the user may lose their color preference
+    if (@available(macOS 10.14, *)) {
+        NSArray *colorKeyNames = [self colorKeyNames];
+        for (NSString *colorKey in colorKeyNames) {
+            NSData *colorData = [userDefaults dataForKey:colorKey];
+            if (!colorData) {
+                continue;
+            }
 
-        // If the color can be unarchived by the deprecated unarchiver,
-        // we need to convert it.
-        NSColor *color = [NSUnarchiver unarchiveObjectWithData:colorData];
-        if (color) {
-            NSData *newColorData = [NSKeyedArchiver archivedDataWithRootObject:color
-                                                         requiringSecureCoding:NO
-                                                                         error:NULL];
-            [userDefaults setObject:newColorData forKey:colorKey];
+            // If the color can be unarchived by the deprecated unarchiver,
+            // we need to convert it.
+            NSColor *color = [NSUnarchiver unarchiveObjectWithData:colorData];
+            if (color) {
+                NSData *newColorData = [NSKeyedArchiver archivedDataWithRootObject:color
+                                                             requiringSecureCoding:NO
+                                                                             error:NULL];
+                [userDefaults setObject:newColorData forKey:colorKey];
+            }
         }
     }
 
