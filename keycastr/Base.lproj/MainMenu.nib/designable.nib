@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
-        <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="22690"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -107,7 +107,7 @@
                     </menu>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-136" y="154"/>
+            <point key="canvasLocation" x="152" y="-291"/>
         </menu>
         <menu id="377" userLabel="Status Menu">
             <items>
@@ -133,7 +133,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-208" y="535"/>
+            <point key="canvasLocation" x="171" y="-134"/>
         </menu>
         <menu id="514">
             <items>
@@ -145,7 +145,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-68" y="686"/>
+            <point key="canvasLocation" x="183" y="73"/>
         </menu>
         <window title="KeyCastr" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" toolbarStyle="preference" id="371" userLabel="Prefs">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
@@ -190,7 +190,7 @@
                                                     <rect key="frame" x="162" y="75" width="195" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="In the menu bar and Dock" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" inset="2" selectedItem="425" id="421">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="message"/>
                                                         <menu key="menu" title="OtherViews" id="422">
                                                             <items>
                                                                 <menuItem title="In the menu bar" tag="1" id="423"/>
@@ -275,7 +275,7 @@
                                                             <rect key="frame" x="162" y="16" width="209" height="26"/>
                                                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="432" id="430">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                <font key="font" metaFont="menu"/>
+                                                                <font key="font" metaFont="message"/>
                                                                 <menu key="menu" title="OtherViews" id="431">
                                                                     <items>
                                                                         <menuItem title="Item 1" state="on" id="432"/>
@@ -327,7 +327,7 @@
                                                             <rect key="frame" x="162" y="17" width="209" height="25"/>
                                                             <popUpButtonCell key="cell" type="push" title="with pointer and visualizer" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="b75-G6-B4y" id="7h2-NY-2W2">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                <font key="font" metaFont="menu"/>
+                                                                <font key="font" metaFont="message"/>
                                                                 <menu key="menu" id="r7L-ll-0VM">
                                                                     <items>
                                                                         <menuItem title="with pointer and visualizer" state="on" id="b75-G6-B4y"/>
@@ -522,7 +522,7 @@
                         <textFieldCell key="cell" controlSize="small" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" id="393">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title" base64-UTF8="YES">
-Q29weXJpZ2h0IAPCqSAyMDA5LTIwMjQgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFuZCBj
+Q29weXJpZ2h0IAPCqSAyMDA5LTIwMjUgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFuZCBj
 b250cmlidXRvcnM
 </string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -556,7 +556,7 @@ b250cmlidXRvcnM
                     <constraint firstAttribute="trailing" secondItem="386" secondAttribute="trailing" id="rmf-TA-eIa"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="-179" y="644.5"/>
+            <point key="canvasLocation" x="-763" y="16"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>
