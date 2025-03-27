@@ -1463,7 +1463,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "0.10.3-pre";
+				MARKETING_VERSION = 0.10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1501,7 +1501,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "0.10.3-pre";
+				MARKETING_VERSION = 0.10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr;
 				PRODUCT_NAME = KeyCastr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
