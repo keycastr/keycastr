@@ -221,47 +221,47 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     BOOL hasShiftModifier = (_modifiers & NSEventModifierFlagShift) != 0;
     BOOL isCommand = event.isCommand;
 
-    BOOL needsShiftGlyph = NO;
-    
+    __block BOOL needsShiftGlyph = NO;
+
     NSMutableString *mutableResponse = [NSMutableString string];
 
     if (_modifiers & NSEventModifierFlagControl)
-	{
-		[mutableResponse appendString:kControlKeyString];
-	}
+    {
+        [mutableResponse appendString:kControlKeyString];
+    }
 
-	if (hasOptionModifier && (isCommand || !_displayModifiedCharacters))
-	{
-		[mutableResponse appendString:kOptionKeyString];
-	}
+    if (hasOptionModifier && (isCommand || !_displayModifiedCharacters))
+    {
+        [mutableResponse appendString:kOptionKeyString];
+    }
 
     if (hasShiftModifier)
-	{
-		if (isCommand || (hasOptionModifier && !_displayModifiedCharacters))
-			[mutableResponse appendString:kShiftKeyString];
+    {
+        if (isCommand || (hasOptionModifier && !_displayModifiedCharacters))
+            [mutableResponse appendString:kShiftKeyString];
         else
-			needsShiftGlyph = !_displayModifiedCharacters;
-	}
+            needsShiftGlyph = !_displayModifiedCharacters;
+    }
 
-    if (_modifiers & NSEventModifierFlagCommand)
-	{
-		if (needsShiftGlyph)
-		{
-			[mutableResponse appendString:kShiftKeyString];
-			needsShiftGlyph = NO;
-		}
-		[mutableResponse appendString:kCommandKeyString];
-	}
-
-    if ([event isKindOfClass:[KCMouseEvent class]]) {
+    void (^addShiftGlyphIfNeeded)(void) = ^{
         if (needsShiftGlyph) {
             [mutableResponse appendString:kShiftKeyString];
             needsShiftGlyph = NO;
         }
+    };
+
+    if (_modifiers & NSEventModifierFlagCommand)
+    {
+        addShiftGlyphIfNeeded();
+        [mutableResponse appendString:kCommandKeyString];
+    }
+
+    if ([event isKindOfClass:[KCMouseEvent class]]) {
+        addShiftGlyphIfNeeded();
         [mutableResponse appendString:@"🖱️"];
         return mutableResponse;
     }
-    
+
     KCKeystroke *keystroke = (KCKeystroke *)event;
 
     // check for bare shift-tab as left tab special case
@@ -272,12 +272,9 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
             return mutableResponse;
         }
     }
-
-    if (needsShiftGlyph) {
-        [mutableResponse appendString:kShiftKeyString];
-        needsShiftGlyph = NO;
-    }
     
+    addShiftGlyphIfNeeded();
+
     void(^appendModifiers)(BOOL) = ^(BOOL append) {
         if (append && !isCommand) {
             if (hasOptionModifier) {
@@ -288,7 +285,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
             }
         }
     };
-    
+
     NSString *specialKeyString = [[self _specialKeys] objectForKey:@(keystroke.keyCode)];
     if (specialKeyString)
     {
