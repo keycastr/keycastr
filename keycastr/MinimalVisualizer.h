@@ -41,9 +41,11 @@
 @interface MinimalVisualizerView : NSView
 {
     uint32_t _flags;
+    NSString *_characters;
 }
 
 - (void)noteFlagsChanged:(uint32_t)flags;
+- (void)noteCharactersChanged:(NSString *)characters;
 
 @end
 

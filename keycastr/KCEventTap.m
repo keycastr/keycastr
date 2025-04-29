@@ -42,9 +42,10 @@
     CFRunLoopSourceRef mouseAndFlagsEventTapSource;
 }
 
-- (void)_noteMouseEvent:(CGEventRef)eventRef;
 - (void)_noteKeyEvent:(CGEventRef)eventRef;
+- (void)_noteKeyUp:(CGEventRef)eventRef;
 - (void)_noteFlagsChanged:(CGEventRef)event;
+- (void)_noteMouseEvent:(CGEventRef)eventRef;
 
 @end
 
@@ -61,6 +62,7 @@ CGEventRef keyEventTapCallback(
             [eventTap _noteKeyEvent:event];
             break;
         case kCGEventKeyUp:
+            [eventTap _noteKeyUp:event];
             break;
         default:
             break;
@@ -221,11 +223,18 @@ CGEventRef mouseAndFlagsEventTapCallback(
 	[self noteFlagsChanged:modifiers];
 }
 
--(void) _noteKeyEvent:(CGEventRef)eventRef
+- (void)_noteKeyEvent:(CGEventRef)eventRef
 {
     NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
-    KCKeystroke* keystroke = [KCKeystroke eventWithNSEvent:event];
-    [self noteKeystroke:keystroke];
+    KCKeystroke *keystroke = [KCKeystroke eventWithNSEvent:event];
+    [_delegate eventTap:self noteKeystroke:keystroke];
+}
+
+- (void)_noteKeyUp:(CGEventRef)eventRef
+{
+    NSEvent *event = [NSEvent eventWithCGEvent:eventRef];
+    KCKeystroke *keystroke = [KCKeystroke eventWithNSEvent:event];
+    [_delegate eventTap:self noteKeyUp:keystroke];
 }
 
 - (void)_noteMouseEvent:(CGEventRef)eventRef
@@ -235,12 +244,7 @@ CGEventRef mouseAndFlagsEventTapCallback(
     [_delegate eventTap:self noteMouseEvent:mouseEvent];
 }
 
--(void) noteKeystroke:(KCKeystroke*)keystroke
-{
-    [_delegate eventTap:self noteKeystroke:keystroke];
-}
-
--(void) noteFlagsChanged:(NSEventModifierFlags)newFlags
+- (void)noteFlagsChanged:(NSEventModifierFlags)newFlags
 {
     [_delegate eventTap:self noteFlagsChanged:newFlags];
 }

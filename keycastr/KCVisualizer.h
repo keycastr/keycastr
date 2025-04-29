@@ -44,6 +44,9 @@
 
 - (void)noteKeyEvent:(KCKeycastrEvent *)event;
 - (void)noteFlagsChanged:(NSEventModifierFlags)flags;
+
+@optional
+- (void)noteKeyUpEvent:(KCKeycastrEvent *)event;
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
 
 @end

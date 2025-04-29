@@ -42,10 +42,18 @@
 
 @end
 
-@protocol KCEventTapDelegate
+@protocol KCEventTapDelegate <NSObject>
 
+/// A Keystroke is a normal standalone key press, or a modified/command key sequence including the final key
 - (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke;
+
+/// Sent in response to the corresponding lower-level KeyUp events, for visualizers that are interested in them
+- (void)eventTap:(KCEventTap *)tap noteKeyUp:(KCKeystroke *)keystroke;
+
+/// Any of the mouse events KeyCastr listens for
 - (void)eventTap:(KCEventTap *)tap noteMouseEvent:(KCMouseEvent *)mouseEvent;
+
+/// Sent any time the currently-held combination of modifier keys changes
 - (void)eventTap:(KCEventTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags;
 
 @end

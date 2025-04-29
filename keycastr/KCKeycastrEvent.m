@@ -48,6 +48,7 @@
 
     _type = event.type;
     _modifierFlags = event.modifierFlags;
+    _underlyingEvent = event;
 
     return self;
 }
