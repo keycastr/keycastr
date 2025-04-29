@@ -254,6 +254,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 }
 
+- (void)eventTap:(KCEventTap *)tap noteKeyUp:(KCKeystroke *)keystroke
+{
+    if ([currentVisualizer respondsToSelector:@selector(noteKeyUpEvent:)]) {
+        [currentVisualizer noteKeyUpEvent:keystroke];
+    }
+}
+
 - (void)eventTap:(KCEventTap *)tap noteFlagsChanged:(NSEventModifierFlags)flags
 {
     if (!_isCapturing) {

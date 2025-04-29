@@ -24,11 +24,12 @@
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#define MODS_WIDTH 100
-
 #import "MinimalVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
 #import "KCKeystroke.h"
+#import "KCMouseEvent.h"
+
+static CGFloat kDefaultDimension = 100.0;
 
 @implementation MinimalVisualizerFactory
 
@@ -77,7 +78,6 @@
 - (void)drawRect:(NSRect)rect {
     NSRect frame = [self frame];
     NSRect bgFrame = [self frame];
-    float oneQuarter = floorf(MODS_WIDTH);
 
     CGFloat x = frame.size.width, y;
     NSSize size;
@@ -100,58 +100,75 @@
     [shadow setShadowBlurRadius:2];
     [shadow setShadowOffset:NSMakeSize(2,-2)];
 
-    NSMutableDictionary* attr = [@{
+    NSDictionary* attr = @{
         NSFontAttributeName:            [NSFont boldSystemFontOfSize:80],
         NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:1 alpha:0.8],
         NSShadowAttributeName:          shadow,
         NSParagraphStyleAttributeName:  ps
-    } mutableCopy];
+    };
+
+    CGFloat width = kDefaultDimension;
+
+    if (_characters) {
+        size = [_characters sizeWithAttributes:attr];
+        y = (frame.size.height - size.height) / 2.0;
+        x -= width;
+        [_characters drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
+    }
 
 	if (_flags & NSEventModifierFlagCommand) {
 		NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
 		size = [commandKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
-		x -= oneQuarter;
-		[commandKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+		x -= width;
+		[commandKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
 	}
 
 	if (_flags & NSEventModifierFlagShift) {
 		NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
 		size = [shiftKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
-		x -= oneQuarter;
-		[shiftKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+		x -= width;
+		[shiftKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
 	}
 
     if (_flags & NSEventModifierFlagOption) {
         NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
         size = [altKeyString sizeWithAttributes:attr];
         y = (frame.size.height - size.height) / 2.0;
-        x -= oneQuarter;
-        [altKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+        x -= width;
+        [altKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
     }
 
 	if (_flags & NSEventModifierFlagControl) {
 		NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
 		size = [controlKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
-		x -= oneQuarter;
-		[controlKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+		x -= width;
+		[controlKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
 	}
 
 	if (_flags & NSEventModifierFlagFunction) {
 		NSString* controlKeyString = [NSString stringWithUTF8String:"fn"];
 		size = [controlKeyString sizeWithAttributes:attr];
 		y = (frame.size.height - size.height) / 2.0;
-		x -= oneQuarter;
-		[controlKeyString drawInRect:NSMakeRect(x, y, oneQuarter, size.height) withAttributes:attr];
+		x -= width;
+		[controlKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
 	}
 }
 
 - (void)noteFlagsChanged:(uint32_t)flags {
     _flags = flags;
     NSRect frame = self.frame;
-    frame.size.width = MODS_WIDTH * (CGFloat)[self flagsCount];
+    frame.size.width = kDefaultDimension * (CGFloat)([self flagsCount] + [_characters length]);
+    self.frame = frame;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)noteCharactersChanged:(NSString *)characters {
+    _characters = characters;
+    NSRect frame = self.frame;
+    frame.size.width = kDefaultDimension * (CGFloat)([self flagsCount] + [_characters length]);
     self.frame = frame;
     [self setNeedsDisplay:YES];
 }
@@ -170,8 +187,10 @@
 
     // autosave frame was not working, despite best efforts. Easy workaround to use defaults instead.
     // (and autosave frame _uses_ defaults anyway so same thing in the end?)
+    // TODO(AK): It appears we sometimes retrieve a stale frame this way with a non-0 width, which was probably stored the last time the app exited via CMD-Q
+    // This strategy also makes it more complicated to adjust the visualizer's dimension later, so we still need to revisit this.
     NSString *frameValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"minimal.savedFrame"];
-    NSRect windowFrame = { MODS_WIDTH, 100, 0, 100 };
+    NSRect windowFrame = { kDefaultDimension, kDefaultDimension, 0, kDefaultDimension };
     if (frameValue) {
         windowFrame = NSRectFromString(frameValue);
     }
@@ -209,6 +228,10 @@
 
 - (void)noteFlagsChanged:(uint32_t)flags {
     [_visualizerView noteFlagsChanged:flags];
+    [self charactersDidChange];
+}
+
+- (void)charactersDidChange {
     NSRect windowFrame = _visualizerWindow.frame;
     NSScreen *screen = _visualizerWindow.screen;
     if (!screen) {
@@ -237,9 +260,21 @@
     [[NSUserDefaults standardUserDefaults] setValue:NSStringFromRect(_visualizerWindow.frame) forKey:@"minimal.savedFrame"];
 }
 
-- (void)noteKeyEvent:(KCKeycastrEvent *)event {}
+- (void)noteKeyEvent:(KCKeystroke *)keystroke {
+    if (keystroke.underlyingEvent.isARepeat) {
+        return;
+    }
 
-- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {}
+    NSString *characters = keystroke.isCommand ? [keystroke.charactersIgnoringModifiers uppercaseString] : keystroke.charactersIgnoringModifiers;
+    // TODO: special characters
+    [_visualizerView noteCharactersChanged:characters];
+    [self charactersDidChange];
+}
+
+- (void)noteKeyUpEvent:(KCKeycastrEvent *)event {
+    [_visualizerView noteCharactersChanged:nil];
+    [self charactersDidChange];
+}
 
 + (NSDictionary<NSString *,NSObject *> *)visualizerDefaults {
 	return @{};

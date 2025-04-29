@@ -31,6 +31,7 @@
 
 @property (nonatomic, readonly) NSEventType type;
 @property (nonatomic, readonly) NSEventModifierFlags modifierFlags;
+@property (nonatomic, readonly) NSEvent *underlyingEvent;
 
 /// An event is a command if it includes the Control or Command key; Option and Shift are only considered modifiers.
 @property (nonatomic, readonly) BOOL isCommand;
