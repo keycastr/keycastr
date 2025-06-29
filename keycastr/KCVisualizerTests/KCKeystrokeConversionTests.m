@@ -162,7 +162,7 @@
 - (void)test_KCKeystroke_displaysOptLetterByDefault {
     // opt-U
     keystroke = [self keystrokeWithKeyCode:32 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"u"];
-    XCTAssertEqualObjects(keystroke.convertToString, @"⌥u");
+    XCTAssertEqualObjects(keystroke.convertToString, @"⌥U");
 }
 
 #pragma mark - Function Row
@@ -256,7 +256,7 @@
     keystroke = [self keystrokeWithKeyCode:14 modifiers:524576 characters:@"" charactersIgnoringModifiers:@"e"];
     
     [userDefaults setBool:NO forKey:@"default_displayModifiedCharacters"];
-    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥e");
+    XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥E");
     
     [userDefaults setBool:YES forKey:@"default_displayModifiedCharacters"];
     XCTAssertEqualObjects([eventTransformer transformedValue:keystroke], @"⌥e");

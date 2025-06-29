@@ -219,7 +219,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     NSEventModifierFlags _modifiers = event.modifierFlags;
     BOOL hasOptionModifier = (_modifiers & NSEventModifierFlagOption) != 0;
     BOOL hasShiftModifier = (_modifiers & NSEventModifierFlagShift) != 0;
-    BOOL isCommand = (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand)) != 0;
+    BOOL isCommand = (_modifiers & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
     
     BOOL needsShiftGlyph = NO;
     
@@ -310,8 +310,8 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         [mutableResponse appendString:[self translatedCharacterForKeystroke:keystroke]];
     }
     
-    // Commands and shifted keystrokes should be uppercased
-    if (isCommand || hasShiftModifier)
+    // Commands, shifted keystrokes, and option combinations (when displayModifiedCharacters is NO) should be uppercased
+    if (isCommand || hasShiftModifier || (hasOptionModifier && !_displayModifiedCharacters))
     {
         // Unless it is a special case - do not shift keycode 27
         if (keystroke.keyCode != 27) {
