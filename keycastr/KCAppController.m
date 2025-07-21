@@ -139,12 +139,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [NSApp activateIgnoringOtherApps:YES];
 
     if (![self installTap]) {
+        [self setIsCapturing:NO];
+
         return;
     }
 
     [self setIsCapturing:YES];
 
-    // Show the preferences window if desired
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kKCPrefVisibleAtLaunch]) {
         [preferencesWindow center];
         [preferencesWindow makeKeyAndOrderFront:self];
