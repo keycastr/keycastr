@@ -62,7 +62,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 @property (nonatomic, assign) NSInteger prefDisplayIcon;
 @property (nonatomic, assign) BOOL showInDock;
 @property (nonatomic, assign) BOOL showInMenuBar;
-@property (nonatomic, assign) KeyCombo toggleKeyCombo;
+@property (nonatomic, strong) SRShortcut *toggleCastingShortcut;
 
 @property (nonatomic, assign) IBOutlet NSMenu *statusMenu;
 @property (nonatomic, strong) IBOutlet NSWindow *aboutWindow;
@@ -83,6 +83,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 @synthesize eventTap, statusItem, statusMenu, aboutWindow, aboutQCView, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem, mouseEventVisualizer, currentVisualizer;
+@synthesize toggleCastingShortcut = _toggleCastingShortcut;
 
 #pragma mark -
 #pragma mark Startup Procedures
@@ -111,20 +112,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     // Set current visualizer from user preferences
     [self setCurrentVisualizerName:[[NSUserDefaults standardUserDefaults] objectForKey:kKCPrefSelectedVisualizer]];
 
-    // Bootstrap key capturing hotkey from preferences
-    KeyCombo toggleShortcutKey;
-    toggleShortcutKey.code = -1;
-    toggleShortcutKey.flags = 0;
-
-    NSData *toggleShortcutKeyData = [[NSUserDefaults standardUserDefaults] dataForKey:kKCPrefCapturingHotKey];
-    if (toggleShortcutKeyData != nil) {
-        [toggleShortcutKeyData getBytes:&toggleShortcutKey length:sizeof(toggleShortcutKey)];
-    }
-
-    [self changeKeyComboTo:toggleShortcutKey];
-    SRShortcut *shortcut = [SRShortcut shortcutWithDictionary:@{SRShortcutKeyKeyCode: @(toggleShortcutKey.code),
-                                                                SRShortcutKeyModifierFlags: @(toggleShortcutKey.flags)}];
-    [shortcutRecorder setObjectValue:shortcut];
+    [shortcutRecorder setObjectValue:self.toggleCastingShortcut];
+    [self updateToggleShortcutDisplay:self.toggleCastingShortcut];
 
     [prefsWindowController nudge];
     [self updateAboutPanel];
@@ -154,6 +143,31 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
     [eventTap removeTap];
+}
+
+- (SRShortcut *)toggleCastingShortcut {
+    if (_toggleCastingShortcut == nil) {
+        KeyCombo toggleShortcutKey;
+        NSData *toggleShortcutKeyData = [[NSUserDefaults standardUserDefaults] dataForKey:kKCPrefCapturingHotKey];
+        if (toggleShortcutKeyData != nil) {
+            [toggleShortcutKeyData getBytes:&toggleShortcutKey length:sizeof(toggleShortcutKey)];
+        }
+
+        _toggleCastingShortcut = [SRShortcut shortcutWithDictionary:@{SRShortcutKeyKeyCode: @(toggleShortcutKey.code),
+                                                                      SRShortcutKeyModifierFlags: @(toggleShortcutKey.flags)}];
+    }
+    return _toggleCastingShortcut;
+
+}
+
+- (void)setToggleCastingShortcut:(SRShortcut *)toggleCastingShortcut {
+    _toggleCastingShortcut = toggleCastingShortcut;
+
+    KeyCombo newKeyCombo;
+    newKeyCombo.code = toggleCastingShortcut.keyCode;
+    newKeyCombo.flags = (unsigned int)toggleCastingShortcut.modifierFlags; // migration needed to avoid cast
+
+    [[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithBytes:&newKeyCombo length:sizeof(newKeyCombo)] forKey:kKCPrefCapturingHotKey];
 }
 
 - (void)openPrefsPane:(id)sender {
@@ -226,7 +240,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)eventTap:(KCEventTap *)tap noteKeystroke:(KCKeystroke *)keystroke
 {
-    if ([keystroke keyCode] == self.toggleKeyCombo.code && ([keystroke modifierFlags] & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)) == (self.toggleKeyCombo.flags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)))
+    if (keystroke.keyCode == self.toggleCastingShortcut.keyCode && (keystroke.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)) == (self.toggleCastingShortcut.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand | NSEventModifierFlagShift | NSEventModifierFlagOption)))
 	{
         [self toggleRecording:self];
 		return;
@@ -295,22 +309,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [KCVisualizer loadPluginsFromDirectory:[[NSBundle mainBundle] builtInPlugInsPath]];
 }
 
--(void) changeKeyComboTo:(KeyCombo)keyCombo
+- (void)updateToggleShortcutDisplay:(SRShortcut *)shortcut
 {
-    self.toggleKeyCombo = keyCombo;
-    if (keyCombo.code != -1)
-    {
-        SRKeyCodeTransformer* xformer = [SRKeyCodeTransformer sharedTransformer];
-        [statusShortcutItem setKeyEquivalent:[xformer transformedValue:@(keyCombo.code)]];
-        [statusShortcutItem setKeyEquivalentModifierMask:keyCombo.flags];
-        [dockShortcutItem setKeyEquivalent:[xformer transformedValue:@(keyCombo.code)]];
-        [dockShortcutItem setKeyEquivalentModifierMask:keyCombo.flags];
-    }
-    else
-    {
-        [statusShortcutItem setKeyEquivalent:@""];
-        [dockShortcutItem setKeyEquivalent:@""];
-    }
+    SRKeyCodeTransformer *transformer = [SRKeyCodeTransformer sharedTransformer];
+    [statusShortcutItem setKeyEquivalent:[transformer transformedValue:@(shortcut.keyCode)]];
+    [statusShortcutItem setKeyEquivalentModifierMask:shortcut.modifierFlags];
+    [dockShortcutItem setKeyEquivalent:[transformer transformedValue:@(shortcut.keyCode)]];
+    [dockShortcutItem setKeyEquivalentModifierMask:shortcut.modifierFlags];
 }
 
 - (void)updateAboutPanel
@@ -540,12 +545,14 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 - (void)shortcutRecorderDidEndRecording:(SRRecorderControl *)aRecorder;
 {
     SRShortcut *toggleShortcut = aRecorder.objectValue;
-    KeyCombo newKeyCombo;
-    newKeyCombo.code = [toggleShortcut[SRShortcutKeyKeyCode] shortValue];
-    newKeyCombo.flags = [toggleShortcut[SRShortcutKeyModifierFlags] unsignedIntValue];
-
-    [self changeKeyComboTo:newKeyCombo];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithBytes:&newKeyCombo length:sizeof(newKeyCombo)] forKey:kKCPrefCapturingHotKey];
+    if (!toggleShortcut) {
+        [shortcutRecorder setObjectValue:self.toggleCastingShortcut];
+        return;
+    }
+    SRShortcut *newShortcut = aRecorder.objectValue;
+    self.toggleCastingShortcut = newShortcut;
+    [shortcutRecorder setObjectValue:newShortcut];
+    [self updateToggleShortcutDisplay:newShortcut];
 }
 
 @end
