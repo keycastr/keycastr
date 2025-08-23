@@ -188,14 +188,14 @@
                                                 </button>
                                                 <popUpButton imageHugsTitle="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="420">
                                                     <rect key="frame" x="162" y="75" width="195" height="25"/>
-                                                    <popUpButtonCell key="cell" type="push" title="In the menu bar and Dock" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" inset="2" selectedItem="425" id="421">
+                                                    <popUpButtonCell key="cell" type="push" title="In the Menu Bar and Dock" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" inset="2" selectedItem="425" id="421">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="message"/>
                                                         <menu key="menu" title="OtherViews" id="422">
                                                             <items>
-                                                                <menuItem title="In the menu bar" tag="1" id="423"/>
+                                                                <menuItem title="In the Menu Bar" tag="1" id="423"/>
                                                                 <menuItem title="In the Dock" tag="2" id="424"/>
-                                                                <menuItem title="In the menu bar and Dock" state="on" tag="3" id="425"/>
+                                                                <menuItem title="In the Menu Bar and Dock" state="on" tag="3" id="425"/>
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
