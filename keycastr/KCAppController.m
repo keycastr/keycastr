@@ -1,5 +1,5 @@
 //	Copyright (c) 2009 Stephen Deken
-//	Copyright (c) 2014-2024 Andrew Kitchen
+//	Copyright (c) 2014-2025 Andrew Kitchen
 //
 //	All rights reserved.
 //
@@ -157,7 +157,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
                                                                       SRShortcutKeyModifierFlags: @(toggleShortcutKey.flags)}];
     }
     return _toggleCastingShortcut;
-
 }
 
 - (void)setToggleCastingShortcut:(SRShortcut *)toggleCastingShortcut {
@@ -542,14 +541,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 #pragma mark -
 #pragma mark SRRecorderControlDelegate methods
 
-- (void)shortcutRecorderDidEndRecording:(SRRecorderControl *)aRecorder;
+- (void)shortcutRecorderDidEndRecording:(SRRecorderControl *)recorder;
 {
-    SRShortcut *toggleShortcut = aRecorder.objectValue;
-    if (!toggleShortcut) {
+    SRShortcut *newShortcut = recorder.objectValue;
+    if (!newShortcut) {
         [shortcutRecorder setObjectValue:self.toggleCastingShortcut];
         return;
     }
-    SRShortcut *newShortcut = aRecorder.objectValue;
     self.toggleCastingShortcut = newShortcut;
     [shortcutRecorder setObjectValue:newShortcut];
     [self updateToggleShortcutDisplay:newShortcut];
