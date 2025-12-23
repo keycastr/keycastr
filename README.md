@@ -59,6 +59,18 @@ To troubleshoot, We recommend that you:
   to the list
 - When macOS prompts you, restart KeyCastr. Or you can do it manually.
 
+## Settings
+
+- Visualizer: Select the desired visualizer type. (Default or Svelte)
+- Display Mouse Events:
+  - With Mouse Pointer will draw a circle around the pointer.
+  - With Current Visualizer will display mouse clicks as popups.
+- Display Mode:
+  - Commands Keys Only will display keys only with the `super` or `ctrl` key.
+  - All Modifier Keys will display keys only with the `super`, `ctrl`, `alt` or `shift` key.
+  - All Keys will display all keys.
+  - Apply Modifiers will display the keys after applying the modifiers. (eg. `Ω` instead of `alt+Z`)
+
 ## Position on Screen
 
 The default position is on the bottom left of your display. To modify the position of displayed keystrokes, click and drag the text like so:
