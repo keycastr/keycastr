@@ -33,6 +33,7 @@
 #import "KCDefaultVisualizer.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
+#import "KCEventTransformer.h"
 #import "NSBezierPath+RoundedRect.h"
 #import "NSUserDefaults+Utility.h"
 
@@ -316,7 +317,17 @@ static NSRect KC_defaultFrame(void) {
         [self abandonCurrentBezelView];
     }
 
-    [self appendString:[keystroke convertToString]];
+    NSString *macString = [keystroke convertToString];
+    NSString *winString = [[KCEventTransformer currentTransformer] transformedValueForWindows:keystroke];
+
+    NSString *displayString;
+    if (winString.length > 0) {
+        displayString = [NSString stringWithFormat:@"%@  |  %@", macString, winString];
+    } else {
+        displayString = macString;
+    }
+
+    [self appendString:displayString];
 }
 
 - (void)appendString:(NSString *)string
