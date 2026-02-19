@@ -289,7 +289,7 @@
 
 + (NSDictionary<NSString *, NSObject *> *)visualizerDefaults {
     return @{ @"svelte.displayAll": @YES,
-              @"svelte.showWindowsEquivalent": @YES };
+              @"svelte.showWindowsEquivalent": @NO };
 }
 
 @end

@@ -194,7 +194,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
                                                           requiringSecureCoding:NO
                                                                           error:NULL],
               @"default_displayModifiedCharacters": @NO,
-              @"default.showWindowsEquivalent": @YES,
+              @"default.showWindowsEquivalent": @NO,
     };
 }
 
