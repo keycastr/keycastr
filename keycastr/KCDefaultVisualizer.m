@@ -194,6 +194,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
                                                           requiringSecureCoding:NO
                                                                           error:NULL],
               @"default_displayModifiedCharacters": @NO,
+              @"default.showWindowsEquivalent": @YES,
     };
 }
 
@@ -318,13 +319,14 @@ static NSRect KC_defaultFrame(void) {
     }
 
     NSString *macString = [keystroke convertToString];
-    NSString *winString = [[KCEventTransformer currentTransformer] transformedValueForWindows:keystroke];
+    BOOL showWindowsEquivalent = [[NSUserDefaults standardUserDefaults] boolForKey:@"default.showWindowsEquivalent"];
 
-    NSString *displayString;
-    if (winString.length > 0) {
-        displayString = [NSString stringWithFormat:@"%@  |  %@", macString, winString];
-    } else {
-        displayString = macString;
+    NSString *displayString = macString;
+    if (showWindowsEquivalent) {
+        NSString *winString = [[KCEventTransformer currentTransformer] transformedValueForWindows:keystroke];
+        if (winString.length > 0) {
+            displayString = [NSString stringWithFormat:@"%@ | %@", macString, winString];
+        }
     }
 
     [self appendString:displayString];

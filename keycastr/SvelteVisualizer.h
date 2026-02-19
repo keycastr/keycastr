@@ -34,6 +34,8 @@
 
 @interface SvelteVisualizerView : NSView
 
+@property (nonatomic, assign) BOOL showWindowsEquivalent;
+
 @end
 
 @interface SvelteVisualizer : KCVisualizer <KCVisualizer>
