@@ -335,13 +335,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
     BOOL isOption = (modifiers & NSEventModifierFlagOption) != 0;
     BOOL isShift = (modifiers & NSEventModifierFlagShift) != 0;
     
-    // Only show Windows equivalent if there are modifiers (Command, Control, or Option)
-    // We treat Shift-only as a "simple letter" case usually, unless it's a special key?
-    // User said: "don't duplicate simple letters like 'a | a'".
-    // Shift+A -> "A". Windows: "Shift+A"? Or just "A"?
-    // Usually Windows shortcuts are Ctrl+C.
-    // Let's require Command, Control, or Option for now.
-    if (!isCommand && !isControl && !isOption) {
+    if (!isCommand && !isControl && !isOption && !isShift) {
         return nil;
     }
 
