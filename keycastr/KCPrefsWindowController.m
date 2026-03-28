@@ -142,11 +142,31 @@
 
 		NSString* itemIdentifier = [tvi label];
 		[toolbarItemIdentifiers addObject:itemIdentifier];
+        
+        NSImage *img = [NSImage imageNamed:[NSString stringWithFormat:@"%@Icon", itemIdentifier]];
+        
+        if (@available(macOS 11.0, *)) {
+            NSString *imageName = @"";
+
+            if ([itemIdentifier isEqualToString:@"General"]){
+                imageName = @"gear";
+            }
+            else if ([itemIdentifier isEqualToString:@"Display"]){
+                imageName = @"display";
+            }
+            else if ([itemIdentifier isEqualToString:@"Update"]){
+                imageName = @"arrow.2.circlepath";
+            }
+            
+            if ([imageName length] > 0) {
+                img = [[NSImage imageWithSystemSymbolName:imageName accessibilityDescription:itemIdentifier] imageWithSymbolConfiguration:[NSImageSymbolConfiguration configurationWithPointSize:21 weight:NSFontWeightSemibold]];
+            }
+        }
 
 		// Create a toolbar item for this preference pane.
 		NSToolbarItem* item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
 		[item setLabel:itemIdentifier];
-		[item setImage:[NSImage imageNamed:[NSString stringWithFormat:@"%@Icon", itemIdentifier]]];
+        [item setImage:img];
 		[item setTarget:self];
 		[item setAction:@selector(toolbarItemSelected:)];
 		[item setTag:tag];
