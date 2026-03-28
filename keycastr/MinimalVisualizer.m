@@ -49,6 +49,21 @@
 
 @implementation MinimalVisualizerView
 
+
+
+- (BOOL)mouseEnabled {
+    NSInteger displayOption = [[NSUserDefaults standardUserDefaults] integerForKey:@"mouse.displayOption"];
+    
+    // 2: With Current Visualizer
+    // 3: With Pointer and Visualizer
+    if (displayOption == 2 || displayOption == 3) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
 - (unsigned short)flagsCount  {
     unsigned short count = 0;
 
@@ -88,7 +103,7 @@
     NSRectFill(frame);
     
     // Prevent drawing empty bezel
-    if (!_flags && !_characters) return;
+    if (!_flags && !_characters && !_mouse) return;
 
     if (bgFrame.size.width > 0) {
         [[ud colorForKey:@"minimal.bezelColor"] setFill];
@@ -114,6 +129,14 @@
 
     CGFloat width = [ud integerForKey:@"minimal.bezelSize"];
 
+    if (_mouse && [self mouseEnabled]) {
+        NSString* mouseString = @"🖱️";
+        size = [mouseString sizeWithAttributes:attr];
+        y = (frame.size.height - size.height) / 2.0;
+        x -= width;
+        [mouseString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
+    }
+    
     if (_characters) {
         size = [_characters sizeWithAttributes:attr];
         y = (frame.size.height - size.height) / 2.0;
@@ -235,6 +258,10 @@
     [self setNeedsDisplay:YES];
 }
 
+- (void)mouseEventsChanged {
+    [self noteMouseChanged:NO];
+}
+
 @end
 
 @implementation MinimalVisualizer
@@ -275,6 +302,8 @@
     _visualizerView = [[MinimalVisualizerView alloc] init];
     [_visualizerView noteFlagsChanged:0];
     [_visualizerWindow setContentView:_visualizerView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:_visualizerView selector:@selector(mouseEventsChanged) name:@"KCMouseEventsSettingChanged" object:nil];
 
     return self;
 }
@@ -354,7 +383,16 @@
     [self charactersDidChange];
 }
 
-- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {}
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {
+    if (NSEventMaskFromType(mouseEvent.type) & (NSEventMaskLeftMouseDown | NSEventMaskRightMouseDown | NSEventMaskOtherMouseDown)) {
+        [_visualizerView noteMouseChanged:YES];
+    }
+    else if (NSEventMaskFromType(mouseEvent.type) & (NSEventMaskLeftMouseUp | NSEventMaskRightMouseUp | NSEventMaskOtherMouseUp)) {
+        [_visualizerView noteMouseChanged:NO];
+    }
+    
+    [self charactersDidChange];
+}
 
 + (NSDictionary<NSString *,NSObject *> *)visualizerDefaults {
     return @{
