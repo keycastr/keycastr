@@ -434,6 +434,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)setCurrentMouseDisplayOptionName:(NSString *)displayOptionName {
     mouseEventVisualizer.currentMouseDisplayOptionName = displayOptionName;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KCMouseEventsSettingChanged" object:nil];
 }
 
 -(void) setIsCapturing:(BOOL)capture

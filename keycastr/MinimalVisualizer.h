@@ -42,6 +42,7 @@
 {
     uint32_t _flags;
     NSString *_characters;
+    BOOL _mouse;
 }
 
 - (void)noteFlagsChanged:(uint32_t)flags;
