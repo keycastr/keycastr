@@ -28,8 +28,7 @@
 #import "NSBezierPath+RoundedRect.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
-
-static CGFloat kDefaultDimension = 100.0;
+#import "NSUserDefaults+Utility.h"
 
 @implementation MinimalVisualizerFactory
 
@@ -76,19 +75,24 @@ static CGFloat kDefaultDimension = 100.0;
 }
 
 - (void)drawRect:(NSRect)rect {
-    NSRect frame = [self frame];
-    NSRect bgFrame = [self frame];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    NSRect frame = self.frame;
+    NSRect bgFrame = self.frame;
 
     CGFloat x = frame.size.width, y;
     NSSize size;
 
     [[NSColor clearColor] setFill];
     NSRectFill(frame);
+    
+    // Prevent drawing empty bezel
+    if (!_flags && !_characters) return;
 
     if (bgFrame.size.width > 0) {
-        [[NSColor colorWithCalibratedWhite:0 alpha:0.75] setFill];
+        [[ud colorForKey:@"minimal.bezelColor"] setFill];
         NSBezierPath* bp = [NSBezierPath bezierPath];
-        [bp appendRoundedRect:bgFrame radius:10];
+        [bp appendRoundedRect:bgFrame radius:[ud floatForKey:@"minimal.borderRadius"]];
         [bp fill];
     }
 
@@ -96,18 +100,18 @@ static CGFloat kDefaultDimension = 100.0;
     [ps setAlignment:NSTextAlignmentCenter];
 
     NSShadow* shadow = [[NSShadow alloc] init];
-    [shadow setShadowColor:[NSColor blackColor]];
+    [shadow setShadowColor:[ud colorForKey:@"minimal.textShadowColor"]];
     [shadow setShadowBlurRadius:2];
     [shadow setShadowOffset:NSMakeSize(2,-2)];
 
     NSDictionary* attr = @{
-        NSFontAttributeName:            [NSFont boldSystemFontOfSize:80],
-        NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:1 alpha:0.8],
+        NSFontAttributeName:            [NSFont boldSystemFontOfSize:[ud floatForKey:@"minimal.fontSize"]],
+        NSForegroundColorAttributeName: [ud colorForKey:@"minimal.textColor"],
         NSShadowAttributeName:          shadow,
         NSParagraphStyleAttributeName:  ps
     };
 
-    CGFloat width = kDefaultDimension;
+    CGFloat width = [ud integerForKey:@"minimal.bezelSize"];
 
     if (_characters) {
         size = [_characters sizeWithAttributes:attr];
@@ -158,24 +162,83 @@ static CGFloat kDefaultDimension = 100.0;
 }
 
 - (void)noteFlagsChanged:(uint32_t)flags {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    // Remove flags that shouldn't be shown
+    if (![ud boolForKey:@"minimal.display.command"]) {
+        flags &= ~NSEventModifierFlagCommand;
+    }
+    if (![ud boolForKey:@"minimal.display.shift"]) {
+        flags &= ~NSEventModifierFlagShift;
+    }
+    if (![ud boolForKey:@"minimal.display.option"]) {
+        flags &= ~NSEventModifierFlagOption;
+    }
+    if (![ud boolForKey:@"minimal.display.control"]) {
+        flags &= ~NSEventModifierFlagControl;
+    }
+    if (![ud boolForKey:@"minimal.display.function"]) {
+        flags &= ~NSEventModifierFlagFunction;
+    }
+    
     _flags = flags;
-    NSRect frame = self.frame;
-    frame.size.width = kDefaultDimension * (CGFloat)([self flagsCount] + [_characters length]);
-    self.frame = frame;
-    [self setNeedsDisplay:YES];
+    
+    [self adjustFrameSize];
 }
 
 - (void)noteCharactersChanged:(NSString *)characters {
-    _characters = characters;
-    NSRect frame = self.frame;
-    frame.size.width = kDefaultDimension * (CGFloat)([self flagsCount] + [_characters length]);
-    self.frame = frame;
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    if (!characters || [ud boolForKey:@"minimal.display.nonmodifier"]) {
+        _characters = characters;
+    }
+    
+    [self adjustFrameSize];
+}
+
+- (void)noteMouseChanged:(BOOL)pressed {
+    _mouse = pressed;
+    
+    [self adjustFrameSize];
+}
+
+- (void)adjustFrameSize {    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    NSString *trimmed = [_characters stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    // Get length of characters (counting emojis as 1 character)
+    __block NSUInteger charactersCount = 0;
+    [trimmed enumerateSubstringsInRange:NSMakeRange(0, trimmed.length)
+                                options:NSStringEnumerationByComposedCharacterSequences
+                             usingBlock:^(NSString *s, NSRange r, NSRange e, BOOL *stop) { charactersCount++; }];
+    
+    CGFloat bezelSize = [ud integerForKey:@"minimal.bezelSize"];
+    CGFloat width = round(bezelSize * (CGFloat)(
+        [self flagsCount] + charactersCount + ([self mouseEnabled] ? _mouse : 0)
+    ));
+    
+    NSRect windowFrame = self.window.frame;
+    
+    NSRect newFrame = windowFrame;
+    newFrame.size.width = width;
+    newFrame.size.height = bezelSize;
+    
+    if ([ud boolForKey:@"minimal.anchorRight"]) {
+        newFrame.origin.x = round(NSMaxX(windowFrame)) - width;
+    }
+    
+    [self.window setFrame:newFrame display:YES animate:NO];
+    
+    [self setFrame:NSMakeRect(0, 0, width, bezelSize)];
     [self setNeedsDisplay:YES];
 }
 
 @end
 
 @implementation MinimalVisualizer
+
+@dynamic preferencesView;
 
 - (NSString *)visualizerName {
     return @"Minimal";
@@ -189,8 +252,9 @@ static CGFloat kDefaultDimension = 100.0;
     // (and autosave frame _uses_ defaults anyway so same thing in the end?)
     // TODO(AK): It appears we sometimes retrieve a stale frame this way with a non-0 width, which was probably stored the last time the app exited via CMD-Q
     // This strategy also makes it more complicated to adjust the visualizer's dimension later, so we still need to revisit this.
+    CGFloat bezelSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"minimal.bezelSize"];
     NSString *frameValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"minimal.savedFrame"];
-    NSRect windowFrame = { kDefaultDimension, kDefaultDimension, 0, kDefaultDimension };
+    NSRect windowFrame = { bezelSize, bezelSize, 0, bezelSize };
     if (frameValue) {
         windowFrame = NSRectFromString(frameValue);
     }
@@ -276,8 +340,30 @@ static CGFloat kDefaultDimension = 100.0;
     [self charactersDidChange];
 }
 
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {}
+
 + (NSDictionary<NSString *,NSObject *> *)visualizerDefaults {
-	return @{};
+    return @{
+        @"minimal.display.command": @YES,
+        @"minimal.display.option": @YES,
+        @"minimal.display.control": @YES,
+        @"minimal.display.shift": @YES,
+        @"minimal.display.function": @YES,
+        @"minimal.display.nonmodifier": @YES,
+        @"minimal.anchorRight": @NO,
+        @"minimal.fontSize": @80.0,
+        @"minimal.bezelSize": @100.0,
+        @"minimal.borderRadius": @10.0,
+        @"minimal.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.75]
+                                                   requiringSecureCoding:NO
+                                                                   error:NULL],
+        @"minimal.textColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:8]
+                                                  requiringSecureCoding:NO
+                                                                  error:NULL],
+        @"minimal.textShadowColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor blackColor]
+                                                          requiringSecureCoding:NO
+                                                                          error:NULL],
+    };
 }
 
 @end
