@@ -46,6 +46,7 @@
 
 - (void)noteFlagsChanged:(uint32_t)flags;
 - (void)noteCharactersChanged:(NSString *)characters;
+- (void)adjustFrameSize;
 
 @end
 
@@ -54,6 +55,8 @@
     NSWindow* _visualizerWindow;
     MinimalVisualizerView* _visualizerView;
 }
+
+@property (nonatomic, assign) IBOutlet NSView *preferencesView;
 
 - (NSString*)visualizerName;
 - (void)deactivateVisualizer:(id)sender;
