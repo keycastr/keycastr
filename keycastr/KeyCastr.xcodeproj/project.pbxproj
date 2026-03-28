@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DB8252C2226E86500E123AA /* Minimal.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Minimal.nib */; };
 		1DB8252D2226E86500E123AA /* Minimal-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825292226E86500E123AA /* Minimal-Info.plist */; };
 		1DB8253E2226E8D100E123AA /* MinimalVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8252A2226E86500E123AA /* MinimalVisualizer.m */; };
-		1DB8253F2226E8DA00E123AA /* Minimal.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB825282226E86500E123AA /* Minimal.nib */; };
 		1DB825402226EC2100E123AA /* Minimal.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DB8253C2226E8A000E123AA /* Minimal.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */; };
 		324AD36C18A447EB8EDCE7B7 /* KCDefaultVisualizer.nib in Resources */ = {isa = PBXBuildFile; fileRef = 324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */; };
@@ -46,6 +44,8 @@
 		3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54870F30F37E001C7272 /* GeneralIcon.tif */; };
 		3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54880F30F37E001C7272 /* DisplayIcon.tif */; };
 		3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */; };
+		6529BC662F7983B000379188 /* Minimal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BC652F7983B000379188 /* Minimal.xib */; };
+		6529BC672F7983B000379188 /* Minimal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BC652F7983B000379188 /* Minimal.xib */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -343,7 +343,6 @@
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1DB825272226E86500E123AA /* MinimalVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinimalVisualizer.h; sourceTree = "<group>"; };
-		1DB825282226E86500E123AA /* Minimal.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Minimal.nib; sourceTree = "<group>"; };
 		1DB825292226E86500E123AA /* Minimal-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Minimal-Info.plist"; sourceTree = "<group>"; };
 		1DB8252A2226E86500E123AA /* MinimalVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinimalVisualizer.m; sourceTree = "<group>"; };
 		1DB8253C2226E8A000E123AA /* Minimal.kcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Minimal.kcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +392,7 @@
 		3D3F56CA0F337533001C7272 /* NSUserDefaults+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+Utility.m"; sourceTree = "<group>"; };
 		3DC3146F0F33EEF400B67D65 /* KCKeystroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKeystroke.h; sourceTree = "<group>"; };
 		3DC314700F33EEF400B67D65 /* KCKeystroke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKeystroke.m; sourceTree = "<group>"; };
+		6529BC652F7983B000379188 /* Minimal.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Minimal.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* KeyCastr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCastr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE3938871BB73B36005458A6 /* KeyCastrStatusItem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeyCastrStatusItem.png; sourceTree = "<group>"; };
@@ -498,7 +498,7 @@
 			isa = PBXGroup;
 			children = (
 				1DB825292226E86500E123AA /* Minimal-Info.plist */,
-				1DB825282226E86500E123AA /* Minimal.nib */,
+				6529BC652F7983B000379188 /* Minimal.xib */,
 				1DB825272226E86500E123AA /* MinimalVisualizer.h */,
 				1DB8252A2226E86500E123AA /* MinimalVisualizer.m */,
 			);
@@ -1037,7 +1037,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB8253F2226E8DA00E123AA /* Minimal.nib in Resources */,
+				6529BC672F7983B000379188 /* Minimal.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,8 +1053,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB8252C2226E86500E123AA /* Minimal.nib in Resources */,
 				1DB8252D2226E86500E123AA /* Minimal-Info.plist in Resources */,
+				6529BC662F7983B000379188 /* Minimal.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
