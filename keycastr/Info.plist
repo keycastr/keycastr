@@ -36,5 +36,23 @@
 	<string>https://keycastr.github.io/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>Ddy5wePDO7kDtpd0s2Y8nGBgVR3HLs1p96Xvhg24/Vc=</string>
+    <key>UTExportedTypeDeclarations</key>
+    <array>
+        <dict>
+            <key>UTTypeIdentifier</key>
+            <string>io.github.keycastr.kcplugin</string>
+            <key>UTTypeDescription</key>
+            <string>KeyCastr Plugin</string>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>com.apple.plugin</string>
+            </array>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <string>kcplugin</string>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>
