@@ -35,5 +35,6 @@
 -(void) setImage:(NSImage*)anImage forKey:(NSString*)aKey;
 -(NSImage*) imageForKey:(NSString*)aKey;
 
+- (void)removeObjectsWithPrefix:(NSString *)prefix;
 
 @end
