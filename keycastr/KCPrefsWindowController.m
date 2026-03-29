@@ -121,7 +121,6 @@
 
 -(void) nudge
 {
-	[tabView retain];
 	[tabView removeFromSuperview];
 	toolbarItemIdentifiers = [[NSMutableArray alloc] init];
 	preferenceViews = [[NSMutableArray alloc] init];
@@ -164,7 +163,7 @@
         }
 
 		// Create a toolbar item for this preference pane.
-		NSToolbarItem* item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+		NSToolbarItem* item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
 		[item setLabel:itemIdentifier];
         [item setImage:img];
 		[item setTarget:self];
@@ -193,14 +192,6 @@
 	[self changeVisualizerFrom:nil to:v];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visualizerChanged:) name:@"KCVisualizerChanged" object:nil];
 	_selectedPreferencePane = 0;
-}
-
-- (void)dealloc {
-    [toolbar release];
-    [toolbarItems release];
-    [toolbarItemIdentifiers release];
-    [preferenceViews release];
-    [super dealloc];
 }
 
 @end

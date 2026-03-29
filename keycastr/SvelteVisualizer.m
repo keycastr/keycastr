@@ -81,7 +81,7 @@
 	NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
 	NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
 	NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
-	NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
+	NSShadow* shadow = [[NSShadow alloc] init];
 	[shadow setShadowColor:[NSColor blackColor]];
 	[shadow setShadowBlurRadius:2];
 	[shadow setShadowOffset:NSMakeSize(2,-2)];
@@ -91,7 +91,7 @@
 		[NSFont boldSystemFontOfSize:16], NSFontAttributeName,
 		[NSColor whiteColor], NSForegroundColorAttributeName,
 		shadow, NSShadowAttributeName,
-		[ps autorelease], NSParagraphStyleAttributeName,
+		ps, NSParagraphStyleAttributeName,
         nil];
 
     if (_flags & NSEventModifierFlagShift)
@@ -142,25 +142,22 @@
 - (void)noteKeyEvent:(KCKeycastrEvent *)event
 {
     if (_displayedString) {
-        [_displayedString autorelease];
-        _displayedString = [[_displayedString stringByAppendingString:[event convertToString]] retain];
+        _displayedString = [_displayedString stringByAppendingString:[event convertToString]];
 
 
         if (_displayedString.length > 6) {
             NSRange range = NSMakeRange(_displayedString.length - 6, 6);
-            [_displayedString autorelease];
-            _displayedString = [[_displayedString substringWithRange:range] retain];
+            _displayedString = [_displayedString substringWithRange:range];
         }
     }
     else {
-        _displayedString = [[event convertToString] retain];
+        _displayedString = [event convertToString];
     }
 	[self setNeedsDisplay:YES];
 }
 
 -(void) noteFlagsChanged:(NSEventModifierFlags)flags
 {
-    [_displayedString autorelease];
     _displayedString = nil;
     _flags = flags;
 	[self setNeedsDisplay:YES];
@@ -219,13 +216,6 @@
                                                   }];
     
     return self;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_visualizerWindow release];
-    [_visualizerView release];
-    [super dealloc];
 }
 
 -(void) showVisualizer:(id)sender

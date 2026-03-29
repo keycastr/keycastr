@@ -14,7 +14,7 @@
 		324ADBC2EAD3FC5FD3C369FE /* KCMouseEventVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 324AD07485304123A4E743E0 /* KCMouseEventVisualizer.h */; };
 		324ADBCB6A0995C04527E1D8 /* NSBezierPath+RoundedRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 324AD5B73A2BC2916E285219 /* NSBezierPath+RoundedRect.m */; };
 		324ADDDF7A11FD8A03BE1995 /* KCMouseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADE0BF78E9FB58C02F49B /* KCMouseEvent.m */; };
-		324ADE7F91EC0CAFD38BA4BA /* KCMouseEventVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADDDFBC424496DA228C39 /* KCMouseEventVisualizer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		324ADE7F91EC0CAFD38BA4BA /* KCMouseEventVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADDDFBC424496DA228C39 /* KCMouseEventVisualizer.m */; };
 		3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */; };
 		3D1646690F43D76D00CA65AD /* KCDefaultVisualizer.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D16465A0F43D6E700CA65AD /* KCDefaultVisualizer.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3D1646C20F43DC4700CA65AD /* KCVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F54DE0F31448A001C7272 /* KCVisualizer.m */; };
@@ -22,10 +22,10 @@
 		3D1646C40F43DC4C00CA65AD /* KCKeystroke.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC314700F33EEF400B67D65 /* KCKeystroke.m */; };
 		3D1646C50F43DC4C00CA65AD /* KCKeystroke.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DC3146F0F33EEF400B67D65 /* KCKeystroke.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D1646C60F43DC5000CA65AD /* KCEventTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D1645DD0F43CD0600CA65AD /* KCEventTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3D1646C70F43DC5100CA65AD /* KCEventTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1645DE0F43CD0600CA65AD /* KCEventTransformer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		3D1646C70F43DC5100CA65AD /* KCEventTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1645DE0F43CD0600CA65AD /* KCEventTransformer.m */; };
 		3D1646CB0F43DC6D00CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1646D10F43DCA700CA65AD /* KCVisualizer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3D1646EB0F43DD3000CA65AD /* KCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52550F300389001C7272 /* KCAppController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		3D1646EB0F43DD3000CA65AD /* KCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52550F300389001C7272 /* KCAppController.m */; };
 		3D1646F40F43DD8300CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1648B70F451D8000CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1648BC0F451DC300CA65AD /* SvelteVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1648BB0F451DC300CA65AD /* SvelteVisualizer.m */; };
@@ -33,7 +33,7 @@
 		3D3F52A70F30BF1E001C7272 /* KeyCastr.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F52A60F30BF1E001C7272 /* KeyCastr.icns */; };
 		3D3F52BA0F30C68B001C7272 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3F52B90F30C68B001C7272 /* Quartz.framework */; };
 		3D3F52EB0F30CB13001C7272 /* KCPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */; };
-		3D3F540C0F30E8E7001C7272 /* KCEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F540B0F30E8E7001C7272 /* KCEventTap.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		3D3F540C0F30E8E7001C7272 /* KCEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F540B0F30E8E7001C7272 /* KCEventTap.m */; };
 		6529B9FB2F78D64E00379188 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6529B9FA2F78D64E00379188 /* Assets.xcassets */; };
 		6529BAE22F78EAF800379188 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAE02F78EAF800379188 /* MainMenu.xib */; };
 		6529BAE62F78EBB300379188 /* Svelte.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAE52F78EBB300379188 /* Svelte.xib */; };
@@ -1163,14 +1163,12 @@
 		3D16465D0F43D6E800CA65AD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1232,7 +1230,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -1295,7 +1292,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1325,7 +1321,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1335,7 +1330,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1366,7 +1360,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1376,7 +1369,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1476,6 +1468,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1517,6 +1510,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;

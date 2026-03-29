@@ -37,7 +37,7 @@
 }
 
 + (instancetype)eventWithNSEvent:(NSEvent *)event {
-    return [[[self alloc] initWithNSEvent:event] autorelease];
+    return [[self alloc] initWithNSEvent:event];
 }
 
 - (instancetype)initWithNSEvent:(NSEvent *)event {
