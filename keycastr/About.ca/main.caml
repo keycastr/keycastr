@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<caml xmlns="http://www.apple.com/CoreAnimation/1.0">
+  <CALayer allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 262 286" contentsFormat="RGBA8" cornerCurve="circular" name="Root Layer" position="131 143">
+    <sublayers>
+      <CALayer allowsEdgeAntialiasing="1" allowsGroupOpacity="1" backgroundColor="0.9468 0.9468 0.9468" beginTime="-0.433333" bounds="0 0 262 286" contentsFormat="RGBA8" cornerCurve="circular" hidden="0" name="Background" position="131 143"/>
+      <CALayer allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 170.86902 36.993" contentsFormat="RGBA8" cornerCurve="circular" name="KeyCastr" position="170.6861 255.2845" transform="translate(-39.6861, -52.1182, 0) scale(1.08785, 1.08785, 1)">
+	<sublayers>
+	  <CAShapeLayer fillColor="0.2902 0.6275 0.8784" path="0 28.798 m 5.991 28.798 l 5.991 14.38 l 4.329 14.96 l 15.848 28.798 l 23.347 28.798 l 11.944 15.037 l 12.292 19.289 l 23.579 0 l 16.583 0 l 9.547 12.177 l 5.991 7.886 l 5.991 0 l 0 0 l 0 28.798 l h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 23.579 28.798" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="11.7895 22.13">
+	    <strokeColor opacity="0" value="0 0 0"/>
+	  </CAShapeLayer>
+	  <CAShapeLayer fillColor="0.2902 0.6275 0.8784" path="11.016 0 m 8.852 0 6.932 0.489 5.257 1.468 c 3.582 2.448 2.287 3.781 1.372 5.469 c 0.457 7.157 0 9.019 0 11.055 c 0 13.116 0.464 14.985 1.391 16.66 c 2.319 18.335 3.595 19.649 5.218 20.603 c 6.842 21.556 8.646 22.033 10.63 22.033 c 12.794 22.033 14.663 21.582 16.235 20.68 c 17.807 19.778 19.005 18.535 19.83 16.95 c 20.654 15.365 21.067 13.593 21.067 11.635 c 21.067 10.681 20.976 9.934 20.796 9.393 c 4.986 9.393 l 4.986 13.645 l 17.51 13.645 l 14.766 11.635 l 15.024 12.717 15.011 13.696 14.727 14.572 c 14.444 15.449 13.941 16.138 13.22 16.64 c 12.498 17.143 11.635 17.394 10.63 17.394 c 9.625 17.394 8.755 17.143 8.021 16.64 c 7.286 16.138 6.745 15.41 6.397 14.456 c 6.049 13.503 5.914 12.356 5.991 11.016 c 5.888 9.831 6.03 8.787 6.416 7.885 c 6.803 6.983 7.402 6.281 8.214 5.778 c 9.026 5.276 9.986 5.025 11.094 5.025 c 12.099 5.025 12.975 5.231 13.722 5.643 c 14.47 6.055 15.049 6.622 15.462 7.344 c 20.1 5.141 l 19.456 3.594 18.316 2.351 16.679 1.41 c 15.043 0.47 13.155 0 11.016 0 c h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 21.067 22.033" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="35.0405 18.2845">
+	    <strokeColor opacity="0" value="0 0 0"/>
+	  </CAShapeLayer>
+	  <CAShapeLayer fillColor="0.2902 0.6275 0.8784" path="8.968 10.128 m 9.277 5.296 l 0 28.837 l 6.224 28.837 l 12.37 12.099 l 10.05 12.099 l 16.197 28.837 l 22.42 28.837 l 11.133 0 l 4.948 0 l 8.968 10.128 l h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 22.42 28.837" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="58.484 14.4185">
+	    <strokeColor opacity="0" value="0 0 0"/>
+	  </CAShapeLayer>
+	  <CAShapeLayer fillColor="0.2902 0.6275 0.8784" path="14.534 0 m 11.802 0 9.328 0.644 7.112 1.932 c 4.896 3.221 3.156 4.999 1.894 7.267 c 0.631 9.534 0 12.073 0 14.882 c 0 17.691 0.631 20.229 1.894 22.497 c 3.156 24.764 4.889 26.536 7.093 27.812 c 9.296 29.087 11.776 29.725 14.534 29.725 c 16.544 29.725 18.393 29.384 20.081 28.701 c 21.769 28.018 23.192 27.097 24.352 25.937 c 25.512 24.777 26.349 23.476 26.865 22.033 c 21.569 19.482 l 21.054 20.925 20.177 22.091 18.94 22.98 c 17.703 23.869 16.235 24.313 14.534 24.313 c 12.859 24.313 11.37 23.92 10.069 23.134 c 8.768 22.348 7.763 21.24 7.054 19.81 c 6.345 18.38 5.991 16.737 5.991 14.882 c 5.991 13.026 6.345 11.383 7.054 9.953 c 7.763 8.523 8.768 7.408 10.069 6.61 c 11.37 5.811 12.859 5.411 14.534 5.411 c 16.235 5.411 17.703 5.856 18.94 6.745 c 20.177 7.634 21.054 8.8 21.569 10.243 c 26.865 7.692 l 26.349 6.249 25.512 4.947 24.352 3.788 c 23.192 2.628 21.769 1.707 20.081 1.024 c 18.393 0.341 16.544 0 14.534 0 c h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 26.865 29.725" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="85.2525 22.1305">
+	    <strokeColor opacity="0" value="0 0 0"/>
+	  </CAShapeLayer>
+	  <CAShapeLayer fillColor="0.2902 0.6275 0.8784" path="7.383 0 m 5.862 0 4.548 0.244 3.44 0.734 c 2.332 1.224 1.482 1.926 0.889 2.841 c 0.296 3.756 0 4.844 0 6.107 c 0 7.911 0.625 9.386 1.875 10.533 c 3.124 11.68 4.999 12.459 7.499 12.872 c 13.954 13.915 l 13.954 9.663 l 8.543 8.697 l 7.692 8.542 7.054 8.272 6.629 7.885 c 6.204 7.499 5.991 6.97 5.991 6.3 c 5.991 5.656 6.23 5.154 6.706 4.793 c 7.183 4.432 7.795 4.252 8.543 4.252 c 9.47 4.252 10.301 4.458 11.036 4.87 c 11.77 5.282 12.337 5.843 12.737 6.552 c 13.136 7.26 13.336 8.04 13.336 8.89 c 13.336 14.379 l 13.336 15.178 13.014 15.848 12.369 16.389 c 11.725 16.93 10.875 17.201 9.818 17.201 c 8.787 17.201 7.879 16.924 7.093 16.37 c 6.307 15.816 5.734 15.062 5.373 14.109 c 0.734 16.312 l 1.353 18.064 2.506 19.456 4.194 20.487 c 5.882 21.517 7.847 22.033 10.089 22.033 c 11.841 22.033 13.407 21.711 14.785 21.066 c 16.164 20.422 17.233 19.52 17.994 18.361 c 18.754 17.201 19.134 15.874 19.134 14.379 c 19.134 0.463 l 13.722 0.463 l 13.722 3.865 l 15.037 4.097 l 14.109 2.68 13.027 1.642 11.79 0.985 c 10.553 0.328 9.084 0 7.383 0 c h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 19.134 22.033" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="110.416 18.2845">
+	    <strokeColor opacity="0" value="0 0 0"/>
+	  </CAShapeLayer>
+	  <CAShapeLayer fillColor="0.2902 0.6275 0.8784" path="9.741 0.077 m 7.422 0 5.386 0.477 3.634 1.507 c 1.882 2.538 0.67 3.968 0 5.798 c 4.175 7.963 l 4.768 6.829 5.534 5.966 6.475 5.373 c 7.416 4.78 8.453 4.497 9.587 4.523 c 10.386 4.548 11.004 4.735 11.442 5.083 c 11.88 5.431 12.086 5.901 12.061 6.494 c 12.035 6.958 11.842 7.344 11.481 7.654 c 11.12 7.963 10.592 8.182 9.896 8.311 c 6.301 9.006 l 4.575 9.419 3.222 10.179 2.242 11.287 c 1.263 12.395 0.748 13.709 0.696 15.23 c 0.67 16.518 0.973 17.672 1.605 18.69 c 2.236 19.707 3.144 20.513 4.33 21.105 c 5.515 21.698 6.894 22.02 8.466 22.072 c 10.527 22.149 12.351 21.73 13.935 20.816 c 15.52 19.901 16.673 18.58 17.395 16.853 c 13.182 14.689 l 12.821 15.539 12.228 16.216 11.404 16.718 c 10.579 17.221 9.651 17.459 8.62 17.433 c 7.873 17.407 7.293 17.234 6.881 16.911 c 6.469 16.589 6.275 16.158 6.301 15.616 c 6.327 15.178 6.527 14.811 6.9 14.515 c 7.274 14.218 7.86 13.967 8.659 13.761 c 12.022 13.065 l 13.8 12.601 15.172 11.841 16.139 10.785 c 17.105 9.728 17.614 8.44 17.666 6.919 c 17.691 5.605 17.389 4.445 16.757 3.44 c 16.126 2.435 15.205 1.636 13.993 1.044 c 12.782 0.451 11.365 0.129 9.741 0.077 c h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 17.691 22.149" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="131.9975 18.3035">
+	    <strokeColor opacity="0" value="0 0 0"/>
+	  </CAShapeLayer>
+	  <CAShapeLayer fillColor="0.2902 0.6275 0.8784" path="11.596 0 m 9.045 0 7.067 0.496 5.663 1.875 c 4.258 3.253 3.556 5.18 3.556 7.653 c 3.556 16.119 l 0 16.119 l 0 21.144 l 0.193 21.144 l 1.275 21.144 2.106 21.415 2.686 21.956 c 3.266 22.497 3.556 23.309 3.556 24.391 c 3.556 26.71 l 9.354 26.71 l 9.354 21.144 l 13.549 21.144 l 13.549 16.119 l 9.354 16.119 l 9.354 8.04 l 9.354 6.958 9.65 6.152 10.243 5.624 c 10.836 5.096 11.738 4.832 12.949 4.832 c 15.787 4.832 l 15.787 0 l 11.596 0 l h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 15.787 26.71" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="150.6055 21.048">
+	    <strokeColor opacity="0" value="0 0 0"/>
+	  </CAShapeLayer>
+	  <CALayer allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 12.37 21.376" contentsFormat="RGBA8" cornerCurve="circular" name="Group" position="166.6 18.613" transform="translate(-1.91598, 0.231929, 0)">
+	    <sublayers>
+	      <CAShapeLayer fillColor="1 0.3804 0.702" path="0 21.144 m 5.412 21.144 l 5.412 16.08 l 5.025 16.815 l 5.463 18.49 6.191 19.669 7.209 20.351 c 8.227 21.034 9.535 21.376 11.133 21.376 c 12.37 21.376 l 12.37 16.351 l 10.553 16.351 l 9.11 16.351 7.957 15.913 7.093 15.036 c 6.23 14.16 5.798 12.949 5.798 11.403 c 5.798 0 l 0 0 l 0 21.144 l h" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 12.369995117187 21.719284057617" contentsFormat="RGBA8" cornerCurve="circular" name="path" position="6.184997558594 10.516357421875">
+		<strokeColor opacity="0" value="0 0 0"/>
+	      </CAShapeLayer>
+	    </sublayers>
+	  </CALayer>
+	</sublayers>
+      </CALayer>
+      <CAEmitterLayer emitterSize="112.859573364258 111.08317565918" renderMode="oldestLast" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" beginTime="-0.2" bounds="0 0 56.4298 55.5416" contentsFormat="RGBA8" cornerCurve="circular" hidden="0" name="Emitter Layer" position="159.1338 113.6972" shouldRasterize="0" speed="0.75">
+	<emitterCells>
+	  <CAEmitterCell beginTime="0" birthRate="2.80791" contentsFrameCount="0" contentsFrameMode="single" contentsFramesPerRow="0" contentsFramesPerSecond="0" contentsScale="1" duration="inf" emissionLatitude="0" emissionRange="0" lifetime="0.75" lifetimeRange="0" name="Cell" particleType="plane" repeatCount="0" repeatDuration="0" scale="0" scaleRange="0" scaleSpeed="0" spin="0" xAcceleration="0">
+	    <contents type="CGImage" src="assets/KeyCastrWave.png"/>
+	    <emitterBehaviors>
+	      <CAEmitterBehavior behavior="valueOverLife" name="valueOverLife" keyPath="scale" additive="0">
+		<values>
+		  <real value="0.4"/>
+		  <real value="1.5"/>
+		</values>
+	      </CAEmitterBehavior>
+	      <CAEmitterBehavior behavior="valueOverLife" name="valueOverLife 2" keyPath="color.alpha" additive="0">
+		<values>
+		  <integer value="1"/>
+		  <real value="0.3"/>
+		  <integer value="0"/>
+		</values>
+	      </CAEmitterBehavior>
+	    </emitterBehaviors>
+	  </CAEmitterCell>
+	</emitterCells>
+	<animations>
+	  <animation type="CAKeyframeAnimation" keyPath="emitterCells.Cell.birthRate" beginTime="1e-100" duration="2" enabled="1" fillMode="both" removedOnCompletion="0" repeatCount="inf">
+	    <keyTimes>
+	      <real value="0.2"/>
+	      <real value="0.4"/>
+	      <real value="0.4"/>
+	      <real value="0.6"/>
+	      <real value="0.8"/>
+	      <integer value="1"/>
+	    </keyTimes>
+	    <values>
+	      <integer value="1"/>
+	      <integer value="10"/>
+	      <integer value="2"/>
+	      <real value="1.5"/>
+	      <integer value="5"/>
+	      <integer value="1"/>
+	    </values>
+	  </animation>
+	</animations>
+      </CAEmitterLayer>
+      <CALayer allowsEdgeAntialiasing="1" allowsGroupBlending="0" allowsGroupOpacity="0" bounds="0 0 116.20865 116.2087" contentsFormat="RGBA8" cornerCurve="circular" name="App Icon" position="131 71">
+	<sublayers>
+	  <CALayer allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 116.2087 116.2087" contentsFormat="RGBA8" cornerCurve="circular" hidden="0" name="Normal" position="58.1044 58.1044">
+	    <contents type="CGImage" src="assets/KeyCastrInactive.png"/>
+	  </CALayer>
+	  <CALayer allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 116.2087 116.2087" contentsFormat="RGBA8" cornerCurve="circular" hidden="0" name="Glow" position="58.104325 58.1044">
+	    <contents type="CGImage" src="assets/KeyCastr.png"/>
+	    <animations>
+	      <p key="animation-1" type="CAKeyframeAnimation" calculationMode="linear" keyPath="opacity" autoreverses="0" beginTime="1e-100" duration="3" enabled="1" fillMode="removed" removedOnCompletion="0" repeatCount="inf" timingFunction="easeInEaseOut">
+		<keyTimes>
+		  <integer value="0"/>
+		  <real value="0.5"/>
+		  <integer value="1"/>
+		</keyTimes>
+		<values>
+		  <integer value="0"/>
+		  <integer value="1"/>
+		  <integer value="0"/>
+		</values>
+	      </p>
+	    </animations>
+	  </CALayer>
+	</sublayers>
+	<animations>
+	  <animation type="CAKeyframeAnimation" calculationMode="linear" keyPath="transform.scale.xy" autoreverses="0" beginTime="1e-100" duration="0.75" enabled="0" fillMode="removed" removedOnCompletion="0" repeatCount="inf" timingFunction="0.092546 0.67152 0.37163 0.96675">
+	    <keyTimes>
+	      <integer value="0"/>
+	      <real value="0.5"/>
+	      <integer value="1"/>
+	    </keyTimes>
+	    <values>
+	      <integer value="1"/>
+	      <real value="0.9"/>
+	      <integer value="1"/>
+	    </values>
+	  </animation>
+	</animations>
+      </CALayer>
+    </sublayers>
+    <states/>
+    <stateTransitions/>
+  </CALayer>
+</caml>

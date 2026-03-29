@@ -38,6 +38,8 @@
 		6529BAE22F78EAF800379188 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAE02F78EAF800379188 /* MainMenu.xib */; };
 		6529BAE62F78EBB300379188 /* Svelte.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAE52F78EBB300379188 /* Svelte.xib */; };
 		6529BAEB2F78EBCA00379188 /* KCDefaultVisualizer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */; };
+		6529BBC02F78FF2800379188 /* KCAboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6529BBBF2F78FF2800379188 /* KCAboutView.m */; };
+		6529BBD92F79332800379188 /* About.ca in Resources */ = {isa = PBXBuildFile; fileRef = 6529BBD82F79332800379188 /* About.ca */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -51,7 +53,6 @@
 		AF5457292C0CDB2E00064C82 /* KCColorValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */; };
 		AF54572A2C0CDB2E00064C82 /* KCColorValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */; };
 		AF546FAC272DFFBE00EA6AFD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF546FAB272DFFBE00EA6AFD /* Carbon.framework */; };
-		AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */ = {isa = PBXBuildFile; fileRef = AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */; };
 		AF7B1CF32C22376100C8C145 /* NSUserDefaults+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F56CA0F337533001C7272 /* NSUserDefaults+Utility.m */; };
 		AF7C0341271F694500CE1F8D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF7C0340271F694500CE1F8D /* QuartzCore.framework */; };
 		AFAA2BB82A991B39007C7BAA /* KCMouseEventVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFAA2BB72A991B39007C7BAA /* KCMouseEventVisualizerTests.m */; };
@@ -364,6 +365,9 @@
 		6529BAE12F78EAF800379188 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		6529BAE52F78EBB300379188 /* Svelte.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Svelte.xib; sourceTree = "<group>"; };
 		6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KCDefaultVisualizer.xib; sourceTree = "<group>"; };
+		6529BBBF2F78FF2800379188 /* KCAboutView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCAboutView.m; sourceTree = "<group>"; };
+		6529BBD72F7931D300379188 /* QuartzCorePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuartzCorePrivate.h; sourceTree = "<group>"; };
+		6529BBD82F79332800379188 /* About.ca */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = About.ca; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* KeyCastr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCastr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF20BE722C1E21B3008B758E /* KCDefaultVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCDefaultVisualizerTests.m; sourceTree = "<group>"; };
@@ -371,7 +375,6 @@
 		AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCColorValueTransformer.m; sourceTree = "<group>"; };
 		AF5457412C0CE25700064C82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AF546FAB272DFFBE00EA6AFD /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = KeyCastrAbout.qtz; sourceTree = "<group>"; };
 		AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
 		AF6DD4082586E04C00EDC9D4 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		AF7C0340271F694500CE1F8D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -439,6 +442,7 @@
 			children = (
 				3D1648930F43DE7A00CA65AD /* Headers */,
 				3D3F52550F300389001C7272 /* KCAppController.m */,
+				6529BBBF2F78FF2800379188 /* KCAboutView.m */,
 				3D3F540B0F30E8E7001C7272 /* KCEventTap.m */,
 				3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
@@ -478,7 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				6529B9FA2F78D64E00379188 /* Assets.xcassets */,
-				AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */,
+				6529BBD82F79332800379188 /* About.ca */,
 				3D3F52A60F30BF1E001C7272 /* KeyCastr.icns */,
 				3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -564,6 +568,7 @@
 				3D3F540A0F30E8E7001C7272 /* KCEventTap.h */,
 				3D3F52E90F30CB13001C7272 /* KCPrefsWindowController.h */,
 				32CA4F630368D1EE00C91783 /* KeyCastr_Prefix.pch */,
+				6529BBD72F7931D300379188 /* QuartzCorePrivate.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -979,12 +984,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				3D3F52A70F30BF1E001C7272 /* KeyCastr.icns in Resources */,
 				3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */,
 				6529B9FB2F78D64E00379188 /* Assets.xcassets in Resources */,
 				6529BAE22F78EAF800379188 /* MainMenu.xib in Resources */,
+				6529BBD92F79332800379188 /* About.ca in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,6 +1040,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6529BBC02F78FF2800379188 /* KCAboutView.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				3D3F52EB0F30CB13001C7272 /* KCPrefsWindowController.m in Sources */,
 				3D3F540C0F30E8E7001C7272 /* KCEventTap.m in Sources */,

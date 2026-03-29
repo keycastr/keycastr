@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>assetManifest</key>
+	<string>assetManifest.caml</string>
+	<key>documentHeight</key>
+	<real>286</real>
+	<key>documentResizesToView</key>
+	<false/>
+	<key>documentWidth</key>
+	<real>262</real>
+	<key>dynamicGuidesEnabled</key>
+	<true/>
+	<key>geometryFlipped</key>
+	<false/>
+	<key>guidesEnabled</key>
+	<true/>
+	<key>interactiveMouseEventsEnabled</key>
+	<true/>
+	<key>interactiveShowsCursor</key>
+	<true/>
+	<key>interactiveTouchEventsEnabled</key>
+	<false/>
+	<key>loopEnd</key>
+	<real>+infinity</real>
+	<key>loopStart</key>
+	<real>0.0</real>
+	<key>loopingEnabled</key>
+	<false/>
+	<key>multitouchDisablesMouse</key>
+	<false/>
+	<key>multitouchEnabled</key>
+	<false/>
+	<key>presentationMouseEventsEnabled</key>
+	<true/>
+	<key>presentationShowsCursor</key>
+	<true/>
+	<key>presentationTouchEventsEnabled</key>
+	<false/>
+	<key>rootDocument</key>
+	<string>main.caml</string>
+	<key>savesWindowFrame</key>
+	<false/>
+	<key>scalesToFitInPlayer</key>
+	<false/>
+	<key>showsTouches</key>
+	<true/>
+	<key>snappingEnabled</key>
+	<true/>
+	<key>timelineMarkers</key>
+	<string>[(null)]</string>
+	<key>touchesColor</key>
+	<string>1 1 0 0.8</string>
+	<key>unitsInPixelsInPlayer</key>
+	<true/>
+</dict>
+</plist>

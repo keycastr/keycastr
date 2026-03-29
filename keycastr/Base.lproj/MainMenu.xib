@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
-        <plugIn identifier="com.apple.QuartzComposerIBPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +16,6 @@
         </customObject>
         <customObject id="375" customClass="KCAppController">
             <connections>
-                <outlet property="aboutQCView" destination="386" id="ppu-GG-BnQ"/>
                 <outlet property="aboutWindow" destination="384" id="395"/>
                 <outlet property="dockShortcutItem" destination="516" id="521"/>
                 <outlet property="preferencesWindow" destination="371" id="394"/>
@@ -162,7 +160,7 @@
             <rect key="contentRect" x="335" y="390" width="471" height="466"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>
             <view key="contentView" misplaced="YES" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="473" height="466"/>
+                <rect key="frame" x="0.0" y="0.0" width="471" height="466"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView translatesAutoresizingMaskIntoConstraints="NO" id="402">
@@ -506,7 +504,7 @@
             </connections>
             <point key="canvasLocation" x="-262.5" y="-49"/>
         </window>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="384" userLabel="About">
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="384" userLabel="About">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="194" width="256" height="337"/>
@@ -519,8 +517,8 @@
                         <rect key="frame" x="0.0" y="78" width="258" height="5"/>
                     </box>
                     <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="388">
-                        <rect key="frame" x="18" y="56" width="83" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Version 0.8.0" id="389">
+                        <rect key="frame" x="18" y="56" width="110" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Version Unknown" id="389">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -531,23 +529,20 @@
                         <textFieldCell key="cell" controlSize="small" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" id="393">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title" base64-UTF8="YES">
-Q29weXJpZ2h0IAPCqSAyMDA5LTIwMjUgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFuZCBj
+Q29weXJpZ2h0IAPCqSAyMDA5LTIwMjYgU3RlcGhlbiBEZWtlbiwgQW5kcmV3IEtpdGNoZW4sIGFuZCBj
 b250cmlidXRvcnM
 </string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <qcView autostartsRendering="YES" translatesAutoresizingMaskIntoConstraints="NO" id="386">
-                        <rect key="frame" x="0.0" y="81" width="256" height="256"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="JQ3-ee-HvC" customClass="KCAboutView">
+                        <rect key="frame" x="-3" y="80" width="262" height="286"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="256" id="Ava-98-nwW"/>
-                            <constraint firstAttribute="height" constant="256" id="hLn-Dy-hdQ"/>
-                            <constraint firstAttribute="width" constant="256" id="tOE-mZ-U4T"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="256" id="vIp-Xy-p2X"/>
+                            <constraint firstAttribute="width" constant="262" id="5Ao-DA-8wY"/>
+                            <constraint firstAttribute="height" constant="286" id="g5L-tN-WBF"/>
                         </constraints>
-                        <color key="eraseColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </qcView>
+                    </customView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="388" secondAttribute="trailing" constant="20" symbolic="YES" id="248-AJ-Ggs"/>
@@ -556,16 +551,15 @@ b250cmlidXRvcnM
                     <constraint firstAttribute="trailing" secondItem="392" secondAttribute="trailing" constant="18" id="AvG-ah-dWf"/>
                     <constraint firstAttribute="trailing" secondItem="387" secondAttribute="trailing" constant="-2" id="D0c-GO-EmZ"/>
                     <constraint firstItem="392" firstAttribute="leading" secondItem="385" secondAttribute="leading" constant="20" symbolic="YES" id="E6j-q0-oTt"/>
+                    <constraint firstAttribute="trailing" secondItem="JQ3-ee-HvC" secondAttribute="trailing" constant="-3" id="GEb-2i-anc"/>
                     <constraint firstAttribute="bottom" secondItem="392" secondAttribute="bottom" constant="20" symbolic="YES" id="HXc-z2-vge"/>
-                    <constraint firstItem="386" firstAttribute="top" secondItem="385" secondAttribute="top" id="Jj4-dI-NKr"/>
-                    <constraint firstItem="387" firstAttribute="top" secondItem="386" secondAttribute="bottom" id="MEY-n5-Y4k"/>
-                    <constraint firstItem="386" firstAttribute="leading" secondItem="385" secondAttribute="leading" id="UQw-nQ-vWY"/>
                     <constraint firstItem="392" firstAttribute="leading" secondItem="388" secondAttribute="leading" id="YcI-9r-inR"/>
                     <constraint firstItem="388" firstAttribute="top" secondItem="387" secondAttribute="bottom" constant="8" symbolic="YES" id="myd-3l-Exp"/>
-                    <constraint firstAttribute="trailing" secondItem="386" secondAttribute="trailing" id="rmf-TA-eIa"/>
+                    <constraint firstItem="JQ3-ee-HvC" firstAttribute="top" secondItem="385" secondAttribute="top" constant="-29" id="pSj-pl-vkG"/>
+                    <constraint firstItem="JQ3-ee-HvC" firstAttribute="leading" secondItem="385" secondAttribute="leading" constant="-3" id="uG1-65-Esu"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="-763" y="16"/>
+            <point key="canvasLocation" x="-763" y="15.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="462"/>
     </objects>

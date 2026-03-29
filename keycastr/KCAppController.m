@@ -62,7 +62,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 @property (nonatomic, assign) IBOutlet NSMenu *statusMenu;
 @property (nonatomic, strong) IBOutlet NSWindow *aboutWindow;
-@property (nonatomic, strong) IBOutlet QCView   *aboutQCView;
 @property (nonatomic, assign) IBOutlet NSWindow *preferencesWindow;
 @property (nonatomic, assign) IBOutlet KCPrefsWindowController *prefsWindowController;
 @property (nonatomic, assign) IBOutlet SRRecorderControl *shortcutRecorder;
@@ -78,7 +77,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     BOOL _isCapturing;
 }
 
-@synthesize eventTap, statusItem, statusMenu, aboutWindow, aboutQCView, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem, mouseEventVisualizer, currentVisualizer;
+@synthesize eventTap, statusItem, statusMenu, aboutWindow, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem, mouseEventVisualizer, currentVisualizer;
 @synthesize toggleCastingShortcut = _toggleCastingShortcut;
 
 #pragma mark -
@@ -324,19 +323,14 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
             }
         }
     }
-
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"KeyCastrAbout" ofType:@"qtz"];
-    [aboutQCView loadCompositionFromFile:filePath];
 }
 
 -(void) orderFrontKeyCastrAboutPanel:(id)sender
 {
+    aboutWindow.movableByWindowBackground = YES;
+    
     [aboutWindow center];
     [aboutWindow makeKeyAndOrderFront:sender];
-    
-    if (!aboutQCView.isRendering) {
-        [aboutQCView startRendering];
-    }
     
     [NSApp activateIgnoringOtherApps:YES];
 }
