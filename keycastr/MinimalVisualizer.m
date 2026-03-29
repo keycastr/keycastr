@@ -297,6 +297,8 @@
     [_visualizerWindow setFrame:windowFrame display:NO];
     [_visualizerWindow setOpaque:NO];
     [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    
+    [_visualizerWindow setTitle:@"Minimal Visualizer"];
 
     _visualizerView = [[MinimalVisualizerView alloc] init];
     [_visualizerView noteFlagsChanged:0];
