@@ -98,9 +98,14 @@
 	NSView* view = [preferenceViews objectAtIndex:1];
 	NSView* subview = [[view subviews] objectAtIndex:0];
 	NSView* prefView = [new preferencesView];
-	NSSize s = [prefView frame].size;
-    // TODO: this is overly tightly coupled to the Display tab's layout
-	s.height += [subview frame].size.height * 2.0;
+    
+    NSSize s = prefView.frame.size;
+    CGFloat existingHeight = 0;
+    for (NSView *v in view.subviews) {
+        existingHeight += v.frame.size.height;
+    }
+    s.height += existingHeight;
+    
 	[view setFrameSize:s];
 	[view addSubview:prefView];
 	

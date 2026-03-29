@@ -159,21 +159,21 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="471" height="466"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>
-            <view key="contentView" misplaced="YES" id="372">
+            <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="471" height="466"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView translatesAutoresizingMaskIntoConstraints="NO" id="402">
-                        <rect key="frame" x="13" y="2" width="447" height="458"/>
+                        <rect key="frame" x="12" y="2" width="447" height="458"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="403">
                                 <view key="view" id="406">
-                                    <rect key="frame" x="10" y="33" width="425" height="412"/>
+                                    <rect key="frame" x="10" y="33" width="427" height="412"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="410">
-                                            <rect key="frame" x="18" y="275" width="389" height="117"/>
+                                            <rect key="frame" x="18" y="275" width="387" height="117"/>
                                             <subviews>
                                                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446">
                                                     <rect key="frame" x="18" y="50" width="139" height="16"/>
@@ -184,7 +184,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="444">
-                                                    <rect key="frame" x="163" y="19" width="206" height="18"/>
+                                                    <rect key="frame" x="163" y="19" width="204" height="18"/>
                                                     <buttonCell key="cell" type="check" title="Show preferences at launch" bezelStyle="regularSquare" imagePosition="leading" alignment="left" state="on" inset="2" id="445">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
@@ -232,6 +232,7 @@
                                                 </customView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="387" id="6CU-bm-InE"/>
                                                 <constraint firstItem="420" firstAttribute="leading" secondItem="418" secondAttribute="trailing" constant="10" id="ASO-R4-kP5"/>
                                                 <constraint firstItem="418" firstAttribute="top" secondItem="410" secondAttribute="top" constant="20" symbolic="YES" id="AhR-0d-QJW"/>
                                                 <constraint firstItem="446" firstAttribute="trailing" secondItem="418" secondAttribute="trailing" id="B0l-8L-Veq"/>
@@ -375,6 +376,7 @@
                                                 <constraint firstItem="M4E-xg-OPh" firstAttribute="leading" secondItem="429" secondAttribute="leading" id="So5-P7-BXR"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="top" secondItem="411" secondAttribute="top" constant="59" id="Zec-vm-rAh"/>
                                                 <constraint firstItem="429" firstAttribute="width" secondItem="M4E-xg-OPh" secondAttribute="width" id="auR-yA-s7a"/>
+                                                <constraint firstAttribute="width" constant="387" id="cZl-X7-71B"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="height" secondItem="426" secondAttribute="height" id="drL-t1-XcD"/>
                                                 <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="lIh-gp-Fjd"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="rXA-cP-0dy"/>
@@ -389,103 +391,93 @@
                                     </constraints>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Update" identifier="Item 2" id="408">
-                                <view key="view" id="409">
-                                    <rect key="frame" x="10" y="33" width="422" height="412"/>
+                            <tabViewItem label="Update" identifier="3" id="hCY-T9-sY3">
+                                <view key="view" id="fc0-vp-oKI">
+                                    <rect key="frame" x="10" y="33" width="427" height="412"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="412">
-                                            <rect key="frame" x="20" y="292" width="382" height="100"/>
+                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="faH-xU-PF6">
+                                            <rect key="frame" x="20" y="292" width="387" height="100"/>
                                             <subviews>
-                                                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="451">
-                                                    <rect key="frame" x="18" y="63" width="200" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Check for updates at startup" bezelStyle="regularSquare" imagePosition="leading" alignment="left" state="on" inset="2" id="452">
+                                                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="NUS-WQ-oWR">
+                                                    <rect key="frame" x="18" y="64" width="200" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="Check for updates at startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="1qL-7h-1TQ">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="496" name="value" keyPath="automaticallyChecksForUpdates" id="501"/>
+                                                        <binding destination="496" name="value" keyPath="automaticallyChecksForUpdates" id="2lZ-13-4Mo"/>
                                                     </connections>
                                                 </button>
-                                                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="459">
-                                                    <rect key="frame" x="18" y="41" width="232" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Include anonymous system profile" bezelStyle="regularSquare" imagePosition="leading" alignment="left" enabled="NO" inset="2" id="460">
+                                                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="A5q-m1-xxY">
+                                                    <rect key="frame" x="18" y="42" width="232" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="Include anonymous system profile" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="pnu-E1-eUx">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <binding destination="496" name="enabled" keyPath="automaticallyChecksForUpdates" id="511"/>
-                                                        <binding destination="496" name="value" keyPath="sendsSystemProfile" id="499"/>
+                                                        <binding destination="496" name="enabled" keyPath="automaticallyChecksForUpdates" id="GaE-Vk-JUZ"/>
+                                                        <binding destination="496" name="value" keyPath="sendsSystemProfile" id="67z-xi-IcR"/>
                                                     </connections>
                                                 </button>
-                                                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="453">
-                                                    <rect key="frame" x="280" y="12" width="88" height="27"/>
-                                                    <buttonCell key="cell" type="push" title="Check Now" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="454">
-                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="checkForUpdates:" target="496" id="497"/>
-                                                    </connections>
-                                                </button>
-                                                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="457">
-                                                    <rect key="frame" x="98" y="20" width="37" height="14"/>
-                                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Never" id="458">
-                                                        <dateFormatter key="formatter" formatterBehavior="custom10_4" dateStyle="short" id="509"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="twd-iu-bEL">
+                                                    <rect key="frame" x="98" y="21" width="37" height="14"/>
+                                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Never" id="mz9-oc-tm5">
+                                                        <dateFormatter key="formatter" formatterBehavior="custom10_4" dateStyle="short" id="ev5-St-q8P"/>
                                                         <font key="font" metaFont="smallSystemBold"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <binding destination="496" name="value" keyPath="lastUpdateCheckDate" id="508">
+                                                        <binding destination="496" name="value" keyPath="lastUpdateCheckDate" id="XgD-vt-HEG">
                                                             <dictionary key="options">
-                                                                <integer key="NSAllowsEditingMultipleValuesSelection" value="1"/>
-                                                                <integer key="NSAlwaysPresentsApplicationModalAlerts" value="0"/>
-                                                                <integer key="NSConditionallySetsEditable" value="0"/>
-                                                                <integer key="NSConditionallySetsEnabled" value="0"/>
-                                                                <integer key="NSConditionallySetsHidden" value="0"/>
-                                                                <integer key="NSContinuouslyUpdatesValue" value="0"/>
-                                                                <string key="NSMultipleValuesPlaceholder"></string>
-                                                                <string key="NSNoSelectionPlaceholder"></string>
-                                                                <string key="NSNotApplicablePlaceholder"></string>
                                                                 <string key="NSNullPlaceholder">Never</string>
-                                                                <integer key="NSRaisesForNotApplicableKeys" value="1"/>
-                                                                <integer key="NSValidatesImmediately" value="0"/>
                                                             </dictionary>
                                                         </binding>
                                                     </connections>
                                                 </textField>
-                                                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="455">
-                                                    <rect key="frame" x="18" y="20" width="78" height="14"/>
-                                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Last checked:" id="456">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nbp-W1-yCj">
+                                                    <rect key="frame" x="18" y="21" width="78" height="14"/>
+                                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Last checked:" id="M0v-0k-kfG">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
+                                                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5mu-9N-rBJ">
+                                                    <rect key="frame" x="285" y="13" width="88" height="27"/>
+                                                    <buttonCell key="cell" type="push" title="Check Now" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IJJ-h3-EeJ">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="checkForUpdates:" target="496" id="LaL-jt-wgY"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="457" firstAttribute="centerY" secondItem="455" secondAttribute="centerY" id="4CT-k5-sTJ"/>
-                                                <constraint firstItem="459" firstAttribute="leading" secondItem="412" secondAttribute="leading" constant="20" symbolic="YES" id="51x-bl-ZnQ"/>
-                                                <constraint firstItem="453" firstAttribute="centerY" secondItem="455" secondAttribute="centerY" id="8G3-0g-iye"/>
-                                                <constraint firstItem="455" firstAttribute="leading" secondItem="412" secondAttribute="leading" constant="20" symbolic="YES" id="9UJ-O8-nHJ"/>
-                                                <constraint firstItem="453" firstAttribute="leading" relation="lessThanOrEqual" secondItem="457" secondAttribute="trailing" priority="750" constant="165" id="Bwd-mK-EDY"/>
-                                                <constraint firstAttribute="bottom" secondItem="455" secondAttribute="bottom" priority="750" constant="20" symbolic="YES" id="C9f-X2-aHf"/>
-                                                <constraint firstAttribute="trailing" secondItem="453" secondAttribute="trailing" constant="20" symbolic="YES" id="MEG-U3-HHf"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="451" secondAttribute="trailing" constant="20" symbolic="YES" id="MWa-M8-HeB"/>
-                                                <constraint firstItem="451" firstAttribute="leading" secondItem="412" secondAttribute="leading" constant="20" symbolic="YES" id="Wdg-09-OeY"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="459" secondAttribute="trailing" constant="20" symbolic="YES" id="lVd-PZ-Pb0"/>
-                                                <constraint firstItem="457" firstAttribute="leading" secondItem="455" secondAttribute="trailing" constant="6" id="lhO-MH-0Y5"/>
-                                                <constraint firstItem="455" firstAttribute="top" secondItem="459" secondAttribute="bottom" constant="8" symbolic="YES" id="n42-Rv-hV1"/>
-                                                <constraint firstItem="459" firstAttribute="top" secondItem="451" secondAttribute="bottom" constant="6" id="uuu-lo-b8g"/>
-                                                <constraint firstItem="451" firstAttribute="top" secondItem="412" secondAttribute="top" constant="20" symbolic="YES" id="xoq-Gs-Tx9"/>
+                                                <constraint firstItem="NUS-WQ-oWR" firstAttribute="leading" secondItem="faH-xU-PF6" secondAttribute="leading" constant="20" id="0ci-Bo-NOV"/>
+                                                <constraint firstItem="Nbp-W1-yCj" firstAttribute="top" secondItem="A5q-m1-xxY" secondAttribute="bottom" constant="8" symbolic="YES" id="Bbs-fZ-S64"/>
+                                                <constraint firstItem="5mu-9N-rBJ" firstAttribute="centerY" secondItem="Nbp-W1-yCj" secondAttribute="centerY" id="CpP-Gl-ZMD"/>
+                                                <constraint firstAttribute="trailing" secondItem="5mu-9N-rBJ" secondAttribute="trailing" constant="20" symbolic="YES" id="Eu6-hJ-T8R"/>
+                                                <constraint firstItem="twd-iu-bEL" firstAttribute="centerY" secondItem="Nbp-W1-yCj" secondAttribute="centerY" id="P6y-if-mY6"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NUS-WQ-oWR" secondAttribute="trailing" constant="20" symbolic="YES" id="V6H-Bf-NZk"/>
+                                                <constraint firstItem="5mu-9N-rBJ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="twd-iu-bEL" secondAttribute="trailing" constant="165" id="YZX-FY-G1H"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="A5q-m1-xxY" secondAttribute="trailing" constant="20" symbolic="YES" id="Yfv-Fp-YZ1"/>
+                                                <constraint firstItem="twd-iu-bEL" firstAttribute="leading" secondItem="Nbp-W1-yCj" secondAttribute="trailing" constant="6" id="fXn-tL-UkS"/>
+                                                <constraint firstItem="A5q-m1-xxY" firstAttribute="leading" secondItem="Nbp-W1-yCj" secondAttribute="leading" id="lha-YN-Hmh"/>
+                                                <constraint firstAttribute="width" constant="387" id="rKo-ZG-YJY"/>
+                                                <constraint firstItem="A5q-m1-xxY" firstAttribute="leading" secondItem="faH-xU-PF6" secondAttribute="leading" constant="20" id="ruB-xd-Six"/>
+                                                <constraint firstItem="A5q-m1-xxY" firstAttribute="top" secondItem="NUS-WQ-oWR" secondAttribute="bottom" constant="6" id="y0w-UI-rdf"/>
+                                                <constraint firstItem="NUS-WQ-oWR" firstAttribute="top" secondItem="faH-xU-PF6" secondAttribute="top" constant="19" id="zj3-bh-YaG"/>
                                             </constraints>
                                         </customView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="412" firstAttribute="top" secondItem="409" secondAttribute="top" constant="20" symbolic="YES" id="UYV-aj-X82"/>
-                                        <constraint firstItem="412" firstAttribute="leading" secondItem="409" secondAttribute="leading" constant="20" symbolic="YES" id="ZFN-97-9xf"/>
-                                        <constraint firstAttribute="trailing" secondItem="412" secondAttribute="trailing" constant="20" symbolic="YES" id="mB7-Kk-Qb2"/>
+                                        <constraint firstAttribute="trailing" secondItem="faH-xU-PF6" secondAttribute="trailing" constant="20" symbolic="YES" id="CYg-Xn-yHo"/>
+                                        <constraint firstItem="faH-xU-PF6" firstAttribute="top" secondItem="fc0-vp-oKI" secondAttribute="top" constant="20" symbolic="YES" id="En7-qW-hxX"/>
+                                        <constraint firstAttribute="bottom" secondItem="faH-xU-PF6" secondAttribute="bottom" constant="292" id="Sdx-ne-Pvc"/>
+                                        <constraint firstItem="faH-xU-PF6" firstAttribute="leading" secondItem="fc0-vp-oKI" secondAttribute="leading" constant="20" symbolic="YES" id="TDb-nE-zjL"/>
                                     </constraints>
                                 </view>
                             </tabViewItem>
@@ -493,10 +485,11 @@
                     </tabView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="402" secondAttribute="trailing" constant="20" symbolic="YES" id="0kG-h1-NYo"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="402" secondAttribute="trailing" id="0kG-h1-NYo"/>
                     <constraint firstItem="402" firstAttribute="centerY" secondItem="372" secondAttribute="centerY" id="1hh-jm-bCH"/>
+                    <constraint firstItem="402" firstAttribute="centerX" secondItem="372" secondAttribute="centerX" id="Dop-Ct-QcZ"/>
                     <constraint firstItem="402" firstAttribute="top" secondItem="372" secondAttribute="top" constant="12" symbolic="YES" id="Ohd-N8-e97"/>
-                    <constraint firstItem="402" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="20" symbolic="YES" id="Umm-iE-YI9"/>
+                    <constraint firstItem="402" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="372" secondAttribute="leading" id="Umm-iE-YI9"/>
                 </constraints>
             </view>
             <connections>
