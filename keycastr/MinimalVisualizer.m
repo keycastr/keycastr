@@ -398,7 +398,7 @@
         @"minimal.display.control": @YES,
         @"minimal.display.shift": @YES,
         @"minimal.display.function": @YES,
-        @"minimal.display.nonmodifier": @YES,
+        @"minimal.display.nonmodifier": @NO,
         @"minimal.anchorRight": @NO,
         @"minimal.fontSize": @80.0,
         @"minimal.bezelSize": @100.0,
