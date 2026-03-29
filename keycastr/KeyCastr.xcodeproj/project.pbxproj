@@ -16,8 +16,6 @@
 		324ADBCB6A0995C04527E1D8 /* NSBezierPath+RoundedRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 324AD5B73A2BC2916E285219 /* NSBezierPath+RoundedRect.m */; };
 		324ADDDF7A11FD8A03BE1995 /* KCMouseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADE0BF78E9FB58C02F49B /* KCMouseEvent.m */; };
 		324ADE7F91EC0CAFD38BA4BA /* KCMouseEventVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADDDFBC424496DA228C39 /* KCMouseEventVisualizer.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		3D1640500F3BCC6900CA65AD /* KeyCastrStatusItemActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D16404E0F3BCC6900CA65AD /* KeyCastrStatusItemActive.png */; };
-		3D1640510F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D16404F0F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png */; };
 		3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */; };
 		3D1646690F43D76D00CA65AD /* KCDefaultVisualizer.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D16465A0F43D6E700CA65AD /* KCDefaultVisualizer.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3D1646C20F43DC4700CA65AD /* KCVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F54DE0F31448A001C7272 /* KCVisualizer.m */; };
@@ -38,17 +36,11 @@
 		3D3F52BA0F30C68B001C7272 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3F52B90F30C68B001C7272 /* Quartz.framework */; };
 		3D3F52EB0F30CB13001C7272 /* KCPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */; };
 		3D3F540C0F30E8E7001C7272 /* KCEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F540B0F30E8E7001C7272 /* KCEventTap.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54870F30F37E001C7272 /* GeneralIcon.tif */; };
-		3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F54880F30F37E001C7272 /* DisplayIcon.tif */; };
-		3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */; };
+		6529B9FB2F78D64E00379188 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6529B9FA2F78D64E00379188 /* Assets.xcassets */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		AE39388B1BB73B36005458A6 /* KeyCastrStatusItem.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938871BB73B36005458A6 /* KeyCastrStatusItem.png */; };
-		AE39388C1BB73B36005458A6 /* KeyCastrStatusItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */; };
-		AE39388D1BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */; };
-		AE39388E1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */; };
 		AF1A0CFD2C22325A00E47433 /* KCDefaultVisualizer.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D16465A0F43D6E700CA65AD /* KCDefaultVisualizer.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF1A0CFE2C22325A00E47433 /* Svelte.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D1648AC0F451D4500CA65AD /* Svelte.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF20BE732C1E21B3008B758E /* KCDefaultVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF20BE722C1E21B3008B758E /* KCDefaultVisualizerTests.m */; };
@@ -345,8 +337,6 @@
 		324ADE0BF78E9FB58C02F49B /* KCMouseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCMouseEvent.m; sourceTree = "<group>"; };
 		324ADE9FD592FD181805CDF3 /* KCMouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCMouseEvent.h; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* KeyCastr_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCastr_Prefix.pch; sourceTree = "<group>"; };
-		3D16404E0F3BCC6900CA65AD /* KeyCastrStatusItemActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeyCastrStatusItemActive.png; sourceTree = "<group>"; };
-		3D16404F0F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeyCastrStatusItemInactive.png; sourceTree = "<group>"; };
 		3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = KeyCastrInactive.icns; sourceTree = "<group>"; };
 		3D1645DD0F43CD0600CA65AD /* KCEventTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCEventTransformer.h; sourceTree = "<group>"; };
 		3D1645DE0F43CD0600CA65AD /* KCEventTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCEventTransformer.m; sourceTree = "<group>"; };
@@ -366,21 +356,15 @@
 		3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCPrefsWindowController.m; sourceTree = "<group>"; };
 		3D3F540A0F30E8E7001C7272 /* KCEventTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCEventTap.h; sourceTree = "<group>"; };
 		3D3F540B0F30E8E7001C7272 /* KCEventTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCEventTap.m; sourceTree = "<group>"; };
-		3D3F54870F30F37E001C7272 /* GeneralIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = GeneralIcon.tif; sourceTree = "<group>"; };
-		3D3F54880F30F37E001C7272 /* DisplayIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DisplayIcon.tif; sourceTree = "<group>"; };
-		3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = UpdateIcon.tif; sourceTree = "<group>"; };
 		3D3F54DD0F31448A001C7272 /* KCVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCVisualizer.h; sourceTree = "<group>"; };
 		3D3F54DE0F31448A001C7272 /* KCVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCVisualizer.m; sourceTree = "<group>"; };
 		3D3F56C90F337533001C7272 /* NSUserDefaults+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+Utility.h"; sourceTree = "<group>"; };
 		3D3F56CA0F337533001C7272 /* NSUserDefaults+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+Utility.m"; sourceTree = "<group>"; };
 		3DC3146F0F33EEF400B67D65 /* KCKeystroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKeystroke.h; sourceTree = "<group>"; };
 		3DC314700F33EEF400B67D65 /* KCKeystroke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKeystroke.m; sourceTree = "<group>"; };
+		6529B9FA2F78D64E00379188 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* KeyCastr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCastr.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE3938871BB73B36005458A6 /* KeyCastrStatusItem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KeyCastrStatusItem.png; sourceTree = "<group>"; };
-		AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItem@2x.png"; sourceTree = "<group>"; };
-		AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemActive@2x.png"; sourceTree = "<group>"; };
-		AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KeyCastrStatusItemInactive@2x.png"; sourceTree = "<group>"; };
 		AF20BE722C1E21B3008B758E /* KCDefaultVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCDefaultVisualizerTests.m; sourceTree = "<group>"; };
 		AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCColorValueTransformer.h; sourceTree = "<group>"; };
 		AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCColorValueTransformer.m; sourceTree = "<group>"; };
@@ -493,16 +477,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6529B9FA2F78D64E00379188 /* Assets.xcassets */,
 				AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */,
-				AE3938871BB73B36005458A6 /* KeyCastrStatusItem.png */,
-				AE3938881BB73B36005458A6 /* KeyCastrStatusItem@2x.png */,
-				AE3938891BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png */,
-				AE39388A1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png */,
-				3D16404E0F3BCC6900CA65AD /* KeyCastrStatusItemActive.png */,
-				3D16404F0F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png */,
-				3D3F548D0F30F3C7001C7272 /* UpdateIcon.tif */,
-				3D3F54870F30F37E001C7272 /* GeneralIcon.tif */,
-				3D3F54880F30F37E001C7272 /* DisplayIcon.tif */,
 				3D3F52A60F30BF1E001C7272 /* KeyCastr.icns */,
 				3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -1014,16 +990,8 @@
 				AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				3D3F52A70F30BF1E001C7272 /* KeyCastr.icns in Resources */,
-				3D3F548A0F30F37E001C7272 /* GeneralIcon.tif in Resources */,
-				AE39388C1BB73B36005458A6 /* KeyCastrStatusItem@2x.png in Resources */,
-				3D3F548B0F30F37E001C7272 /* DisplayIcon.tif in Resources */,
-				3D3F548E0F30F3C7001C7272 /* UpdateIcon.tif in Resources */,
-				3D1640500F3BCC6900CA65AD /* KeyCastrStatusItemActive.png in Resources */,
-				3D1640510F3BCC6900CA65AD /* KeyCastrStatusItemInactive.png in Resources */,
-				AE39388D1BB73B36005458A6 /* KeyCastrStatusItemActive@2x.png in Resources */,
-				AE39388B1BB73B36005458A6 /* KeyCastrStatusItem.png in Resources */,
-				AE39388E1BB73B36005458A6 /* KeyCastrStatusItemInactive@2x.png in Resources */,
 				3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */,
+				6529B9FB2F78D64E00379188 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
