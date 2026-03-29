@@ -175,6 +175,10 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
     // no-op; future option to display or otherwise react to bare modifier keypresses
 }
 
+- (IBAction)resetPreferences:(id)sender {
+    [[NSUserDefaults standardUserDefaults] removeObjectsWithPrefix:@"default."];
+}
+
 + (NSDictionary<NSString *, NSObject *> *)visualizerDefaults
 {
     return @{ @"default.commandKeysOnly": @YES,

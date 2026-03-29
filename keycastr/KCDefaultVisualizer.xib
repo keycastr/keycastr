@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="380" height="380"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
                     <rect key="frame" x="93" y="254" width="64" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="oj0-lq-OA1"/>
@@ -27,7 +28,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="52">
+                <textField focusRingType="none" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="52">
                     <rect key="frame" x="43" y="230" width="110" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="FYf-Uh-xbf"/>
@@ -46,7 +47,7 @@
                         <binding destination="9" name="value" keyPath="values.default.fontSize" id="64"/>
                     </connections>
                 </slider>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26">
                     <rect key="frame" x="161" y="243" width="23" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Tiny" id="108">
                         <font key="font" metaFont="miniSystem"/>
@@ -54,7 +55,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="28">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="28">
                     <rect key="frame" x="334" y="243" width="28" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Huge" id="109">
                         <font key="font" metaFont="miniSystem"/>
@@ -62,7 +63,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="18">
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="18">
                     <rect key="frame" x="48" y="205" width="109" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="bX2-H7-kTx"/>
@@ -73,7 +74,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="48">
+                <textField focusRingType="none" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="48">
                     <rect key="frame" x="45" y="180" width="108" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="104" id="lW4-c6-Sd9"/>
@@ -91,7 +92,7 @@
                         <binding destination="9" name="value" keyPath="values.default.keystrokeDelay" id="65"/>
                     </connections>
                 </slider>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31">
                     <rect key="frame" x="161" y="193" width="28" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Short" id="111">
                         <font key="font" metaFont="miniSystem"/>
@@ -99,7 +100,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="30">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="30">
                     <rect key="frame" x="336" y="193" width="26" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Long" id="110">
                         <font key="font" metaFont="miniSystem"/>
@@ -107,7 +108,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="20">
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="20">
                     <rect key="frame" x="77" y="155" width="80" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="4aB-UP-YRn"/>
@@ -118,7 +119,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="50">
+                <textField focusRingType="none" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="50">
                     <rect key="frame" x="49" y="129" width="104" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="Rtg-nV-mBt"/>
@@ -136,7 +137,7 @@
                         <binding destination="9" name="value" keyPath="values.default.fadeDelay" id="66"/>
                     </connections>
                 </slider>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="38">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="38">
                     <rect key="frame" x="161" y="142" width="28" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Short" id="115">
                         <font key="font" metaFont="miniSystem"/>
@@ -144,7 +145,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="37">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="37">
                     <rect key="frame" x="336" y="142" width="26" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Long" id="114">
                         <font key="font" metaFont="miniSystem"/>
@@ -152,7 +153,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="22">
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="22">
                     <rect key="frame" x="64" y="105" width="93" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="Rte-ej-cs2"/>
@@ -163,7 +164,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="54">
+                <textField focusRingType="none" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="54">
                     <rect key="frame" x="77" y="80" width="76" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="72" id="S53-WX-hfS"/>
@@ -181,7 +182,7 @@
                         <binding destination="9" name="value" keyPath="values.default.fadeDuration" id="67"/>
                     </connections>
                 </slider>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="43">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="43">
                     <rect key="frame" x="161" y="92" width="35" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Instant" id="117">
                         <font key="font" metaFont="miniSystem"/>
@@ -189,7 +190,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="44">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="44">
                     <rect key="frame" x="322" y="92" width="40" height="11"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Fast-ish" id="118">
                         <font key="font" metaFont="miniSystem"/>
@@ -197,7 +198,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="2">
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="2">
                     <rect key="frame" x="79" y="53" width="78" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="izL-kT-ll9"/>
@@ -223,7 +224,7 @@
                         </binding>
                     </connections>
                 </colorWell>
-                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="14">
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="14">
                     <rect key="frame" x="87" y="23" width="70" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="ywo-xr-G82"/>
@@ -278,7 +279,7 @@
                         <binding destination="9" name="value" keyPath="values.default.allKeys" id="dUM-9e-oZf"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8ph-mh-BBf">
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8ph-mh-BBf">
                     <rect key="frame" x="67" y="348" width="90" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Display Mode:" id="6mL-ee-0MX">
                         <font key="font" metaFont="system"/>
@@ -298,6 +299,17 @@
                     </buttonCell>
                     <connections>
                         <binding destination="9" name="value" keyPath="values.default_displayModifiedCharacters" id="sXZ-s3-9aV"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UEW-iX-azs">
+                    <rect key="frame" x="310" y="13" width="58" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wxu-6p-oaE">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetPreferences:" target="-2" id="0Bc-jD-vGX"/>
                     </connections>
                 </button>
             </subviews>
