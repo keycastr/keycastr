@@ -200,6 +200,7 @@
     [_visualizerWindow setFrameUsingName:@"svelte visualizerFrame"];
     [_visualizerWindow setOpaque:NO];
     [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    [_visualizerWindow setTitle:@"Svelte Visualizer"];
     
     _visualizerView = [[SvelteVisualizerView alloc] initWithFrame:r];
     [_visualizerWindow setContentView:_visualizerView];

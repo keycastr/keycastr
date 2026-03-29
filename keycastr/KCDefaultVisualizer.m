@@ -239,6 +239,8 @@ static NSRect KC_defaultFrame(void) {
 
     [self setMovableByWindowBackground:YES];
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    
+    [self setTitle:@"Default Visualizer"];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillTerminate:)
