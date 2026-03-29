@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		324AD25E40F9EFA6F54FA36A /* KCKeycastrEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */; };
-		324AD36C18A447EB8EDCE7B7 /* KCDefaultVisualizer.nib in Resources */ = {isa = PBXBuildFile; fileRef = 324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */; };
 		324AD7AC994A031550F38591 /* KCKeycastrEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADBA0D37774E36EA35A2E /* KCKeycastrEvent.m */; };
 		324AD844390E162E4229CD1B /* KCDefaultVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 324ADC930C7D14543CCB1327 /* KCDefaultVisualizer.m */; };
 		324ADBB15522719676E80D5F /* KCMouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 324ADE9FD592FD181805CDF3 /* KCMouseEvent.h */; };
@@ -29,7 +28,6 @@
 		3D1646EB0F43DD3000CA65AD /* KCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52550F300389001C7272 /* KCAppController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3D1646F40F43DD8300CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
 		3D1648B70F451D8000CA65AD /* KCVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1646B60F43DBD700CA65AD /* KCVisualizer.framework */; };
-		3D1648B90F451DAA00CA65AD /* Svelte.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1648B80F451DAA00CA65AD /* Svelte.nib */; };
 		3D1648BC0F451DC300CA65AD /* SvelteVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1648BB0F451DC300CA65AD /* SvelteVisualizer.m */; };
 		3D1648C20F451EDB00CA65AD /* Svelte.kcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D1648AC0F451D4500CA65AD /* Svelte.kcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3D3F52A70F30BF1E001C7272 /* KeyCastr.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F52A60F30BF1E001C7272 /* KeyCastr.icns */; };
@@ -37,7 +35,9 @@
 		3D3F52EB0F30CB13001C7272 /* KCPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F52EA0F30CB13001C7272 /* KCPrefsWindowController.m */; };
 		3D3F540C0F30E8E7001C7272 /* KCEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F540B0F30E8E7001C7272 /* KCEventTap.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		6529B9FB2F78D64E00379188 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6529B9FA2F78D64E00379188 /* Assets.xcassets */; };
-		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		6529BAE22F78EAF800379188 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAE02F78EAF800379188 /* MainMenu.xib */; };
+		6529BAE62F78EBB300379188 /* Svelte.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAE52F78EBB300379188 /* Svelte.xib */; };
+		6529BAEB2F78EBCA00379188 /* KCDefaultVisualizer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -329,7 +329,6 @@
 		324AD08A82A3657D73DC13DF /* KCDefaultVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCDefaultVisualizer.h; sourceTree = "<group>"; };
 		324AD5B73A2BC2916E285219 /* NSBezierPath+RoundedRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+RoundedRect.m"; sourceTree = "<group>"; };
 		324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKeycastrEvent.h; sourceTree = "<group>"; };
-		324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KCDefaultVisualizer.nib; sourceTree = "<group>"; };
 		324ADA987B1C0B9D0D36CBDF /* NSBezierPath+RoundedRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+RoundedRect.h"; sourceTree = "<group>"; };
 		324ADBA0D37774E36EA35A2E /* KCKeycastrEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKeycastrEvent.m; sourceTree = "<group>"; };
 		324ADC930C7D14543CCB1327 /* KCDefaultVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCDefaultVisualizer.m; sourceTree = "<group>"; };
@@ -345,7 +344,6 @@
 		3D1646B70F43DBD700CA65AD /* KCVisualizer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KCVisualizer-Info.plist"; sourceTree = "<group>"; };
 		3D1648AC0F451D4500CA65AD /* Svelte.kcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Svelte.kcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D1648AD0F451D4500CA65AD /* Svelte-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Svelte-Info.plist"; sourceTree = "<group>"; };
-		3D1648B80F451DAA00CA65AD /* Svelte.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Svelte.nib; sourceTree = "<group>"; };
 		3D1648BA0F451DC300CA65AD /* SvelteVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SvelteVisualizer.h; sourceTree = "<group>"; };
 		3D1648BB0F451DC300CA65AD /* SvelteVisualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SvelteVisualizer.m; sourceTree = "<group>"; };
 		3D3F52540F300389001C7272 /* KCAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCAppController.h; sourceTree = "<group>"; };
@@ -363,13 +361,15 @@
 		3DC3146F0F33EEF400B67D65 /* KCKeystroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKeystroke.h; sourceTree = "<group>"; };
 		3DC314700F33EEF400B67D65 /* KCKeystroke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKeystroke.m; sourceTree = "<group>"; };
 		6529B9FA2F78D64E00379188 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6529BAE12F78EAF800379188 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		6529BAE52F78EBB300379188 /* Svelte.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Svelte.xib; sourceTree = "<group>"; };
+		6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KCDefaultVisualizer.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* KeyCastr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCastr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF20BE722C1E21B3008B758E /* KCDefaultVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCDefaultVisualizerTests.m; sourceTree = "<group>"; };
 		AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCColorValueTransformer.h; sourceTree = "<group>"; };
 		AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCColorValueTransformer.m; sourceTree = "<group>"; };
 		AF5457412C0CE25700064C82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AF5457422C0CE26D00064C82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		AF546FAB272DFFBE00EA6AFD /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		AF6B80D925AA7ACE00C6FA9D /* KeyCastrAbout.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = KeyCastrAbout.qtz; sourceTree = "<group>"; };
 		AF6DD3FC2586E03A00EDC9D4 /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = ShortcutRecorder/ShortcutRecorder.xcodeproj; sourceTree = "<group>"; };
@@ -482,8 +482,8 @@
 				3D3F52A60F30BF1E001C7272 /* KeyCastr.icns */,
 				3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
+				6529BAE02F78EAF800379188 /* MainMenu.xib */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
-				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -516,7 +516,7 @@
 				324AD04AB4EBA23C2B0E55BE /* KCDefaultVisualizer-Info.plist */,
 				324AD08A82A3657D73DC13DF /* KCDefaultVisualizer.h */,
 				324ADC930C7D14543CCB1327 /* KCDefaultVisualizer.m */,
-				324AD93D2D9827CC6B6996A8 /* KCDefaultVisualizer.nib */,
+				6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */,
 				324ADA987B1C0B9D0D36CBDF /* NSBezierPath+RoundedRect.h */,
 				324AD5B73A2BC2916E285219 /* NSBezierPath+RoundedRect.m */,
 			);
@@ -572,7 +572,7 @@
 			isa = PBXGroup;
 			children = (
 				3D1648AD0F451D4500CA65AD /* Svelte-Info.plist */,
-				3D1648B80F451DAA00CA65AD /* Svelte.nib */,
+				6529BAE52F78EBB300379188 /* Svelte.xib */,
 				3D1648BA0F451DC300CA65AD /* SvelteVisualizer.h */,
 				3D1648BB0F451DC300CA65AD /* SvelteVisualizer.m */,
 			);
@@ -963,14 +963,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				324AD36C18A447EB8EDCE7B7 /* KCDefaultVisualizer.nib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3D1646B20F43DBD700CA65AD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				6529BAEB2F78EBCA00379188 /* KCDefaultVisualizer.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,7 +971,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D1648B90F451DAA00CA65AD /* Svelte.nib in Resources */,
+				6529BAE62F78EBB300379188 /* Svelte.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -986,12 +979,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				AF6B80EB25AA7ACE00C6FA9D /* KeyCastrAbout.qtz in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				3D3F52A70F30BF1E001C7272 /* KeyCastr.icns in Resources */,
 				3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */,
 				6529B9FB2F78D64E00379188 /* Assets.xcassets in Resources */,
+				6529BAE22F78EAF800379188 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1124,12 +1117,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+		6529BAE02F78EAF800379188 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				AF5457422C0CE26D00064C82 /* Base */,
+				6529BAE12F78EAF800379188 /* Base */,
 			);
-			name = MainMenu.nib;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
