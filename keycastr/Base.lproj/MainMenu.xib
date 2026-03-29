@@ -111,23 +111,25 @@
         </menu>
         <menu id="377" userLabel="Status Menu">
             <items>
-                <menuItem title="About KeyCastr" id="378">
-                    <connections>
-                        <action selector="orderFrontKeyCastrAboutPanel:" target="375" id="396"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Preferences..." keyEquivalent="," id="379">
-                    <connections>
-                        <action selector="orderFrontKeyCastrPreferencesPanel:" target="375" id="397"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Start Casting" keyEquivalent="S" id="438">
                     <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                     <connections>
                         <action selector="pretendToDoSomethingImportant:" target="375" id="520"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Quit KeyCastr" id="380">
+                <menuItem isSeparatorItem="YES" id="3bv-et-RtH"/>
+                <menuItem title="Preferences..." keyEquivalent="," id="379">
+                    <connections>
+                        <action selector="orderFrontKeyCastrPreferencesPanel:" target="375" id="397"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="About KeyCastr" id="378">
+                    <connections>
+                        <action selector="orderFrontKeyCastrAboutPanel:" target="375" id="396"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="sKa-bl-8aE"/>
+                <menuItem title="Quit KeyCastr" keyEquivalent="q" id="380">
                     <connections>
                         <action selector="terminate:" target="-3" id="382"/>
                     </connections>
@@ -142,6 +144,13 @@
                     <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                     <connections>
                         <action selector="toggleRecording:" target="375" id="519"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="h2W-Vc-5mj"/>
+                <menuItem title="Preferences..." keyEquivalent="," id="7hQ-qr-NR1">
+                    <attributedString key="attributedTitle"/>
+                    <connections>
+                        <action selector="orderFrontKeyCastrPreferencesPanel:" target="375" id="prH-w7-ljG"/>
                     </connections>
                 </menuItem>
             </items>
