@@ -32,6 +32,7 @@
                 <outlet property="tabView" destination="402" id="407"/>
             </connections>
         </customObject>
+        <customObject id="IcW-dw-TLi" userLabel="Available Display Modes" customClass="KCAvailableDisplayMode"/>
         <customObject id="496" userLabel="Sparkle" customClass="SUUpdater"/>
         <menu title="AMainMenu" systemMenu="main" id="29" userLabel="Main Menu">
             <items>
@@ -169,7 +170,7 @@
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="403">
                                 <view key="view" id="406">
-                                    <rect key="frame" x="10" y="33" width="427" height="412"/>
+                                    <rect key="frame" x="10" y="33" width="423" height="412"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="410">
@@ -364,21 +365,171 @@
                                                         <constraint firstItem="i4K-FF-bg4" firstAttribute="centerY" secondItem="eb6-kp-O9f" secondAttribute="centerY" id="xTr-7r-Syp"/>
                                                     </constraints>
                                                 </customView>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="ciK-e7-Dvt" userLabel="Display Options Container View">
+                                                    <rect key="frame" x="0.0" y="94" width="387" height="159"/>
+                                                    <subviews>
+                                                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="JNU-3D-BUz">
+                                                            <rect key="frame" x="0.0" y="-2" width="387" height="5"/>
+                                                        </box>
+                                                        <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="6nM-1h-AnL">
+                                                            <rect key="frame" x="140" y="127" width="90" height="16"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="16" id="aug-Jg-hEg"/>
+                                                            </constraints>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Display Mode:" id="ByA-CF-gca">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <gridView xPlacement="leading" yPlacement="bottom" rowAlignment="none" rowSpacing="23" columnSpacing="43" translatesAutoresizingMaskIntoConstraints="NO" id="YSU-GJ-VZa">
+                                                            <rect key="frame" x="48" y="21" width="291" height="88"/>
+                                                            <rows>
+                                                                <gridRow height="14" id="z6E-tS-a3d"/>
+                                                                <gridRow height="14" id="QfZ-Me-a5d"/>
+                                                                <gridRow height="14" id="1Ww-vg-s0I"/>
+                                                            </rows>
+                                                            <columns>
+                                                                <gridColumn id="ebi-2d-F4B"/>
+                                                                <gridColumn id="cx7-v4-Ein"/>
+                                                            </columns>
+                                                            <gridCells>
+                                                                <gridCell row="z6E-tS-a3d" column="ebi-2d-F4B" id="Hfi-FP-y1b">
+                                                                    <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NmD-ht-BnQ">
+                                                                        <rect key="frame" x="-2" y="73" width="114" height="16"/>
+                                                                        <buttonCell key="cell" type="check" title="Command (⌘)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="JK7-oD-zuM">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="IcW-dw-TLi" name="hidden" keyPath="self.displayModes.isCommandAvailable" id="pMl-Cg-EMb">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="462" name="value" keyPath="values.display.command" id="5s8-xV-bCq"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </gridCell>
+                                                                <gridCell row="z6E-tS-a3d" column="cx7-v4-Ein" id="cxn-T1-1cZ">
+                                                                    <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lYk-qc-3gM">
+                                                                        <rect key="frame" x="153" y="73" width="96" height="16"/>
+                                                                        <buttonCell key="cell" type="check" title="Control (⌃)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kQo-65-XVg">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="IcW-dw-TLi" name="hidden" keyPath="self.displayModes.isControlAvailable" id="Yf9-9b-2Sj">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="462" name="value" keyPath="values.display.control" id="l36-RT-ac5"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </gridCell>
+                                                                <gridCell row="QfZ-Me-a5d" column="ebi-2d-F4B" id="L1x-63-a70">
+                                                                    <button key="contentView" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="W2I-JE-YOa">
+                                                                        <rect key="frame" x="-2" y="36" width="93" height="16"/>
+                                                                        <buttonCell key="cell" type="check" title="Option (⌥)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WBc-qN-R4U">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="IcW-dw-TLi" name="hidden" keyPath="self.displayModes.isOptionAvailable" id="C6a-di-PcQ">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="462" name="value" keyPath="values.display.option" id="tnc-k9-thL"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </gridCell>
+                                                                <gridCell row="QfZ-Me-a5d" column="cx7-v4-Ein" id="d5p-MU-pQH">
+                                                                    <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PEg-9p-F0T">
+                                                                        <rect key="frame" x="153" y="36" width="81" height="16"/>
+                                                                        <buttonCell key="cell" type="check" title="Shift (⇧)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Fyx-Ub-WPj">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="IcW-dw-TLi" name="hidden" keyPath="self.displayModes.isShiftAvailable" id="K2W-8l-Em1">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="462" name="value" keyPath="values.display.shift" id="I8i-1G-RQ9"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </gridCell>
+                                                                <gridCell row="1Ww-vg-s0I" column="ebi-2d-F4B" id="0iL-fI-MEd">
+                                                                    <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EqG-YC-vSW">
+                                                                        <rect key="frame" x="-2" y="-1" width="105" height="16"/>
+                                                                        <buttonCell key="cell" type="check" title="Function (fn)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0dq-EE-dgo">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="IcW-dw-TLi" name="hidden" keyPath="self.displayModes.isFunctionAvailable" id="CC6-Wa-29t">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="462" name="value" keyPath="values.display.function" id="IN4-IO-qc3"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </gridCell>
+                                                                <gridCell row="1Ww-vg-s0I" column="cx7-v4-Ein" id="IRm-AF-62c">
+                                                                    <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wwV-g4-0CR">
+                                                                        <rect key="frame" x="153" y="-1" width="138" height="16"/>
+                                                                        <buttonCell key="cell" type="check" title="Non-modifier keys" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0sP-Yt-sjx">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="IcW-dw-TLi" name="hidden" keyPath="self.displayModes.isNonModifierAvailable" id="F8k-x1-zUI">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="462" name="value" keyPath="values.display.nonmodifier" id="9nI-Ll-1go"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </gridCell>
+                                                            </gridCells>
+                                                        </gridView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="JNU-3D-BUz" secondAttribute="bottom" id="AeN-bR-KV4"/>
+                                                        <constraint firstItem="YSU-GJ-VZa" firstAttribute="centerX" secondItem="ciK-e7-Dvt" secondAttribute="centerX" id="Bzb-aI-uCL"/>
+                                                        <constraint firstAttribute="trailing" secondItem="JNU-3D-BUz" secondAttribute="trailing" id="L0I-Hl-fP3"/>
+                                                        <constraint firstItem="6nM-1h-AnL" firstAttribute="top" secondItem="ciK-e7-Dvt" secondAttribute="top" constant="16" id="TMz-pr-SVd"/>
+                                                        <constraint firstItem="JNU-3D-BUz" firstAttribute="bottom" secondItem="YSU-GJ-VZa" secondAttribute="bottom" constant="21" id="Ujq-GS-RJh"/>
+                                                        <constraint firstItem="YSU-GJ-VZa" firstAttribute="top" secondItem="6nM-1h-AnL" secondAttribute="bottom" constant="18" id="fZv-ge-yj8"/>
+                                                        <constraint firstItem="JNU-3D-BUz" firstAttribute="leading" secondItem="ciK-e7-Dvt" secondAttribute="leading" id="mSi-b1-HLj"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6nM-1h-AnL" secondAttribute="trailing" constant="20" symbolic="YES" id="nKY-Pj-IPc"/>
+                                                        <constraint firstItem="6nM-1h-AnL" firstAttribute="leading" secondItem="ciK-e7-Dvt" secondAttribute="leading" constant="142" id="tAg-Ph-nt0"/>
+                                                    </constraints>
+                                                </customView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="426" firstAttribute="top" secondItem="411" secondAttribute="top" constant="-1" id="1Ab-H7-bCx"/>
                                                 <constraint firstItem="426" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="7Fk-Cn-60D"/>
                                                 <constraint firstItem="426" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="7Xe-N7-6ra"/>
+                                                <constraint firstItem="ciK-e7-Dvt" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="BgL-42-wdT"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="FNg-LN-KJQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="ciK-e7-Dvt" secondAttribute="trailing" id="KfJ-Gv-xpg"/>
                                                 <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="L0z-xl-lkI"/>
                                                 <constraint firstAttribute="trailing" secondItem="eb6-kp-O9f" secondAttribute="trailing" id="LiA-gp-fpA"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="426" secondAttribute="leading" id="P0K-Hi-dPV"/>
                                                 <constraint firstItem="M4E-xg-OPh" firstAttribute="leading" secondItem="429" secondAttribute="leading" id="So5-P7-BXR"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="top" secondItem="411" secondAttribute="top" constant="59" id="Zec-vm-rAh"/>
                                                 <constraint firstItem="429" firstAttribute="width" secondItem="M4E-xg-OPh" secondAttribute="width" id="auR-yA-s7a"/>
-                                                <constraint firstAttribute="width" constant="387" id="cZl-X7-71B"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="height" secondItem="426" secondAttribute="height" id="drL-t1-XcD"/>
+                                                <constraint firstItem="ciK-e7-Dvt" firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="gHj-jk-uc7"/>
+                                                <constraint firstItem="ciK-e7-Dvt" firstAttribute="leading" secondItem="426" secondAttribute="leading" id="gyc-2l-fAp"/>
                                                 <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="lIh-gp-Fjd"/>
+                                                <constraint firstItem="ciK-e7-Dvt" firstAttribute="top" secondItem="426" secondAttribute="bottom" constant="59" id="mwg-5m-Rtn"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="rXA-cP-0dy"/>
                                             </constraints>
                                         </customView>

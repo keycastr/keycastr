@@ -40,6 +40,8 @@
 		6529BAEB2F78EBCA00379188 /* KCDefaultVisualizer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */; };
 		6529BBC02F78FF2800379188 /* KCAboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6529BBBF2F78FF2800379188 /* KCAboutView.m */; };
 		6529BBD92F79332800379188 /* About.ca in Resources */ = {isa = PBXBuildFile; fileRef = 6529BBD82F79332800379188 /* About.ca */; };
+		6575D3832F7E0E32003E87BB /* KCDisplayMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6575D3812F7E0E32003E87BB /* KCDisplayMode.h */; };
+		6575D3842F7E0E32003E87BB /* KCDisplayMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6575D3822F7E0E32003E87BB /* KCDisplayMode.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -368,6 +370,8 @@
 		6529BBBF2F78FF2800379188 /* KCAboutView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCAboutView.m; sourceTree = "<group>"; };
 		6529BBD72F7931D300379188 /* QuartzCorePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuartzCorePrivate.h; sourceTree = "<group>"; };
 		6529BBD82F79332800379188 /* About.ca */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = About.ca; sourceTree = "<group>"; };
+		6575D3812F7E0E32003E87BB /* KCDisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCDisplayMode.h; sourceTree = "<group>"; };
+		6575D3822F7E0E32003E87BB /* KCDisplayMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCDisplayMode.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* KeyCastr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyCastr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF20BE722C1E21B3008B758E /* KCDefaultVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCDefaultVisualizerTests.m; sourceTree = "<group>"; };
@@ -542,6 +546,8 @@
 			children = (
 				AF5457272C0CDB2E00064C82 /* KCColorValueTransformer.h */,
 				AF5457282C0CDB2E00064C82 /* KCColorValueTransformer.m */,
+				6575D3812F7E0E32003E87BB /* KCDisplayMode.h */,
+				6575D3822F7E0E32003E87BB /* KCDisplayMode.m */,
 				3D1645DD0F43CD0600CA65AD /* KCEventTransformer.h */,
 				3D1645DE0F43CD0600CA65AD /* KCEventTransformer.m */,
 				324AD6721F5E3C6D50AE104A /* KCKeycastrEvent.h */,
@@ -650,6 +656,7 @@
 				AFF68CBB2C05776000B98D92 /* KCUserDefaultsMigration.h in Headers */,
 				3D1646C30F43DC4700CA65AD /* KCVisualizer.h in Headers */,
 				3D1646C50F43DC4C00CA65AD /* KCKeystroke.h in Headers */,
+				6575D3832F7E0E32003E87BB /* KCDisplayMode.h in Headers */,
 				3D1646C60F43DC5000CA65AD /* KCEventTransformer.h in Headers */,
 				AF54572A2C0CDB2E00064C82 /* KCColorValueTransformer.h in Headers */,
 				324ADBC2EAD3FC5FD3C369FE /* KCMouseEventVisualizer.h in Headers */,
@@ -1021,6 +1028,7 @@
 				AF7B1CF32C22376100C8C145 /* NSUserDefaults+Utility.m in Sources */,
 				AFF68CBA2C05776000B98D92 /* KCUserDefaultsMigration.m in Sources */,
 				3D1646C40F43DC4C00CA65AD /* KCKeystroke.m in Sources */,
+				6575D3842F7E0E32003E87BB /* KCDisplayMode.m in Sources */,
 				3D1646C70F43DC5100CA65AD /* KCEventTransformer.m in Sources */,
 				324ADE7F91EC0CAFD38BA4BA /* KCMouseEventVisualizer.m in Sources */,
 				324ADDDF7A11FD8A03BE1995 /* KCMouseEvent.m in Sources */,

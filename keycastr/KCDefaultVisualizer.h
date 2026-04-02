@@ -84,32 +84,9 @@
 
 @end
 
-typedef NS_ENUM(NSInteger, KCDefaultVisualizerDisplayOption) {
-    KCDefaultVisualizerDisplayOptionCommandKeysOnly = 0,
-    KCDefaultVisualizerDisplayOptionAllModifiedKeys,
-    KCDefaultVisualizerDisplayOptionAllKeys,
-    KCDefaultVisualizerDisplayOptionDefault = KCDefaultVisualizerDisplayOptionCommandKeysOnly
-};
-
-@interface  KCDefaultVisualizerPreferencesView : NSView
-
-@property (nonatomic, assign) IBOutlet NSButton *commandKeysOnlyButton;
-@property (nonatomic, assign) IBOutlet NSButton *allModifiedKeysButton;
-@property (nonatomic, assign) IBOutlet NSButton *allKeysButton;
-
-@end
-
 @interface KCDefaultVisualizer : KCVisualizer <KCVisualizer>
 {
 	KCDefaultVisualizerWindow* visualizerWindow;
 }
-
-@property (nonatomic, assign) IBOutlet KCDefaultVisualizerPreferencesView *preferencesView;
-@property (nonatomic, assign) KCDefaultVisualizerDisplayOption displayMode;
-
-- (IBAction)preferencesViewDidSelectDisplayOption:(id)sender;
-
-- (BOOL)shouldOnlyDisplayCommandKeys;
-- (BOOL)shouldOnlyDisplayModifiedKeys;
 
 @end

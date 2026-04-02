@@ -29,6 +29,7 @@
 #import <Quartz/Quartz.h>
 #import <ShortcutRecorder/ShortcutRecorder.h>
 #import "KCAppController.h"
+#import "KCDisplayMode.h"
 #import "KCEventTap.h"
 #import "KCKeystroke.h"
 #import "KCMouseEventVisualizer.h"
@@ -232,6 +233,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
         }
     }
     
+    [defaults addEntriesFromDictionary:[KCDisplayMode defaults]];
     [defaults addEntriesFromDictionary:appDefaults];
     [userDefaults registerDefaults:defaults];
 }
@@ -390,6 +392,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     if (oldVisualizer != nil) {
         [oldVisualizer deactivateVisualizer:self];
     }
+    
+    [[KCAvailableDisplayMode sharedInstance] setAvailableModes:[newVisualizer availableDisplayModes]];
 
     currentVisualizer = newVisualizer;
     [newVisualizer showVisualizer:self];

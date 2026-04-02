@@ -29,6 +29,7 @@
 
 #import "SvelteVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
+#import "KCDisplayMode.h"
 #import "KCKeycastrEvent.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
@@ -65,13 +66,8 @@
 	NSRect frame = [self frame];
 	[[NSColor clearColor] setFill];
 	NSRectFill(frame);
-    
-    BOOL shift = [ud boolForKey:@"svelte.display.shift"];
-    BOOL control = [ud boolForKey:@"svelte.display.control"];
-    BOOL option = [ud boolForKey:@"svelte.display.option"];
-    BOOL command = [ud boolForKey:@"svelte.display.command"];
 
-    int segmentCount = shift + control + option + command;
+    int segmentCount = KCDisplayMode.shift + KCDisplayMode.control + KCDisplayMode.option + KCDisplayMode.command;
 	float oneSegment = floorf(frame.size.width / segmentCount);
 
     CGFloat rectHeight = segmentCount ? 100 : 70;
@@ -116,7 +112,7 @@
     
     NSMutableArray<NSAttributedString *> *drawModifiers = [@[] mutableCopy];
 
-    if (shift) {
+    if (KCDisplayMode.shift) {
         NSMutableDictionary *tmpAttr = [attr mutableCopy];
         tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagShift) ? activeModColor : inactiveModColor;
         
@@ -124,7 +120,7 @@
         [drawModifiers addObject:attrString];
     }
 
-    if (control) {
+    if (KCDisplayMode.control) {
         NSMutableDictionary *tmpAttr = [attr mutableCopy];
         tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagControl) ? activeModColor : inactiveModColor;
         
@@ -132,7 +128,7 @@
         [drawModifiers addObject:attrString];
     }
 
-    if (option) {
+    if (KCDisplayMode.option) {
         NSMutableDictionary *tmpAttr = [attr mutableCopy];
         tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagOption) ? activeModColor : inactiveModColor;
         
@@ -140,7 +136,7 @@
         [drawModifiers addObject:attrString];
     }
 
-    if (command) {
+    if (KCDisplayMode.command) {
         NSMutableDictionary *tmpAttr = [attr mutableCopy];
         tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagCommand) ? activeModColor : inactiveModColor;
         
@@ -213,6 +209,14 @@
 -(NSString*) visualizerName
 {
 	return @"Svelte";
+}
+
+-(KCDisplayModeType) availableDisplayModes
+{
+    return KCDisplayModeTypeCommand
+            | KCDisplayModeTypeOption
+            | KCDisplayModeTypeControl
+            | KCDisplayModeTypeShift;
 }
 
 -(id) init

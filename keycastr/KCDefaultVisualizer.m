@@ -58,16 +58,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 @end
 
 
-@implementation KCDefaultVisualizerPreferencesView
-
-@synthesize commandKeysOnlyButton, allModifiedKeysButton, allKeysButton;
-
-@end
-
-
 @implementation KCDefaultVisualizer
-
-@dynamic preferencesView;
 
 - (instancetype)init
 {
@@ -84,47 +75,13 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 	return @"Default";
 }
 
--(void) awakeFromNib
+-(KCDisplayModeType) availableDisplayModes
 {
-    [super awakeFromNib];
-    [self configureDisplayModeWithDefaults:NSUserDefaults.standardUserDefaults];
-}
-
-- (void)configureDisplayModeWithDefaults:(NSUserDefaults *)userDefaults
-{
-    if ([userDefaults boolForKey:@"default.commandKeysOnly"]) {
-        _displayMode = KCDefaultVisualizerDisplayOptionCommandKeysOnly;
-    } else if ([userDefaults boolForKey:@"default.allModifiedKeys"]) {
-        _displayMode = KCDefaultVisualizerDisplayOptionAllModifiedKeys;
-    } else {
-        _displayMode = KCDefaultVisualizerDisplayOptionAllKeys;
-    }
-}
-
-- (IBAction)preferencesViewDidSelectDisplayOption:(id)sender
-{
-    KCDefaultVisualizerDisplayOption mode = KCDefaultVisualizerDisplayOptionDefault;
-    if (sender == self.preferencesView.commandKeysOnlyButton) {
-        mode = KCDefaultVisualizerDisplayOptionCommandKeysOnly;
-    }
-    else if (sender == self.preferencesView.allModifiedKeysButton) {
-        mode = KCDefaultVisualizerDisplayOptionAllModifiedKeys;
-    }
-    else if (sender == self.preferencesView.allKeysButton) {
-        mode = KCDefaultVisualizerDisplayOptionAllKeys;
-    }
-    
-    [self setDisplayMode:mode];
-}
-
-- (void)setDisplayMode:(KCDefaultVisualizerDisplayOption)mode
-{
-    _displayMode = mode;
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionCommandKeysOnly) forKey:@"default.commandKeysOnly"];
-    [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionAllModifiedKeys) forKey:@"default.allModifiedKeys"];
-    [userDefaults setBool:(mode == KCDefaultVisualizerDisplayOptionAllKeys) forKey:@"default.allKeys"];
+    return KCDisplayModeTypeCommand
+            | KCDisplayModeTypeOption
+            | KCDisplayModeTypeControl
+            | KCDisplayModeTypeShift
+            | KCDisplayModeTypeNonModifier;
 }
 
 -(void) showVisualizer:(id)sender
@@ -142,23 +99,18 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 	[visualizerWindow orderOut:self];
 }
 
-- (BOOL)shouldOnlyDisplayCommandKeys
-{
-    return _displayMode == KCDefaultVisualizerDisplayOptionCommandKeysOnly;
-}
-
-- (BOOL)shouldOnlyDisplayModifiedKeys
-{
-    return _displayMode == KCDefaultVisualizerDisplayOptionAllModifiedKeys;
-}
-
 - (void)noteKeyEvent:(KCKeystroke *)keystroke
 {
-    if (![keystroke isCommand] && [self shouldOnlyDisplayCommandKeys]) {
+    if (
+           (!KCDisplayMode.command && keystroke.hasCommand)
+        || (!KCDisplayMode.option  && keystroke.hasOption)
+        || (!KCDisplayMode.control && keystroke.hasControl)
+        || (!KCDisplayMode.shift   && keystroke.hasShift)
+    ) {
         return;
     }
     
-    if (![keystroke isModified] && [self shouldOnlyDisplayModifiedKeys]) {
+    if (!KCDisplayMode.nonModifier && !keystroke.hasNonModifier) {
         return;
     }
     
@@ -313,7 +265,7 @@ static NSRect KC_defaultFrame(void) {
 {
     [self _cancelLineBreak];
 
-    if ([keystroke isCommand])
+    if (keystroke.hasNonModifier)
     {
         [self abandonCurrentBezelView];
     }

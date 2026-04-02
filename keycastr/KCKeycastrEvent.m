@@ -56,4 +56,23 @@
     return [[KCEventTransformer currentTransformer] transformedValue:self];
 }
 
+- (BOOL)hasCommand {
+    return (self.modifierFlags & NSEventModifierFlagCommand) != 0;
+}
+- (BOOL)hasOption {
+    return (self.modifierFlags & NSEventModifierFlagOption) != 0;
+}
+- (BOOL)hasControl {
+    return (self.modifierFlags & NSEventModifierFlagControl) != 0;
+}
+- (BOOL)hasShift {
+    return (self.modifierFlags & NSEventModifierFlagShift) != 0;
+}
+- (BOOL)hasFunction {
+    return (self.modifierFlags & NSEventModifierFlagFunction) != 0;
+}
+- (BOOL)hasNonModifier {
+    return (self.modifierFlags & (NSEventModifierFlagCommand | NSEventModifierFlagOption | NSEventModifierFlagControl | NSEventModifierFlagShift | NSEventModifierFlagFunction)) != 0;
+}
+
 @end
