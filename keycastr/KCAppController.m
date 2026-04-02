@@ -140,6 +140,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     [eventTap removeTap];
 }
 
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
+    return YES;
+}
+
 - (SRShortcut *)toggleCastingShortcut {
     if (_toggleCastingShortcut == nil) {
         KeyCombo toggleShortcutKey;
