@@ -30,7 +30,14 @@
 @interface KCAboutView : NSView
 @end
 
-@implementation KCAboutView
+@implementation KCAboutView {
+    CALayer *_rootLayer;
+    CAStateController *_stateController;
+    CAState *_pressedState;
+    
+    id _eventMonitor;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     
@@ -38,14 +45,87 @@
     NSError *outError;
     
     CAPackage *package = [CAPackage packageWithContentsOfURL:url type:kCAPackageTypeCAMLBundle options:nil error:&outError];
-    
     if (outError) {
         NSLog(@"%@", [outError description]);
+        
+        return;
+    }
+    
+    _rootLayer = package.rootLayer;
+    
+    _stateController = [[CAStateController alloc] initWithLayer:_rootLayer];
+    [_stateController setInitialStatesOfLayer:package.rootLayer transitionSpeed:0.0];
+    
+    _pressedState = [_rootLayer valueForKey:@"states"][0];
+    
+    self.wantsLayer = YES;
+    self.layer = package.rootLayer;
+    
+    // Track mouse hovering over app logo
+    CGRect appLogoRect = CGRectMake(84, 24, 94, 94);
+    
+    NSTrackingArea* trackingArea = [[NSTrackingArea alloc] initWithRect:appLogoRect
+                                                                options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways)
+                                                                  owner:self
+                                                               userInfo:nil];
+    
+    [self addTrackingArea:trackingArea];
+}
+
+- (void)setPressedState:(BOOL)pressed {
+    if (pressed) {
+        [_stateController setState:_pressedState ofLayer:_rootLayer transitionSpeed:1.0];
     }
     else {
-        self.wantsLayer = YES;
-        self.layer = package.rootLayer;
+        [_stateController setState:nil ofLayer:_rootLayer transitionSpeed:1.0];
     }
+}
+
+// MARK: Event monitoring
+
+- (void)removeMonitor {
+    if (_eventMonitor) {
+        [NSEvent removeMonitor:_eventMonitor];
+        _eventMonitor = nil;
+    }
+}
+
+- (void)viewDidMoveToWindow {
+    [super viewDidMoveToWindow];
+    
+    if (self.window) {
+        __weak typeof(self) weakSelf = self;
+        
+        // Track command button being held
+        _eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskFlagsChanged
+                                              handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+            BOOL heldCommand = event.modifierFlags & NSEventModifierFlagCommand;
+            
+            [weakSelf handleCommandPress:heldCommand];
+            
+            return event;
+        }];
+    }
+    else {
+        [self removeMonitor];
+    }
+}
+
+- (void)dealloc {
+    [self removeMonitor];
+}
+
+// MARK: Event handling
+
+- (void)handleCommandPress:(BOOL)heldCommand {
+    [self setPressedState:heldCommand];
+}
+
+- (void)mouseEntered:(NSEvent *)event {
+    [self setPressedState:YES];
+}
+- (void)mouseExited:(NSEvent *)event {
+    [self setPressedState:NO];
 }
 @end
 

@@ -6,12 +6,25 @@ extern NSString *kCAPackageTypeCAMLBundle;
 
 @interface CAPackage : NSObject
 
+@property(readonly) CALayer *rootLayer;
+
 + (id)packageWithData:(NSData *)data type:(NSString *)type options:(id)opts error:(NSError **)outError;
 + (id)packageWithContentsOfURL:(NSURL *)url type:(NSString *)type options:(id)opts error:(NSError **)outError;
 
-- (NSArray <NSString *> *)publishedObjectNames;
+@end
 
-@property(readonly, getter=isGeometryFlipped) BOOL geometryFlipped;
-@property(readonly) CALayer *rootLayer;
+
+@interface CAState : NSObject;
+@end
+
+
+@interface CAStateController : NSObject;
+
+@property (readonly) CALayer* layer;
+
+- (void)setState:(id)state ofLayer:(id)layer transitionSpeed:(float)speed;
+- (void)setState:(id)state ofLayer:(id)layer;
+- (id)initWithLayer:(id)layer;
+- (void)setInitialStatesOfLayer:(id)layer transitionSpeed:(float)speed;
 
 @end

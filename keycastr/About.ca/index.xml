@@ -32,6 +32,8 @@
 	<false/>
 	<key>multitouchEnabled</key>
 	<false/>
+	<key>playerBackgroundColor</key>
+	<string>0.95 0.95 0.95 1</string>
 	<key>presentationMouseEventsEnabled</key>
 	<true/>
 	<key>presentationShowsCursor</key>
@@ -43,7 +45,7 @@
 	<key>savesWindowFrame</key>
 	<false/>
 	<key>scalesToFitInPlayer</key>
-	<false/>
+	<true/>
 	<key>showsTouches</key>
 	<true/>
 	<key>snappingEnabled</key>
