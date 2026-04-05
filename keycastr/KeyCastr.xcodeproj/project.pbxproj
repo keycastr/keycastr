@@ -39,7 +39,6 @@
 		6529BAE62F78EBB300379188 /* Svelte.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAE52F78EBB300379188 /* Svelte.xib */; };
 		6529BAEB2F78EBCA00379188 /* KCDefaultVisualizer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */; };
 		6529BBC02F78FF2800379188 /* KCAboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6529BBBF2F78FF2800379188 /* KCAboutView.m */; };
-		6529BBD92F79332800379188 /* About.ca in Resources */ = {isa = PBXBuildFile; fileRef = 6529BBD82F79332800379188 /* About.ca */; };
 		6575D3832F7E0E32003E87BB /* KCDisplayMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6575D3812F7E0E32003E87BB /* KCDisplayMode.h */; };
 		6575D3842F7E0E32003E87BB /* KCDisplayMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6575D3822F7E0E32003E87BB /* KCDisplayMode.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -369,7 +368,6 @@
 		6529BAEA2F78EBCA00379188 /* KCDefaultVisualizer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KCDefaultVisualizer.xib; sourceTree = "<group>"; };
 		6529BBBF2F78FF2800379188 /* KCAboutView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCAboutView.m; sourceTree = "<group>"; };
 		6529BBD72F7931D300379188 /* QuartzCorePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuartzCorePrivate.h; sourceTree = "<group>"; };
-		6529BBD82F79332800379188 /* About.ca */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = About.ca; sourceTree = "<group>"; };
 		6575D3812F7E0E32003E87BB /* KCDisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCDisplayMode.h; sourceTree = "<group>"; };
 		6575D3822F7E0E32003E87BB /* KCDisplayMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCDisplayMode.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -486,7 +484,6 @@
 			isa = PBXGroup;
 			children = (
 				6529B9FA2F78D64E00379188 /* Assets.xcassets */,
-				6529BBD82F79332800379188 /* About.ca */,
 				3D3F52A60F30BF1E001C7272 /* KeyCastr.icns */,
 				3D16405F0F3BCEC900CA65AD /* KeyCastrInactive.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -996,7 +993,6 @@
 				3D1640600F3BCEC900CA65AD /* KeyCastrInactive.icns in Resources */,
 				6529B9FB2F78D64E00379188 /* Assets.xcassets in Resources */,
 				6529BAE22F78EAF800379188 /* MainMenu.xib in Resources */,
-				6529BBD92F79332800379188 /* About.ca in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
