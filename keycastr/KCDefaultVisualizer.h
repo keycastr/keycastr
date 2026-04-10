@@ -79,6 +79,7 @@
 - (void)addKeystroke:(KCKeystroke *)keystroke;
 - (void)addMouseEvent:(KCMouseEvent *)mouseEvent;
 - (void)addRunningAnimation:(KCBezelAnimation *)animation;
+- (void)appendString:(NSString *)string;
 
 - (instancetype)init;
 
@@ -102,6 +103,7 @@ typedef NS_ENUM(NSInteger, KCDefaultVisualizerDisplayOption) {
 @interface KCDefaultVisualizer : KCVisualizer <KCVisualizer>
 {
 	KCDefaultVisualizerWindow* visualizerWindow;
+	NSEventModifierFlags _previousModifierFlags;
 }
 
 @property (nonatomic, assign) IBOutlet KCDefaultVisualizerPreferencesView *preferencesView;

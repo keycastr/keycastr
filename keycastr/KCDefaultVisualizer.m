@@ -176,7 +176,30 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (void)noteFlagsChanged:(NSEventModifierFlags)flags
 {
-    // no-op; future option to display or otherwise react to bare modifier keypresses
+    NSEventModifierFlags newlyPressed = flags & ~_previousModifierFlags;
+    _previousModifierFlags = flags;
+
+    if (newlyPressed == 0)
+        return;
+
+    BOOL isCommandModifier = (newlyPressed & (NSEventModifierFlagCommand | NSEventModifierFlagControl)) != 0;
+
+    if (!isCommandModifier && [self shouldOnlyDisplayCommandKeys])
+        return;
+
+    NSMutableString *displayString = [NSMutableString string];
+
+    if (newlyPressed & NSEventModifierFlagControl)
+        [displayString appendString:@"\xe2\x8c\x83"];
+    if (newlyPressed & NSEventModifierFlagOption)
+        [displayString appendString:@"\xe2\x8c\xa5"];
+    if (newlyPressed & NSEventModifierFlagShift)
+        [displayString appendString:@"\xe2\x87\xa7"];
+    if (newlyPressed & NSEventModifierFlagCommand)
+        [displayString appendString:@"\xe2\x8c\x98"];
+
+    if (displayString.length > 0)
+        [visualizerWindow appendString:displayString];
 }
 
 + (NSDictionary<NSString *, NSObject *> *)visualizerDefaults
