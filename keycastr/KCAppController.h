@@ -30,6 +30,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class KCMouseEventVisualizer;
 @protocol KCVisualizer;
 
 @interface KCAppController : NSObject <NSApplicationDelegate>
@@ -56,5 +57,9 @@
 
 - (NSString *)currentMouseDisplayOptionName;
 - (void)setCurrentMouseDisplayOptionName:(NSString *)displayOptionName;
+
+- (NSArray *)availableMouseEffectNames;
+
+- (KCMouseEventVisualizer *)mouseEventVisualizer;
 
 @end
