@@ -157,7 +157,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 
 #pragma mark - Value Transformer
 
-- (NSDictionary *)_specialKeys
++ (NSDictionary *)specialKeys
 {
     static NSDictionary *d = nil;
     if (d == nil) {
@@ -286,7 +286,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
         }
     };
 
-    NSString *specialKeyString = [[self _specialKeys] objectForKey:@(keystroke.keyCode)];
+    NSString *specialKeyString = [KCEventTransformer.specialKeys objectForKey:@(keystroke.keyCode)];
     if (specialKeyString)
     {
         appendModifiers(_displayModifiedCharacters);

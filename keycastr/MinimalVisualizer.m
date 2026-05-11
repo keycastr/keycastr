@@ -26,6 +26,7 @@
 
 #import "MinimalVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
+#import "KCEventTransformer.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
 
@@ -265,15 +266,32 @@ static CGFloat kDefaultDimension = 100.0;
         return;
     }
 
-    NSString *characters = keystroke.isCommand ? [keystroke.charactersIgnoringModifiers uppercaseString] : keystroke.charactersIgnoringModifiers;
-    // TODO: special characters
-    [_visualizerView noteCharactersChanged:characters];
+    NSString *specialKey = [KCEventTransformer.specialKeys objectForKey:@(keystroke.keyCode)];
+    if (specialKey) {
+        [_visualizerView noteCharactersChanged:specialKey];
+    } else {
+        NSString *characters;
+        if (keystroke.isCommand) {
+            if (keystroke.characters.length) {
+                characters = [keystroke.characters uppercaseString];
+            } else {
+                characters = [keystroke.charactersIgnoringModifiers uppercaseString];
+            }
+        } else {
+            characters = keystroke.charactersIgnoringModifiers;
+        }
+        [_visualizerView noteCharactersChanged:characters];
+    }
     [self charactersDidChange];
 }
 
 - (void)noteKeyUpEvent:(KCKeycastrEvent *)event {
     [_visualizerView noteCharactersChanged:nil];
     [self charactersDidChange];
+}
+
+- (void)noteMouseEvent:(KCMouseEvent *)mouseEvent {
+    NSLog(@"================> %@", NSStringFromSelector(_cmd));
 }
 
 + (NSDictionary<NSString *,NSObject *> *)visualizerDefaults {

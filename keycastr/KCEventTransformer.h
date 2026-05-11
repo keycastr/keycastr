@@ -32,6 +32,8 @@
 
 @interface KCEventTransformer : NSValueTransformer
 
+@property (nonatomic, readonly, class) NSDictionary *specialKeys;
+
 + (instancetype)currentTransformer;
 
 - (instancetype)initWithKeyboardLayout:(TISInputSourceRef)keyboardLayout userDefaults:(NSUserDefaults *)userDefaults;
