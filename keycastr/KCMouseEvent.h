@@ -32,5 +32,6 @@
 @interface KCMouseEvent : KCKeycastrEvent
 
 @property (nonatomic, readonly) NSPoint locationInWindow;
+@property (nonatomic, readonly) NSInteger buttonNumber;
 
 @end

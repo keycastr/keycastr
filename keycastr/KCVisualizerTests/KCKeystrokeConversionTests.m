@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 #import <KCVisualizer/KCKeystroke.h>
 #import <KCVisualizer/KCEventTransformer.h>
+#import "KCMouseEvent.h"
 
 /**
  NOTE: This is not a comprehensive set of tests, but serves as a sanity check for handling commands and whether to display or apply modifiers.
@@ -279,6 +280,52 @@
     // In order to avoid confusion, fall back to displaying the keycap.
     keystroke = [self keystrokeWithKeyCode:27 modifiers:1048840 characters:@"ß" charactersIgnoringModifiers:@"ß"];
     XCTAssertEqualObjects([keystroke convertToString], @"⌘ß");
+}
+
+#pragma mark - Mouse buttons
+
+- (KCMouseEvent *)mouseEventOfType:(NSEventType)type buttonNumber:(NSInteger)buttonNumber modifiers:(NSEventModifierFlags)modifiers {
+    KCMouseEvent *event = [[KCMouseEvent alloc] initWithNSEvent:nil];
+    [event setValue:@(type) forKey:@"type"];
+    [event setValue:@(buttonNumber) forKey:@"buttonNumber"];
+    [event setValue:@(modifiers) forKey:@"modifierFlags"];
+    return event;
+}
+
+- (void)test_KCMouseEvent_leftMouseDownIsLMB {
+    KCMouseEvent *event = [self mouseEventOfType:NSEventTypeLeftMouseDown buttonNumber:0 modifiers:0];
+    XCTAssertEqualObjects([eventTransformer transformedValue:event], @"LMB");
+}
+
+- (void)test_KCMouseEvent_rightMouseDownIsRMB {
+    KCMouseEvent *event = [self mouseEventOfType:NSEventTypeRightMouseDown buttonNumber:1 modifiers:0];
+    XCTAssertEqualObjects([eventTransformer transformedValue:event], @"RMB");
+}
+
+- (void)test_KCMouseEvent_middleMouseDownIsMMB {
+    KCMouseEvent *event = [self mouseEventOfType:NSEventTypeOtherMouseDown buttonNumber:2 modifiers:0];
+    XCTAssertEqualObjects([eventTransformer transformedValue:event], @"MMB");
+}
+
+- (void)test_KCMouseEvent_fourthButtonIsMB4 {
+    KCMouseEvent *event = [self mouseEventOfType:NSEventTypeOtherMouseDown buttonNumber:3 modifiers:0];
+    XCTAssertEqualObjects([eventTransformer transformedValue:event], @"MB4");
+}
+
+- (void)test_KCMouseEvent_fifthButtonIsMB5 {
+    KCMouseEvent *event = [self mouseEventOfType:NSEventTypeOtherMouseDown buttonNumber:4 modifiers:0];
+    XCTAssertEqualObjects([eventTransformer transformedValue:event], @"MB5");
+}
+
+- (void)test_KCMouseEvent_commandLeftClickShowsCommandLMB {
+    KCMouseEvent *event = [self mouseEventOfType:NSEventTypeLeftMouseDown buttonNumber:0 modifiers:NSEventModifierFlagCommand];
+    XCTAssertEqualObjects([eventTransformer transformedValue:event], @"⌘LMB");
+}
+
+- (void)test_KCMouseEvent_optionShiftRightClickShowsModifiersWithRMB {
+    NSEventModifierFlags modifiers = NSEventModifierFlagOption | NSEventModifierFlagShift;
+    KCMouseEvent *event = [self mouseEventOfType:NSEventTypeRightMouseDown buttonNumber:1 modifiers:modifiers];
+    XCTAssertEqualObjects([eventTransformer transformedValue:event], @"⌥⇧RMB");
 }
 
 @end

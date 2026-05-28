@@ -260,7 +260,35 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
             [mutableResponse appendString:kShiftKeyString];
             needsShiftGlyph = NO;
         }
-        [mutableResponse appendString:@"🖱️"];
+
+        NSString *token;
+        switch (event.type) {
+            case NSEventTypeLeftMouseDown:
+            case NSEventTypeLeftMouseUp:
+            case NSEventTypeLeftMouseDragged:
+                token = @"LMB";
+                break;
+            case NSEventTypeRightMouseDown:
+            case NSEventTypeRightMouseUp:
+            case NSEventTypeRightMouseDragged:
+                token = @"RMB";
+                break;
+            case NSEventTypeOtherMouseDown:
+            case NSEventTypeOtherMouseUp:
+            case NSEventTypeOtherMouseDragged: {
+                NSInteger buttonNumber = ((KCMouseEvent *)event).buttonNumber;
+                if (buttonNumber == 2) {
+                    token = @"MMB";
+                } else {
+                    token = [NSString stringWithFormat:@"MB%ld", (long)(buttonNumber + 1)];
+                }
+                break;
+            }
+            default:
+                token = @"MB?";
+                break;
+        }
+        [mutableResponse appendString:token];
         return mutableResponse;
     }
     

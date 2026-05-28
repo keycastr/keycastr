@@ -38,6 +38,7 @@
     }
 
     _locationInWindow = event.locationInWindow;
+    _buttonNumber = event.buttonNumber;
 
     return self;
 }
