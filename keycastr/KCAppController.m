@@ -222,7 +222,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     NSDictionary *appDefaults = @{ kKCPrefDisplayIcon: @3,
                                    kKCPrefSelectedVisualizer: @"Default",
                                    kKCPrefVisibleAtLaunch: @YES,
-                                   kKCPrefCapturingHotKey: [NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)] };
+                                   kKCPrefCapturingHotKey: [NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)],
+                                   @"mouse.strokeColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]
+                                                                               requiringSecureCoding:NO
+                                                                                               error:NULL] };
     
     NSArray *factories = [KCVisualizer availableVisualizerFactories];
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];

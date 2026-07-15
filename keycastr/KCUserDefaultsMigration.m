@@ -57,7 +57,7 @@
 }
 
 + (NSArray *)colorKeyNames {
-    return @[ @"default.textColor", @"default.bezelColor" ];
+    return @[ @"default.textColor", @"default.bezelColor", @"mouse.strokeColor" ];
 }
 
 @end

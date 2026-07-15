@@ -170,18 +170,17 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 
-    // TODO: this should be its own color config.
-    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:@"values.default.bezelColor" options:NSKeyValueObservingOptionNew context:NULL];
+    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:@"values.mouse.strokeColor" options:NSKeyValueObservingOptionNew context:NULL];
 
     return self;
 }
 
 - (void)dealloc {
-    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:@"values.default.bezelColor"];
+    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:@"values.mouse.strokeColor"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"values.default.bezelColor"]) {
+    if ([keyPath isEqualToString:@"values.mouse.strokeColor"]) {
         [self.circle removeFromSuperlayer];
         self.circle = nil;
     }
@@ -200,8 +199,8 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
         self.circle.path = pathRef;
         CGPathRelease(pathRef);
 
-        NSColor *bezelColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
-        self.circle.strokeColor = bezelColor.CGColor;
+        NSColor *strokeColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"mouse.strokeColor"];
+        self.circle.strokeColor = strokeColor.CGColor;
 
         self.circle.fillColor = NSColor.clearColor.CGColor;
         self.circle.lineWidth = lineWidth;

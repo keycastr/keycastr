@@ -307,13 +307,13 @@
                                                     </constraints>
                                                 </customView>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="eb6-kp-O9f" userLabel="Mouse Options Container View">
-                                                    <rect key="frame" x="0.0" y="252" width="387" height="61"/>
+                                                    <rect key="frame" x="0.0" y="213" width="387" height="100"/>
                                                     <subviews>
                                                         <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-cZ-Yk1">
                                                             <rect key="frame" x="0.0" y="-2" width="387" height="5"/>
                                                         </box>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i4K-FF-bg4">
-                                                            <rect key="frame" x="18" y="22" width="141" height="17"/>
+                                                            <rect key="frame" x="18" y="61" width="141" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="Ar2-T7-Vk2"/>
                                                             </constraints>
@@ -324,7 +324,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <popUpButton horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M4E-xg-OPh" userLabel="Mouse Display Options">
-                                                            <rect key="frame" x="162" y="17" width="209" height="25"/>
+                                                            <rect key="frame" x="162" y="56" width="209" height="25"/>
                                                             <popUpButtonCell key="cell" type="push" title="with pointer and visualizer" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="b75-G6-B4y" id="7h2-NY-2W2">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="message"/>
@@ -344,16 +344,47 @@
                                                                 <binding destination="375" name="selectedValue" keyPath="currentMouseDisplayOptionName" previousBinding="o5O-Wp-pDz" id="oNY-D3-xbk"/>
                                                             </connections>
                                                         </popUpButton>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mPc-Lb-001">
+                                                            <rect key="frame" x="55" y="24" width="104" height="17"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="17" id="mPc-Ht-001"/>
+                                                            </constraints>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Pointer Color:" id="mPc-Cell-1">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="mPc-Cw-001">
+                                                            <rect key="frame" x="162" y="19" width="50" height="26"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="44" id="mPc-Cw-W"/>
+                                                                <constraint firstAttribute="height" constant="22" id="mPc-Cw-H"/>
+                                                            </constraints>
+                                                            <color key="color" red="0.0" green="0.0" blue="0.0" alpha="0.80000000999999998" colorSpace="calibratedRGB"/>
+                                                            <connections>
+                                                                <binding destination="462" name="value" keyPath="values.mouse.strokeColor" id="mPc-Bind-1">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">KCColorValueTransformer</string>
+                                                                    </dictionary>
+                                                                </binding>
+                                                            </connections>
+                                                        </colorWell>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="M4E-xg-OPh" firstAttribute="centerY" secondItem="eb6-kp-O9f" secondAttribute="centerY" id="7Pe-er-u6y"/>
+                                                        <constraint firstItem="i4K-FF-bg4" firstAttribute="top" secondItem="eb6-kp-O9f" secondAttribute="top" constant="16" id="mPc-Top-1"/>
+                                                        <constraint firstItem="M4E-xg-OPh" firstAttribute="centerY" secondItem="i4K-FF-bg4" secondAttribute="centerY" id="7Pe-er-u6y"/>
                                                         <constraint firstItem="M4E-xg-OPh" firstAttribute="leading" secondItem="i4K-FF-bg4" secondAttribute="trailing" constant="8" symbolic="YES" id="Cq3-2R-pcl"/>
                                                         <constraint firstItem="cVt-cZ-Yk1" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" id="Eh8-4A-q9r"/>
                                                         <constraint firstAttribute="bottom" secondItem="cVt-cZ-Yk1" secondAttribute="bottom" id="beM-Gf-hXe"/>
                                                         <constraint firstAttribute="trailing" secondItem="M4E-xg-OPh" secondAttribute="trailing" constant="20" symbolic="YES" id="jEI-iC-aeW"/>
                                                         <constraint firstItem="i4K-FF-bg4" firstAttribute="leading" secondItem="eb6-kp-O9f" secondAttribute="leading" constant="20" symbolic="YES" id="mKh-Df-ITg"/>
                                                         <constraint firstAttribute="trailing" secondItem="cVt-cZ-Yk1" secondAttribute="trailing" id="qBs-y2-jtp"/>
-                                                        <constraint firstItem="i4K-FF-bg4" firstAttribute="centerY" secondItem="eb6-kp-O9f" secondAttribute="centerY" id="xTr-7r-Syp"/>
+                                                        <constraint firstItem="mPc-Lb-001" firstAttribute="top" secondItem="i4K-FF-bg4" secondAttribute="bottom" constant="20" id="mPc-Top-2"/>
+                                                        <constraint firstItem="mPc-Lb-001" firstAttribute="trailing" secondItem="i4K-FF-bg4" secondAttribute="trailing" id="mPc-Tr-1"/>
+                                                        <constraint firstItem="mPc-Cw-001" firstAttribute="leading" secondItem="M4E-xg-OPh" secondAttribute="leading" id="mPc-Ld-1"/>
+                                                        <constraint firstItem="mPc-Cw-001" firstAttribute="centerY" secondItem="mPc-Lb-001" secondAttribute="centerY" id="mPc-CY-1"/>
+                                                        <constraint firstAttribute="height" constant="100" id="mPc-Ht-Ctr"/>
                                                     </constraints>
                                                 </customView>
                                             </subviews>
@@ -368,7 +399,6 @@
                                                 <constraint firstItem="M4E-xg-OPh" firstAttribute="leading" secondItem="429" secondAttribute="leading" id="So5-P7-BXR"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="top" secondItem="411" secondAttribute="top" constant="59" id="Zec-vm-rAh"/>
                                                 <constraint firstItem="429" firstAttribute="width" secondItem="M4E-xg-OPh" secondAttribute="width" id="auR-yA-s7a"/>
-                                                <constraint firstItem="eb6-kp-O9f" firstAttribute="height" secondItem="426" secondAttribute="height" id="drL-t1-XcD"/>
                                                 <constraint firstAttribute="trailing" secondItem="426" secondAttribute="trailing" id="lIh-gp-Fjd"/>
                                                 <constraint firstItem="eb6-kp-O9f" firstAttribute="leading" secondItem="411" secondAttribute="leading" id="rXA-cP-0dy"/>
                                             </constraints>

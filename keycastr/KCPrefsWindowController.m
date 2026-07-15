@@ -30,6 +30,7 @@
 #import "KCPrefsWindowController.h"
 #import "KCAppController.h"
 #import "KCVisualizer.h"
+#import "KCColorValueTransformer.h"
 
 @implementation KCPrefsWindowController
 
@@ -96,11 +97,14 @@
 		
 	// we assume it's the second item in the array
 	NSView* view = [preferenceViews objectAtIndex:1];
-	NSView* subview = [[view subviews] objectAtIndex:0];
+	[self ensureMousePointerColorControlsInDisplayPane:view];
 	NSView* prefView = [new preferencesView];
 	NSSize s = [prefView frame].size;
-    // TODO: this is overly tightly coupled to the Display tab's layout
-	s.height += [subview frame].size.height * 2.0;
+	CGFloat chromeHeight = 0;
+	for (NSView *child in [view subviews]) {
+		chromeHeight += [child frame].size.height;
+	}
+	s.height += chromeHeight;
 	[view setFrameSize:s];
 	[view addSubview:prefView];
 	
@@ -110,6 +114,79 @@
 		NSRect newFrame = [self frameRectWithPin:NSZeroPoint andContentSize:s];
 		[prefsWindow setFrame:newFrame display:display animate:display];
 	}
+}
+
+- (BOOL)displayPane:(NSView *)displayPane containsLabel:(NSString *)label
+{
+	for (NSView *container in [displayPane subviews]) {
+		for (NSView *child in [container subviews]) {
+			if ([child isKindOfClass:[NSTextField class]] &&
+				[[(NSTextField *)child stringValue] isEqualToString:label]) {
+				return YES;
+			}
+		}
+		if ([container isKindOfClass:[NSTextField class]] &&
+			[[(NSTextField *)container stringValue] isEqualToString:label]) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
+- (NSView *)mouseOptionsContainerInDisplayPane:(NSView *)displayPane
+{
+	for (NSView *container in [displayPane subviews]) {
+		for (NSView *child in [container subviews]) {
+			if ([child isKindOfClass:[NSTextField class]] &&
+				[[(NSTextField *)child stringValue] isEqualToString:@"Display Mouse Events:"]) {
+				return container;
+			}
+		}
+	}
+	return nil;
+}
+
+- (void)ensureMousePointerColorControlsInDisplayPane:(NSView *)displayPane
+{
+	if ([self displayPane:displayPane containsLabel:@"Pointer Color:"]) {
+		return;
+	}
+
+	NSView *mouseContainer = [self mouseOptionsContainerInDisplayPane:displayPane];
+	if (mouseContainer == nil) {
+		return;
+	}
+
+	CGFloat rowHeight = 40.0;
+	NSRect mouseFrame = [mouseContainer frame];
+	NSView *colorRow = [[[NSView alloc] initWithFrame:NSMakeRect(0, mouseFrame.origin.y - rowHeight, mouseFrame.size.width, rowHeight)] autorelease];
+	[colorRow setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
+
+	NSTextField *label = [[[NSTextField alloc] initWithFrame:NSMakeRect(20, 11, 141, 17)] autorelease];
+	[label setEditable:NO];
+	[label setBordered:NO];
+	[label setDrawsBackground:NO];
+	[label setAlignment:NSTextAlignmentRight];
+	[label setStringValue:@"Pointer Color:"];
+	[label setFont:[NSFont systemFontOfSize:[NSFont systemFontSize]]];
+	[label setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
+	[colorRow addSubview:label];
+
+	NSColorWell *colorWell = [[[NSColorWell alloc] initWithFrame:NSMakeRect(169, 8, 44, 22)] autorelease];
+	[colorWell setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
+	KCColorValueTransformer *transformer = [[[KCColorValueTransformer alloc] init] autorelease];
+	[colorWell bind:@"value"
+		   toObject:[NSUserDefaultsController sharedUserDefaultsController]
+		withKeyPath:@"values.mouse.strokeColor"
+			options:@{ NSValueTransformerBindingOption: transformer }];
+	[colorRow addSubview:colorWell];
+
+	NSBox *separator = [[[NSBox alloc] initWithFrame:NSMakeRect(0, -2, mouseFrame.size.width, 5)] autorelease];
+	[separator setBoxType:NSBoxSeparator];
+	[separator setAutoresizingMask:NSViewWidthSizable | NSViewMaxYMargin];
+	[colorRow addSubview:separator];
+
+	[displayPane addSubview:colorRow];
 }
 
 -(void) visualizerChanged:(NSNotification*)notification
