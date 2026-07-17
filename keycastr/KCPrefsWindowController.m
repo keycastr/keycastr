@@ -97,7 +97,7 @@
 		
 	// we assume it's the second item in the array
 	NSView* view = [preferenceViews objectAtIndex:1];
-	[self ensureMousePointerColorControlsInDisplayPane:view];
+	[self ensureMouseAppearanceControlsInDisplayPane:view];
 	NSView* prefView = [new preferencesView];
 	NSSize s = [prefView frame].size;
 	CGFloat chromeHeight = 0;
@@ -146,47 +146,96 @@
 	return nil;
 }
 
-- (void)ensureMousePointerColorControlsInDisplayPane:(NSView *)displayPane
+- (NSTextField *)labelWithTitle:(NSString *)title frame:(NSRect)frame
 {
-	if ([self displayPane:displayPane containsLabel:@"Pointer Color:"]) {
-		return;
-	}
+	NSTextField *label = [[[NSTextField alloc] initWithFrame:frame] autorelease];
+	[label setEditable:NO];
+	[label setBordered:NO];
+	[label setDrawsBackground:NO];
+	[label setAlignment:NSTextAlignmentRight];
+	[label setStringValue:title];
+	[label setFont:[NSFont systemFontOfSize:[NSFont systemFontSize]]];
+	[label setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
+	return label;
+}
 
+- (NSColorWell *)colorWellBoundToKeyPath:(NSString *)keyPath frame:(NSRect)frame
+{
+	NSColorWell *colorWell = [[[NSColorWell alloc] initWithFrame:frame] autorelease];
+	[colorWell setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
+	KCColorValueTransformer *transformer = [[[KCColorValueTransformer alloc] init] autorelease];
+	[colorWell bind:@"value"
+		   toObject:[NSUserDefaultsController sharedUserDefaultsController]
+		withKeyPath:keyPath
+			options:@{ NSValueTransformerBindingOption: transformer }];
+	return colorWell;
+}
+
+- (void)ensureMouseAppearanceControlsInDisplayPane:(NSView *)displayPane
+{
 	NSView *mouseContainer = [self mouseOptionsContainerInDisplayPane:displayPane];
 	if (mouseContainer == nil) {
 		return;
 	}
 
-	CGFloat rowHeight = 40.0;
+	BOOL hasPointerColor = [self displayPane:displayPane containsLabel:@"Pointer Color:"];
+	BOOL hasFillColor = [self displayPane:displayPane containsLabel:@"Fill Color:"];
+	BOOL hasPointerSize = [self displayPane:displayPane containsLabel:@"Pointer Size:"];
+	if (hasPointerColor && hasFillColor && hasPointerSize) {
+		return;
+	}
+
 	NSRect mouseFrame = [mouseContainer frame];
-	NSView *colorRow = [[[NSView alloc] initWithFrame:NSMakeRect(0, mouseFrame.origin.y - rowHeight, mouseFrame.size.width, rowHeight)] autorelease];
-	[colorRow setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
+	CGFloat rowHeight = 36.0;
+	CGFloat nextY = mouseFrame.origin.y;
+	NSView *anchorView = mouseContainer;
 
-	NSTextField *label = [[[NSTextField alloc] initWithFrame:NSMakeRect(20, 11, 141, 17)] autorelease];
-	[label setEditable:NO];
-	[label setBordered:NO];
-	[label setDrawsBackground:NO];
-	[label setAlignment:NSTextAlignmentRight];
-	[label setStringValue:@"Pointer Color:"];
-	[label setFont:[NSFont systemFontOfSize:[NSFont systemFontSize]]];
-	[label setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
-	[colorRow addSubview:label];
+	if (!hasPointerColor || !hasFillColor) {
+		nextY -= rowHeight;
+		NSView *colorRow = [[[NSView alloc] initWithFrame:NSMakeRect(0, nextY, mouseFrame.size.width, rowHeight)] autorelease];
+		[colorRow setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
 
-	NSColorWell *colorWell = [[[NSColorWell alloc] initWithFrame:NSMakeRect(169, 8, 44, 22)] autorelease];
-	[colorWell setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin];
-	KCColorValueTransformer *transformer = [[[KCColorValueTransformer alloc] init] autorelease];
-	[colorWell bind:@"value"
-		   toObject:[NSUserDefaultsController sharedUserDefaultsController]
-		withKeyPath:@"values.mouse.strokeColor"
-			options:@{ NSValueTransformerBindingOption: transformer }];
-	[colorRow addSubview:colorWell];
+		if (!hasPointerColor) {
+			[colorRow addSubview:[self labelWithTitle:@"Pointer Color:" frame:NSMakeRect(20, 9, 141, 17)]];
+			[colorRow addSubview:[self colorWellBoundToKeyPath:@"values.mouse.strokeColor" frame:NSMakeRect(169, 6, 44, 22)]];
+		}
+		if (!hasFillColor) {
+			CGFloat fillLabelX = hasPointerColor ? 20.0 : 230.0;
+			CGFloat fillWellX = hasPointerColor ? 169.0 : 310.0;
+			CGFloat fillLabelWidth = hasPointerColor ? 141.0 : 70.0;
+			[colorRow addSubview:[self labelWithTitle:@"Fill Color:" frame:NSMakeRect(fillLabelX, 9, fillLabelWidth, 17)]];
+			[colorRow addSubview:[self colorWellBoundToKeyPath:@"values.mouse.fillColor" frame:NSMakeRect(fillWellX, 6, 44, 22)]];
+		}
 
-	NSBox *separator = [[[NSBox alloc] initWithFrame:NSMakeRect(0, -2, mouseFrame.size.width, 5)] autorelease];
-	[separator setBoxType:NSBoxSeparator];
-	[separator setAutoresizingMask:NSViewWidthSizable | NSViewMaxYMargin];
-	[colorRow addSubview:separator];
+		[displayPane addSubview:colorRow positioned:NSWindowBelow relativeTo:anchorView];
+		anchorView = colorRow;
+	}
 
-	[displayPane addSubview:colorRow];
+	if (!hasPointerSize) {
+		nextY -= 44.0;
+		NSView *sizeRow = [[[NSView alloc] initWithFrame:NSMakeRect(0, nextY, mouseFrame.size.width, 44.0)] autorelease];
+		[sizeRow setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
+
+		[sizeRow addSubview:[self labelWithTitle:@"Pointer Size:" frame:NSMakeRect(20, 14, 141, 17)]];
+
+		NSSlider *slider = [[[NSSlider alloc] initWithFrame:NSMakeRect(169, 12, 180, 20)] autorelease];
+		[slider setMinValue:8.0];
+		[slider setMaxValue:64.0];
+		[slider setContinuous:YES];
+		[slider setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin | NSViewMaxYMargin];
+		[slider bind:@"value"
+			toObject:[NSUserDefaultsController sharedUserDefaultsController]
+		 withKeyPath:@"values.mouse.radius"
+			 options:nil];
+		[sizeRow addSubview:slider];
+
+		NSBox *separator = [[[NSBox alloc] initWithFrame:NSMakeRect(0, -2, mouseFrame.size.width, 5)] autorelease];
+		[separator setBoxType:NSBoxSeparator];
+		[separator setAutoresizingMask:NSViewWidthSizable | NSViewMaxYMargin];
+		[sizeRow addSubview:separator];
+
+		[displayPane addSubview:sizeRow positioned:NSWindowBelow relativeTo:anchorView];
+	}
 }
 
 -(void) visualizerChanged:(NSNotification*)notification

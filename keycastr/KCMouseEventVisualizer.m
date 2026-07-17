@@ -36,7 +36,22 @@
 #import "NSUserDefaults+Utility.h"
 #import "KCKeycastrEvent.h"
 
-static CGFloat const kKCMouseVisualizerRadius = 22.0;
+static CGFloat const kKCMouseVisualizerDefaultRadius = 22.0;
+static CGFloat const kKCMouseVisualizerMinRadius = 8.0;
+static CGFloat const kKCMouseVisualizerMaxRadius = 64.0;
+static CGFloat const kKCMouseVisualizerLineWidth = 2.0;
+
+static NSString * const kKCMouseStrokeColorKey = @"mouse.strokeColor";
+static NSString * const kKCMouseFillColorKey = @"mouse.fillColor";
+static NSString * const kKCMouseRadiusKey = @"mouse.radius";
+
+static CGFloat KCMouseVisualizerRadius(void) {
+    CGFloat radius = [[NSUserDefaults standardUserDefaults] floatForKey:kKCMouseRadiusKey];
+    if (radius < kKCMouseVisualizerMinRadius) {
+        radius = kKCMouseVisualizerDefaultRadius;
+    }
+    return MIN(MAX(radius, kKCMouseVisualizerMinRadius), kKCMouseVisualizerMaxRadius);
+}
 
 @interface KCMouseVisualizerWindow : NSWindow
 
@@ -82,7 +97,7 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 - (void)createWindow {
     if (NSApp == nil) return;
     
-    CGFloat diameter = 2 * kKCMouseVisualizerRadius;
+    CGFloat diameter = 2 * KCMouseVisualizerRadius();
     _window = [[KCMouseVisualizerWindow alloc] initWithContentRect:NSMakeRect(0, 0, diameter, diameter)
                                                          styleMask:NSWindowStyleMaskBorderless
                                                            backing:NSBackingStoreBuffered
@@ -170,44 +185,67 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
 
     [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 
-    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:@"values.mouse.strokeColor" options:NSKeyValueObservingOptionNew context:NULL];
+    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+    [defaultsController addObserver:self forKeyPath:@"values.mouse.strokeColor" options:NSKeyValueObservingOptionNew context:NULL];
+    [defaultsController addObserver:self forKeyPath:@"values.mouse.fillColor" options:NSKeyValueObservingOptionNew context:NULL];
+    [defaultsController addObserver:self forKeyPath:@"values.mouse.radius" options:NSKeyValueObservingOptionNew context:NULL];
 
     return self;
 }
 
 - (void)dealloc {
-    [[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:@"values.mouse.strokeColor"];
+    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+    [defaultsController removeObserver:self forKeyPath:@"values.mouse.strokeColor"];
+    [defaultsController removeObserver:self forKeyPath:@"values.mouse.fillColor"];
+    [defaultsController removeObserver:self forKeyPath:@"values.mouse.radius"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"values.mouse.strokeColor"]) {
+    if ([keyPath isEqualToString:@"values.mouse.strokeColor"]
+        || [keyPath isEqualToString:@"values.mouse.fillColor"]
+        || [keyPath isEqualToString:@"values.mouse.radius"]) {
         [self.circle removeFromSuperlayer];
         self.circle = nil;
     }
 }
 
-- (void)updateWithMouseEvent:(KCMouseEvent *)event {
-    if (!self.circle) {
-        self.circle = [CAShapeLayer layer];
-
-        CGFloat diameter = 2 * kKCMouseVisualizerRadius;
-        CGFloat lineWidth = 2.0;
-        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(lineWidth, lineWidth, diameter - 2 * lineWidth, diameter - 2 * lineWidth)
-                                                             xRadius:kKCMouseVisualizerRadius
-                                                             yRadius:kKCMouseVisualizerRadius];
-        CGMutablePathRef pathRef = [self newCGPathWithBezierPath:path];
-        self.circle.path = pathRef;
-        CGPathRelease(pathRef);
-
-        NSColor *strokeColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"mouse.strokeColor"];
-        self.circle.strokeColor = strokeColor.CGColor;
-
-        self.circle.fillColor = NSColor.clearColor.CGColor;
-        self.circle.lineWidth = lineWidth;
-        self.circle.opacity = 0.0;
-
-        [self.contentView.layer addSublayer:self.circle];
+- (void)configureCircleIfNeeded {
+    if (self.circle) {
+        return;
     }
+
+    CGFloat radius = KCMouseVisualizerRadius();
+    CGFloat diameter = 2 * radius;
+    CGFloat lineWidth = kKCMouseVisualizerLineWidth;
+
+    NSRect frame = self.frame;
+    frame.size = NSMakeSize(diameter, diameter);
+    [self setFrame:frame display:NO];
+
+    self.circle = [CAShapeLayer layer];
+
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(lineWidth, lineWidth, diameter - 2 * lineWidth, diameter - 2 * lineWidth)
+                                                         xRadius:radius
+                                                         yRadius:radius];
+    CGMutablePathRef pathRef = [self newCGPathWithBezierPath:path];
+    self.circle.path = pathRef;
+    CGPathRelease(pathRef);
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSColor *strokeColor = [defaults colorForKey:kKCMouseStrokeColorKey];
+    NSColor *fillColor = [defaults colorForKey:kKCMouseFillColorKey];
+    self.circle.strokeColor = strokeColor.CGColor;
+    self.circle.fillColor = fillColor.CGColor;
+    self.circle.lineWidth = lineWidth;
+    self.circle.opacity = 0.0;
+
+    [self.contentView.layer addSublayer:self.circle];
+}
+
+- (void)updateWithMouseEvent:(KCMouseEvent *)event {
+    [self configureCircleIfNeeded];
+
+    CGFloat radius = KCMouseVisualizerRadius();
 
     switch (event.type) {
         case NSEventTypeLeftMouseDown:
@@ -225,8 +263,8 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
         case NSEventTypeLeftMouseDragged:
         case NSEventTypeRightMouseDragged:
         case NSEventTypeOtherMouseDragged: {
-            NSPoint origin = NSMakePoint(event.locationInWindow.x - kKCMouseVisualizerRadius,
-                                         event.locationInWindow.y - kKCMouseVisualizerRadius);
+            NSPoint origin = NSMakePoint(event.locationInWindow.x - radius,
+                                         event.locationInWindow.y - radius);
             [self setFrameOrigin:origin];
 
             break;

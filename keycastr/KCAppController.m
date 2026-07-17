@@ -225,7 +225,11 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
                                    kKCPrefCapturingHotKey: [NSData dataWithBytes:&keyCombo length:sizeof(keyCombo)],
                                    @"mouse.strokeColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]
                                                                                requiringSecureCoding:NO
-                                                                                               error:NULL] };
+                                                                                               error:NULL],
+                                   @"mouse.fillColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor clearColor]
+                                                                             requiringSecureCoding:NO
+                                                                                             error:NULL],
+                                   @"mouse.radius": @22.0 };
     
     NSArray *factories = [KCVisualizer availableVisualizerFactories];
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
