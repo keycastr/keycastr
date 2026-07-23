@@ -49,21 +49,6 @@
 
 @implementation MinimalVisualizerView
 
-
-
-- (BOOL)mouseEnabled {
-    NSInteger displayOption = [[NSUserDefaults standardUserDefaults] integerForKey:@"mouse.displayOption"];
-    
-    // 2: With Current Visualizer
-    // 3: With Pointer and Visualizer
-    if (displayOption == 2 || displayOption == 3) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
-}
-
 - (unsigned short)flagsCount  {
     unsigned short count = 0;
 
@@ -129,7 +114,7 @@
 
     CGFloat width = [ud integerForKey:@"minimal.bezelSize"];
 
-    if (_mouse && [self mouseEnabled]) {
+    if (_mouse) {
         NSString* mouseString = @"🖱️";
         size = [mouseString sizeWithAttributes:attr];
         y = (frame.size.height - size.height) / 2.0;
@@ -239,7 +224,7 @@
     
     CGFloat bezelSize = [ud integerForKey:@"minimal.bezelSize"];
     CGFloat width = round(bezelSize * (CGFloat)(
-        [self flagsCount] + charactersCount + ([self mouseEnabled] ? _mouse : 0)
+        [self flagsCount] + charactersCount + _mouse
     ));
     
     NSRect windowFrame = self.window.frame;
@@ -256,10 +241,6 @@
     
     [self setFrame:NSMakeRect(0, 0, width, bezelSize)];
     [self setNeedsDisplay:YES];
-}
-
-- (void)mouseEventsChanged {
-    [self noteMouseChanged:NO];
 }
 
 @end
@@ -304,8 +285,6 @@
     _visualizerView = [[MinimalVisualizerView alloc] init];
     [_visualizerView noteFlagsChanged:0];
     [_visualizerWindow setContentView:_visualizerView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:_visualizerView selector:@selector(mouseEventsChanged) name:@"KCMouseEventsSettingChanged" object:nil];
 
     return self;
 }
