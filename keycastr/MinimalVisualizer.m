@@ -390,7 +390,7 @@
         @"minimal.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.75]
                                                    requiringSecureCoding:NO
                                                                    error:NULL],
-        @"minimal.textColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:8]
+        @"minimal.textColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1 alpha:0.8]
                                                   requiringSecureCoding:NO
                                                                   error:NULL],
         @"minimal.textShadowColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor blackColor]
