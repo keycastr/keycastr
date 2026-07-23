@@ -77,23 +77,19 @@
 
 - (void)drawRect:(NSRect)rect {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    
-    NSRect frame = self.frame;
-    NSRect bgFrame = self.frame;
 
-    CGFloat x = frame.size.width, y;
-    NSSize size;
+    NSRect frame = self.frame;
 
     [[NSColor clearColor] setFill];
     NSRectFill(frame);
-    
+
     // Prevent drawing empty bezel
     if (!_flags && !_characters && !_mouse) return;
 
-    if (bgFrame.size.width > 0) {
+    if (frame.size.width > 0) {
         [[ud colorForKey:@"minimal.bezelColor"] setFill];
         NSBezierPath* bp = [NSBezierPath bezierPath];
-        [bp appendRoundedRect:bgFrame radius:[ud floatForKey:@"minimal.borderRadius"]];
+        [bp appendRoundedRect:frame radius:[ud floatForKey:@"minimal.borderRadius"]];
         [bp fill];
     }
 
@@ -112,62 +108,38 @@
         NSParagraphStyleAttributeName:  ps
     };
 
-    CGFloat width = [ud integerForKey:@"minimal.bezelSize"];
+    // Glyphs occupy fixed-width slots laid out right-to-left: mouse, characters,
+    // then modifiers in ⌘⇧⌥⌃fn order.
+    CGFloat slotWidth = [ud integerForKey:@"minimal.bezelSize"];
+    __block CGFloat x = frame.size.width;
+    void (^drawGlyph)(NSString *) = ^(NSString *glyph) {
+        NSSize size = [glyph sizeWithAttributes:attr];
+        CGFloat y = (frame.size.height - size.height) / 2.0;
+        x -= slotWidth;
+        [glyph drawInRect:NSMakeRect(x, y, slotWidth, size.height) withAttributes:attr];
+    };
 
     if (_mouse) {
-        NSString* mouseString = @"🖱️";
-        size = [mouseString sizeWithAttributes:attr];
-        y = (frame.size.height - size.height) / 2.0;
-        x -= width;
-        [mouseString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
+        drawGlyph(@"🖱️");
     }
-    
     if (_characters) {
-        size = [_characters sizeWithAttributes:attr];
-        y = (frame.size.height - size.height) / 2.0;
-        x -= width;
-        [_characters drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
+        drawGlyph(_characters);
     }
-
-	if (_flags & NSEventModifierFlagCommand) {
-		NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
-		size = [commandKeyString sizeWithAttributes:attr];
-		y = (frame.size.height - size.height) / 2.0;
-		x -= width;
-		[commandKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
-	}
-
-	if (_flags & NSEventModifierFlagShift) {
-		NSString* shiftKeyString = [NSString stringWithUTF8String:"\xe2\x87\xa7\x01"];
-		size = [shiftKeyString sizeWithAttributes:attr];
-		y = (frame.size.height - size.height) / 2.0;
-		x -= width;
-		[shiftKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
-	}
-
+    if (_flags & NSEventModifierFlagCommand) {
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\x98\x01"]);
+    }
+    if (_flags & NSEventModifierFlagShift) {
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x87\xa7\x01"]);
+    }
     if (_flags & NSEventModifierFlagOption) {
-        NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
-        size = [altKeyString sizeWithAttributes:attr];
-        y = (frame.size.height - size.height) / 2.0;
-        x -= width;
-        [altKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"]);
     }
-
-	if (_flags & NSEventModifierFlagControl) {
-		NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
-		size = [controlKeyString sizeWithAttributes:attr];
-		y = (frame.size.height - size.height) / 2.0;
-		x -= width;
-		[controlKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
-	}
-
-	if (_flags & NSEventModifierFlagFunction) {
-		NSString* controlKeyString = [NSString stringWithUTF8String:"fn"];
-		size = [controlKeyString sizeWithAttributes:attr];
-		y = (frame.size.height - size.height) / 2.0;
-		x -= width;
-		[controlKeyString drawInRect:NSMakeRect(x, y, width, size.height) withAttributes:attr];
-	}
+    if (_flags & NSEventModifierFlagControl) {
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\x83\x01"]);
+    }
+    if (_flags & NSEventModifierFlagFunction) {
+        drawGlyph(@"fn");
+    }
 }
 
 - (void)noteFlagsChanged:(uint32_t)flags {
