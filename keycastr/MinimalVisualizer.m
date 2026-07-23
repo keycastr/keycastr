@@ -1,4 +1,6 @@
 //  Copyright (c) 2023 Colin Gray
+//  Copyright (c) 2026 Daniel Costa
+//  Copyright (c) 2026 Andrew Kitchen
 //  All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without modification,
