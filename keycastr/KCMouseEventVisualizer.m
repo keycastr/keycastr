@@ -108,7 +108,9 @@ static NSString *kKCMouseVisualizerDisplayOptionKey = @"mouse.displayOption";
     }
 
     // Options 2 & 3 include displaying mouse events in the keystroke visualizer.
-    if (self.selectedMouseDisplayOptionIndex >= 2) {
+    // Mouse-up is always forwarded (like the overlay above) so a click that began
+    // while a visualizer was enabled can clear even if the option changed since.
+    if (self.selectedMouseDisplayOptionIndex >= 2 || [self isMouseUp:mouseEvent]) {
         [self.delegate mouseEventVisualizer:self didNoteMouseEvent:mouseEvent];
     }
 }
