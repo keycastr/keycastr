@@ -35,6 +35,7 @@
 #import "KCAppController.h"
 #import "KCEventTap.h"
 #import "KCKeystroke.h"
+#import "KCMouseEvent.h"
 #import "KCMouseEventVisualizer.h"
 #import "KCPrefsWindowController.h"
 #import "KCUserDefaultsMigration.h"
@@ -274,8 +275,9 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)eventTap:(KCEventTap *)eventTap noteMouseEvent:(KCMouseEvent *)mouseEvent
 {
-    // TODO: need to let mouseUp events through after isCapturing or mouse events are disabled, otherwise we can end up with a stuck visualizer animation
-    if (!_isCapturing) {
+    // Always let mouse-up through to avoid a stuck visualization. Down/drag stay gated.
+    BOOL isMouseUp = (NSEventMaskFromType(mouseEvent.type) & (NSEventMaskLeftMouseUp | NSEventMaskRightMouseUp | NSEventMaskOtherMouseUp)) != 0;
+    if (!_isCapturing && !isMouseUp) {
         return;
     }
 
