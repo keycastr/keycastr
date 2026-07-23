@@ -214,17 +214,15 @@
 - (void)adjustFrameSize {    
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
-    NSString *trimmed = [_characters stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
-    // Get length of characters (counting emojis as 1 character)
-    __block NSUInteger charactersCount = 0;
-    [trimmed enumerateSubstringsInRange:NSMakeRange(0, trimmed.length)
-                                options:NSStringEnumerationByComposedCharacterSequences
-                             usingBlock:^(NSString *s, NSRange r, NSRange e, BOOL *stop) { charactersCount++; }];
+    // -drawRect: renders the whole _characters string within a single bezel slot,
+    // so it always occupies exactly one slot regardless of length. Counting each
+    // composed character here over-sized the frame for multi-character key labels
+    // (e.g. "F1", "F10"), leaving a trailing empty bezel box.
+    BOOL hasCharacters = [_characters stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length > 0;
     
     CGFloat bezelSize = [ud integerForKey:@"minimal.bezelSize"];
     CGFloat width = round(bezelSize * (CGFloat)(
-        [self flagsCount] + charactersCount + _mouse
+        [self flagsCount] + (hasCharacters ? 1 : 0) + _mouse
     ));
     
     // Size the view to its content only. The owning MinimalVisualizer is the sole
