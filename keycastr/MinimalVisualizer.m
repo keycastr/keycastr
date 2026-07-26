@@ -227,18 +227,8 @@
         [self flagsCount] + charactersCount + _mouse
     ));
     
-    NSRect windowFrame = self.window.frame;
-    
-    NSRect newFrame = windowFrame;
-    newFrame.size.width = width;
-    newFrame.size.height = bezelSize;
-    
-    if ([ud boolForKey:@"minimal.anchorRight"]) {
-        newFrame.origin.x = round(NSMaxX(windowFrame)) - width;
-    }
-    
-    [self.window setFrame:newFrame display:YES animate:NO];
-    
+    // Size the view to its content only. The owning MinimalVisualizer is the sole
+    // owner of the window frame (position + anchoring); see -charactersDidChange.
     [self setFrame:NSMakeRect(0, 0, width, bezelSize)];
     [self setNeedsDisplay:YES];
 }
@@ -257,36 +247,48 @@
     if (!(self = [super init]))
         return nil;
 
-    // autosave frame was not working, despite best efforts. Easy workaround to use defaults instead.
-    // (and autosave frame _uses_ defaults anyway so same thing in the end?)
-    // TODO(AK): It appears we sometimes retrieve a stale frame this way with a non-0 width, which was probably stored the last time the app exited via CMD-Q
-    // This strategy also makes it more complicated to adjust the visualizer's dimension later, so we still need to revisit this.
-    CGFloat bezelSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"minimal.bezelSize"];
-    NSString *frameValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"minimal.savedFrame"];
-    NSRect windowFrame = { bezelSize, bezelSize, 0, bezelSize };
-    if (frameValue) {
-        windowFrame = NSRectFromString(frameValue);
-    }
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    CGFloat bezelSize = [ud integerForKey:@"minimal.bezelSize"];
 
     _visualizerWindow = [[NSWindow alloc]
-         initWithContentRect:windowFrame
+         initWithContentRect:NSMakeRect(bezelSize, bezelSize, 0, bezelSize)
         styleMask:NSWindowStyleMaskBorderless
         backing:NSBackingStoreBuffered
         defer:NO];
     [_visualizerWindow setLevel:NSScreenSaverWindowLevel];
     [_visualizerWindow setBackgroundColor:[NSColor clearColor]];
     [_visualizerWindow setMovableByWindowBackground:YES];
-    [_visualizerWindow setFrame:windowFrame display:NO];
     [_visualizerWindow setOpaque:NO];
     [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-    
     [_visualizerWindow setTitle:@"Minimal Visualizer"];
 
     _visualizerView = [[MinimalVisualizerView alloc] init];
     [_visualizerView noteFlagsChanged:0];
     [_visualizerWindow setContentView:_visualizerView];
 
+    [_visualizerWindow setFrameAutosaveName:@"MinimalVisualizerWindow"];
+    [_visualizerWindow setFrameUsingName:@"MinimalVisualizerWindow"];
+
+    // AppKit doesn't keep borderless windows on-screen; guard against a frame saved
+    // on a display that's since been disconnected.
+    NSRect frame = _visualizerWindow.frame;
+    NSRect visible = (_visualizerWindow.screen ?: NSScreen.mainScreen).visibleFrame;
+    frame.origin.x = MAX(NSMinX(visible), MIN(frame.origin.x, NSMaxX(visible) - frame.size.width));
+    frame.origin.y = MAX(NSMinY(visible), MIN(frame.origin.y, NSMaxY(visible) - frame.size.height));
+    [_visualizerWindow setFrame:frame display:NO];
+
+    _anchorRight = [self effectiveAnchorRight];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userDefaultsDidChange:)
+                                                 name:NSUserDefaultsDidChangeNotification
+                                               object:ud];
+
     return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)showVisualizer:(id)sender {
@@ -306,33 +308,39 @@
     [self charactersDidChange];
 }
 
+// YES pins the right edge (content grows leftward); NO pins the left edge.
+- (BOOL)effectiveAnchorRight {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"minimal.anchorRight"];
+}
+
 - (void)charactersDidChange {
     NSRect windowFrame = _visualizerWindow.frame;
-    NSScreen *screen = _visualizerWindow.screen;
-    if (!screen) {
-        for (NSScreen *s in NSScreen.screens) {
-            if (CGRectContainsPoint(s.frame, windowFrame.origin)) {
-                screen = s;
-                break;
-            }
-        }
+    NSSize contentSize = _visualizerView.frame.size;
 
-        if (!screen) {
-            screen = NSScreen.screens.firstObject;
-        }
-    }
-    
-    NSRect screenFrame = screen.frame;
-    CGFloat screenX = windowFrame.origin.x - screenFrame.origin.x;
-    if (screenX > screenFrame.size.width / 2) {
-        CGFloat right = windowFrame.origin.x + windowFrame.size.width;
-        windowFrame.size.width = _visualizerView.frame.size.width;
-        windowFrame.origin.x = right - windowFrame.size.width;
+    if ([self effectiveAnchorRight]) {
+        // Right edge fixed; grows/shrinks leftward.
+        CGFloat right = NSMaxX(windowFrame);
+        windowFrame.size = contentSize;
+        windowFrame.origin.x = right - contentSize.width;
     } else {
-        windowFrame.size.width = _visualizerView.frame.size.width;
+        // Left edge fixed; grows/shrinks rightward.
+        windowFrame.size = contentSize;
     }
+
     [_visualizerWindow setFrame:windowFrame display:NO];
-    [[NSUserDefaults standardUserDefaults] setValue:NSStringFromRect(_visualizerWindow.frame) forKey:@"minimal.savedFrame"];
+}
+
+- (void)userDefaultsDidChange:(NSNotification *)notification {
+    // Fires for every defaults write (including AppKit's frame autosave); act only
+    // when the anchor preference actually flips.
+    BOOL anchorRight = [self effectiveAnchorRight];
+    if (anchorRight == _anchorRight) {
+        return;
+    }
+    _anchorRight = anchorRight;
+
+    // Re-anchor now rather than waiting for the next keystroke.
+    [self charactersDidChange];
 }
 
 - (void)noteKeyEvent:(KCKeystroke *)keystroke {

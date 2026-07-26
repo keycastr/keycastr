@@ -55,6 +55,10 @@
 {
     NSWindow* _visualizerWindow;
     MinimalVisualizerView* _visualizerView;
+
+    // Last observed value of the minimal.anchorRight preference, used to detect
+    // when the user flips the anchor in Preferences (see -userDefaultsDidChange:).
+    BOOL _anchorRight;
 }
 
 @property (nonatomic, assign) IBOutlet NSView *preferencesView;
