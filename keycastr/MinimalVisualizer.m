@@ -144,7 +144,7 @@
     }
 }
 
-- (void)noteFlagsChanged:(uint32_t)flags {
+- (void)noteFlagsChanged:(NSEventModifierFlags)flags {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
     // ⌘⇧⌥⌃ always render while held (the Minimal visualizer's live-HUD identity);
@@ -262,7 +262,7 @@
     [_visualizerWindow orderOut:self];
 }
 
-- (void)noteFlagsChanged:(uint32_t)flags {
+- (void)noteFlagsChanged:(NSEventModifierFlags)flags {
     [_visualizerView noteFlagsChanged:flags];
     [self charactersDidChange];
 }
@@ -316,7 +316,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
     if (keystroke.isCommand) {
-        return [ud boolForKey:@"minimal.display.commandShortcuts"];
+        return [ud boolForKey:@"minimal.display.commandKeys"];
     }
 
     // Command/Control are handled above. Only Option marks a keystroke as modified;
@@ -368,7 +368,7 @@
         // (and the optional fn badge). A keystroke is classified into exactly one
         // category by precedence (see -shouldDisplayKeystroke:); default all-on
         // shows everything.
-        @"minimal.display.commandShortcuts": @YES,
+        @"minimal.display.commandKeys": @YES,
         @"minimal.display.modifiedKeys": @YES,
         @"minimal.display.specialKeys": @YES,
         @"minimal.display.allKeys": @YES,
