@@ -42,14 +42,14 @@
 
 @interface MinimalVisualizerView : NSView
 {
-    uint32_t _flags;
+    NSEventModifierFlags _flags;
     NSString *_characters;
     BOOL _mouse;
 }
 
-- (void)noteFlagsChanged:(uint32_t)flags;
+- (void)noteFlagsChanged:(NSEventModifierFlags)flags;
 - (void)noteCharactersChanged:(NSString *)characters;
-- (void)adjustFrameSize;
+- (void)noteMouseChanged:(BOOL)pressed;
 
 @end
 
@@ -67,7 +67,5 @@
 
 - (NSString*)visualizerName;
 - (void)deactivateVisualizer:(id)sender;
-
-- (void)noteFlagsChanged:(uint32_t)flags;
 
 @end

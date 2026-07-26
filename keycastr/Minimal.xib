@@ -109,7 +109,7 @@
                         <constraint firstAttribute="height" constant="18" id="7X3-bP-ouV"/>
                     </constraints>
                     <connections>
-                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.minimal.display.commandShortcuts" id="6xI-kw-gv8"/>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.minimal.display.commandKeys" id="6xI-kw-gv8"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qkP-cs-oNB">
