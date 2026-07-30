@@ -221,9 +221,13 @@ expands away from</string>
                     <constraints>
                         <constraint firstAttribute="width" constant="187" id="YqI-Pf-1us"/>
                     </constraints>
-                    <sliderCell key="cell" controlSize="mini" state="on" alignment="left" minValue="8" maxValue="160" doubleValue="80" tickMarkPosition="above" sliderType="linear" id="UNY-7F-9eF"/>
+                    <sliderCell key="cell" continuous="YES" controlSize="mini" state="on" alignment="left" minValue="8" maxValue="160" doubleValue="80" tickMarkPosition="above" sliderType="linear" id="UNY-7F-9eF"/>
                     <connections>
-                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.minimal.fontSize" id="7HQ-hc-WSZ"/>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.minimal.fontSize" id="7HQ-hc-WSZ">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </slider>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XAl-SB-bm6">
@@ -257,9 +261,13 @@ bezel frame</string>
                 </textField>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nxk-Tr-B9X">
                     <rect key="frame" x="164" y="187" width="187" height="11"/>
-                    <sliderCell key="cell" controlSize="mini" state="on" alignment="left" minValue="5" maxValue="200" doubleValue="100" tickMarkPosition="above" sliderType="linear" id="Xdr-iJ-N8w"/>
+                    <sliderCell key="cell" continuous="YES" controlSize="mini" state="on" alignment="left" minValue="10" maxValue="200" doubleValue="100" tickMarkPosition="above" sliderType="linear" id="Xdr-iJ-N8w"/>
                     <connections>
-                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.minimal.bezelSize" id="oaO-SL-ZPZ"/>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.minimal.bezelSize" id="oaO-SL-ZPZ">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </slider>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Exc-vB-3MN">

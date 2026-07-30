@@ -61,6 +61,12 @@
     // Last observed value of the minimal.anchorRight preference, used to detect
     // when the user flips the anchor in Preferences (see -userDefaultsDidChange:).
     BOOL _anchorRight;
+
+    // Last observed font/bezel sizes, used to detect which slider the user moved
+    // and to keep font and bezel size coupled (see -userDefaultsDidChange:).
+    CGFloat _fontSize;
+    CGFloat _bezelSize;
+    BOOL _adjustingCoupledSizes;
 }
 
 @property (nonatomic, assign) IBOutlet NSView *preferencesView;

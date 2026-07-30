@@ -33,6 +33,12 @@
 #import "KCMouseEvent.h"
 #import "NSUserDefaults+Utility.h"
 
+// Largest font point size, as a fraction of the bezel height, that still fits
+// within the bezel (rendered text height is ~1.16x the point size). Font and
+// bezel size are coupled to hold this bound so text never overruns the bezel;
+// tune to taste. See -userDefaultsDidChange:.
+static CGFloat const kMinimalMaxFontToBezelRatio = 0.85;
+
 @implementation MinimalVisualizerFactory
 
 - (NSString *)visualizerNibName {
@@ -238,6 +244,10 @@
 
     _anchorRight = [self effectiveAnchorRight];
 
+    // Seed the size caches and correct any pre-existing config that violates the
+    // font/bezel fit constraint (see -enforceFontBezelCoupling).
+    [self enforceFontBezelCoupling];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userDefaultsDidChange:)
                                                  name:NSUserDefaultsDidChangeNotification
@@ -289,9 +299,58 @@
     [_visualizerWindow setFrame:windowFrame display:NO];
 }
 
+// Writes a coupled size through the shared NSUserDefaultsController rather than
+// NSUserDefaults directly, so the slider bound to this key in Preferences updates
+// live; a plain defaults write leaves the existing Cocoa binding stale.
+- (void)setCoupledSizeDefault:(NSString *)key toDouble:(CGFloat)value {
+    NSString *keyPath = [@"values." stringByAppendingString:key];
+    [[NSUserDefaultsController sharedUserDefaultsController] setValue:@(value) forKeyPath:keyPath];
+}
+
+// Holds font point size within kMinimalMaxFontToBezelRatio of the bezel height so
+// text never overruns the bezel. Font and bezel stay independent until a change
+// crosses the boundary, then the slider the user *didn't* move yields: growing the
+// font past the bound grows the bezel to fit; shrinking the bezel past the bound
+// shrinks the font to fit. The _adjustingCoupledSizes guard swallows the
+// re-entrant notification from writing the counterpart preference.
+- (void)enforceFontBezelCoupling {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    CGFloat font = [ud floatForKey:@"minimal.fontSize"];
+    CGFloat bezel = [ud floatForKey:@"minimal.bezelSize"];
+
+    BOOL fontChanged = (font != _fontSize);
+    BOOL bezelChanged = (bezel != _bezelSize);
+    if (!fontChanged && !bezelChanged) {
+        return;
+    }
+
+    CGFloat maxFont = kMinimalMaxFontToBezelRatio * bezel;
+    if (font > maxFont) {
+        _adjustingCoupledSizes = YES;
+        if (fontChanged && !bezelChanged) {
+            bezel = ceil(font / kMinimalMaxFontToBezelRatio);
+            [self setCoupledSizeDefault:@"minimal.bezelSize" toDouble:bezel];
+        } else {
+            font = floor(maxFont);
+            [self setCoupledSizeDefault:@"minimal.fontSize" toDouble:font];
+        }
+        _adjustingCoupledSizes = NO;
+    }
+
+    _fontSize = font;
+    _bezelSize = bezel;
+}
+
 - (void)userDefaultsDidChange:(NSNotification *)notification {
-    // Fires for every defaults write (including AppKit's frame autosave); act only
-    // when the anchor preference actually flips.
+    // Fires for every defaults write (including AppKit's frame autosave and our own
+    // coupled-size writes); ignore the writes we make from within this handler.
+    if (_adjustingCoupledSizes) {
+        return;
+    }
+
+    [self enforceFontBezelCoupling];
+
+    // Act on the anchor only when the preference actually flips.
     BOOL anchorRight = [self effectiveAnchorRight];
     if (anchorRight == _anchorRight) {
         return;
