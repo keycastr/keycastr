@@ -123,6 +123,11 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
                                             forKeyPath:kKCPrefDisplayIcon
                                                options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
                                                context:nil];
+
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
+                                                          selector:@selector(activeApplicationDidChange:)
+                                                              name:NSWorkspaceDidActivateApplicationNotification
+                                                            object:nil];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -144,6 +149,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
     [eventTap removeTap];
+}
+
+- (void)activeApplicationDidChange:(NSNotification *)notification {
+    // Handle a special case where an application becomes active which
+    // restricts or interferes with key events. Send a nil keyUp event
+    // to avoid a stuck key, if any (typically ⌘Q)
+    [currentVisualizer noteKeyUpEvent:nil];
 }
 
 - (SRShortcut *)toggleCastingShortcut {
@@ -445,6 +457,12 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
 
 	_isCapturing = capture;
+
+    // Clear the visualizer's flag state immediately to avoid stuck keys
+    if (!_isCapturing) {
+        [currentVisualizer noteFlagsChanged:0];
+    }
+
 	[statusItem.button setImage:(_isCapturing
 		? [NSImage imageNamed:@"KeyCastrStatusItemActive"]
 		: [NSImage imageNamed:@"KeyCastrStatusItemInactive"])
