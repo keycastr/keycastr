@@ -35,8 +35,8 @@
 
 // Largest font point size, as a fraction of the bezel height, that still fits
 // within the bezel (rendered text height is ~1.16x the point size). Font and
-// bezel size are coupled to hold this bound so text never overruns the bezel;
-// tune to taste. See -userDefaultsDidChange:.
+// bezel size are coupled to hold this bound so text never overruns the bezel.
+// See -enforceFontBezelCoupling.
 static CGFloat const kMinimalMaxFontToBezelRatio = 0.85;
 
 // Window position is persisted as the x-coordinate of the anchored edge (the
@@ -100,7 +100,6 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
     [[NSColor clearColor] setFill];
     NSRectFill(frame);
 
-    // Prevent drawing empty bezel
     if (!_flags && !_characters && !_mouse) return;
 
     if (frame.size.width > 0) {
