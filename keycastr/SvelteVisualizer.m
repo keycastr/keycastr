@@ -299,6 +299,7 @@
 
 - (void)setMaximumVisibleKeystrokes:(NSUInteger)maximumVisibleKeystrokes
 {
+    [[NSUserDefaults standardUserDefaults] setInteger:maximumVisibleKeystrokes forKey:@"svelte.maximumVisibleKeystrokes"];
     _visualizerView.maximumVisibleKeystrokes = maximumVisibleKeystrokes;
 }
 

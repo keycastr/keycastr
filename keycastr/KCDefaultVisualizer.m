@@ -112,6 +112,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 
 - (void)setMaximumVisibleKeystrokes:(NSUInteger)maximumVisibleKeystrokes
 {
+    [NSUserDefaults.standardUserDefaults setInteger:maximumVisibleKeystrokes forKey:@"default.maximumVisibleKeystrokes"];
     visualizerWindow.maximumVisibleKeystrokes = maximumVisibleKeystrokes;
 }
 
