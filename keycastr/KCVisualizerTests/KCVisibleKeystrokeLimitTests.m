@@ -4,12 +4,19 @@
 
 #import <XCTest/XCTest.h>
 #import "KCKeycastrEvent.h"
+#import "KCMouseEvent.h"
 #import <KCVisualizer/KCKeystroke.h>
 #import <KCVisualizer/KCVisualizer.h>
 
 @protocol KCVisibleKeystrokeLimitTesting <NSObject>
 
 @property (nonatomic, assign) NSUInteger maximumVisibleKeystrokes;
+
+@end
+
+@protocol KCSvelteVisualizerViewTesting <NSObject>
+
+- (CGFloat)fontSizeForDisplayedString:(NSString *)displayedString withinWidth:(CGFloat)width;
 
 @end
 
@@ -35,6 +42,13 @@
 
 - (void)tearDown
 {
+    for (NSString *key in @[@"default.maximumVisibleKeystrokes",
+                            @"svelte.maximumVisibleKeystrokes",
+                            @"default.commandKeysOnly",
+                            @"default.allModifiedKeys",
+                            @"default.allKeys"]) {
+        [NSUserDefaults.standardUserDefaults removeObjectForKey:key];
+    }
     [KCVisualizer unloadPlugins];
     [super tearDown];
 }
@@ -99,6 +113,38 @@
 
     // Assert
     XCTAssertNotNil(preferenceControl);
+}
+
+- (void)test_SvelteVisualizer_doesNotCountMouseEventsAsKeystrokes
+{
+    // Arrange
+    id<KCVisualizer> visualizer = [KCVisualizer visualizerWithName:@"Svelte"];
+    id<KCVisibleKeystrokeLimitTesting> visualizerWithLimit = (id)visualizer;
+    visualizerWithLimit.maximumVisibleKeystrokes = 2;
+    for (KCStubKeycastrEvent *event in [self eventsWithDisplayStrings:@[@"A", @"B"]]) {
+        [visualizer noteKeyEvent:(id)event];
+    }
+
+    // Act
+    [visualizer noteMouseEvent:[self mouseDownEvent]];
+
+    // Assert
+    id visualizerView = [(NSObject *)visualizer valueForKey:@"visualizerView"];
+    XCTAssertEqualObjects([visualizerView valueForKey:@"displayedString"], @"AB🖱️");
+}
+
+- (void)test_SvelteVisualizer_stopsShrinkingFontAtOnePoint
+{
+    // Arrange
+    id<KCVisualizer> visualizer = [KCVisualizer visualizerWithName:@"Svelte"];
+    id<KCSvelteVisualizerViewTesting> visualizerView = [(NSObject *)visualizer valueForKey:@"visualizerView"];
+    NSString *longDisplayString = [@"M" stringByPaddingToLength:500 withString:@"M" startingAtIndex:0];
+
+    // Act
+    CGFloat fontSize = [visualizerView fontSizeForDisplayedString:longDisplayString withinWidth:190];
+
+    // Assert
+    XCTAssertEqual(fontSize, 1);
 }
 
 - (void)test_DefaultVisualizer_defaultsToUnlimitedVisibleKeystrokes
@@ -171,6 +217,46 @@
     XCTAssertNotNil(preferenceControl);
 }
 
+- (void)test_DefaultVisualizer_closesGapWhenRemovingMiddleRow
+{
+    // Arrange
+    id<KCVisualizer> visualizer = [KCVisualizer visualizerWithName:@"Default"];
+    [(NSObject *)visualizer setValue:@2 forKey:@"displayMode"];
+    id<KCVisibleKeystrokeLimitTesting> visualizerWithLimit = (id)visualizer;
+    visualizerWithLimit.maximumVisibleKeystrokes = 0;
+    [visualizer noteMouseEvent:[self mouseDownEvent]];
+    NSWindow *visualizerWindow = [(NSObject *)visualizer valueForKey:@"visualizerWindow"];
+    [visualizerWindow performSelector:@selector(abandonCurrentBezelView)];
+    [visualizer noteKeyEvent:[self keystrokeWithCharacters:@"a" modifierFlags:0 keyCode:0]];
+    [visualizer noteKeyEvent:[self keystrokeWithCharacters:@"b" modifierFlags:NSEventModifierFlagCommand keyCode:11]];
+
+    // Act
+    visualizerWithLimit.maximumVisibleKeystrokes = 1;
+
+    // Assert
+    for (NSView *bezelView in visualizerWindow.contentView.subviews) {
+        XCTAssertGreaterThanOrEqual(NSMinY(bezelView.frame), 0);
+        XCTAssertLessThanOrEqual(NSMaxY(bezelView.frame), NSHeight(visualizerWindow.contentView.bounds));
+    }
+}
+
+- (void)test_VisualizersDoNotPersistRegisteredDefaultsDuringInitialization
+{
+    // Arrange
+    NSUserDefaults *userDefaults = NSUserDefaults.standardUserDefaults;
+    [userDefaults removeObjectForKey:@"svelte.maximumVisibleKeystrokes"];
+    [userDefaults removeObjectForKey:@"default.maximumVisibleKeystrokes"];
+
+    // Act
+    [KCVisualizer visualizerWithName:@"Svelte"];
+    [KCVisualizer visualizerWithName:@"Default"];
+
+    // Assert
+    NSDictionary *persistentDefaults = [userDefaults persistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
+    XCTAssertNil([persistentDefaults objectForKey:@"svelte.maximumVisibleKeystrokes"]);
+    XCTAssertNil([persistentDefaults objectForKey:@"default.maximumVisibleKeystrokes"]);
+}
+
 - (NSArray<KCStubKeycastrEvent *> *)eventsWithDisplayStrings:(NSArray<NSString *> *)displayStrings
 {
     NSMutableArray<KCStubKeycastrEvent *> *events = [NSMutableArray array];
@@ -204,6 +290,20 @@
          charactersIgnoringModifiers:characters
                            isARepeat:NO
                              keyCode:keyCode];
+}
+
+- (KCMouseEvent *)mouseDownEvent
+{
+    NSEvent *event = [NSEvent mouseEventWithType:NSEventTypeLeftMouseDown
+                                        location:NSZeroPoint
+                                   modifierFlags:0
+                                       timestamp:NSDate.timeIntervalSinceReferenceDate
+                                    windowNumber:0
+                                         context:nil
+                                     eventNumber:0
+                                      clickCount:1
+                                        pressure:1];
+    return [[KCMouseEvent alloc] initWithNSEvent:event];
 }
 
 - (NSArray<NSString *> *)visibleStringsForDefaultVisualizer:(id<KCVisualizer>)visualizer
