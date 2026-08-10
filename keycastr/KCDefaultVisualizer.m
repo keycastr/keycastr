@@ -79,8 +79,39 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
         return nil;
 
     visualizerWindow = [[KCDefaultVisualizerWindow alloc] init];
+    NSUserDefaults *userDefaults = NSUserDefaults.standardUserDefaults;
+    NSInteger configuredMaximum = [userDefaults integerForKey:@"default.maximumVisibleKeystrokes"];
+    self.maximumVisibleKeystrokes = configuredMaximum > 0 ? (NSUInteger)configuredMaximum : 0;
+
+    __weak typeof(self) weakSelf = self;
+    _defaultsObserver = [NSNotificationCenter.defaultCenter addObserverForName:NSUserDefaultsDidChangeNotification
+                                                                    object:userDefaults
+                                                                     queue:nil
+                                                                    usingBlock:^(NSNotification *notification) {
+                                                                        KCDefaultVisualizer *strongSelf = weakSelf;
+                                                                        NSInteger maximumVisibleKeystrokes = [notification.object integerForKey:@"default.maximumVisibleKeystrokes"];
+                                                                        strongSelf->visualizerWindow.maximumVisibleKeystrokes = maximumVisibleKeystrokes > 0 ? (NSUInteger)maximumVisibleKeystrokes : 0;
+                                                                    }];
 
     return self;
+}
+
+- (void)dealloc
+{
+    if (_defaultsObserver) {
+        [NSNotificationCenter.defaultCenter removeObserver:_defaultsObserver];
+    }
+}
+
+- (NSUInteger)maximumVisibleKeystrokes
+{
+    return visualizerWindow.maximumVisibleKeystrokes;
+}
+
+- (void)setMaximumVisibleKeystrokes:(NSUInteger)maximumVisibleKeystrokes
+{
+    visualizerWindow.maximumVisibleKeystrokes = maximumVisibleKeystrokes;
+    [NSUserDefaults.standardUserDefaults setInteger:maximumVisibleKeystrokes forKey:@"default.maximumVisibleKeystrokes"];
 }
 
 -(NSString*) visualizerName
@@ -186,6 +217,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
               @"default.fadeDuration": @0.2,
               @"default.fontSize": @16.0,
               @"default.keystrokeDelay": @0.5,
+              @"default.maximumVisibleKeystrokes": @0,
               @"default.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]
                                                            requiringSecureCoding:NO
                                                                            error:NULL],
@@ -222,6 +254,7 @@ static NSRect KC_defaultFrame(void) {
         return nil;
     
     _runningAnimations = [[NSMutableArray alloc] init];
+    _bezelViews = [[NSMutableArray alloc] init];
 
     [self setFrameUsingName:@"KCBezelWindow default.bezelWindow" force:YES];
     [self setFrameAutosaveName:@"KCBezelWindow default.bezelWindow"];
@@ -303,7 +336,7 @@ static NSRect KC_defaultFrame(void) {
 {
     if (NSEventMaskFromType(mouseEvent.type) & (NSEventMaskLeftMouseDown | NSEventMaskRightMouseDown | NSEventMaskOtherMouseDown)) {
         [self abandonCurrentBezelView];
-        [self appendString:[mouseEvent convertToString]];
+        [self appendString:[mouseEvent convertToString] countsAsKeystroke:NO];
     }
 }
 
@@ -316,10 +349,10 @@ static NSRect KC_defaultFrame(void) {
         [self abandonCurrentBezelView];
     }
 
-    [self appendString:[keystroke convertToString]];
+    [self appendString:[keystroke convertToString] countsAsKeystroke:YES];
 }
 
-- (void)appendString:(NSString *)string
+- (void)appendString:(NSString *)string countsAsKeystroke:(BOOL)countsAsKeystroke
 {
 	if (_currentBezelView == nil)
 	{
@@ -330,8 +363,9 @@ static NSRect KC_defaultFrame(void) {
 
 		NSColor *backgroundColor = [[NSUserDefaults standardUserDefaults] colorForKey:@"default.bezelColor"];
 		_currentBezelView = [[KCDefaultVisualizerBezelView alloc] initWithMaxWidth:NSWidth(self.frame)
-																			  text:string
-																   backgroundColor:backgroundColor];
+															  text:string
+													   backgroundColor:backgroundColor
+												 countsAsKeystroke:countsAsKeystroke];
 		[_currentBezelView setAutoresizingMask:NSViewMinYMargin];
 
         NSRect frame = self.frame;
@@ -339,12 +373,82 @@ static NSRect KC_defaultFrame(void) {
 		[self setFrame:frame display:YES animate:NO];
 
 		[[self contentView] addSubview:_currentBezelView];
+		[_bezelViews addObject:_currentBezelView];
 	}
 	else
 	{
-		[_currentBezelView appendString:string];
+		[_currentBezelView appendString:string countsAsKeystroke:countsAsKeystroke];
 	}
+    [self trimVisibleKeystrokes];
     [self _scheduleLineBreak];
+}
+
+- (void)setMaximumVisibleKeystrokes:(NSUInteger)maximumVisibleKeystrokes
+{
+    _maximumVisibleKeystrokes = maximumVisibleKeystrokes;
+    [self trimVisibleKeystrokes];
+}
+
+- (void)trimVisibleKeystrokes
+{
+    if (_maximumVisibleKeystrokes == 0)
+        return;
+
+    NSUInteger visibleKeystrokeCount = 0;
+    for (KCDefaultVisualizerBezelView *bezelView in _bezelViews) {
+        visibleKeystrokeCount += bezelView.keystrokeCount;
+    }
+
+    while (visibleKeystrokeCount > _maximumVisibleKeystrokes) {
+        KCDefaultVisualizerBezelView *oldestBezelView = [self oldestBezelViewWithKeystrokes];
+        if (!oldestBezelView)
+            return;
+
+        [oldestBezelView removeOldestKeystroke];
+        visibleKeystrokeCount--;
+        if (oldestBezelView.isEmpty) {
+            [self removeBezelView:oldestBezelView];
+        }
+    }
+}
+
+- (KCDefaultVisualizerBezelView *)oldestBezelViewWithKeystrokes
+{
+    for (KCDefaultVisualizerBezelView *bezelView in _bezelViews) {
+        if (bezelView.keystrokeCount > 0) {
+            return bezelView;
+        }
+    }
+    return nil;
+}
+
+- (void)removeBezelView:(KCDefaultVisualizerBezelView *)bezelView
+{
+    if (bezelView == _currentBezelView) {
+        _currentBezelView = nil;
+    }
+
+    [NSObject cancelPreviousPerformRequestsWithTarget:bezelView];
+    for (KCBezelAnimation *animation in [_runningAnimations copy]) {
+        if (animation.bezelView == bezelView) {
+            animation.delegate = nil;
+            [animation stopAnimation];
+            [self removeRunningAnimation:animation];
+        }
+    }
+    CGFloat deltaY = bezelView.frame.size.height + 10;
+    [_bezelViews removeObject:bezelView];
+    [bezelView removeFromSuperview];
+
+    for (NSView *view in self.contentView.subviews) {
+        NSRect frame = view.frame;
+        frame.origin.y += deltaY;
+        view.frame = frame;
+    }
+
+    NSRect frame = self.frame;
+    frame.size.height = MAX(0, frame.size.height - deltaY);
+    [self setFrame:frame display:YES animate:NO];
 }
 
 -(void) addRunningAnimation:(KCBezelAnimation*)animation
@@ -453,27 +557,9 @@ static NSRect KC_defaultFrame(void) {
 
 -(void) animationDidEnd:(NSAnimation*)anim
 {
-	CGFloat deltaY = [_bezelView frame].size.height + 10;
 	KCDefaultVisualizerWindow* w = (KCDefaultVisualizerWindow*)[_bezelView window];
 	[w removeRunningAnimation:self];
-	[_bezelView removeFromSuperview];
-
-	NSArray* a = [[w contentView] subviews];
-	NSUInteger vc = [a count];
-	int i;
-	for (i = 0; i < vc; ++i)
-	{
-		NSView* v = [a objectAtIndex:i];
-		NSRect r = [v frame];
-		r.origin.y += deltaY;
-		[v setFrame:r];
-	}
-
-	NSRect r = [w frame];
-	r.size.height -= deltaY;
-	if (r.size.height < 0)
-		r.size.height = 0;
-	[w setFrame:r display:YES animate:NO];
+	[w removeBezelView:_bezelView];
 }
 
 @end
@@ -483,7 +569,7 @@ static NSRect KC_defaultFrame(void) {
 
 static const int kKCBezelBorder = 6;
 
-- (id)initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color
+- (id)initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color countsAsKeystroke:(BOOL)countsAsKeystroke
 {
 	if (!(self = [super initWithFrame:NSMakeRect(0, 0, maxWidth, kKCDefaultBezelHeight)]))
 		return nil;
@@ -492,6 +578,8 @@ static const int kKCBezelBorder = 6;
 
 	_maxWidth = maxWidth;
 	_backgroundColor = color;
+	_displayedStrings = [[NSMutableArray alloc] initWithObjects:string, nil];
+	_keystrokeFlags = [[NSMutableArray alloc] initWithObjects:@(countsAsKeystroke), nil];
 
 	_textStorage = [[NSTextStorage alloc] initWithString:string];
 	_textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(_maxWidth-kKCBezelBorder*2, FLT_MAX)];
@@ -589,13 +677,56 @@ static const int kKCBezelBorder = 6;
 	}
 }
 
--(void) appendString:(NSString*)t
+-(void) appendString:(NSString*)t countsAsKeystroke:(BOOL)countsAsKeystroke
 {
 	[self scheduleFadeOut];
+	[_displayedStrings addObject:t];
+	[_keystrokeFlags addObject:@(countsAsKeystroke)];
 	[_textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:t]];
 	[_textStorage setAttributes:[self attributes] range:NSMakeRange(0, [_textStorage length])];
 	[self maybeResize];
 	[self setNeedsDisplay:YES];
+}
+
+- (NSArray<NSString *> *)displayedKeystrokes
+{
+    NSMutableArray<NSString *> *keystrokes = [NSMutableArray array];
+    [_displayedStrings enumerateObjectsUsingBlock:^(NSString *string, NSUInteger index, BOOL *stop) {
+        if ([_keystrokeFlags[index] boolValue]) {
+            [keystrokes addObject:string];
+        }
+    }];
+    return keystrokes;
+}
+
+- (NSUInteger)keystrokeCount
+{
+    return self.displayedKeystrokes.count;
+}
+
+- (BOOL)isEmpty
+{
+    return _displayedStrings.count == 0;
+}
+
+- (void)removeOldestKeystroke
+{
+    NSUInteger keystrokeIndex = [_keystrokeFlags indexOfObject:@YES];
+    if (keystrokeIndex == NSNotFound)
+        return;
+
+    [_displayedStrings removeObjectAtIndex:keystrokeIndex];
+    [_keystrokeFlags removeObjectAtIndex:keystrokeIndex];
+    [self rebuildTextStorage];
+}
+
+- (void)rebuildTextStorage
+{
+    [_textStorage replaceCharactersInRange:NSMakeRange(0, _textStorage.length)
+                                withString:[_displayedStrings componentsJoinedByString:@""]];
+    [_textStorage setAttributes:[self attributes] range:NSMakeRange(0, _textStorage.length)];
+    [self maybeResize];
+    [self setNeedsDisplay:YES];
 }
 
 -(BOOL) isFlipped

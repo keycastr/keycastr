@@ -34,8 +34,13 @@
 
 @interface SvelteVisualizerView : NSView
 
+@property (nonatomic, assign) NSUInteger maximumVisibleKeystrokes;
+@property (nonatomic, readonly) NSString *displayedString;
+
 @end
 
 @interface SvelteVisualizer : KCVisualizer <KCVisualizer>
+
+@property (nonatomic, assign) NSUInteger maximumVisibleKeystrokes;
 
 @end
