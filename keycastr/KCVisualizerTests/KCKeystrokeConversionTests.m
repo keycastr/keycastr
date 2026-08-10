@@ -78,6 +78,67 @@
 
 #pragma mark - Numbers
 
+- (void)test_KCKeystroke_distinguishesNumericKeypadKeys {
+    // Arrange
+    NSDictionary<NSNumber *, NSString *> *expectedStringsByKeyCode = @{
+        @(kVK_ANSI_KeypadDecimal): @"⊞.",
+        @(kVK_ANSI_KeypadMultiply): @"⊞*",
+        @(kVK_ANSI_KeypadPlus): @"⊞+",
+        @(kVK_ANSI_KeypadClear): @"⊞⌧",
+        @(kVK_ANSI_KeypadDivide): @"⊞/",
+        @(kVK_ANSI_KeypadEnter): @"⊞↩",
+        @(kVK_ANSI_KeypadMinus): @"⊞-",
+        @(kVK_ANSI_KeypadEquals): @"⊞=",
+        @(kVK_ANSI_Keypad0): @"⊞0",
+        @(kVK_ANSI_Keypad1): @"⊞1",
+        @(kVK_ANSI_Keypad2): @"⊞2",
+        @(kVK_ANSI_Keypad3): @"⊞3",
+        @(kVK_ANSI_Keypad4): @"⊞4",
+        @(kVK_ANSI_Keypad5): @"⊞5",
+        @(kVK_ANSI_Keypad6): @"⊞6",
+        @(kVK_ANSI_Keypad7): @"⊞7",
+        @(kVK_ANSI_Keypad8): @"⊞8",
+        @(kVK_ANSI_Keypad9): @"⊞9",
+        @(kVK_JIS_KeypadComma): @"⊞,"
+    };
+
+    for (NSNumber *keyCode in expectedStringsByKeyCode) {
+        keystroke = [self keystrokeWithKeyCode:keyCode.unsignedShortValue
+                                     modifiers:0
+                                     characters:@""
+                            charactersIgnoringModifiers:@""];
+
+        // Act
+        NSString *convertedString = [eventTransformer transformedValue:keystroke];
+
+        // Assert
+        XCTAssertEqualObjects(convertedString, expectedStringsByKeyCode[keyCode]);
+    }
+}
+
+- (void)test_KCKeystroke_keepsMainKeyboardKeysUnprefixed {
+    // Arrange
+    NSDictionary<NSNumber *, NSString *> *expectedStringsByKeyCode = @{
+        @(kVK_ANSI_1): @"1",
+        @(kVK_ANSI_Period): @".",
+        @(kVK_Return): @"↩"
+    };
+
+    for (NSNumber *keyCode in expectedStringsByKeyCode) {
+        NSString *expectedString = expectedStringsByKeyCode[keyCode];
+        keystroke = [self keystrokeWithKeyCode:keyCode.unsignedShortValue
+                                     modifiers:0
+                                     characters:expectedString
+                            charactersIgnoringModifiers:expectedString];
+
+        // Act
+        NSString *convertedString = [eventTransformer transformedValue:keystroke];
+
+        // Assert
+        XCTAssertEqualObjects(convertedString, expectedString);
+    }
+}
+
 - (void)test_KCKeystroke_convertsCtrlNumberToNumber {
     // ctrl-7
     keystroke = [self keystrokeWithKeyCode:26 modifiers:262401 characters:@"7" charactersIgnoringModifiers:@"7"];
