@@ -81,7 +81,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
     visualizerWindow = [[KCDefaultVisualizerWindow alloc] init];
     NSUserDefaults *userDefaults = NSUserDefaults.standardUserDefaults;
     NSInteger configuredMaximum = [userDefaults integerForKey:@"default.maximumVisibleKeystrokes"];
-    self.maximumVisibleKeystrokes = configuredMaximum > 0 ? (NSUInteger)configuredMaximum : 0;
+    visualizerWindow.maximumVisibleKeystrokes = configuredMaximum > 0 ? (NSUInteger)configuredMaximum : 0;
 
     __weak typeof(self) weakSelf = self;
     _defaultsObserver = [NSNotificationCenter.defaultCenter addObserverForName:NSUserDefaultsDidChangeNotification
@@ -89,6 +89,8 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
                                                                      queue:nil
                                                                     usingBlock:^(NSNotification *notification) {
                                                                         KCDefaultVisualizer *strongSelf = weakSelf;
+                                                                        if (!strongSelf)
+                                                                            return;
                                                                         NSInteger maximumVisibleKeystrokes = [notification.object integerForKey:@"default.maximumVisibleKeystrokes"];
                                                                         strongSelf->visualizerWindow.maximumVisibleKeystrokes = maximumVisibleKeystrokes > 0 ? (NSUInteger)maximumVisibleKeystrokes : 0;
                                                                     }];
@@ -111,7 +113,6 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
 - (void)setMaximumVisibleKeystrokes:(NSUInteger)maximumVisibleKeystrokes
 {
     visualizerWindow.maximumVisibleKeystrokes = maximumVisibleKeystrokes;
-    [NSUserDefaults.standardUserDefaults setInteger:maximumVisibleKeystrokes forKey:@"default.maximumVisibleKeystrokes"];
 }
 
 -(NSString*) visualizerName
@@ -440,15 +441,21 @@ static NSRect KC_defaultFrame(void) {
     [_bezelViews removeObject:bezelView];
     [bezelView removeFromSuperview];
 
-    for (NSView *view in self.contentView.subviews) {
-        NSRect frame = view.frame;
-        frame.origin.y += deltaY;
-        view.frame = frame;
-    }
-
     NSRect frame = self.frame;
     frame.size.height = MAX(0, frame.size.height - deltaY);
     [self setFrame:frame display:YES animate:NO];
+    [self layoutBezelViews];
+}
+
+- (void)layoutBezelViews
+{
+    CGFloat originY = 0;
+    for (KCDefaultVisualizerBezelView *bezelView in _bezelViews.reverseObjectEnumerator) {
+        NSRect frame = bezelView.frame;
+        frame.origin.y = originY;
+        bezelView.frame = frame;
+        originY += frame.size.height + 10;
+    }
 }
 
 -(void) addRunningAnimation:(KCBezelAnimation*)animation
@@ -717,6 +724,9 @@ static const int kKCBezelBorder = 6;
 
     [_displayedStrings removeObjectAtIndex:keystrokeIndex];
     [_keystrokeFlags removeObjectAtIndex:keystrokeIndex];
+    if (self.isEmpty)
+        return;
+
     [self rebuildTextStorage];
 }
 

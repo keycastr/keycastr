@@ -37,6 +37,8 @@
 @property (nonatomic, assign) NSUInteger maximumVisibleKeystrokes;
 @property (nonatomic, readonly) NSString *displayedString;
 
+- (CGFloat)fontSizeForDisplayedString:(NSString *)displayedString withinWidth:(CGFloat)width;
+
 @end
 
 @interface SvelteVisualizer : KCVisualizer <KCVisualizer>

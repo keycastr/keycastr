@@ -55,6 +55,7 @@
 @implementation SvelteVisualizerView {
     NSEventModifierFlags _flags;
 	NSMutableArray<NSString *> *_displayedKeystrokes;
+	NSMutableArray<NSNumber *> *_keystrokeFlags;
 }
 
 - (id)initWithFrame:(NSRect)frame
@@ -63,12 +64,14 @@
         return nil;
 
     _displayedKeystrokes = [[NSMutableArray alloc] init];
+    _keystrokeFlags = [[NSMutableArray alloc] init];
     return self;
 }
 
 - (void)dealloc
 {
     [_displayedKeystrokes release];
+    [_keystrokeFlags release];
     [super dealloc];
 }
 
@@ -146,23 +149,36 @@
 	if (displayedString.length > 0)
 	{
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-		float fontSize = 48;
+		float fontSize = [self fontSizeForDisplayedString:displayedString withinWidth:frame.size.width - 10];
 		[attr setObject:[NSFont systemFontOfSize:fontSize] forKey:NSFontAttributeName];
 		
 		size = [displayedString sizeWithAttributes:attr];
-		while (size.width > frame.size.width - 10)
-		{
-			fontSize -= 1.0;
-			[attr setObject:[NSFont systemFontOfSize:fontSize] forKey:NSFontAttributeName];
-			size = [displayedString sizeWithAttributes:attr];
-		}
 		[displayedString drawInRect:NSMakeRect(0,30+(frame.size.height-30 - size.height)/2.0,frame.size.width,size.height) withAttributes:attr];
 	}
 }
 
+- (CGFloat)fontSizeForDisplayedString:(NSString *)displayedString withinWidth:(CGFloat)width
+{
+    CGFloat fontSize = 48;
+    NSDictionary *attributes = @{ NSFontAttributeName: [NSFont systemFontOfSize:fontSize] };
+    NSSize size = [displayedString sizeWithAttributes:attributes];
+    while (fontSize > 1 && size.width > width) {
+        fontSize -= 1;
+        attributes = @{ NSFontAttributeName: [NSFont systemFontOfSize:fontSize] };
+        size = [displayedString sizeWithAttributes:attributes];
+    }
+    return fontSize;
+}
+
 - (void)noteKeyEvent:(KCKeycastrEvent *)event
 {
+	[self noteEvent:event countsAsKeystroke:YES];
+}
+
+- (void)noteEvent:(KCKeycastrEvent *)event countsAsKeystroke:(BOOL)countsAsKeystroke
+{
 	[_displayedKeystrokes addObject:[event convertToString]];
+	[_keystrokeFlags addObject:@(countsAsKeystroke)];
 	[self trimDisplayedKeystrokes];
 	[self setNeedsDisplay:YES];
 }
@@ -176,16 +192,25 @@
 
 - (void)trimDisplayedKeystrokes
 {
-    if (_maximumVisibleKeystrokes == 0 || _displayedKeystrokes.count <= _maximumVisibleKeystrokes)
-        return;
+    if (_maximumVisibleKeystrokes == 0)
+		return;
 
-    NSRange expiredKeystrokes = NSMakeRange(0, _displayedKeystrokes.count - _maximumVisibleKeystrokes);
-    [_displayedKeystrokes removeObjectsInRange:expiredKeystrokes];
+    NSUInteger visibleKeystrokeCount = [[_keystrokeFlags filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"boolValue == YES"]] count];
+    while (visibleKeystrokeCount > _maximumVisibleKeystrokes) {
+        NSUInteger expiredKeystrokeIndex = [_keystrokeFlags indexOfObject:@YES];
+        if (expiredKeystrokeIndex == NSNotFound)
+            return;
+
+        [_displayedKeystrokes removeObjectAtIndex:expiredKeystrokeIndex];
+        [_keystrokeFlags removeObjectAtIndex:expiredKeystrokeIndex];
+        visibleKeystrokeCount--;
+    }
 }
 
 -(void) noteFlagsChanged:(NSEventModifierFlags)flags
 {
 	[_displayedKeystrokes removeAllObjects];
+	[_keystrokeFlags removeAllObjects];
     _flags = flags;
 	[self setNeedsDisplay:YES];
 }
@@ -235,7 +260,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSNumber *configuredMaximum = [userDefaults objectForKey:@"svelte.maximumVisibleKeystrokes"];
     NSInteger maximumVisibleKeystrokes = configuredMaximum ? configuredMaximum.integerValue : 6;
-    self.maximumVisibleKeystrokes = maximumVisibleKeystrokes > 0 ? (NSUInteger)maximumVisibleKeystrokes : 0;
+    _visualizerView.maximumVisibleKeystrokes = maximumVisibleKeystrokes > 0 ? (NSUInteger)maximumVisibleKeystrokes : 0;
     
     NSNumber *configuredDisplayAll = [userDefaults objectForKey:@"svelte.displayAll"];
     _displayAll = configuredDisplayAll ? configuredDisplayAll.boolValue : YES;
@@ -247,6 +272,8 @@
                                                                        queue:nil
                                                                        usingBlock:^(NSNotification * _Nonnull notification) {
                                                                            SvelteVisualizer *strongSelf = weakSelf;
+                                                                           if (!strongSelf)
+                                                                               return;
                                                                            NSNumber *displayAll = [notification.object objectForKey:@"svelte.displayAll"];
                                                                            strongSelf.displayAll = displayAll ? displayAll.boolValue : YES;
                                                                            NSInteger maximumVisibleKeystrokes = [notification.object integerForKey:@"svelte.maximumVisibleKeystrokes"];
@@ -273,7 +300,6 @@
 - (void)setMaximumVisibleKeystrokes:(NSUInteger)maximumVisibleKeystrokes
 {
     _visualizerView.maximumVisibleKeystrokes = maximumVisibleKeystrokes;
-    [[NSUserDefaults standardUserDefaults] setInteger:maximumVisibleKeystrokes forKey:@"svelte.maximumVisibleKeystrokes"];
 }
 
 -(void) showVisualizer:(id)sender
@@ -302,7 +328,7 @@
 {
     NSEventMask eventMask = NSEventMaskFromType(mouseEvent.type);
     if (eventMask & (NSEventMaskLeftMouseDown | NSEventMaskRightMouseDown | NSEventMaskOtherMouseDown)) {
-        [_visualizerView noteKeyEvent:mouseEvent];
+        [_visualizerView noteEvent:mouseEvent countsAsKeystroke:NO];
     }
 
     if (eventMask & (NSEventMaskLeftMouseUp | NSEventMaskRightMouseUp | NSEventMaskOtherMouseUp)) {
