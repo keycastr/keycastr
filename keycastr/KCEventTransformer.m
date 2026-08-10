@@ -168,7 +168,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
              UTF8("\xe2\x87\xa0"), @123, // left
              UTF8("\xe2\x87\xa5"), @48,  // tab
              UTF8("\xe2\x8e\x8b"), @53,  // escape
-             UTF8("\xe2\x8c\xa7"), @71,  // clear
+             @"⊞⌧", @(kVK_ANSI_KeypadClear), // numpad clear
              UTF8("\xe2\x8c\xab"), @51,  // delete
              UTF8("\xe2\x8c\xa6"), @117, // forward delete
              UTF8("?\xe2\x83\x9d"), @114, // help
@@ -177,7 +177,7 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
              UTF8("\xe2\x87\x9e"), @116, // pgup
              UTF8("\xe2\x87\x9f"), @121, // pgdn
              UTF8("\xe2\x86\xa9"), @36,  // return
-             UTF8("\xe2\x86\xa9"), @76,  // numpad enter
+             @"⊞↩", @(kVK_ANSI_KeypadEnter), // numpad enter
              UTF8("\xf0\x9f\x94\x85"), @145, // low brightness
              UTF8("\xf0\x9f\x94\x86"), @144, // high brightness
              UTF8("\xf0\x9f\x96\xa5"), @160, // mission control
@@ -207,6 +207,23 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
              @"F18 ", @79,  // F18
              @"F19 ", @80,  // F19
              @"F20 ", @90,  // F20
+             @"⊞.", @(kVK_ANSI_KeypadDecimal),
+             @"⊞*", @(kVK_ANSI_KeypadMultiply),
+             @"⊞+", @(kVK_ANSI_KeypadPlus),
+             @"⊞/", @(kVK_ANSI_KeypadDivide),
+             @"⊞-", @(kVK_ANSI_KeypadMinus),
+             @"⊞=", @(kVK_ANSI_KeypadEquals),
+             @"⊞0", @(kVK_ANSI_Keypad0),
+             @"⊞1", @(kVK_ANSI_Keypad1),
+             @"⊞2", @(kVK_ANSI_Keypad2),
+             @"⊞3", @(kVK_ANSI_Keypad3),
+             @"⊞4", @(kVK_ANSI_Keypad4),
+             @"⊞5", @(kVK_ANSI_Keypad5),
+             @"⊞6", @(kVK_ANSI_Keypad6),
+             @"⊞7", @(kVK_ANSI_Keypad7),
+             @"⊞8", @(kVK_ANSI_Keypad8),
+             @"⊞9", @(kVK_ANSI_Keypad9),
+             @"⊞,", @(kVK_JIS_KeypadComma),
              @"英数", @0x66, // eisū key, JIS keyboards only
              @"かな", @0x68, // kana key, JIS keyboards only
              nil];
