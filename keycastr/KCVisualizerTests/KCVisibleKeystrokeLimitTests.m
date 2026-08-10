@@ -229,11 +229,13 @@
     [visualizerWindow performSelector:@selector(abandonCurrentBezelView)];
     [visualizer noteKeyEvent:[self keystrokeWithCharacters:@"a" modifierFlags:0 keyCode:0]];
     [visualizer noteKeyEvent:[self keystrokeWithCharacters:@"b" modifierFlags:NSEventModifierFlagCommand keyCode:11]];
+    XCTAssertEqual(visualizerWindow.contentView.subviews.count, 3);
 
     // Act
     visualizerWithLimit.maximumVisibleKeystrokes = 1;
 
     // Assert
+    XCTAssertEqual(visualizerWindow.contentView.subviews.count, 2);
     for (NSView *bezelView in visualizerWindow.contentView.subviews) {
         XCTAssertGreaterThanOrEqual(NSMinY(bezelView.frame), 0);
         XCTAssertLessThanOrEqual(NSMaxY(bezelView.frame), NSHeight(visualizerWindow.contentView.bounds));
