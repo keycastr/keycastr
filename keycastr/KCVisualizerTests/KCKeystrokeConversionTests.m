@@ -281,4 +281,52 @@
     XCTAssertEqualObjects([keystroke convertToString], @"⌘ß");
 }
 
+#pragma mark - keyCapForKeystroke (bare keycap, no modifier glyphs)
+
+- (void)test_keyCap_plainLetterIsLowercaseKeycap {
+    // a
+    keystroke = [self keystrokeWithKeyCode:0 modifiers:0 characters:@"a" charactersIgnoringModifiers:@"a"];
+    XCTAssertEqualObjects([eventTransformer keyCapForKeystroke:keystroke], @"a");
+}
+
+- (void)test_keyCap_commandLetterIsUppercaseKeycap {
+    // cmd-A -> "A" (no ⌘ glyph; the visualizer draws modifiers separately)
+    keystroke = [self keystrokeWithKeyCode:0 modifiers:1048840 characters:@"a" charactersIgnoringModifiers:@"a"];
+    XCTAssertEqualObjects([eventTransformer keyCapForKeystroke:keystroke], @"A");
+}
+
+- (void)test_keyCap_controlLetterIgnoresControlCharacter {
+    // ctrl-A: characters is the non-printing control char; the keycap must still be "A"
+    keystroke = [self keystrokeWithKeyCode:0
+                                 modifiers:NSEventModifierFlagControl
+                                characters:[NSString stringWithFormat:@"%C", (unichar)0x01]
+               charactersIgnoringModifiers:@"a"];
+    XCTAssertEqualObjects([eventTransformer keyCapForKeystroke:keystroke], @"A");
+}
+
+- (void)test_keyCap_commandOptionControlLetterShowsKeycapNotBlank {
+    // cmd-opt-ctrl-X previously rendered a blank box because -characters was a
+    // control char; the keycap must be "X". (keyCode 7 == 'x' on US layouts.)
+    keystroke = [self keystrokeWithKeyCode:7
+                                 modifiers:(NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand)
+                                characters:[NSString stringWithFormat:@"%C", (unichar)0x18]
+               charactersIgnoringModifiers:@"x"];
+    XCTAssertEqualObjects([eventTransformer keyCapForKeystroke:keystroke], @"X");
+}
+
+- (void)test_keyCap_specialKeyReturnsGlyphWithoutModifiers {
+    // up arrow with modifiers still resolves to the bare special glyph
+    keystroke = [self keystrokeWithKeyCode:126
+                                 modifiers:(NSEventModifierFlagOption | NSEventModifierFlagShift)
+                                characters:@""
+               charactersIgnoringModifiers:@""];
+    XCTAssertEqualObjects([eventTransformer keyCapForKeystroke:keystroke], @"⇡");
+}
+
+- (void)test_keyCap_excludesModifierGlyphs {
+    // cmd-7 -> "7", not "⌘7"
+    keystroke = [self keystrokeWithKeyCode:26 modifiers:1048840 characters:@"7" charactersIgnoringModifiers:@"7"];
+    XCTAssertEqualObjects([eventTransformer keyCapForKeystroke:keystroke], @"7");
+}
+
 @end

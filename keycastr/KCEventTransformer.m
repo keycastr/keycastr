@@ -317,6 +317,28 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	return mutableResponse;
 }
 
+- (NSString *)keyCapForKeystroke:(KCKeystroke *)keystroke
+{
+    NSString *specialKeyString = [KCEventTransformer.specialKeys objectForKey:@(keystroke.keyCode)];
+    if (specialKeyString) {
+        return specialKeyString;
+    }
+
+    NSString *keyCap = [self translatedCharacterForKeystroke:keystroke];
+
+    // Uppercase to match keycap convention when a modifier is held, mirroring the
+    // key portion of -transformedValue:. keyCode 27 is excepted there as well.
+    NSEventModifierFlags modifiers = keystroke.modifierFlags;
+    BOOL shouldUppercase = keystroke.isCommand
+        || (modifiers & NSEventModifierFlagShift)
+        || (modifiers & NSEventModifierFlagOption);
+    if (shouldUppercase && keystroke.keyCode != 27) {
+        keyCap = [keyCap uppercaseString];
+    }
+
+    return keyCap;
+}
+
 - (NSString *)translatedCharacterForKeystroke:(KCKeystroke *)keystroke {
     if ([self shouldReturnOriginalCharactersForKeyCode:keystroke.keyCode 
                                             characters:keystroke.characters] && keystroke.isCommand) {
