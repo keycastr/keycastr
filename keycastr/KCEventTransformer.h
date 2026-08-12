@@ -29,6 +29,7 @@
 #import <Carbon/Carbon.h>
 
 @class KCKeycastrEvent;
+@class KCKeystroke;
 
 @interface KCEventTransformer : NSValueTransformer
 
@@ -42,5 +43,11 @@
 + (instancetype)new NS_UNAVAILABLE;
 
 - (id)transformedValue:(KCKeycastrEvent *)event;
+
+// The bare key label (special-key glyph or layout keycap) for a keystroke, without
+// any modifier glyphs. Visualizers that render modifiers separately (e.g. Minimal)
+// use this so a control/command chord shows the keycap instead of a non-printing
+// control character. The composed-character mode is intentionally not applied here.
+- (NSString *)keyCapForKeystroke:(KCKeystroke *)keystroke;
 
 @end
