@@ -39,6 +39,15 @@
 // tune to taste. See -userDefaultsDidChange:.
 static CGFloat const kMinimalMaxFontToBezelRatio = 0.85;
 
+// Window position is persisted as the x-coordinate of the anchored edge (the
+// right edge when anchored right, otherwise the left edge) plus the vertical
+// origin. Storing the anchored edge -- rather than the whole frame -- keeps
+// restore correct no matter how much content was showing when the value was
+// saved. AppKit's frame autosave stored a full frame instead, which restored the
+// wrong position after a ⌘Q that quit the app while glyphs were on screen.
+static NSString *const kMinimalAnchorXKey = @"minimal.anchorX";
+static NSString *const kMinimalOriginYKey = @"minimal.originY";
+
 @implementation MinimalVisualizerFactory
 
 - (NSString *)visualizerNibName {
@@ -231,18 +240,8 @@ static CGFloat const kMinimalMaxFontToBezelRatio = 0.85;
     [_visualizerView noteFlagsChanged:0];
     [_visualizerWindow setContentView:_visualizerView];
 
-    [_visualizerWindow setFrameAutosaveName:@"MinimalVisualizerWindow"];
-    [_visualizerWindow setFrameUsingName:@"MinimalVisualizerWindow"];
-
-    // AppKit doesn't keep borderless windows on-screen; guard against a frame saved
-    // on a display that's since been disconnected.
-    NSRect frame = _visualizerWindow.frame;
-    NSRect visible = (_visualizerWindow.screen ?: NSScreen.mainScreen).visibleFrame;
-    frame.origin.x = MAX(NSMinX(visible), MIN(frame.origin.x, NSMaxX(visible) - frame.size.width));
-    frame.origin.y = MAX(NSMinY(visible), MIN(frame.origin.y, NSMaxY(visible) - frame.size.height));
-    [_visualizerWindow setFrame:frame display:NO];
-
     _anchorRight = [self effectiveAnchorRight];
+    [self restoreWindowPosition];
 
     // Seed the size caches and correct any pre-existing config that violates the
     // font/bezel fit constraint (see -enforceFontBezelCoupling).
@@ -252,6 +251,13 @@ static CGFloat const kMinimalMaxFontToBezelRatio = 0.85;
                                              selector:@selector(userDefaultsDidChange:)
                                                  name:NSUserDefaultsDidChangeNotification
                                                object:ud];
+
+    // Persist the anchored edge whenever the user drags the window (and, harmlessly,
+    // whenever we re-anchor it ourselves); see -saveWindowPosition.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(windowDidMove:)
+                                                 name:NSWindowDidMoveNotification
+                                               object:_visualizerWindow];
 
     return self;
 }
@@ -297,6 +303,43 @@ static CGFloat const kMinimalMaxFontToBezelRatio = 0.85;
     }
 
     [_visualizerWindow setFrame:windowFrame display:NO];
+}
+
+// Places the (empty, zero-width) window so its anchored edge sits at the saved
+// position; the first event then grows it from that edge. The anchored edge is
+// invariant to content width, so this restores correctly even when the saved
+// value was captured with glyphs on screen (e.g. a ⌘Q that quit the app).
+- (void)restoreWindowPosition {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    CGFloat bezelSize = [ud integerForKey:@"minimal.bezelSize"];
+
+    NSRect frame = NSMakeRect([ud doubleForKey:kMinimalAnchorXKey],
+                              [ud doubleForKey:kMinimalOriginYKey],
+                              0, bezelSize);
+
+    // First run has no saved position; fall back to the window's original spot.
+    if ([ud objectForKey:kMinimalAnchorXKey] == nil) {
+        frame.origin = NSMakePoint(bezelSize, bezelSize);
+    }
+
+    // AppKit doesn't keep borderless windows on-screen; guard against a position
+    // saved on a display that's since been disconnected.
+    NSRect visible = (_visualizerWindow.screen ?: NSScreen.mainScreen).visibleFrame;
+    frame.origin.x = MAX(NSMinX(visible), MIN(frame.origin.x, NSMaxX(visible) - frame.size.width));
+    frame.origin.y = MAX(NSMinY(visible), MIN(frame.origin.y, NSMaxY(visible) - frame.size.height));
+    [_visualizerWindow setFrame:frame display:NO];
+}
+
+- (void)saveWindowPosition {
+    NSRect frame = _visualizerWindow.frame;
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setDouble:([self effectiveAnchorRight] ? NSMaxX(frame) : NSMinX(frame))
+           forKey:kMinimalAnchorXKey];
+    [ud setDouble:NSMinY(frame) forKey:kMinimalOriginYKey];
+}
+
+- (void)windowDidMove:(NSNotification *)notification {
+    [self saveWindowPosition];
 }
 
 // Writes a coupled size through the shared NSUserDefaultsController rather than
