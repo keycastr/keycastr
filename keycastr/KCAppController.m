@@ -152,10 +152,11 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 }
 
 - (void)activeApplicationDidChange:(NSNotification *)notification {
-    // Handle a special case where an application becomes active which
-    // restricts or interferes with key events. Send a nil keyUp event
-    // to avoid a stuck key, if any (typically ⌘Q)
-    [currentVisualizer noteKeyUpEvent:nil];
+    // Handle a special case where an application becomes active which restricts
+    // or interferes with key events. Send an optional nil keyUp event to avoid a stuck key.
+    if ([currentVisualizer respondsToSelector:@selector(noteKeyUpEvent:)]) {
+        [currentVisualizer noteKeyUpEvent:nil];
+    }
 }
 
 - (SRShortcut *)toggleCastingShortcut {
