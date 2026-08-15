@@ -109,53 +109,76 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
         [bp fill];
     }
 
-    NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
+    NSDictionary *attr = [self textAttributes];
+
+    // Laid out right-to-left: mouse, characters, then modifiers in ⌘⇧⌥⌃fn order.
+    // Modifier and mouse glyphs each occupy one fixed bezel-sized slot; the key
+    // label gets a wider slot when its text needs one (see -characterSlotWidth...).
+    CGFloat slotWidth = [ud integerForKey:@"minimal.bezelSize"];
+    __block CGFloat x = frame.size.width;
+    void (^drawGlyph)(NSString *, CGFloat) = ^(NSString *glyph, CGFloat slot) {
+        NSSize size = [glyph sizeWithAttributes:attr];
+        CGFloat y = (frame.size.height - size.height) / 2.0;
+        x -= slot;
+        [glyph drawInRect:NSMakeRect(x, y, slot, size.height) withAttributes:attr];
+    };
+
+    if (_mouse) {
+        drawGlyph(@"🖱️", slotWidth);
+    }
+    if (_characters) {
+        drawGlyph(_characters, [self characterSlotWidthForAttributes:attr]);
+    }
+    if (_flags & NSEventModifierFlagCommand) {
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\x98\x01"], slotWidth);
+    }
+    if (_flags & NSEventModifierFlagShift) {
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x87\xa7\x01"], slotWidth);
+    }
+    if (_flags & NSEventModifierFlagOption) {
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"], slotWidth);
+    }
+    if (_flags & NSEventModifierFlagControl) {
+        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\x83\x01"], slotWidth);
+    }
+    if (_flags & NSEventModifierFlagFunction) {
+        drawGlyph(@"fn", slotWidth);
+    }
+}
+
+// Text attributes shared by -drawRect: and the label-width measurement so both
+// agree on the rendered size of a key label.
+- (NSDictionary *)textAttributes {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+
+    NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
     [ps setAlignment:NSTextAlignmentCenter];
 
-    NSShadow* shadow = [[NSShadow alloc] init];
+    NSShadow *shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[ud colorForKey:@"minimal.textShadowColor"]];
     [shadow setShadowBlurRadius:2];
-    [shadow setShadowOffset:NSMakeSize(2,-2)];
+    [shadow setShadowOffset:NSMakeSize(2, -2)];
 
-    NSDictionary* attr = @{
+    return @{
         NSFontAttributeName:            [NSFont boldSystemFontOfSize:[ud floatForKey:@"minimal.fontSize"]],
         NSForegroundColorAttributeName: [ud colorForKey:@"minimal.textColor"],
         NSShadowAttributeName:          shadow,
         NSParagraphStyleAttributeName:  ps
     };
+}
 
-    // Glyphs occupy fixed-width slots laid out right-to-left: mouse, characters,
-    // then modifiers in ⌘⇧⌥⌃fn order.
-    CGFloat slotWidth = [ud integerForKey:@"minimal.bezelSize"];
-    __block CGFloat x = frame.size.width;
-    void (^drawGlyph)(NSString *) = ^(NSString *glyph) {
-        NSSize size = [glyph sizeWithAttributes:attr];
-        CGFloat y = (frame.size.height - size.height) / 2.0;
-        x -= slotWidth;
-        [glyph drawInRect:NSMakeRect(x, y, slotWidth, size.height) withAttributes:attr];
-    };
+// Width of the slot that holds the key label. A label can be wider than a single
+// bezel slot (e.g. "F10", "esc"), so give it room for its rendered text plus a
+// little horizontal padding, never less than one slot. Returns 0 when there is no
+// label to draw so the caller allots no space for it.
+- (CGFloat)characterSlotWidthForAttributes:(NSDictionary *)attributes {
+    if ([_characters stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length == 0) {
+        return 0;
+    }
 
-    if (_mouse) {
-        drawGlyph(@"🖱️");
-    }
-    if (_characters) {
-        drawGlyph(_characters);
-    }
-    if (_flags & NSEventModifierFlagCommand) {
-        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\x98\x01"]);
-    }
-    if (_flags & NSEventModifierFlagShift) {
-        drawGlyph([NSString stringWithUTF8String:"\xe2\x87\xa7\x01"]);
-    }
-    if (_flags & NSEventModifierFlagOption) {
-        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"]);
-    }
-    if (_flags & NSEventModifierFlagControl) {
-        drawGlyph([NSString stringWithUTF8String:"\xe2\x8c\x83\x01"]);
-    }
-    if (_flags & NSEventModifierFlagFunction) {
-        drawGlyph(@"fn");
-    }
+    CGFloat slotWidth = [[NSUserDefaults standardUserDefaults] integerForKey:@"minimal.bezelSize"];
+    CGFloat textWidth = ceil([_characters sizeWithAttributes:attributes].width);
+    return MAX(slotWidth, textWidth + round(slotWidth * 0.3));
 }
 
 - (void)noteFlagsChanged:(NSEventModifierFlags)flags {
@@ -186,20 +209,16 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
     [self adjustFrameSize];
 }
 
-- (void)adjustFrameSize {    
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    
-    // -drawRect: renders the whole _characters string within a single bezel slot,
-    // so it always occupies exactly one slot regardless of length. Counting each
-    // composed character here over-sized the frame for multi-character key labels
-    // (e.g. "F1", "F10"), leaving a trailing empty bezel box.
-    BOOL hasCharacters = [_characters stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length > 0;
-    
-    CGFloat bezelSize = [ud integerForKey:@"minimal.bezelSize"];
-    CGFloat width = round(bezelSize * (CGFloat)(
-        [self flagsCount] + (hasCharacters ? 1 : 0) + _mouse
-    ));
-    
+- (void)adjustFrameSize {
+    CGFloat bezelSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"minimal.bezelSize"];
+
+    // Modifier and mouse glyphs each occupy one fixed slot; the key label gets a
+    // variable slot sized to its text so multi-character labels (e.g. "F10") are
+    // neither clipped nor padded with a trailing empty bezel box. Must match the
+    // slot widths -drawRect: uses.
+    CGFloat width = round(bezelSize * ([self flagsCount] + _mouse)
+                          + [self characterSlotWidthForAttributes:[self textAttributes]]);
+
     // Size the view to its content only. The owning MinimalVisualizer is the sole
     // owner of the window frame (position + anchoring); see -charactersDidChange.
     [self setFrame:NSMakeRect(0, 0, width, bezelSize)];
