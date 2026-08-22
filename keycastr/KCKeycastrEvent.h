@@ -38,4 +38,13 @@
 
 - (NSString *)convertToString;
 
+- (BOOL)hasCommand;
+- (BOOL)hasOption;
+- (BOOL)hasControl;
+- (BOOL)hasShift;
+- (BOOL)hasFunction;
+
+/// Indicates whether a Keystroke has no modifiers applied
+- (BOOL)hasNonModifier;
+
 @end

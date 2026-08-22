@@ -28,6 +28,7 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "KCDisplayMode.h"
 
 @class KCKeycastrEvent, KCMouseEvent;
 
@@ -37,6 +38,7 @@
 
 -(NSView*) preferencesView;
 -(NSString*) visualizerName;
+-(KCDisplayModeType) availableDisplayModes;
 
 -(void) showVisualizer:(id)sender;
 -(void) hideVisualizer:(id)sender;

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SvelteVisualizer">
+            <connections>
+                <outlet property="preferencesView" destination="8" id="9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="8" userLabel="Custom View">
+            <rect key="frame" x="0.0" y="0.0" width="380" height="245"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button imageHugsTitle="YES" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BmP-1Z-8xN">
+                    <rect key="frame" x="20" y="208" width="163" height="18"/>
+                    <buttonCell key="cell" type="check" title="Display All Keystrokes:" bezelStyle="regularSquare" imagePosition="right" alignment="left" state="on" inset="2" id="DWq-JT-zxO">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <connections>
+                            <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.displayAll" id="FCh-5O-6YO"/>
+                        </connections>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.displayAll" id="aF8-FA-7c9"/>
+                    </connections>
+                </button>
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8Hq-WI-E9P">
+                    <rect key="frame" x="41" y="168" width="117" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="5v6-Yc-bRj"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Background Color:" id="Jnc-1l-ttR">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="OF0-Lz-ole">
+                    <rect key="frame" x="161" y="164" width="50" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="Jxf-WK-BN8"/>
+                        <constraint firstAttribute="height" constant="22" id="O0h-2j-4V5"/>
+                    </constraints>
+                    <color key="color" red="0.0" green="0.0" blue="0.0" alpha="0.84702690972222228" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <connections>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.backgroundColor" id="4pB-E7-8UF">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">KCColorValueTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </colorWell>
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="82r-Ee-gSc">
+                    <rect key="frame" x="88" y="135" width="70" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="tnI-9K-v2E"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Text Color:" id="AZF-lB-ul3">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="tJG-Pb-F8N">
+                    <rect key="frame" x="161" y="131" width="50" height="26"/>
+                    <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <connections>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.textColor" id="S3S-dK-Vpm">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">KCColorValueTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </colorWell>
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Qod-ge-OPi">
+                    <rect key="frame" x="13" y="61" width="145" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="PEN-cF-Kez"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Inactive Modifier Color:" id="aYM-KP-vwe">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="p2v-OH-1Wq">
+                    <rect key="frame" x="161" y="57" width="50" height="26"/>
+                    <color key="color" white="1" alpha="0.5" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <connections>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.inactiveModifierColor" id="xIl-nM-hcM">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">KCColorValueTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </colorWell>
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="2dT-Xd-wVe">
+                    <rect key="frame" x="23" y="28" width="135" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="9Pu-Ux-2g4"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Active Modifier Color:" id="Pn4-dR-6os">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="dKW-um-pMQ">
+                    <rect key="frame" x="161" y="24" width="50" height="26"/>
+                    <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <connections>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.activeModifierColor" id="5gL-cq-Opr">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">KCColorValueTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </colorWell>
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PHI-fK-BAD">
+                    <rect key="frame" x="37" y="102" width="121" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="HWQ-wG-31o"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Text Shadow Color:" id="CPe-qb-zqK">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="iH2-aT-pu4">
+                    <rect key="frame" x="161" y="98" width="50" height="26"/>
+                    <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <connections>
+                        <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.textShadowColor" id="Oig-zk-m1p">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">KCColorValueTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </colorWell>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ie6-Va-wyE">
+                    <rect key="frame" x="318" y="10" width="58" height="27"/>
+                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ie4-X4-WO6">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetPreferences:" target="-2" id="OGO-7q-ckv"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="PHI-fK-BAD" firstAttribute="trailing" secondItem="8Hq-WI-E9P" secondAttribute="trailing" id="0Zi-Cu-7yT"/>
+                <constraint firstItem="BmP-1Z-8xN" firstAttribute="leading" secondItem="8" secondAttribute="leading" constant="20" id="1TF-5V-uCv"/>
+                <constraint firstItem="p2v-OH-1Wq" firstAttribute="trailing" secondItem="OF0-Lz-ole" secondAttribute="trailing" id="286-9e-Pcb"/>
+                <constraint firstItem="2dT-Xd-wVe" firstAttribute="top" secondItem="Qod-ge-OPi" secondAttribute="bottom" constant="16" id="2uv-ly-fvc"/>
+                <constraint firstAttribute="trailing" secondItem="ie6-Va-wyE" secondAttribute="trailing" constant="10" id="3AD-C0-Go8"/>
+                <constraint firstItem="iH2-aT-pu4" firstAttribute="centerY" secondItem="PHI-fK-BAD" secondAttribute="centerY" id="7Zu-b3-Dbq"/>
+                <constraint firstItem="iH2-aT-pu4" firstAttribute="width" secondItem="OF0-Lz-ole" secondAttribute="width" id="8Mx-YS-HHV"/>
+                <constraint firstItem="dKW-um-pMQ" firstAttribute="width" secondItem="OF0-Lz-ole" secondAttribute="width" id="9YK-wz-nBR"/>
+                <constraint firstItem="2dT-Xd-wVe" firstAttribute="trailing" secondItem="8Hq-WI-E9P" secondAttribute="trailing" id="9lI-aI-Cpe"/>
+                <constraint firstItem="iH2-aT-pu4" firstAttribute="trailing" secondItem="OF0-Lz-ole" secondAttribute="trailing" id="9r4-kp-u8i"/>
+                <constraint firstItem="tJG-Pb-F8N" firstAttribute="centerY" secondItem="82r-Ee-gSc" secondAttribute="centerY" id="B4e-Ej-hXw"/>
+                <constraint firstItem="Qod-ge-OPi" firstAttribute="top" secondItem="PHI-fK-BAD" secondAttribute="bottom" constant="24" id="B8M-hl-UV0"/>
+                <constraint firstItem="82r-Ee-gSc" firstAttribute="top" secondItem="8Hq-WI-E9P" secondAttribute="bottom" constant="16" id="BhJ-d6-OBM"/>
+                <constraint firstItem="tJG-Pb-F8N" firstAttribute="width" secondItem="OF0-Lz-ole" secondAttribute="width" id="BuQ-VH-ouu"/>
+                <constraint firstAttribute="bottom" secondItem="ie6-Va-wyE" secondAttribute="bottom" constant="17" id="JkC-Pa-3EF"/>
+                <constraint firstItem="PHI-fK-BAD" firstAttribute="top" secondItem="82r-Ee-gSc" secondAttribute="bottom" constant="16" id="Kmp-q9-4KY"/>
+                <constraint firstItem="p2v-OH-1Wq" firstAttribute="width" secondItem="OF0-Lz-ole" secondAttribute="width" id="LN2-g5-GLa"/>
+                <constraint firstItem="dKW-um-pMQ" firstAttribute="trailing" secondItem="OF0-Lz-ole" secondAttribute="trailing" id="Lc5-LT-ov5"/>
+                <constraint firstItem="OF0-Lz-ole" firstAttribute="leading" secondItem="8Hq-WI-E9P" secondAttribute="trailing" constant="8" symbolic="YES" id="LjM-sS-N41"/>
+                <constraint firstAttribute="bottom" secondItem="2dT-Xd-wVe" secondAttribute="bottom" constant="28" id="LqE-uQ-n96"/>
+                <constraint firstItem="82r-Ee-gSc" firstAttribute="trailing" secondItem="8Hq-WI-E9P" secondAttribute="trailing" id="Onl-vU-9WX"/>
+                <constraint firstItem="dKW-um-pMQ" firstAttribute="centerY" secondItem="2dT-Xd-wVe" secondAttribute="centerY" id="TnT-pB-llR"/>
+                <constraint firstItem="tJG-Pb-F8N" firstAttribute="height" secondItem="OF0-Lz-ole" secondAttribute="height" id="TsR-GM-Y5S"/>
+                <constraint firstItem="p2v-OH-1Wq" firstAttribute="centerY" secondItem="Qod-ge-OPi" secondAttribute="centerY" id="hSw-Rc-Yjd"/>
+                <constraint firstItem="8Hq-WI-E9P" firstAttribute="trailing" secondItem="Qod-ge-OPi" secondAttribute="trailing" id="i2S-x7-B5b"/>
+                <constraint firstItem="OF0-Lz-ole" firstAttribute="centerY" secondItem="8Hq-WI-E9P" secondAttribute="centerY" id="jQX-Z5-tcn"/>
+                <constraint firstItem="2dT-Xd-wVe" firstAttribute="leading" secondItem="8" secondAttribute="leading" constant="25" id="kdf-g6-fct"/>
+                <constraint firstItem="8Hq-WI-E9P" firstAttribute="top" secondItem="BmP-1Z-8xN" secondAttribute="bottom" constant="24" id="ml5-uk-rff"/>
+                <constraint firstItem="iH2-aT-pu4" firstAttribute="height" secondItem="OF0-Lz-ole" secondAttribute="height" id="oiW-HT-Jph"/>
+                <constraint firstItem="tJG-Pb-F8N" firstAttribute="trailing" secondItem="OF0-Lz-ole" secondAttribute="trailing" id="ruu-k6-65m"/>
+                <constraint firstItem="dKW-um-pMQ" firstAttribute="height" secondItem="OF0-Lz-ole" secondAttribute="height" id="xYB-PV-IF5"/>
+                <constraint firstItem="p2v-OH-1Wq" firstAttribute="height" secondItem="OF0-Lz-ole" secondAttribute="height" id="zyJ-mj-33Q"/>
+            </constraints>
+            <point key="canvasLocation" x="252.5" y="-59.5"/>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="2Th-Np-O1z"/>
+    </objects>
+</document>

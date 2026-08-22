@@ -48,15 +48,6 @@
     return self;
 }
 
-- (void)dealloc {
-	[_charactersIgnoringModifiers release];
-	_charactersIgnoringModifiers = nil;
-    [_characters release];
-    _characters = nil;
-
-    [super dealloc];
-}
-
 - (BOOL)isCommand {
     return (self.modifierFlags & (NSEventModifierFlagControl | NSEventModifierFlagCommand)) != 0;
 }

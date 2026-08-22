@@ -69,4 +69,18 @@
     return theImage;
 }
 
+- (void)removeObjectsWithPrefix:(NSString *)prefix {
+    NSDictionary *all =
+        [self dictionaryRepresentation];
+
+    for (NSString *key in all) {
+      if ([key hasPrefix:prefix]) {
+        [self removeObjectForKey:key];
+      }
+    }
+
+    // Refresh state for cocoa bindings
+    [[NSUserDefaultsController sharedUserDefaultsController] revert:nil];
+}
+
 @end

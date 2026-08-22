@@ -98,9 +98,14 @@
 	NSView* view = [preferenceViews objectAtIndex:1];
 	NSView* subview = [[view subviews] objectAtIndex:0];
 	NSView* prefView = [new preferencesView];
-	NSSize s = [prefView frame].size;
-    // TODO: this is overly tightly coupled to the Display tab's layout
-	s.height += [subview frame].size.height * 2.0;
+    
+    NSSize s = prefView.frame.size;
+    CGFloat existingHeight = 0;
+    for (NSView *v in view.subviews) {
+        existingHeight += v.frame.size.height;
+    }
+    s.height += existingHeight;
+    
 	[view setFrameSize:s];
 	[view addSubview:prefView];
 	
@@ -121,7 +126,6 @@
 
 -(void) nudge
 {
-	[tabView retain];
 	[tabView removeFromSuperview];
 	toolbarItemIdentifiers = [[NSMutableArray alloc] init];
 	preferenceViews = [[NSMutableArray alloc] init];
@@ -142,11 +146,31 @@
 
 		NSString* itemIdentifier = [tvi label];
 		[toolbarItemIdentifiers addObject:itemIdentifier];
+        
+        NSImage *img = [NSImage imageNamed:[NSString stringWithFormat:@"%@Icon", itemIdentifier]];
+        
+        if (@available(macOS 11.0, *)) {
+            NSString *imageName = @"";
+
+            if ([itemIdentifier isEqualToString:@"General"]){
+                imageName = @"gear";
+            }
+            else if ([itemIdentifier isEqualToString:@"Display"]){
+                imageName = @"display";
+            }
+            else if ([itemIdentifier isEqualToString:@"Update"]){
+                imageName = @"arrow.2.circlepath";
+            }
+            
+            if ([imageName length] > 0) {
+                img = [[NSImage imageWithSystemSymbolName:imageName accessibilityDescription:itemIdentifier] imageWithSymbolConfiguration:[NSImageSymbolConfiguration configurationWithPointSize:21 weight:NSFontWeightSemibold]];
+            }
+        }
 
 		// Create a toolbar item for this preference pane.
-		NSToolbarItem* item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+		NSToolbarItem* item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
 		[item setLabel:itemIdentifier];
-		[item setImage:[NSImage imageNamed:[NSString stringWithFormat:@"%@Icon", itemIdentifier]]];
+        [item setImage:img];
 		[item setTarget:self];
 		[item setAction:@selector(toolbarItemSelected:)];
 		[item setTag:tag];
@@ -173,14 +197,6 @@
 	[self changeVisualizerFrom:nil to:v];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visualizerChanged:) name:@"KCVisualizerChanged" object:nil];
 	_selectedPreferencePane = 0;
-}
-
-- (void)dealloc {
-    [toolbar release];
-    [toolbarItems release];
-    [toolbarItemIdentifiers release];
-    [preferenceViews release];
-    [super dealloc];
 }
 
 @end

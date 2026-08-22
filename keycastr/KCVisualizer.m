@@ -47,7 +47,7 @@
 
 + (void)registerVisualizerClass:(Class)c
 {
-	KCVisualizerFactory *factory = [[[c alloc] init] autorelease];
+	KCVisualizerFactory *factory = [[c alloc] init];
 	[KCVisualizer registerVisualizerFactory:factory withName:[factory visualizerName]];
 }
 
@@ -111,8 +111,8 @@
 -(id<KCVisualizer>) constructVisualizer
 {
 	Class c = [self visualizerClass];
-	id<KCVisualizer> v = [[[c alloc] init] autorelease];
-	NSNib* nib = [[[NSNib alloc] initWithNibNamed:[self visualizerNibName] bundle:[NSBundle bundleForClass:[self class]]] autorelease];
+	id<KCVisualizer> v = [[c alloc] init];
+	NSNib* nib = [[NSNib alloc] initWithNibNamed:[self visualizerNibName] bundle:[NSBundle bundleForClass:[self class]]];
 	if (![nib instantiateWithOwner:v topLevelObjects:nil])
 		return nil;
 	return v;

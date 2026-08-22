@@ -29,9 +29,11 @@
 
 #import "SvelteVisualizer.h"
 #import "NSBezierPath+RoundedRect.h"
+#import "KCDisplayMode.h"
 #import "KCKeycastrEvent.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
+#import "NSUserDefaults+Utility.h"
 
 @implementation SvelteVisualizerFactory
 
@@ -59,19 +61,30 @@
 
 -(void) drawRect:(NSRect)rect
 {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
 	NSRect frame = [self frame];
 	[[NSColor clearColor] setFill];
 	NSRectFill(frame);
 
-	float oneQuarter = floorf(frame.size.width / 4);
+    int segmentCount = KCDisplayMode.shift + KCDisplayMode.control + KCDisplayMode.option + KCDisplayMode.command;
+	float oneSegment = floorf(frame.size.width / segmentCount);
 
-	[[NSColor colorWithCalibratedWhite:0 alpha:0.85] setFill];
+    CGFloat rectHeight = segmentCount ? 100 : 70;
+    CGFloat rectY = segmentCount ? 0 : 30;
+    NSRect drawRect = NSMakeRect(frame.origin.x, rectY, frame.size.width, rectHeight);
+
+	[[ud colorForKey:@"svelte.backgroundColor"] setFill];
 	NSBezierPath* bp = [NSBezierPath bezierPath];
-	[bp appendRoundedRect:frame radius:16];
-	[bp appendBezierPathWithRect:NSMakeRect(0,30,frame.size.width,1)];
-	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*1,0,1,30)];
-	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*2,0,1,30)];
-	[bp appendBezierPathWithRect:NSMakeRect(oneQuarter*3,0,1,30)];
+	[bp appendRoundedRect:drawRect radius:16];
+
+    if (segmentCount) {
+        [bp appendBezierPathWithRect:NSMakeRect(0,30,frame.size.width,1)];
+        for (int i = 1; i < segmentCount; i++) {
+            [bp appendBezierPathWithRect:NSMakeRect(oneSegment*i,0,1,30)];
+        }
+    }
+
 	[bp fill];
 	
 	NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
@@ -81,8 +94,8 @@
 	NSString* controlKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x83\x01"];
 	NSString* altKeyString = [NSString stringWithUTF8String:"\xe2\x8c\xa5\x01"];
 	NSString* commandKeyString = [NSString stringWithUTF8String:"\xe2\x8c\x98\x01"];
-	NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
-	[shadow setShadowColor:[NSColor blackColor]];
+	NSShadow* shadow = [[NSShadow alloc] init];
+	[shadow setShadowColor:[ud colorForKey:@"svelte.textShadowColor"]];
 	[shadow setShadowBlurRadius:2];
 	[shadow setShadowOffset:NSMakeSize(2,-2)];
 
@@ -91,40 +104,56 @@
 		[NSFont boldSystemFontOfSize:16], NSFontAttributeName,
 		[NSColor whiteColor], NSForegroundColorAttributeName,
 		shadow, NSShadowAttributeName,
-		[ps autorelease], NSParagraphStyleAttributeName,
+		ps, NSParagraphStyleAttributeName,
         nil];
+    
+    NSColor *inactiveModColor = [ud colorForKey:@"svelte.inactiveModifierColor"];
+    NSColor *activeModColor = [ud colorForKey:@"svelte.activeModifierColor"];
+    
+    NSMutableArray<NSAttributedString *> *drawModifiers = [@[] mutableCopy];
 
-    if (_flags & NSEventModifierFlagShift)
-		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-	else
-		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
-	size = [shiftKeyString sizeWithAttributes:attr];
-	[shiftKeyString drawInRect:NSMakeRect(0,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+    if (KCDisplayMode.shift) {
+        NSMutableDictionary *tmpAttr = [attr mutableCopy];
+        tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagShift) ? activeModColor : inactiveModColor;
+        
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:shiftKeyString attributes:tmpAttr];
+        [drawModifiers addObject:attrString];
+    }
 
-    if (_flags & NSEventModifierFlagControl)
-		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-	else
-		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
-	size = [controlKeyString sizeWithAttributes:attr];
-	[controlKeyString drawInRect:NSMakeRect(oneQuarter,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+    if (KCDisplayMode.control) {
+        NSMutableDictionary *tmpAttr = [attr mutableCopy];
+        tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagControl) ? activeModColor : inactiveModColor;
+        
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:controlKeyString attributes:tmpAttr];
+        [drawModifiers addObject:attrString];
+    }
 
-    if (_flags & NSEventModifierFlagOption)
-		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-	else
-		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
-	size = [altKeyString sizeWithAttributes:attr];
-	[altKeyString drawInRect:NSMakeRect(oneQuarter*2,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
+    if (KCDisplayMode.option) {
+        NSMutableDictionary *tmpAttr = [attr mutableCopy];
+        tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagOption) ? activeModColor : inactiveModColor;
+        
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:altKeyString attributes:tmpAttr];
+        [drawModifiers addObject:attrString];
+    }
 
-    if (_flags & NSEventModifierFlagCommand)
-		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-	else
-		[attr setObject:[NSColor colorWithCalibratedWhite:1 alpha:0.5] forKey:NSForegroundColorAttributeName];
-	size = [commandKeyString sizeWithAttributes:attr];
-	[commandKeyString drawInRect:NSMakeRect(oneQuarter*3,(30 - size.height) / 2.0,oneQuarter,size.height) withAttributes:attr];
-	
+    if (KCDisplayMode.command) {
+        NSMutableDictionary *tmpAttr = [attr mutableCopy];
+        tmpAttr[NSForegroundColorAttributeName] = (_flags & NSEventModifierFlagCommand) ? activeModColor : inactiveModColor;
+        
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:commandKeyString attributes:tmpAttr];
+        [drawModifiers addObject:attrString];
+    }
+    
+    for (int i = 0; i < [drawModifiers count]; i++) {
+        NSAttributedString *modifierString = drawModifiers[i];
+        NSSize size = [modifierString.string sizeWithAttributes:attr];
+        
+        [modifierString drawInRect:NSMakeRect(oneSegment*i,(30 - size.height) / 2.0,oneSegment,size.height)];
+    }
+    
 	if (_displayedString != nil)
 	{
-		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+        [attr setObject:[ud colorForKey:@"svelte.textColor"] forKey:NSForegroundColorAttributeName];
 		float fontSize = 48;
 		[attr setObject:[NSFont systemFontOfSize:fontSize] forKey:NSFontAttributeName];
 		
@@ -142,25 +171,22 @@
 - (void)noteKeyEvent:(KCKeycastrEvent *)event
 {
     if (_displayedString) {
-        [_displayedString autorelease];
-        _displayedString = [[_displayedString stringByAppendingString:[event convertToString]] retain];
+        _displayedString = [_displayedString stringByAppendingString:[event convertToString]];
 
 
         if (_displayedString.length > 6) {
             NSRange range = NSMakeRange(_displayedString.length - 6, 6);
-            [_displayedString autorelease];
-            _displayedString = [[_displayedString substringWithRange:range] retain];
+            _displayedString = [_displayedString substringWithRange:range];
         }
     }
     else {
-        _displayedString = [[event convertToString] retain];
+        _displayedString = [event convertToString];
     }
 	[self setNeedsDisplay:YES];
 }
 
 -(void) noteFlagsChanged:(NSEventModifierFlags)flags
 {
-    [_displayedString autorelease];
     _displayedString = nil;
     _flags = flags;
 	[self setNeedsDisplay:YES];
@@ -185,6 +211,14 @@
 	return @"Svelte";
 }
 
+-(KCDisplayModeType) availableDisplayModes
+{
+    return KCDisplayModeTypeCommand
+            | KCDisplayModeTypeOption
+            | KCDisplayModeTypeControl
+            | KCDisplayModeTypeShift;
+}
+
 -(id) init
 {
     if (!(self = [super init]))
@@ -203,6 +237,7 @@
     [_visualizerWindow setFrameUsingName:@"svelte visualizerFrame"];
     [_visualizerWindow setOpaque:NO];
     [_visualizerWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    [_visualizerWindow setTitle:@"Svelte Visualizer"];
     
     _visualizerView = [[SvelteVisualizerView alloc] initWithFrame:r];
     [_visualizerWindow setContentView:_visualizerView];
@@ -219,13 +254,6 @@
                                                   }];
     
     return self;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_visualizerWindow release];
-    [_visualizerView release];
-    [super dealloc];
 }
 
 -(void) showVisualizer:(id)sender
@@ -268,8 +296,40 @@
 	[_visualizerView noteFlagsChanged:flags];
 }
 
+- (IBAction)resetPreferences:(id)sender {
+    [[NSUserDefaults standardUserDefaults] removeObjectsWithPrefix:@"svelte."];
+}
+
 + (NSDictionary<NSString *, NSObject *> *)visualizerDefaults {
-    return @{ @"svelte.displayAll": @YES };
+  return @{
+    @"svelte.display.shift" : @YES,
+    @"svelte.display.control" : @YES,
+    @"svelte.display.option" : @YES,
+    @"svelte.display.command" : @YES,
+    @"svelte.displayAll" : @YES,
+    @"svelte.backgroundColor" : [NSKeyedArchiver
+        archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0
+                                                               alpha:0.85]
+             requiringSecureCoding:NO
+                             error:NULL],
+    @"svelte.textColor" :
+        [NSKeyedArchiver archivedDataWithRootObject:[NSColor whiteColor]
+                              requiringSecureCoding:NO
+                                              error:NULL],
+    @"svelte.textShadowColor" :
+        [NSKeyedArchiver archivedDataWithRootObject:[NSColor blackColor]
+                              requiringSecureCoding:NO
+                                              error:NULL],
+    @"svelte.inactiveModifierColor" : [NSKeyedArchiver
+        archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:1
+                                                               alpha:0.5]
+             requiringSecureCoding:NO
+                             error:NULL],
+    @"svelte.activeModifierColor" :
+        [NSKeyedArchiver archivedDataWithRootObject:[NSColor whiteColor]
+                              requiringSecureCoding:NO
+                                              error:NULL],
+  };
 }
 
 @end

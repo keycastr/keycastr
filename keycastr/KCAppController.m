@@ -26,13 +26,10 @@
 //	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#if !__has_feature(objc_arc)
-#error "ARC is required for this file -- enable with -fobjc-arc"
-#endif
-
 #import <Quartz/Quartz.h>
 #import <ShortcutRecorder/ShortcutRecorder.h>
 #import "KCAppController.h"
+#import "KCDisplayMode.h"
 #import "KCEventTap.h"
 #import "KCKeystroke.h"
 #import "KCMouseEventVisualizer.h"
@@ -66,7 +63,6 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 @property (nonatomic, assign) IBOutlet NSMenu *statusMenu;
 @property (nonatomic, strong) IBOutlet NSWindow *aboutWindow;
-@property (nonatomic, strong) IBOutlet QCView   *aboutQCView;
 @property (nonatomic, assign) IBOutlet NSWindow *preferencesWindow;
 @property (nonatomic, assign) IBOutlet KCPrefsWindowController *prefsWindowController;
 @property (nonatomic, assign) IBOutlet SRRecorderControl *shortcutRecorder;
@@ -82,7 +78,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     BOOL _isCapturing;
 }
 
-@synthesize eventTap, statusItem, statusMenu, aboutWindow, aboutQCView, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem, mouseEventVisualizer, currentVisualizer;
+@synthesize eventTap, statusItem, statusMenu, aboutWindow, preferencesWindow, prefsWindowController, shortcutRecorder, dockShortcutItem, statusShortcutItem, mouseEventVisualizer, currentVisualizer;
 @synthesize toggleCastingShortcut = _toggleCastingShortcut;
 
 #pragma mark -
@@ -143,6 +139,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
     [eventTap removeTap];
+}
+
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
+    return YES;
 }
 
 - (SRShortcut *)toggleCastingShortcut {
@@ -233,6 +233,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
         }
     }
     
+    [defaults addEntriesFromDictionary:[KCDisplayMode defaults]];
     [defaults addEntriesFromDictionary:appDefaults];
     [userDefaults registerDefaults:defaults];
 }
@@ -328,19 +329,14 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
             }
         }
     }
-
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"KeyCastrAbout" ofType:@"qtz"];
-    [aboutQCView loadCompositionFromFile:filePath];
 }
 
 -(void) orderFrontKeyCastrAboutPanel:(id)sender
 {
+    aboutWindow.movableByWindowBackground = YES;
+    
     [aboutWindow center];
     [aboutWindow makeKeyAndOrderFront:sender];
-    
-    if (!aboutQCView.isRendering) {
-        [aboutQCView startRendering];
-    }
     
     [NSApp activateIgnoringOtherApps:YES];
 }
@@ -396,6 +392,8 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     if (oldVisualizer != nil) {
         [oldVisualizer deactivateVisualizer:self];
     }
+    
+    [[KCAvailableDisplayMode sharedInstance] setAvailableModes:[newVisualizer availableDisplayModes]];
 
     currentVisualizer = newVisualizer;
     [newVisualizer showVisualizer:self];
