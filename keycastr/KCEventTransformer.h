@@ -41,4 +41,6 @@
 
 - (id)transformedValue:(KCKeycastrEvent *)event;
 
+- (NSString *)transformedValueForWindows:(KCKeycastrEvent *)event;
+
 @end

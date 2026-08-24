@@ -32,6 +32,7 @@
 #import "KCKeycastrEvent.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
+#import "KCEventTransformer.h"
 
 @implementation SvelteVisualizerFactory
 
@@ -56,6 +57,8 @@
     NSEventModifierFlags _flags;
 	NSString *_displayedString;
 }
+
+@synthesize showWindowsEquivalent = _showWindowsEquivalent;
 
 -(void) drawRect:(NSRect)rect
 {
@@ -141,19 +144,27 @@
 
 - (void)noteKeyEvent:(KCKeycastrEvent *)event
 {
-    if (_displayedString) {
+    NSString *macString = [event convertToString];
+    NSString *winString = self.showWindowsEquivalent ? [[KCEventTransformer currentTransformer] transformedValueForWindows:event] : nil;
+
+    if (winString.length > 0) {
+        // For modifier-based shortcuts, replace the display entirely (don't accumulate)
         [_displayedString autorelease];
-        _displayedString = [[_displayedString stringByAppendingString:[event convertToString]] retain];
-
-
-        if (_displayedString.length > 6) {
-            NSRange range = NSMakeRange(_displayedString.length - 6, 6);
+        _displayedString = [[NSString stringWithFormat:@"%@ | %@", macString, winString] retain];
+    } else {
+        // Regular keypresses: accumulate, keep last 6 chars
+        if (_displayedString) {
             [_displayedString autorelease];
-            _displayedString = [[_displayedString substringWithRange:range] retain];
+            _displayedString = [[_displayedString stringByAppendingString:macString] retain];
+
+            if (_displayedString.length > 6) {
+                NSRange range = NSMakeRange(_displayedString.length - 6, 6);
+                [_displayedString autorelease];
+                _displayedString = [[_displayedString substringWithRange:range] retain];
+            }
+        } else {
+            _displayedString = [macString retain];
         }
-    }
-    else {
-        _displayedString = [[event convertToString] retain];
     }
 	[self setNeedsDisplay:YES];
 }
@@ -172,6 +183,7 @@
 @interface SvelteVisualizer ()
 
 @property (nonatomic, assign) BOOL displayAll;
+@property (nonatomic, assign) BOOL showWindowsEquivalent;
 
 @end
 
@@ -208,6 +220,7 @@
     [_visualizerWindow setContentView:_visualizerView];
     
     _displayAll = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.displayAll"] boolValue];
+    self.showWindowsEquivalent = [[[NSUserDefaults standardUserDefaults] valueForKey:@"svelte.showWindowsEquivalent"] boolValue];
     
     // TODO: migrate away from using NSNotificationCenter for this, as it is far too chatty
     __weak typeof(self) weakSelf = self;
@@ -216,6 +229,7 @@
                                                        queue:nil
                                                   usingBlock:^(NSNotification * _Nonnull notification) {
                                                       weakSelf.displayAll = [notification.object boolForKey:@"svelte.displayAll"];
+                                                      weakSelf.showWindowsEquivalent = [notification.object boolForKey:@"svelte.showWindowsEquivalent"];
                                                   }];
     
     return self;
@@ -268,8 +282,14 @@
 	[_visualizerView noteFlagsChanged:flags];
 }
 
+-(void) setShowWindowsEquivalent:(BOOL)showWindowsEquivalent {
+    _showWindowsEquivalent = showWindowsEquivalent;
+    _visualizerView.showWindowsEquivalent = showWindowsEquivalent;
+}
+
 + (NSDictionary<NSString *, NSObject *> *)visualizerDefaults {
-    return @{ @"svelte.displayAll": @YES };
+    return @{ @"svelte.displayAll": @YES,
+              @"svelte.showWindowsEquivalent": @NO };
 }
 
 @end

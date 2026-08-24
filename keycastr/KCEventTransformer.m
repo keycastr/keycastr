@@ -322,6 +322,49 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
 	return mutableResponse;
 }
 
+- (NSString *)transformedValueForWindows:(KCKeycastrEvent *)event {
+    if (![event isKindOfClass:[KCKeystroke class]]) {
+        return nil;
+    }
+    
+    KCKeystroke *keystroke = (KCKeystroke *)event;
+    NSEventModifierFlags modifiers = event.modifierFlags;
+    
+    BOOL isCommand = (modifiers & NSEventModifierFlagCommand) != 0;
+    BOOL isControl = (modifiers & NSEventModifierFlagControl) != 0;
+    BOOL isOption = (modifiers & NSEventModifierFlagOption) != 0;
+    BOOL isShift = (modifiers & NSEventModifierFlagShift) != 0;
+    
+    if (!isCommand && !isControl && !isOption && !isShift) {
+        return nil;
+    }
+
+    NSMutableArray *parts = [NSMutableArray array];
+    
+    if (isControl) [parts addObject:@"Win"];
+    if (isCommand) [parts addObject:@"Ctrl"];
+    if (isOption) [parts addObject:@"Alt"];
+    if (isShift) [parts addObject:@"Shift"];
+    
+    // Get the character key
+    NSString *charString = nil;
+    NSString *specialKeyString = [[self _specialKeys] objectForKey:@(keystroke.keyCode)];
+    if (specialKeyString) {
+        // We might want to map some symbols to text if possible, but keeping them as is for now is safer
+        // unless we have a map for Windows names.
+        // For example, arrow keys are symbols in _specialKeys.
+        charString = specialKeyString;
+    } else {
+        charString = [self translatedCharacterForKeystroke:keystroke];
+    }
+    
+    if (charString.length > 0) {
+        [parts addObject:[charString uppercaseString]];
+    }
+    
+    return [parts componentsJoinedByString:@"+"];
+}
+
 - (NSString *)translatedCharacterForKeystroke:(KCKeystroke *)keystroke {
     if ([self shouldReturnOriginalCharactersForKeyCode:keystroke.keyCode 
                                             characters:keystroke.characters] && keystroke.isCommand) {
