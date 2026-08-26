@@ -1268,6 +1268,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Minimal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = YES;
 			};
@@ -1299,6 +1300,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Minimal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = NO;
 			};
@@ -1331,6 +1333,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.KCDefaultVisualizer;
 				PRODUCT_NAME = KCDefaultVisualizer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = YES;
 			};
@@ -1455,6 +1458,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.keycastr.Svelte;
 				PRODUCT_NAME = Svelte;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = kcplugin;
 				ZERO_LINK = YES;
 			};
