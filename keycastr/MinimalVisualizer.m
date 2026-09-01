@@ -184,8 +184,13 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
 - (void)noteFlagsChanged:(NSEventModifierFlags)flags {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
-    // ⌘⇧⌥⌃ always render while held (the Minimal visualizer's live-HUD identity);
-    // only the fn/globe badge is optional.
+    // The modifier preference governs whether ⌘, ⌃, ⌥, and ⇧ are ever shown.
+    if (![ud boolForKey:@"minimal.display.modifierKeys"]) {
+        flags &= ~(NSEventModifierFlagCommand
+                   | NSEventModifierFlagControl
+                   | NSEventModifierFlagOption
+                   | NSEventModifierFlagShift);
+    }
     if (![ud boolForKey:@"minimal.display.includeFunctionKey"]) {
         flags &= ~NSEventModifierFlagFunction;
     }
@@ -196,8 +201,9 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
 }
 
 - (void)noteCharactersChanged:(NSString *)characters {
-    // Whether a key is worth showing is decided by the owning MinimalVisualizer
-    // (see -shouldDisplayKeystroke:); the view just renders what it's handed.
+    // Whether the key label is worth showing is decided by the owning
+    // MinimalVisualizer (see -shouldDisplayKeystroke:). Modifier glyphs are
+    // tracked independently in _flags.
     _characters = characters;
 
     [self adjustFrameSize];
@@ -423,34 +429,29 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
 }
 
 // Decides whether a keystroke's base key label should be displayed. Modifier
-// glyphs are handled separately (always shown) via -noteFlagsChanged:; this
-// governs only the non-modifier key label.
-//
-// Each keystroke is classified into exactly one category by precedence, and the
-// matching checklist toggle decides visibility:
-//   holds ⌘/⌃  -> Command keys              (⌘C, ⌃Space, ⌘←)
-//   else ⌥     -> Modified keys             (⌥E, ⌥⇧E, ⌥←)
-//   else special -> Special & navigation keys (←, Tab, F5, ⇧Tab)
-//   else       -> All keys                  (a, A, 7, !)
+// glyphs are filtered separately via -noteFlagsChanged:; this governs only the
+// non-modifier key label.
 - (BOOL)shouldDisplayKeystroke:(KCKeystroke *)keystroke {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
-    if (keystroke.isCommand) {
-        return [ud boolForKey:@"minimal.display.commandKeys"];
+    BOOL isSpecialKey = [KCEventTransformer.specialKeys objectForKey:@(keystroke.keyCode)] != nil;
+    NSString *baseKeyPreference = isSpecialKey
+        ? @"minimal.display.specialKeys"
+        : @"minimal.display.allKeys";
+    if (![ud boolForKey:baseKeyPreference]) {
+        return NO;
     }
 
-    // Command/Control are handled above. Only Option marks a keystroke as modified;
-    // Shift-only keystrokes fall through so capitals and shifted punctuation count
-    // as ordinary typing (or special keys), matching how people read them.
-    if (keystroke.modifierFlags & NSEventModifierFlagOption) {
-        return [ud boolForKey:@"minimal.display.modifiedKeys"];
+    NSEventModifierFlags displayModifiers = (NSEventModifierFlagCommand
+                                             | NSEventModifierFlagControl
+                                             | NSEventModifierFlagOption
+                                             | NSEventModifierFlagShift);
+    if ((keystroke.modifierFlags & displayModifiers)
+        && ![ud boolForKey:@"minimal.display.modifierKeys"]) {
+        return NO;
     }
 
-    if ([KCEventTransformer.specialKeys objectForKey:@(keystroke.keyCode)] != nil) {
-        return [ud boolForKey:@"minimal.display.specialKeys"];
-    }
-
-    return [ud boolForKey:@"minimal.display.allKeys"];
+    return YES;
 }
 
 - (void)noteKeyEvent:(KCKeystroke *)keystroke {
@@ -484,12 +485,10 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
 
 + (NSDictionary<NSString *,NSObject *> *)visualizerDefaults {
     return @{
-        // ⌘⇧⌥⌃ glyphs always render; the checklist below governs base-key labels
-        // (and the optional fn badge). A keystroke is classified into exactly one
-        // category by precedence (see -shouldDisplayKeystroke:); default all-on
-        // shows everything.
-        @"minimal.display.commandKeys": @YES,
-        @"minimal.display.modifiedKeys": @YES,
+        // The modifier preference governs both modifier glyphs and the labels of
+        // keystrokes that use them. Base-key filters also apply to modified
+        // keystrokes (see -shouldDisplayKeystroke:); default all-on shows everything.
+        @"minimal.display.modifierKeys": @YES,
         @"minimal.display.specialKeys": @YES,
         @"minimal.display.allKeys": @YES,
         @"minimal.display.includeFunctionKey": @YES,
