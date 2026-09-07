@@ -485,9 +485,6 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
 
 + (NSDictionary<NSString *,NSObject *> *)visualizerDefaults {
     return @{
-        // The modifier preference governs both modifier glyphs and the labels of
-        // keystrokes that use them. Base-key filters also apply to modified
-        // keystrokes (see -shouldDisplayKeystroke:); default all-on shows everything.
         @"minimal.display.modifierKeys": @YES,
         @"minimal.display.specialKeys": @YES,
         @"minimal.display.allKeys": @YES,

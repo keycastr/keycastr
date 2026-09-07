@@ -29,8 +29,6 @@
 
 @implementation KCUserDefaultsMigration
 
-// TODO: migrate legacy keys from dot/namespaces to underscores, and audit for observation (KVC?)
-
 + (void)performMigration:(NSUserDefaults *)userDefaults {
     // Only migrate if we're running on macOS 10.14 or later or the user may lose their color preference
     if (@available(macOS 10.14, *)) {
@@ -53,6 +51,8 @@
         }
     }
 
+    // remove the `modifiedKeys` default, which was replaced by the `modifierKeys` default in v0.11.1
+    [userDefaults removeObjectForKey:@"minimal.display.modifiedKeys"];
     [userDefaults removeObjectForKey:@"svelte.allKeystrokes"];
 }
 
