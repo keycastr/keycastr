@@ -26,10 +26,17 @@
 //  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 @class KCMouseEvent;
 @class KCMouseEventVisualizer;
+
+extern NSString * const kKCMouseEffectKey;
+extern NSString * const kKCMouseEffectColor1Key;
+extern NSString * const kKCMouseEffectColor2Key;
+extern NSString * const kKCMouseEffectDurationKey;
+extern NSString * const kKCMouseEffectDensityKey;
+extern NSString * const kKCMouseEffectDiameterKey;
 
 #pragma mark - KCMouseDisplayOptionsProvider
 
@@ -38,6 +45,9 @@
 @property (nonatomic, strong, readonly) NSArray<NSString *> *mouseDisplayOptionNames;
 @property (nonatomic, strong) NSString *currentMouseDisplayOptionName;
 @property (nonatomic, assign) NSInteger selectedMouseDisplayOptionIndex;
+
+@property (nonatomic, strong, readonly) NSArray<NSString *> *mouseEffectNames;
+@property (nonatomic, strong) NSString *currentMouseEffectName;
 
 @end
 
@@ -56,5 +66,7 @@
 @property (nonatomic, weak) id<KCMouseEventVisualizerDelegate> delegate;
 
 - (void)noteMouseEvent:(KCMouseEvent *)mouseEvent;
+
++ (NSDictionary<NSString *, id> *)defaultPreferences;
 
 @end

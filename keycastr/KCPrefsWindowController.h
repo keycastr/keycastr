@@ -40,6 +40,10 @@
 	NSToolbar* toolbar;
 	NSMutableArray* preferenceViews;
 	NSInteger _selectedPreferencePane;
+	NSBox* _mouseEffectsBox;
+	CGFloat _mouseEffectsBoxOuterHeight;
+	NSView* _originalDisplayTab;
+	NSView* _displayWrapper;
 }
 
 -(void) changeVisualizerFrom:(id<KCVisualizer>)old to:(id<KCVisualizer>)new;

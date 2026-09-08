@@ -33,6 +33,7 @@
 #import <Quartz/Quartz.h>
 #import <ShortcutRecorder/ShortcutRecorder.h>
 #import "KCAppController.h"
+#import "KCColorValueTransformer.h"
 #import "KCEventTap.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
@@ -229,6 +230,13 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [KCUserDefaultsMigration performMigration:userDefaults];
 
+    if (@available(macOS 10.14, *)) {
+        if ([NSValueTransformer valueTransformerForName:NSStringFromClass([KCColorValueTransformer class])] == nil) {
+            [NSValueTransformer setValueTransformer:[[KCColorValueTransformer alloc] init]
+                                            forName:NSStringFromClass([KCColorValueTransformer class])];
+        }
+    }
+
     KeyCombo keyCombo;
     keyCombo.code = 40;
     keyCombo.flags = NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand;
@@ -248,6 +256,7 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
     }
     
     [defaults addEntriesFromDictionary:appDefaults];
+    [defaults addEntriesFromDictionary:[KCMouseEventVisualizer defaultPreferences]];
     [userDefaults registerDefaults:defaults];
 }
 
@@ -441,6 +450,10 @@ static NSInteger kKCPrefDisplayIconInDock = 0x02;
 
 - (NSArray *)availableMouseDisplayOptionNames {
     return mouseEventVisualizer.mouseDisplayOptionNames;
+}
+
+- (NSArray *)availableMouseEffectNames {
+    return mouseEventVisualizer.mouseEffectNames;
 }
 
 - (NSString *)currentMouseDisplayOptionName {
