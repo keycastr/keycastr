@@ -47,13 +47,20 @@
 	NSTextStorage* _textStorage;
 	NSLayoutManager* _layoutManager;
 	NSTextContainer* _textContainer;
+	NSMutableArray<NSString *> *_displayedStrings;
+	NSMutableArray<NSNumber *> *_keystrokeFlags;
 }
 
--(id) initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color;
+@property (nonatomic, readonly) NSArray<NSString *> *displayedKeystrokes;
+
+-(id) initWithMaxWidth:(CGFloat)maxWidth text:(NSString *)string backgroundColor:(NSColor *)color countsAsKeystroke:(BOOL)countsAsKeystroke;
 -(NSDictionary*) attributes;
 -(void) maybeResize;
 -(void) setAlphaValue:(float)opacity;
--(void) appendString:(NSString*)t;
+-(void) appendString:(NSString*)t countsAsKeystroke:(BOOL)countsAsKeystroke;
+-(void) removeOldestKeystroke;
+-(NSUInteger) keystrokeCount;
+-(BOOL) isEmpty;
 -(void) scheduleFadeOut;
 
 @end
@@ -74,13 +81,17 @@
 {
 	KCDefaultVisualizerBezelView* _currentBezelView;
 	NSMutableArray* _runningAnimations;
+	NSMutableArray<KCDefaultVisualizerBezelView *> *_bezelViews;
 }
 
 - (void)addKeystroke:(KCKeystroke *)keystroke;
 - (void)addMouseEvent:(KCMouseEvent *)mouseEvent;
 - (void)addRunningAnimation:(KCBezelAnimation *)animation;
+- (void)removeBezelView:(KCDefaultVisualizerBezelView *)bezelView;
 
 - (instancetype)init;
+
+@property (nonatomic, assign) NSUInteger maximumVisibleKeystrokes;
 
 @end
 
@@ -102,10 +113,12 @@ typedef NS_ENUM(NSInteger, KCDefaultVisualizerDisplayOption) {
 @interface KCDefaultVisualizer : KCVisualizer <KCVisualizer>
 {
 	KCDefaultVisualizerWindow* visualizerWindow;
+	id _defaultsObserver;
 }
 
 @property (nonatomic, assign) IBOutlet KCDefaultVisualizerPreferencesView *preferencesView;
 @property (nonatomic, assign) KCDefaultVisualizerDisplayOption displayMode;
+@property (nonatomic, assign) NSUInteger maximumVisibleKeystrokes;
 
 - (IBAction)preferencesViewDidSelectDisplayOption:(id)sender;
 

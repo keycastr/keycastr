@@ -13,7 +13,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1" userLabel="Preferences" customClass="KCDefaultVisualizerPreferencesView">
-            <rect key="frame" x="0.0" y="0.0" width="380" height="380"/>
+            <rect key="frame" x="0.0" y="0.0" width="380" height="420"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
@@ -300,6 +300,44 @@
                         <binding destination="9" name="value" keyPath="values.default_displayModifiedCharacters" id="sXZ-s3-9aV"/>
                     </connections>
                 </button>
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="max-label-default">
+                    <rect key="frame" x="34" y="304" width="123" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Visible Keystrokes:" id="max-label-cell-default">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="max-field-default">
+                    <rect key="frame" x="161" y="300" width="50" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="max-field-width-default"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" title="0" drawsBackground="YES" id="max-field-cell-default">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="3" id="max-formatter-default">
+                            <real key="minimum" value="0.0"/>
+                            <real key="maximum" value="999"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="9" name="value" keyPath="values.default.maximumVisibleKeystrokes" id="max-binding-default">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="max-help-default">
+                    <rect key="frame" x="219" y="304" width="85" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="0 = unlimited" id="max-help-cell-default">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="13" firstAttribute="width" secondItem="8" secondAttribute="width" id="0J1-VP-ec6"/>
@@ -373,6 +411,12 @@
                 <constraint firstItem="8" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="zBO-qC-VpU"/>
                 <constraint firstItem="4FL-0E-Ykx" firstAttribute="leading" secondItem="wva-Xt-LhR" secondAttribute="trailing" constant="8" symbolic="YES" id="zJm-dx-dcw"/>
                 <constraint firstItem="48" firstAttribute="trailing" secondItem="52" secondAttribute="trailing" id="zUY-EJ-yvK"/>
+                <constraint firstItem="max-label-default" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" id="max-label-trailing-default"/>
+                <constraint firstItem="max-label-default" firstAttribute="centerY" secondItem="max-field-default" secondAttribute="centerY" id="max-label-center-default"/>
+                <constraint firstItem="max-label-default" firstAttribute="top" secondItem="wva-Xt-LhR" secondAttribute="bottom" constant="14" id="max-label-top-default"/>
+                <constraint firstItem="max-field-default" firstAttribute="leading" secondItem="24" secondAttribute="leading" id="max-field-leading-default"/>
+                <constraint firstItem="max-help-default" firstAttribute="leading" secondItem="max-field-default" secondAttribute="trailing" constant="8" id="max-help-leading-default"/>
+                <constraint firstItem="max-help-default" firstAttribute="centerY" secondItem="max-field-default" secondAttribute="centerY" id="max-help-center-default"/>
             </constraints>
             <connections>
                 <outlet property="allKeysButton" destination="wva-Xt-LhR" id="AbU-Bb-Mqy"/>
