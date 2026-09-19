@@ -32,6 +32,10 @@
 #import "KCKeycastrEvent.h"
 #import "KCKeystroke.h"
 #import "KCMouseEvent.h"
+#import "NSUserDefaults+Utility.h"
+
+// Floor for the shrink-to-fit pass on the key label.
+static const float kKCSvelteMinimumFontSize = 8.0;
 
 @implementation SvelteVisualizerFactory
 
@@ -124,15 +128,21 @@
 	
 	if (_displayedString != nil)
 	{
+		// Only the key label follows the chosen font; the modifier strip above it is
+		// iconography, and reads better kept in the system font.
+		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 		[attr setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 		float fontSize = 48;
-		[attr setObject:[NSFont systemFontOfSize:fontSize] forKey:NSFontAttributeName];
-		
+		NSFont *font = [ud fontForKey:@"svelte.fontName" size:fontSize bold:NO];
+		[attr setObject:font forKey:NSFontAttributeName];
+
 		size = [_displayedString sizeWithAttributes:attr];
-		while (size.width > frame.size.width - 10)
+		// A wide font can need a lot of shrinking to fit; stop at something still
+		// legible rather than walking the size down through zero.
+		while (size.width > frame.size.width - 10 && fontSize > kKCSvelteMinimumFontSize)
 		{
 			fontSize -= 1.0;
-			[attr setObject:[NSFont systemFontOfSize:fontSize] forKey:NSFontAttributeName];
+			[attr setObject:[NSFont fontWithDescriptor:[font fontDescriptor] size:fontSize] forKey:NSFontAttributeName];
 			size = [_displayedString sizeWithAttributes:attr];
 		}
 		[_displayedString drawInRect:NSMakeRect(0,30+(frame.size.height-30 - size.height)/2.0,frame.size.width,size.height) withAttributes:attr];
@@ -269,7 +279,8 @@
 }
 
 + (NSDictionary<NSString *, NSObject *> *)visualizerDefaults {
-    return @{ @"svelte.displayAll": @YES };
+    return @{ @"svelte.displayAll": @YES,
+              @"svelte.fontName": @"" };
 }
 
 @end

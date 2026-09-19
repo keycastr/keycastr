@@ -185,6 +185,7 @@ static const CGFloat kKCDefaultBezelPadding = 10.0;
               @"default.fadeDelay": @2.0,
               @"default.fadeDuration": @0.2,
               @"default.fontSize": @16.0,
+              @"default.fontName": @"",
               @"default.keystrokeDelay": @0.5,
               @"default.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.8]
                                                            requiringSecureCoding:NO
@@ -531,7 +532,7 @@ static const int kKCBezelBorder = 6;
 	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 	NSColor* c = [ud colorForKey:@"default.textColor"];
 	return [NSDictionary dictionaryWithObjectsAndKeys:
-		[NSFont systemFontOfSize:[ud floatForKey:@"default.fontSize"]], NSFontAttributeName,
+		[ud fontForKey:@"default.fontName" size:[ud floatForKey:@"default.fontSize"] bold:NO], NSFontAttributeName,
 		[c colorWithAlphaComponent:_opacity * [c alphaComponent]], NSForegroundColorAttributeName,
 		nil];
 }

@@ -13,11 +13,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="8" userLabel="Custom View">
-            <rect key="frame" x="0.0" y="0.0" width="370" height="60"/>
+            <rect key="frame" x="0.0" y="0.0" width="370" height="96"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button imageHugsTitle="YES" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BmP-1Z-8xN">
-                    <rect key="frame" x="22" y="23" width="163" height="19"/>
+                    <rect key="frame" x="22" y="58" width="163" height="19"/>
                     <buttonCell key="cell" type="check" title="Display All Keystrokes:" bezelStyle="regularSquare" imagePosition="right" alignment="left" state="on" inset="2" id="DWq-JT-zxO">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -32,10 +32,37 @@
                         <binding destination="2Th-Np-O1z" name="value" keyPath="values.svelte.displayAll" id="aF8-FA-7c9"/>
                     </connections>
                 </button>
+                <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="aQ7-hd-Zk3">
+                    <rect key="frame" x="22" y="25" width="37" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="bV2-nm-Tc9"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Font:" id="cR4-pl-Wq8">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dK6-xy-Nv1" customClass="KCFontPopUpButton">
+                    <rect key="frame" x="67" y="21" width="281" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="System Font" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="eM3-tz-Hj5">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="fT8-rw-Qx2"/>
+                    </popUpButtonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="fontFamilyDefaultsKey" value="svelte.fontName"/>
+                    </userDefinedRuntimeAttributes>
+                </popUpButton>
             </subviews>
             <constraints>
                 <constraint firstItem="BmP-1Z-8xN" firstAttribute="leading" secondItem="8" secondAttribute="leading" constant="22" id="1TF-5V-uCv"/>
                 <constraint firstItem="BmP-1Z-8xN" firstAttribute="top" secondItem="8" secondAttribute="top" constant="19" id="R06-0Y-eqt"/>
+                <constraint firstItem="aQ7-hd-Zk3" firstAttribute="leading" secondItem="8" secondAttribute="leading" constant="22" id="4Jd-Hq-mXe"/>
+                <constraint firstItem="aQ7-hd-Zk3" firstAttribute="centerY" secondItem="dK6-xy-Nv1" secondAttribute="centerY" id="5Rb-Tk-nWc"/>
+                <constraint firstItem="dK6-xy-Nv1" firstAttribute="leading" secondItem="aQ7-hd-Zk3" secondAttribute="trailing" constant="8" symbolic="YES" id="7Gm-Zc-qLp"/>
+                <constraint firstItem="dK6-xy-Nv1" firstAttribute="top" secondItem="BmP-1Z-8xN" secondAttribute="bottom" constant="12" id="9Pw-Dv-sYt"/>
+                <constraint firstAttribute="trailing" secondItem="dK6-xy-Nv1" secondAttribute="trailing" constant="22" id="AtC-Wn-hJ6"/>
             </constraints>
             <point key="canvasLocation" x="244" y="134"/>
         </customView>

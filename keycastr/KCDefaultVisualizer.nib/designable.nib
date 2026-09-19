@@ -13,9 +13,31 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1" userLabel="Preferences" customClass="KCDefaultVisualizerPreferencesView">
-            <rect key="frame" x="0.0" y="0.0" width="380" height="380"/>
+            <rect key="frame" x="0.0" y="0.0" width="380" height="415"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
+                <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="aQ7-hd-Zk3">
+                    <rect key="frame" x="120" y="285" width="37" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="bV2-nm-Tc9"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Font:" id="cR4-pl-Wq8">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dK6-xy-Nv1" customClass="KCFontPopUpButton">
+                    <rect key="frame" x="165" y="281" width="197" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="System Font" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="eM3-tz-Hj5">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="fT8-rw-Qx2"/>
+                    </popUpButtonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="fontFamilyDefaultsKey" value="default.fontName"/>
+                    </userDefinedRuntimeAttributes>
+                </popUpButton>
                 <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
                     <rect key="frame" x="93" y="254" width="64" height="17"/>
                     <constraints>
@@ -246,7 +268,7 @@
                     </connections>
                 </colorWell>
                 <button verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="56">
-                    <rect key="frame" x="161" y="347" width="152" height="18"/>
+                    <rect key="frame" x="161" y="382" width="152" height="18"/>
                     <buttonCell key="cell" type="radio" title="Command Keys Only" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="123">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -257,7 +279,7 @@
                     </connections>
                 </button>
                 <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Tl-2J-YBO" userLabel="All Modified Keys Button">
-                    <rect key="frame" x="161" y="325" width="130" height="18"/>
+                    <rect key="frame" x="161" y="360" width="130" height="18"/>
                     <buttonCell key="cell" type="radio" title="All Modified Keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="yg3-BT-nUP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -268,7 +290,7 @@
                     </connections>
                 </button>
                 <button tag="2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wva-Xt-LhR">
-                    <rect key="frame" x="161" y="303" width="74" height="18"/>
+                    <rect key="frame" x="161" y="338" width="74" height="18"/>
                     <buttonCell key="cell" type="radio" title="All Keys" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uCf-M1-rtX">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -279,7 +301,7 @@
                     </connections>
                 </button>
                 <textField focusRingType="none" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8ph-mh-BBf">
-                    <rect key="frame" x="67" y="348" width="90" height="16"/>
+                    <rect key="frame" x="67" y="383" width="90" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Display Mode:" id="6mL-ee-0MX">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -287,11 +309,11 @@
                     </textFieldCell>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" id="8PJ-cL-aOJ">
-                    <rect key="frame" x="6" y="283" width="384" height="5"/>
+                    <rect key="frame" x="6" y="318" width="384" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </box>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4FL-0E-Ykx">
-                    <rect key="frame" x="241" y="303" width="121" height="18"/>
+                    <rect key="frame" x="241" y="338" width="121" height="18"/>
                     <buttonCell key="cell" type="check" title="Apply Modifiers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SEj-DO-7J0">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -306,7 +328,12 @@
                 <constraint firstItem="13" firstAttribute="centerY" secondItem="14" secondAttribute="centerY" id="0Tb-r1-UIH"/>
                 <constraint firstItem="14" firstAttribute="top" secondItem="2" secondAttribute="bottom" constant="13" id="1J0-wQ-74V"/>
                 <constraint firstItem="36" firstAttribute="centerY" secondItem="20" secondAttribute="centerY" id="1uM-Wt-j4h"/>
+                <constraint firstItem="16" firstAttribute="top" secondItem="dK6-xy-Nv1" secondAttribute="bottom" constant="10" id="1Uo-Ps-fVz"/>
                 <constraint firstItem="24" firstAttribute="centerY" secondItem="16" secondAttribute="centerY" id="3g3-uM-OOV"/>
+                <constraint firstItem="aQ7-hd-Zk3" firstAttribute="centerY" secondItem="dK6-xy-Nv1" secondAttribute="centerY" id="4Jd-Hq-mXe"/>
+                <constraint firstItem="aQ7-hd-Zk3" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" id="5Rb-Tk-nWc"/>
+                <constraint firstItem="dK6-xy-Nv1" firstAttribute="leading" secondItem="aQ7-hd-Zk3" secondAttribute="trailing" constant="8" symbolic="YES" id="7Gm-Zc-qLp"/>
+                <constraint firstItem="dK6-xy-Nv1" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="9Pw-Dv-sYt"/>
                 <constraint firstItem="8ph-mh-BBf" firstAttribute="top" secondItem="1" secondAttribute="top" constant="16" id="3k0-SE-Spc"/>
                 <constraint firstItem="42" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="4pm-uP-Qdn"/>
                 <constraint firstItem="48" firstAttribute="firstBaseline" secondItem="31" secondAttribute="firstBaseline" id="4tC-Sx-SOP"/>
