@@ -160,7 +160,7 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
     [shadow setShadowOffset:NSMakeSize(2, -2)];
 
     return @{
-        NSFontAttributeName:            [NSFont boldSystemFontOfSize:[ud floatForKey:@"minimal.fontSize"]],
+        NSFontAttributeName:            [ud fontForKey:@"minimal.fontName" size:[ud floatForKey:@"minimal.fontSize"] bold:YES],
         NSForegroundColorAttributeName: [ud colorForKey:@"minimal.textColor"],
         NSShadowAttributeName:          shadow,
         NSParagraphStyleAttributeName:  ps
@@ -491,6 +491,7 @@ static NSString *const kMinimalOriginYKey = @"minimal.originY";
         @"minimal.display.includeFunctionKey": @YES,
         @"minimal.anchorRight": @NO,
         @"minimal.fontSize": @80.0,
+        @"minimal.fontName": @"",
         @"minimal.bezelSize": @100.0,
         @"minimal.borderRadius": @10.0,
         @"minimal.bezelColor": [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0 alpha:0.75]

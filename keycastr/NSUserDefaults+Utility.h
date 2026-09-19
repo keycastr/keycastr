@@ -35,5 +35,10 @@
 -(void) setImage:(NSImage*)anImage forKey:(NSString*)aKey;
 -(NSImage*) imageForKey:(NSString*)aKey;
 
+// Resolves the font family name stored at aKey into a concrete font. An unset,
+// empty, or no-longer-installed family yields the system font at the requested
+// size, so a visualizer always has something to draw with.
+-(NSFont*) fontForKey:(NSString*)aKey size:(CGFloat)size bold:(BOOL)bold;
+
 
 @end

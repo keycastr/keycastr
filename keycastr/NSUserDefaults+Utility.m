@@ -69,4 +69,28 @@
     return theImage;
 }
 
+-(NSFont*) fontForKey:(NSString*)aKey size:(CGFloat)size bold:(BOOL)bold
+{
+    NSFont *systemFont = bold ? [NSFont boldSystemFontOfSize:size] : [NSFont systemFontOfSize:size];
+
+    NSString *familyName = [self stringForKey:aKey];
+    if (familyName == nil || [familyName length] == 0)
+        return systemFont;
+
+    NSFontManager *fontManager = [NSFontManager sharedFontManager];
+    NSFont *font = [fontManager fontWithFamily:familyName
+                                        traits:(bold ? NSBoldFontMask : 0)
+                                        weight:(bold ? 9 : 5)
+                                          size:size];
+
+    // Plenty of families ship no bold face. Prefer the family the user picked in
+    // its regular weight over honouring boldness with a family they didn't.
+    if (font == nil && bold)
+        font = [fontManager fontWithFamily:familyName traits:0 weight:5 size:size];
+
+    // The family itself can disappear — uninstalled, or a disabled font in Font
+    // Book — after it was chosen.
+    return font != nil ? font : systemFont;
+}
+
 @end
