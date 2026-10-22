@@ -344,18 +344,26 @@ static NSString* kLeftTabString = @"\xe2\x87\xa4";
                                             characters:keystroke.characters] && keystroke.isCommand) {
         return keystroke.characters;
     }
-    return [self translateKeyCode:keystroke.keyCode];
+    // Layouts such as "Dvorak - QWERTY ⌘" map keys differently while command is held,
+    // so translate command shortcuts with the command modifier applied.
+    if (keystroke.modifierFlags & NSEventModifierFlagCommand) {
+        NSString *commandCharacter = [self translateKeyCode:keystroke.keyCode modifierKeyState:(cmdKey >> 8) & 0xFF];
+        if (commandCharacter.length > 0) {
+            return commandCharacter;
+        }
+    }
+    return [self translateKeyCode:keystroke.keyCode modifierKeyState:0];
 }
 
 - (BOOL)shouldReturnOriginalCharactersForKeyCode:(uint16_t)keyCode characters:(NSString *)characters {
     return (keyCode == 27 && [characters isEqual:@"ß"]);
 }
 
-- (NSString *)translateKeyCode:(uint16_t)keyCode {
+- (NSString *)translateKeyCode:(uint16_t)keyCode modifierKeyState:(UInt32)modifierKeyState {
     static UInt32 deadKeyState = 0;
     UniCharCount maxLength = 4, length;
     UniChar unicodeString[4];
-    UCKeyTranslate(_uchrData, keyCode, kUCKeyActionDisplay, 0, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &deadKeyState, maxLength, &length, unicodeString);
+    UCKeyTranslate(_uchrData, keyCode, kUCKeyActionDisplay, modifierKeyState, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &deadKeyState, maxLength, &length, unicodeString);
     return [NSString stringWithCharacters:unicodeString length:length];
 }
 
