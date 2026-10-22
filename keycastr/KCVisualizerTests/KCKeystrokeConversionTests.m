@@ -281,6 +281,31 @@
     XCTAssertEqualObjects([keystroke convertToString], @"⌘ß");
 }
 
+#pragma mark - Dvorak - QWERTY ⌘ - Special Case
+
+- (KCEventTransformer *)transformerForInputSourceID:(NSString *)inputSourceID {
+    NSDictionary *filter = @{ (__bridge NSString *)kTISPropertyInputSourceID: inputSourceID };
+    NSArray *sources = CFBridgingRelease(TISCreateInputSourceList((__bridge CFDictionaryRef)filter, true));
+    if (sources.count == 0) {
+        return nil;
+    }
+    return [[KCEventTransformer alloc] initWithKeyboardLayout:(__bridge TISInputSourceRef)sources.firstObject userDefaults:userDefaults];
+}
+
+- (void)test_dvorakQwertyCommand_commandShortcutsUseQwertyKeycaps {
+    // The "Dvorak - QWERTY ⌘" layout switches to QWERTY while command is held, so the
+    // key labelled J in Dvorak (keyCode 8, C on QWERTY) triggers cmd-C, and that is what should be shown.
+    KCEventTransformer *transformer = [self transformerForInputSourceID:@"com.apple.keylayout.DVORAK-QWERTYCMD"];
+    XCTAssertNotNil(transformer);
+
+    keystroke = [self keystrokeWithKeyCode:8 modifiers:0 characters:@"j" charactersIgnoringModifiers:@"j"];
+    XCTAssertEqualObjects([transformer transformedValue:keystroke], @"j");
+
+    keystroke = [self keystrokeWithKeyCode:8 modifiers:1048840 characters:@"c" charactersIgnoringModifiers:@"c"];
+    XCTAssertEqualObjects([transformer transformedValue:keystroke], @"⌘C");
+    XCTAssertEqualObjects([transformer keyCapForKeystroke:keystroke], @"C");
+}
+
 #pragma mark - keyCapForKeystroke (bare keycap, no modifier glyphs)
 
 - (void)test_keyCap_plainLetterIsLowercaseKeycap {
